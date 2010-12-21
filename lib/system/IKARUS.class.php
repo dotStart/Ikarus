@@ -319,6 +319,9 @@ class IKARUS {
 			// call method
 			return call_user_func_array(self::$additionalMethods[$method], $arguments);
 		}
+
+		// no additional method known -> error
+		throw new SystemException("Method '%s' does not exist in class %s", $method, 'IKARUS');
 	}
 
 	/**
