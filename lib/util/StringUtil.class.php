@@ -234,7 +234,7 @@ class StringUtil {
 	 * alias to php strlen() function.
 	 */
 	public static function length($string) {
-		if (USE_MBSTRING) {
+		if (OPTION_USE_MBSTRING) {
 			return mb_strlen($string);
 		}
 		else {
