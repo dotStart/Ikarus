@@ -40,6 +40,8 @@ class AbstractCacheSource implements CacheSource {
 	/**
 	 * @see lib/system/cache/CacheSource::get()
 	 */
-	abstract function get($cacheFile, $cacheBuilderPath, $minLifetime, $maxLifetime);
+	function get($cacheFile, $cacheBuilderPath, $minLifetime, $maxLifetime) {
+		return null;
+	}
 }
 ?>
