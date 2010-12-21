@@ -190,7 +190,7 @@ class IKARUS {
 		self::$dbObj = new DatabaseManager();
 
 		// add connection
-		self::$dbObj->addConnection($dbType, $dbHostname, $dbUsername, $dbPassword, $dbDatabase);
+		self::$dbObj->addConnection($dbType.'DatabaseDriver', $dbHostname, $dbUsername, $dbPassword, $dbDatabase);
 	}
 
 	/**
