@@ -1,4 +1,7 @@
 <?php
+// ikarus imports
+require_once(IKARUS_DIR.'lib/system/database/driver/DatabaseDriver.class.php');
+require_once(IKARUS_DIR.'lib/system/database/driver/AbstractDatabaseDriver.class.php');
 
 /**
  * Manages database connections
