@@ -39,6 +39,12 @@ class IKARUS {
 	const CONFIGURATION_FILE = 'config.inc.php';
 
 	/**
+	 * Contains the suffix for database drivers
+	 * @var string
+	 */
+	const DATABASE_DRIVER_SUFFIX = 'DatabaseDriver';
+
+	/**
 	 * Contains the name of the file that contains all stored options from database that should used for the current application instance
 	 * @var	string
 	 */
@@ -190,7 +196,7 @@ class IKARUS {
 		self::$dbObj = new DatabaseManager();
 
 		// add connection
-		self::$dbObj->addConnection($dbType.'DatabaseDriver', $dbHostname, $dbUsername, $dbPassword, $dbDatabase);
+		self::$dbObj->addConnection($dbType.self::DATABASE_DRIVER_SUFFIX, $dbHostname, $dbUsername, $dbPassword, $dbDatabase);
 	}
 
 	/**
