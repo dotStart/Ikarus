@@ -68,6 +68,7 @@ class DatabaseManager {
 
 	/**
 	 * Returnes the current active driver
+	 * @return DatabaseDriver
 	 */
 	public function getActiveDriver() {
 		return $this->availableConnections[$this->activeDriverID];
