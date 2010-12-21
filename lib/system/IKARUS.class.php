@@ -124,10 +124,10 @@ class IKARUS {
 	 */
 	protected function initCache() {
 		// option fallback
-		if (!defined('OPTION_CACHE_SOURCE')) define('OPTION_CACHE_SOURCE', 'Disk');
+		if (!defined('OPTION_FALLBACK_CACHE_SOURCE')) define('OPTION_FALLBACK_CACHE_SOURCE', 'Disk');
 
 		// start CacheSourceManager
-		self::$cacheObj = new CacheSourceManager(OPTION_CACHE_SOURCE);
+		self::$cacheObj = new CacheSourceManager(OPTION_FALLBACK_CACHE_SOURCE);
 	}
 
 	/**
