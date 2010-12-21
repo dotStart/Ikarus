@@ -3,7 +3,7 @@
 /**
  * This exception will thrown if an system error occours
  * Note: This is the red screen of death
- * @author		Johannes Donath
+ * @author		Johannes Donath, Some code taken from WoltLab Community Framework (developed by Marcel Werk)
  * @copyright	2010 DEVel Fusion
  * @package		com.develfusion.ikarus
  * @subpackage	system
