@@ -15,6 +15,9 @@ set_exception_handler(array('IKARUS', 'handleException'));
 // set error handler
 set_error_handler(array('IKARUS', 'handleError'), E_ALL);
 
+// register shutdown method
+register_shutdown_function(array('IKARUS', 'destruct'));
+
 /**
  * Loads missing class definitions from framework dir
  * Supported dirs are:
