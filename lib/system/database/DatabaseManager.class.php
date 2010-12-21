@@ -83,6 +83,15 @@ class DatabaseManager {
 	}
 
 	/**
+	 * Shuts down all database connections
+	 */
+	public function shutdown() {
+		foreach($this->availableConnections as $linkID => $connection) {
+			$this->availableConnections[$linkID]->shutdown();
+		}
+	}
+
+	/**
 	 * Redirects method calls to active driver
 	 * @param	string	$method
 	 * @param	array	$arguments
