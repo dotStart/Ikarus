@@ -7,6 +7,7 @@ require_once(IKARUS_DIR.'lib/system/database/DatabaseManager.class.php');
 require_once(IKARUS_DIR.'lib/system/event/EventHandler.class.php');
 require_once(IKARUS_DIR.'lib/system/option/Options.class.php');
 require_once(IKARUS_DIR.'lib/system/session/SessionFactory.class.php');
+require_once(IKARUS_DIR.'lib/system/style/StyleManager.class.php');
 require_once(IKARUS_DIR.'lib/system/template/Template.class.php');
 
 // defines
@@ -72,6 +73,12 @@ class IKARUS {
 	protected static $sessionObj = null;
 
 	/**
+	 * Contains the active Style instance
+	 * @var Style
+	 */
+	protected static $styleObj = null;
+
+	/**
 	 * Contains the current Template instance
 	 * @var	Template
 	 */
@@ -98,6 +105,7 @@ class IKARUS {
 		$this->initCache();
 		$this->initTemplate();
 		$this->initSession();
+		$this->initStyle();
 
 		// fire event
 		EventHandler::fire('IKARUS', 'finishedInit');
@@ -156,6 +164,17 @@ class IKARUS {
 	}
 
 	/**
+	 * Initialisizes the Style instance
+	 */
+	protected function initStyle() {
+		// get StyleManager instance
+		$styleManager = StyleManager::getInstance();
+
+		// get active style
+		self::$styleObj = $styleManager->getActiveStyle();
+	}
+
+	/**
 	 * Initialisizes the Template instance
 	 */
 	protected function initTemplate() {
@@ -206,6 +225,13 @@ class IKARUS {
 	 */
 	public static final function getSession() {
 		return self::$sessionObj;
+	}
+
+	/**
+	 * Returnes the current Style instance
+	 */
+	public static final function getStyle() {
+		return self::$styleObj;
 	}
 
 	/**
