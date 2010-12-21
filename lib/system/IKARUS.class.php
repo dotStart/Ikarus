@@ -317,7 +317,7 @@ class IKARUS {
 	public static function __call($method, $arguments) {
 		if (isset(self::$additionalMethods[$method])) {
 			// call method
-			call_user_func_array(self::$additionalMethods[$method], $arguments);
+			return call_user_func_array(self::$additionalMethods[$method], $arguments);
 		}
 	}
 
