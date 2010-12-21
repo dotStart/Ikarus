@@ -6,6 +6,7 @@ require_once(IKARUS_DIR.'lib/system/cache/CacheSourceManager.class.php');
 require_once(IKARUS_DIR.'lib/system/database/DatabaseManager.class.php');
 require_once(IKARUS_DIR.'lib/system/event/EventHandler.class.php');
 require_once(IKARUS_DIR.'lib/system/option/Options.class.php');
+require_once(IKARUS_DIR.'lib/system/session/SessionFactory.class.php');
 require_once(IKARUS_DIR.'lib/system/template/Template.class.php');
 
 // defines
@@ -65,10 +66,22 @@ class IKARUS {
 	protected static $packageDirs = array();
 
 	/**
+	 * Contains the current Session instance
+	 * @var	Session
+	 */
+	protected static $sessionObj = null;
+
+	/**
 	 * Contains the current Template instance
 	 * @var	Template
 	 */
 	protected static $tplObj = null;
+
+	/**
+	 * Contains the current User instance
+	 * @var User
+	 */
+	protected static $userObj = null;
 
 	/**
 	 * Starts IKARUS
@@ -84,6 +97,7 @@ class IKARUS {
 		$this->initOptions();
 		$this->initCache();
 		$this->initTemplate();
+		$this->initSession();
 
 		// fire event
 		EventHandler::fire('IKARUS', 'finishedInit');
@@ -127,6 +141,18 @@ class IKARUS {
 			Options::generate(self::$packageDir.self::OPTION_FILE);
 		else
 			require_once(self::$packageDir.self::OPTION_FILE);
+	}
+
+	/**
+	 * Initialisizes all session related instances (Such as User instance and Session instance)
+	 */
+	protected function initSession() {
+		// get SessionFactory instance
+		$sessionFactory = SessionFactory::getInstance();
+
+		// get session object
+		self::$sessionObj = $sessionFactory->getSession();
+		self::$userObj = self::$sessionObj->getUser();
 	}
 
 	/**
@@ -176,6 +202,13 @@ class IKARUS {
 	}
 
 	/**
+	 * Returnes the current Session instance
+	 */
+	public static final function getSession() {
+		return self::$sessionObj;
+	}
+
+	/**
 	 * Returnes the current Template instance
 	 * @return Template
 	 */
@@ -189,6 +222,13 @@ class IKARUS {
 	 */
 	public static final function getTPL() {
 		return self::getTemplate();
+	}
+
+	/**
+	 * Returnes the current User instance
+	 */
+	public static final function getUser() {
+		return self::$userObj;
 	}
 }
 ?>
