@@ -56,6 +56,9 @@ class CacheSourceManager {
 
 				// add to available cache sources array
 				$this->cacheSources[str_replace('CacheSource', '', $dir->getBasename('.class.php'))] = new $className();
+
+				// validate
+				if (!($this->cacheSources[str_replace('CacheSource', '', $dir->getBasename('.class.php'))] instanceof CacheSource)) unset($this->cacheSources[str_replace('CacheSource', '', $dir->getBasename('.class.php'))]);
 			}
 		}
 	}
