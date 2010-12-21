@@ -44,6 +44,15 @@ class IKARUS {
 	const OPTION_FILE = 'options.inc.php';
 
 	/**
+	 * Contains a list of additional methods
+	 * With this little variable we can add additional methods such as getCronjob() to this core
+	 * A little tip: Use the factory pattern
+	 * Note: All method calls will redirected to defined method. See call_user_func_array syntax
+	 * @var	array
+	 */
+	protected static $additionalMethods = array();
+
+	/**
 	 * Contains the current CacheSourceManager instance
 	 * @var	CacheSourceManager
 	 */
@@ -110,6 +119,7 @@ class IKARUS {
 		$this->initDatabase();
 		$this->initOptions();
 		$this->initCache();
+		$this->initAdditionalMethods();
 		$this->initLanguage();
 		$this->initTemplate();
 		$this->initSession();
@@ -117,6 +127,13 @@ class IKARUS {
 
 		// fire event
 		EventHandler::fire('IKARUS', 'finishedInit');
+	}
+
+	/**
+	 * Reads all additional methods from cache
+	 */
+	protected function initAdditionalMethods() {
+		self::$additionalMethods = self::$cacheObj->get(IKARUS_DIR.'cache/cache.additionalMethods.php', IKARUS_DIR.'lib/system/cache/CacheBuilderAdditionalMethods.class.php');
 	}
 
 	/**
@@ -290,6 +307,18 @@ class IKARUS {
 	 */
 	public static final function getUser() {
 		return self::$userObj;
+	}
+
+	/**
+	 * Allows additional method hooks
+	 * @param	string	$method
+	 * @param	array	$arguments
+	 */
+	public static function __call($method, $arguments) {
+		if (isset(self::$additionalMethods[$method])) {
+			// call method
+			call_user_func_array(self::$additionalMethods[$method], $arguments);
+		}
 	}
 }
 ?>
