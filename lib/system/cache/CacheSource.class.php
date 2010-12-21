@@ -1,4 +1,5 @@
 <?php
+require_once(IKARUS_DIR.'lib/system/cache/CacheBuilder.class.php');
 
 /**
  * Defines default methods for cache sources
