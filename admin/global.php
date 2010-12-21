@@ -10,7 +10,7 @@
  */
 
 // defines
-define('REALTIVE_IKARUS_DIR', '../');
+define('RELATIVE_IKARUS_DIR', '../');
 
 // define package dirs
 $packageDirs = array(dirname(dirname(__FILE__)));
