@@ -74,6 +74,14 @@ class DatabaseManager {
 	}
 
 	/**
+	 * Returnes the type of the active driver
+	 * @return string
+	 */
+	public function getActiveDriverType() {
+		return get_class($this->getActiveDriver());
+	}
+
+	/**
 	 * Redirects method calls to active driver
 	 * @param	string	$method
 	 * @param	array	$arguments
