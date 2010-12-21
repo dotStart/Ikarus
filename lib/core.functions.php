@@ -27,6 +27,10 @@ register_shutdown_function(array('IKARUS', 'destruct'));
  * @param	string	$className
  */
 function __autoload($className) {
+	// get packageDirs variable
+	global $packageDirs;
+
+	// loop through package dirs
 	foreach($packageDirs as $dir) {
 		// search exceptions
 		if (file_exists($dir.'lib/system/exception/'.$className.'.class.php')) {
