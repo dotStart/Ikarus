@@ -320,5 +320,23 @@ class IKARUS {
 			call_user_func_array(self::$additionalMethods[$method], $arguments);
 		}
 	}
+
+	/**
+	 * Calls getXYZ methods
+	 * Note: This will used by template system
+	 * @param	string	$variable
+	 * @return mixed
+	 * @throws SystemException
+	 */
+	public function __get($variable) {
+		// create searched method name
+		$methodName = 'get'.ucfirst($variable);
+
+		if (method_exists('IKARUS', $methodName))
+			return call_user_func(array('IKARUS', $methodName));
+
+		// method does not exist -> error
+		throw new SystemException("Property '%s' does not exist in class %s", $variable, 'IKARUS');
+	}
 }
 ?>
