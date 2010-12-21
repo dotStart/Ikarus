@@ -13,7 +13,7 @@
 define('RELATIVE_IKARUS_DIR', '../');
 
 // define package dirs
-$packageDirs = array(dirname(dirname(__FILE__)));
+$packageDirs = array(dirname(dirname(__FILE__)).'/');
 
 // include IKARUS
 require_once(RELATIVE_IKARUS_DIR.'global.php');
