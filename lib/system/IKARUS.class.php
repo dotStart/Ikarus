@@ -130,6 +130,33 @@ class IKARUS {
 	}
 
 	/**
+	 * Replacement of the "__destruct()" method.
+	 * Seems that under specific conditions (windows) the destructor is not called automatically.
+	 * So we use the php register_shutdown_function to register an own destructor method.
+	 * Flushs the output, updates the session and executes the shutdown queries.
+	 */
+	public static function destruct() {
+		// flush ouput
+		if (ob_get_level() and ini_get('output_handler')) {
+			ob_flush();
+		} else {
+			flush();
+		}
+
+		// update session
+		if (self::$sessionObj !== null)
+			self::$sessionObj->update();
+
+		// close cache sources
+		if (self::$cacheObj !== null)
+			self::$cacheObj->closeCacheSources();
+
+		// shut down database
+		if (self::$dbObj !== null)
+			self::$dbObj->shutdown();
+	}
+
+	/**
 	 * Reads all additional methods from cache
 	 */
 	protected function initAdditionalMethods() {
