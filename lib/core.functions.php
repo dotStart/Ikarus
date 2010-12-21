@@ -37,6 +37,7 @@ function __autoload($className) {
 		// search utils
 		if (file_exists($dir.'lib/util/'.$className.'.class.php')) {
 			require_once($dir.'lib/util/'.$className.'.class.php');
+			return;
 		}
 	}
 }
