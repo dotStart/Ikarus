@@ -314,7 +314,7 @@ class IKARUS {
 	 * @param	string	$method
 	 * @param	array	$arguments
 	 */
-	public static function __call($method, $arguments) {
+	public static function __callStatic($method, $arguments) {
 		if (isset(self::$additionalMethods[$method])) {
 			// call method
 			return call_user_func_array(self::$additionalMethods[$method], $arguments);
