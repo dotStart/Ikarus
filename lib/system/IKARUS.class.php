@@ -5,6 +5,7 @@ require_once(IKARUS_DIR.'lib/core.functions.php');
 require_once(IKARUS_DIR.'lib/system/cache/CacheSourceManager.class.php');
 require_once(IKARUS_DIR.'lib/system/database/DatabaseManager.class.php');
 require_once(IKARUS_DIR.'lib/system/event/EventHandler.class.php');
+require_once(IKARUS_DIR.'lib/system/language/LanguageManager.class.php');
 require_once(IKARUS_DIR.'lib/system/option/Options.class.php');
 require_once(IKARUS_DIR.'lib/system/session/SessionFactory.class.php');
 require_once(IKARUS_DIR.'lib/system/style/StyleManager.class.php');
@@ -55,6 +56,12 @@ class IKARUS {
 	protected static $dbObj = null;
 
 	/**
+	 * Contains the current LanguageManager instance
+	 * @var Language
+	 */
+	protected static $languageObj = null;
+
+	/**
 	 * Contains the application dir of the current application
 	 * @var string
 	 */
@@ -103,6 +110,7 @@ class IKARUS {
 		$this->initDatabase();
 		$this->initOptions();
 		$this->initCache();
+		$this->initLanguage();
 		$this->initTemplate();
 		$this->initSession();
 		$this->initStyle();
@@ -138,6 +146,13 @@ class IKARUS {
 
 		// add connection
 		self::$dbObj->addConnection($dbType, $dbHostname, $dbUsername, $dbPassword, $dbDatabase);
+	}
+
+	/**
+	 * Initialisizes the LanguageManager instance
+	 */
+	protected function initLanguage() {
+		self::$languageObj = LanguageManager::getInstance();
 	}
 
 	/**
@@ -207,7 +222,24 @@ class IKARUS {
 	}
 
 	/**
+	 * Returnes the current LanguageManager instance
+	 * @return LanguageManager
+	 */
+	public static final function getLanguage() {
+		return self::$languageObj;
+	}
+
+	/**
+	 * Alias for IKARUS::getLanguage()
+	 * @see IKARUS::getLanguage()
+	 */
+	public static final function getLang() {
+		return self::getLanguage();
+	}
+
+	/**
 	 * Returnes the current package dir
+	 * @return string
 	 */
 	public static final function getPackageDir() {
 		return self::$packageDir;
@@ -215,6 +247,7 @@ class IKARUS {
 
 	/**
 	 * Returnes all package dirs
+	 * @return array<string>
 	 */
 	public static final function getPackageDirs() {
 		return self::$packageDirs;
@@ -222,6 +255,7 @@ class IKARUS {
 
 	/**
 	 * Returnes the current Session instance
+	 * @return Session
 	 */
 	public static final function getSession() {
 		return self::$sessionObj;
@@ -229,6 +263,7 @@ class IKARUS {
 
 	/**
 	 * Returnes the current Style instance
+	 * @return Style
 	 */
 	public static final function getStyle() {
 		return self::$styleObj;
