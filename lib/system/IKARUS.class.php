@@ -24,7 +24,7 @@ define('IKARUS_VERSION_STABLE', false);
  * @subpackage	system
  * @category	Ikarus Framework
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
- * @version		1.0.0-0001
+ * @version		1.0.0-0001 (Codename: Avior)
  */
 class IKARUS {
 
