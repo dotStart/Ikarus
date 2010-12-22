@@ -36,6 +36,22 @@ class DatabaseObjectList implements Iterator {
 	}
 
 	/**
+	 * Returnes the count of all objects
+	 * @return integer
+	 */
+	public function countObjects() {
+		return count($this->objectList);
+	}
+
+	/**
+	 * Converts the iterator to array
+	 * @return array
+	 */
+	public function __toArray() {
+		return $this->objectList;
+	}
+
+	/**
 	 * Handles all given objects
 	 * @param	array	$objectList
 	 */
@@ -44,7 +60,6 @@ class DatabaseObjectList implements Iterator {
 	}
 
 	/** ITERATOR METHODS **/
-
 	/**
 	 * @see Iterator::rewind()
 	 */
