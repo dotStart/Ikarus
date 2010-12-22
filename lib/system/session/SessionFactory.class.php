@@ -50,7 +50,7 @@ class SessionFactory {
 	 * Creates a new session
 	 */
 	protected function createSession() {
-		$this->session = SessionEditor::create(session_id());
+		$this->session = call_user_func(array($this->sessionClassName, 'create'), session_id());
 		$this->session->init();
 	}
 

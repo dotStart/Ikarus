@@ -43,7 +43,9 @@ class SessionEditor extends Session {
 					('".escapeString($sessionID)."', ".implode("','", array_map('escapeString', $additionalFields))."')";
 		IKARUS::getDatabase()->sendQuery($sql);
 
-		return new SessionEditor($sessionID, null, true);
+		$className = __CLASS__;
+
+		return new $className($sessionID, null, true);
 	}
 
 	/**
