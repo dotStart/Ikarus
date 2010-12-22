@@ -12,6 +12,10 @@ require_once(IKARUS_DIR.'lib/system/IKARUS.class.php');
  * @version		1.0.0-0001
  */
 class IKARUSSetup extends IKARUS {
-	// This is just a placeholder
+
+	/**
+	 * @see IKARUS::ENVIRONMENT
+	 */
+	const ENVIRONMENT = 'setup';
 }
 ?>
