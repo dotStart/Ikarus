@@ -47,10 +47,14 @@ class DatabaseManager {
 		// create new instance
 		$linkID = $database.'.'.str_replace('DatabaseDriver', '', $driver);
 
-		$this->availableConnections[$linkID] = new $driver($hostname, $username, $password, $database);
+		if (call_user_func(array($driver, 'isSupported'))) {
+			$this->availableConnections[$linkID] = new $driver($hostname, $username, $password, $database);
 
-		// set active
-		$this->activeDriverID = $linkID;
+			// set active
+			$this->activeDriverID = $linkID;
+		} else {
+			throw new SystemException("Trying to load an unsupported database driver: %s", $driver);
+		}
 
 		// return linkID
 		return $linkID;
