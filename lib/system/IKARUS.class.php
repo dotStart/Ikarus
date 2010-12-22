@@ -45,6 +45,12 @@ class IKARUS {
 	const DATABASE_DRIVER_SUFFIX = 'DatabaseDriver';
 
 	/**
+	 * Contains the environment
+	 * @var string
+	 */
+	const ENVIRONMENT = 'frontend';
+
+	/**
 	 * Contains the name of the file that contains all stored options from database that should used for the current application instance
 	 * @var	string
 	 */
@@ -234,7 +240,7 @@ class IKARUS {
 	 */
 	protected function initStyle() {
 		// get StyleManager instance
-		$styleManager = StyleManager::getInstance();
+		$styleManager = StyleManager::getInstance(self::ENVIRONMENT);
 
 		// get active style
 		self::$styleObj = $styleManager->getActiveStyle();
