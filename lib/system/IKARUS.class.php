@@ -211,10 +211,10 @@ class IKARUS {
 	 */
 	protected function initOptions() {
 		// regenerate option cache if needed or include option cache
-		if (!file_exists(self::$packageDir.self::OPTION_FILE))
-			Options::generate(self::$packageDir.self::OPTION_FILE);
-		else
-			require_once(self::$packageDir.self::OPTION_FILE);
+		if (!file_exists(self::$packageDir.self::OPTION_FILE)) Options::generate(self::$packageDir.self::OPTION_FILE);
+
+		// include option file
+		require_once(self::$packageDir.self::OPTION_FILE);
 	}
 
 	/**
