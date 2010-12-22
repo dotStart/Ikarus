@@ -1,4 +1,6 @@
 <?php
+// ikarus imports
+require_once(IKARUS_DIR.'lib/system/io/File.class.php');
 
 /**
  * Provides methods for localisations
