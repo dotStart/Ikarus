@@ -27,6 +27,12 @@ class SessionFactory {
 	protected $session = null;
 
 	/**
+	 * Contains the class name of the class that should used for Sessions
+	 * @var string
+	 */
+	protected $sessionClassName = 'CookieSession';
+
+	/**
 	 * Creates a new instance of SessionFactory
 	 * @deprecated
 	 */
@@ -84,7 +90,9 @@ class SessionFactory {
 				ON
 					session.sessionID = data.sessionID
 				WHERE
-					session.sessionID = ".$sessionID;
+					session.sessionID = ".$sessionID."
+				AND
+					data.packageID = ".PACKAGE_ID;
 		$row = IKARUS::getDatabase()->getFirstRow($sql);
 
 		// no rows found -> return false
