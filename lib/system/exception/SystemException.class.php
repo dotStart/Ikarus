@@ -149,7 +149,7 @@ class SystemException extends Exception implements PrintableException {
 		<h1>Fatal error: <?php echo StringUtil::encodeHTML($this->getMessage()); ?></h1>
 
 		<div>
-			<?php if ($this->getCode()) { ?><p>You get more information about the problem in our knowledge base: <a href="http://cp.develfusion.com/help/?code=<?php echo intval($this->getCode()); ?>">http://cp.develfusion.com/help/?code=<?php echo intval($this->getCode()); ?></a></p><?php } ?>
+			<?php if ($this->getCode()) { ?><p>You get more information about the problem in our knowledge base: <a href="http://ikarus.evil-co.de/help/?code=<?php echo intval($this->getCode()); ?>">http://ikarus.evil-co.de/help/?code=<?php echo intval($this->getCode()); ?></a></p><?php } ?>
 
 			<h2>Information:</h2>
 			<p>
