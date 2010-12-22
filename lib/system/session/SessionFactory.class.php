@@ -1,6 +1,7 @@
 <?php
 // ikarus imports
 require_once(IKARUS_DIR.'lib/system/session/Session.class.php');
+require_once(IKARUS_DIR.'lib/system/session/SessionEditor.class.php');
 
 /**
  * Creates and identifies sessions
