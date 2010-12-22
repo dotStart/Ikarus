@@ -57,6 +57,12 @@ class IKARUS {
 	const OPTION_FILE = 'options.inc.php';
 
 	/**
+	 * Contains the dir of for templates
+	 * @var string
+	 */
+	const TEMPLATE_DIR = 'templates/';
+
+	/**
 	 * Contains a list of additional methods
 	 * With this little variable we can add additional methods such as getCronjob() to this core
 	 * A little tip: Use the factory pattern
