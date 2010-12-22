@@ -17,5 +17,10 @@ class IKARUSSetup extends IKARUS {
 	 * @see IKARUS::ENVIRONMENT
 	 */
 	const ENVIRONMENT = 'setup';
+
+	/**
+	 * @see IKARUS::TEMPLATE_DIR
+	 */
+	const TEMPLATE_DIR = 'setup/templates/';
 }
 ?>

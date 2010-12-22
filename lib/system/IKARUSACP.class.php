@@ -17,5 +17,10 @@ class IKARUSACP extends IKARUS {
 	 * @see IKARUS::ENVIRONMENT
 	 */
 	const ENVIRONMENT = 'backend';
+
+	/**
+	 * @see IKARUS::TEMPLATE_DIR
+	 */
+	const TEMPLATE_DIR = 'admin/templates/';
 }
 ?>
