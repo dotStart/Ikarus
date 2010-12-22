@@ -25,7 +25,7 @@ class LanguageManager {
 	 * Note: LanguageManager uses the factory pattern
 	 * @var LanguageManager
 	 */
-	protected $instance = null;
+	protected static $instance = null;
 
 	/**
 	 * Contains all language variables for the current language
@@ -199,6 +199,17 @@ class LanguageManager {
 	 */
 	public static function fixLanguageCode($languageCode) {
 		return preg_replace('/-[a-z0-9]+/', '', $languageCode);
+	}
+
+	/**
+	 * Returnes a LanguageManager instance
+	 * @return LanguageManager
+	 */
+	public static function getInstance() {
+		if (self::$instance === null)
+			self::$instance = new LanguageManager();
+
+		return self::$instance;
 	}
 
 	/**
