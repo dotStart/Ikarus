@@ -5,29 +5,30 @@ require_once(CP_DIR.'lib/system/template/Template.class.php');
 
 /**
  * The 'smallpages' template function is used to generate simple sliding pagers.
- * 
+ *
  * Usage:
  * {smallpages pages=10 link='page-%d.html'}
- * 
- * assign to variable 'output'; do not print: 
+ *
+ * assign to variable 'output'; do not print:
  * {smallpages pages=10 link='page-%d.html' assign='output'}
- * 
+ *
  * assign to variable 'output' and do print also:
  * {smallpages pages=10 link='page-%d.html' assign='output' print=true}
- * 
- * @author 	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.template.plugin
- * @category 	Community Framework
+ *
+ * @author 		Marcel Werk
+ * @copyright		2001-2009 WoltLab GmbH
+ * @package		com.develfusion.ikarus
+ * @subpackage		system
+ * @category		Ikarus Framework
+ * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
+ * @version		1.0.0-0001
  */
 class TemplatePluginFunctionSmallpages implements TemplatePluginFunction {
 	const SHOW_LINKS = 5;
-	
+
 	/**
 	 * Inserts the page number into the link.
-	 * 
+	 *
 	 * @param 	string		$link
 	 * @param 	integer		$pageNo
 	 * @return	string		final link
@@ -37,10 +38,10 @@ class TemplatePluginFunctionSmallpages implements TemplatePluginFunction {
 		if ($startPos !== null) $link = StringUtil::substring($link, 0, $startPos) . $pageNo . StringUtil::substring($link, $startPos + 2);
 		return $link;
 	}
-	
+
 	/**
 	 * Generates html code of a link.
-	 * 
+	 *
 	 * @param 	string		$link
 	 * @param 	integer		$pageNo
 	 * @return	string
@@ -48,7 +49,7 @@ class TemplatePluginFunctionSmallpages implements TemplatePluginFunction {
 	protected function makeLink($link, $pageNo) {
 		return '<li><a href="'.$this->insertPageNumber($link, $pageNo).'" title="' . IKARUS::getLanguage()->getDynamicVariable('wcf.page.pageNo', array('pageNo' => $pageNo)) . '">'.StringUtil::formatInteger($pageNo).'</a></li>'."\n";
 	}
-	
+
 	/**
 	 * @see TemplatePluginFunction::execute()
 	 */
@@ -60,25 +61,25 @@ class TemplatePluginFunctionSmallpages implements TemplatePluginFunction {
 				throw new SystemException("missing 'pages' argument in pages tag", 12001);
 			}
 		}
-		
+
 		$html = '';
 		if ($tagArgs['pages'] > 1) {
 			// encode link
 			$link = StringUtil::encodeHTML($tagArgs['link']);
-		
+
 			// open div and ul
 			$html .= "<div class=\"pageNavigation\">\n<ul>\n";
-			
+
 			// generate simple links
 			$simpleLinks = $tagArgs['pages'];
 			if ($simpleLinks > self::SHOW_LINKS) {
 				$simpleLinks = self::SHOW_LINKS - 2;
 			}
-			
+
 			for ($i = 1; $i <= $simpleLinks; $i++) {
 				$html .= $this->makeLink($link, $i);
 			}
-			
+
 			if ($tagArgs['pages'] > self::SHOW_LINKS) {
 				// jumper
 				$html .= '<li><a onclick="var result = prompt(\''.IKARUS::getLanguage()->get('wcf.global.page.input').'\', \''.$tagArgs['pages'].'\'); if (typeof(result) != \'object\' &amp;&amp; typeof(result) != \'undefined\') document.location.href = fixURL((\''.StringUtil::replace("'", "\'", $link).'\').replace(/%d/, result));">&hellip;</a></li>'."\n";
@@ -86,17 +87,17 @@ class TemplatePluginFunctionSmallpages implements TemplatePluginFunction {
 				// last page
 				$html .= $this->makeLink($link, $tagArgs['pages']);
 			}
-			
+
 			// close div and ul
 			$html .= "</ul></div>\n";
 		}
-		
+
 		// assign html output to template var
 		if (isset($tagArgs['assign'])) {
 			$tplObj->assign($tagArgs['assign'], $html);
 			if (!isset($tagArgs['print']) || !$tagArgs['print']) return '';
 		}
-		
+
 		return $html;
 	}
 }

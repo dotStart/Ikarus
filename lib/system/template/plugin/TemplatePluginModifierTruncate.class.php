@@ -5,16 +5,17 @@ require_once(CP_DIR.'lib/system/template/Template.class.php');
 
 /**
  * The 'truncate' modifier truncates a string.
- * 
+ *
  * Usage:
  * {$foo|truncate:35:'...'}
  *
- * @author 	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.template.plugin
- * @category 	Community Framework
+ * @author 		Marcel Werk
+ * @copyright		2001-2009 WoltLab GmbH
+ * @package		com.develfusion.ikarus
+ * @subpackage		system
+ * @category		Ikarus Framework
+ * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
+ * @version		1.0.0-0001
  */
 class TemplatePluginModifierTruncate implements TemplatePluginModifier {
 	/**
@@ -25,13 +26,13 @@ class TemplatePluginModifierTruncate implements TemplatePluginModifier {
 		$length = 80;
 		$etc = '...';
 		$breakWords = false;
-		
+
 		// get values
 		$string = $tagArgs[0];
 		if (isset($tagArgs[1])) $length = intval($tagArgs[1]);
 		if (isset($tagArgs[2])) $etc = $tagArgs[2];
 		if (isset($tagArgs[3])) $breakWords = $tagArgs[3];
-		
+
 		// execute plugin
 		if ($length == 0) {
 			return '';
@@ -39,11 +40,11 @@ class TemplatePluginModifierTruncate implements TemplatePluginModifier {
 
 		if (StringUtil::length($string) > $length) {
 			$length -= StringUtil::length($etc);
-			
+
 			if (!$breakWords) {
 				$string = preg_replace('/\s+?(\S+)?$/', '', StringUtil::substring($string, 0, $length + 1));
 			}
-  
+
 			return StringUtil::substring($string, 0, $length).$etc;
 		}
 		else {

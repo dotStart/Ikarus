@@ -5,31 +5,32 @@ require_once(CP_DIR.'lib/system/template/Template.class.php');
 
 /**
  * The 'pages' template function is used to generate sliding pagers.
- * 
+ *
  * Usage:
  * {pages pages=10 link='page-%d.html'}
  * {pages page=8 pages=10 link='page-%d.html'}
- * 
- * assign to variable 'output'; do not print: 
+ *
+ * assign to variable 'output'; do not print:
  * {pages page=8 pages=10 link='page-%d.html' assign='output'}
- * 
+ *
  * assign to variable 'output' and do print also:
  * {pages page=8 pages=10 link='page-%d.html' assign='output' print=true}
- * 
- * @author 	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.template.plugin
- * @category 	Community Framework
+ *
+ * @author 		Marcel Werk
+ * @copyright		2001-2009 WoltLab GmbH
+ * @package		com.develfusion.ikarus
+ * @subpackage		system
+ * @category		Ikarus Framework
+ * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
+ * @version		1.0.0-0001
  */
 class TemplatePluginFunctionPages implements TemplatePluginFunction {
 	const SHOW_LINKS = 11;
 	const SHOW_SUB_LINKS = 20;
-	
+
 	/**
 	 * Inserts the page number into the link.
-	 * 
+	 *
 	 * @param 	string		$link
 	 * @param 	integer		$pageNo
 	 * @return	string		final link
@@ -39,10 +40,10 @@ class TemplatePluginFunctionPages implements TemplatePluginFunction {
 		if ($startPos !== null) $link = StringUtil::substring($link, 0, $startPos) . $pageNo . StringUtil::substring($link, $startPos + 2);
 		return $link;
 	}
-	
+
 	/**
 	 * Generates html code of a link.
-	 * 
+	 *
 	 * @param 	string		$link
 	 * @param 	integer		$pageNo
 	 * @param 	integer		$activePage
@@ -58,7 +59,7 @@ class TemplatePluginFunctionPages implements TemplatePluginFunction {
 			return '<li class="'.($break ? 'break ' : '').'active"><span>'.StringUtil::formatInteger($pageNo).'</span></li>'."\n";
 		}
 	}
-	
+
 	/**
 	 * @see TemplatePluginFunction::execute()
 	 */
@@ -70,25 +71,25 @@ class TemplatePluginFunctionPages implements TemplatePluginFunction {
 				throw new SystemException("missing 'pages' argument in pages tag", 12001);
 			}
 		}
-		
+
 		$html = '';
-		
+
 		if ($tagArgs['pages'] > 1) {
 			// define page link for js function
 			$html .= "<script type=\"text/javascript\">\n//<![CDATA[\nmultiPagesLinks.setPageLink('".StringUtil::replace("'", "\'", $tagArgs['link'])."');\n//]]>\n</script>";
-			
+
 			// encode link
 			$tagArgs['link'] = StringUtil::encodeHTML($tagArgs['link']);
-		
+
 			if (!isset($tagArgs['page'])) {
 				if (($tagArgs['page'] = $tplObj->get('pageNo')) === null) {
 					$tagArgs['page'] = 0;
 				}
 			}
-			
+
 			// open div and ul
 			$html .= "<div class=\"pageNavigation\">\n<ul>\n";
-			
+
 			// previous page
 			$previousTitle = IKARUS::getLanguage()->getDynamicVariable('wcf.global.page.previous');
 			if ($tagArgs['page'] > 1) {
@@ -97,26 +98,26 @@ class TemplatePluginFunctionPages implements TemplatePluginFunction {
 			else {
 				$html .= '<li class="skip"><img src="'.self::getIconPath('previousDisabledS.png').'" alt="" /></li>'."\n";
 			}
-			
+
 			// first page
 			$html .= $this->makeLink($tagArgs['link'], 1, $tagArgs['page']);
-			
+
 			// calculate page links
 			$maxLinks = self::SHOW_LINKS - 4;
 			$linksBeforePage = $tagArgs['page'] - 2;
-			if ($linksBeforePage < 0) $linksBeforePage = 0; 
+			if ($linksBeforePage < 0) $linksBeforePage = 0;
 			$linksAfterPage = $tagArgs['pages'] - ($tagArgs['page'] + 1);
-			if ($linksAfterPage < 0) $linksAfterPage = 0; 
+			if ($linksAfterPage < 0) $linksAfterPage = 0;
 			if ($tagArgs['page'] > 1 && $tagArgs['page'] < $tagArgs['pages']) {
 				$maxLinks--;
 			}
-			
+
 			$half = $maxLinks / 2;
 			$left = $right = $tagArgs['page'];
 			if ($left < 1) $left = 1;
 			if ($right < 1) $right = 1;
 			if ($right > $tagArgs['pages'] - 1) $right = $tagArgs['pages'] - 1;
-			
+
 			if ($linksBeforePage >= $half) {
 				$left -= $half;
 			}
@@ -124,7 +125,7 @@ class TemplatePluginFunctionPages implements TemplatePluginFunction {
 				$left -= $linksBeforePage;
 				$right += $half - $linksBeforePage;
 			}
-			
+
 			if ($linksAfterPage >= $half) {
 				$right += $half;
 			}
@@ -132,12 +133,12 @@ class TemplatePluginFunctionPages implements TemplatePluginFunction {
 				$right += $linksAfterPage;
 				$left -= $half - $linksAfterPage;
 			}
-			
+
 			$right = intval(ceil($right));
 			$left = intval(ceil($left));
 			if ($left < 1) $left = 1;
 			if ($right > $tagArgs['pages']) $right = $tagArgs['pages'];
-			
+
 			// left ... links
 			if ($left > 1) {
 				if ($left - 1 < 2) {
@@ -145,23 +146,23 @@ class TemplatePluginFunctionPages implements TemplatePluginFunction {
 				}
 				else {
 					$html .= '<li class="children"><a onclick="multiPagesLinks.startPageNumberInput(this)">&hellip;<img src="'.self::getIconPath('arrowDown.png').'" alt="" /></a><input type="text" class="inputText" name="pageNo" /><div><ul>'."\n";
-					
+
 					$k = 0;
 					$step = intval(ceil(($left - 2) / self::SHOW_SUB_LINKS));
 					for ($i = 2; $i <= $left; $i += $step) {
 						$html .= $this->makeLink($tagArgs['link'], $i, $tagArgs['page'], $k != 0 && $k % 4 == 0);
 						$k++;
 					}
-					
+
 					$html .= "</ul></div></li>\n";
 				}
 			}
-			
+
 			// visible links
 			for ($i = $left + 1; $i < $right; $i++) {
 				$html .= $this->makeLink($tagArgs['link'], $i, $tagArgs['page']);
 			}
-			
+
 			// right ... links
 			if ($right < $tagArgs['pages']) {
 				if ($tagArgs['pages'] - $right < 2) {
@@ -169,21 +170,21 @@ class TemplatePluginFunctionPages implements TemplatePluginFunction {
 				}
 				else {
 					$html .= '<li class="children"><a onclick="multiPagesLinks.startPageNumberInput(this)">&hellip;<img src="'.self::getIconPath('arrowDown.png').'" alt="" /></a><input type="text" class="inputText" name="page" /><div><ul>'."\n";
-					
+
 					$k = 0;
 					$step = intval(ceil(($tagArgs['pages'] - $right) / self::SHOW_SUB_LINKS));
 					for ($i = $right; $i < $tagArgs['pages']; $i += $step) {
 						$html .= $this->makeLink($tagArgs['link'], $i, $tagArgs['page'], $k != 0 && $k % 4 == 0);
 						$k++;
 					}
-					
+
 					$html .= "</ul></div></li>\n";
 				}
 			}
-			
+
 			// last page
 			$html .= $this->makeLink($tagArgs['link'], $tagArgs['pages'], $tagArgs['page']);
-			
+
 			// next page
 			$nextTitle = IKARUS::getLanguage()->getDynamicVariable('wcf.global.page.next');
 			if ($tagArgs['page'] && $tagArgs['page'] < $tagArgs['pages']) {
@@ -192,20 +193,20 @@ class TemplatePluginFunctionPages implements TemplatePluginFunction {
 			else {
 				$html .= '<li class="skip"><img src="'.self::getIconPath('nextDisabledS.png').'" alt="" /></li>'."\n";
 			}
-			
+
 			// close div and ul
 			$html .= "</ul></div>\n";
 		}
-		
+
 		// assign html output to template var
 		if (isset($tagArgs['assign'])) {
 			$tplObj->assign($tagArgs['assign'], $html);
 			if (!isset($tagArgs['print']) || !$tagArgs['print']) return '';
 		}
-		
+
 		return $html;
 	}
-	
+
 	private static function getIconPath($filename) {
 		if (class_exists('StyleManager')) {
 			return StyleManager::getStyle()->getIconPath($filename);

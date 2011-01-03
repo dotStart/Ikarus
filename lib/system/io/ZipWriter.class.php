@@ -1,13 +1,14 @@
 <?php
 /**
  * Creates a Zip file archive.
- * 
- * @author	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.io
- * @category 	Community Framework
+ *
+ * @author		Marcel Werk
+ * @copyright		2001-2009 WoltLab GmbH
+ * @package		com.develfusion.ikarus
+ * @subpackage		system
+ * @category		Ikarus Framework
+ * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
+ * @version		1.0.0-0001
  */
 class ZipWriter {
 	protected $headers = array();
@@ -17,7 +18,7 @@ class ZipWriter {
 
 	/**
 	 * Adds a folder to the Zip archive.
-	 * 
+	 *
 	 * @param	string		$name		dirname
 	 */
 	public function addDir($name) {
@@ -73,7 +74,7 @@ class ZipWriter {
 
 	/**
 	 * Adds a file to the Zip archive.
-	 * 
+	 *
 	 * @param	string		$data		content of the file
 	 * @param	string		$name		filename
 	 * @param	integer		$date		file creation time as unix timestamp
@@ -81,16 +82,16 @@ class ZipWriter {
 	public function addFile($data, $name, $date = 0) {
 		// replace backward slashes with forward slashes in the filename
 		$name = StringUtil::replace("\\", "/", $name);
-		
+
 		// calculate the size of the file being uncompressed
 		$sizeUncompressed = strlen($data);
-		
+
 		// get data checksum
 		$crc = crc32($data);
-		
+
 		// compress the file data
 		$compressedData = gzcompress($data);
-		
+
 		// calculate the size of the file being compressed
 		$compressedData = substr($compressedData, 2, - 4);
 		$sizeCompressed = strlen($compressedData);
@@ -106,10 +107,10 @@ class ZipWriter {
 		$header .= pack("v", strlen($name));
 		$header .= pack("v", 0);
 		$header .= $name;
-		
+
 		// store the compressed data immediately following the file header
 		$header .= $compressedData;
-		
+
 		// complete the file record by adding an additional footer directly following the file data
 		//$header .= pack("V", $crc);
 		//$header .= pack("V", $sizeCompressed);
@@ -120,7 +121,7 @@ class ZipWriter {
 
 		// calculate the new offset for the central index record
 		$newOffset = strlen(implode('', $this->headers));
-		
+
 		// construct the record
 		$record = "\x50\x4b\x01\x02";
 		$record .= "\x00\x00\x14\x00";
@@ -148,13 +149,13 @@ class ZipWriter {
 
 	/**
 	 * Constructs the final Zip file structure and return it.
-	 * 
+	 *
 	 * @return	string
 	 */
 	public function getFile() {
 		// implode the $headers array into a single string
 		$headers = implode('', $this->headers);
-		
+
 		// implode the $data array into a single string
 		$data = implode('', $this->data);
 
@@ -169,10 +170,10 @@ class ZipWriter {
 			pack("V", strlen($headers)).
 			"\x00\x00";
 	}
-	
+
 	/**
 	 * Converts an unix timestamp to Zip file time.
-	 * 
+	 *
 	 * @param	integer		$date		unix timestamp
 	 * @return	string
 	 */
@@ -184,26 +185,26 @@ class ZipWriter {
 		$hour = gmdate('H', $date);
 		$minute = gmdate('i', $date);
 		$second = gmdate('s', $date);
-		
+
 		// calculate time
 		$time = $hour;
 		$time = ($time << 6) + $minute;
 		$time = ($time << 5) + number_format($second / 2, 0);
 		$timeRight = $time >> 8;
 		$timeLeft = $time - ($timeRight << 8);
-		
+
 		// calculate date
 		$date = $year;
 		$date = ($date << 4) + $month;
 		$date = ($date << 5) + $day;
 		$dateRight = $date >> 8;
 		$dateLeft = $date - ($dateRight << 8);
-		
+
 		$timeLeft = sprintf("%02x", $timeLeft);
 		$timeRight = sprintf("%02x", $timeRight);
 		$dateLeft = sprintf("%02x", $dateLeft);
 		$dateRight = sprintf("%02x", $dateRight);
-		
+
 		return pack("H*H*H*H*", $timeLeft, $timeRight, $dateLeft, $dateRight);
 	}
 }

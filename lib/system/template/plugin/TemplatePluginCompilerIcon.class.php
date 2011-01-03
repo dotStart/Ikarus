@@ -9,12 +9,13 @@ require_once(CP_DIR.'lib/system/template/TemplateScriptingCompiler.class.php');
  * Usage:
  * {icon}{$blah}{/icon}
  *
- * @author	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.system.style
- * @subpackage	system.template.plugin
- * @category 	Community Framework
+ * @author		Marcel Werk
+ * @copyright		2001-2009 WoltLab GmbH
+ * @package		com.develfusion.ikarus
+ * @subpackage		system
+ * @category		Ikarus Framework
+ * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
+ * @version		1.0.0-0001
  */
 class TemplatePluginCompilerIcon implements TemplatePluginCompiler {
 	/**
@@ -24,7 +25,7 @@ class TemplatePluginCompilerIcon implements TemplatePluginCompiler {
 		$compiler->pushTag('icon');
 		return "<?php ob_start(); ?>";
 	}
-	
+
 	/**
 	 * @see TemplatePluginCompiler::executeEnd()
 	 */

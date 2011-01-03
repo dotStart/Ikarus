@@ -1,20 +1,20 @@
 <?php
+
 /**
  * The FTP class handles all ftp operations.
- *  
- * @author	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.io
- * @category 	Community Framework
+ * @author		Marcel Werk
+ * @copyright		2001-2009 WoltLab GmbH
+ * @package		com.develfusion.ikarus
+ * @subpackage		system
+ * @category		Ikarus Framework
+ * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
+ * @version		1.0.0-0001
  */
 class FTP {
 	protected $resource;
 
 	/**
 	 * Opens a new ftp connection to given host.
-	 * 
 	 * @param 	string		$host
 	 * @param 	string		$port
 	 * @param 	integer		$timeout
@@ -28,7 +28,6 @@ class FTP {
 
 	/**
 	 * Calls the specified function on the open ftp connection.
-	 * 
 	 * @param 	string		$function
 	 * @param 	array		$arguments
 	 */
@@ -37,7 +36,7 @@ class FTP {
 		if (!function_exists('ftp_'.$function)) {
 			throw new SystemException('Can not call method ' . $function, 11003);
 		}
-		
+
 		return call_user_func_array('ftp_' . $function, $arguments);
 	}
 }

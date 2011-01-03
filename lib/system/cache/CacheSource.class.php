@@ -5,10 +5,10 @@ require_once(IKARUS_DIR.'lib/system/cache/CacheBuilder.class.php');
  * Defines default methods for cache sources
  * Note: CacheSourceManager will only accept instances of this interface!
  * @author		Johannes Donath
- * @copyright	2010 DEVel Fusion
+ * @copyright		2010 DEVel Fusion
  * @package		com.develfusion.ikarus
- * @subpackage	system
- * @category	Ikarus Framework
+ * @subpackage		system
+ * @category		Ikarus Framework
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		1.0.0-0001
  */

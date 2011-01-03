@@ -4,10 +4,10 @@ require_once(IKARUS_DIR.'lib/system/session/Session.class.php');
 /**
  * Represents a session and provides methods fro creating new, updating or deleting sessions
  * @author		Johannes Donath
- * @copyright	2010 DEVel Fusion
+ * @copyright		2010 DEVel Fusion
  * @package		com.develfusion.ikarus
- * @subpackage	system
- * @category	Ikarus Framework
+ * @subpackage		system
+ * @category		Ikarus Framework
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		1.0.0-0001
  */

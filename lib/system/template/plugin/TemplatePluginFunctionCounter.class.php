@@ -5,21 +5,22 @@ require_once(CP_DIR.'lib/system/template/Template.class.php');
 
 /**
  * The 'counter' template function is used to print out a count.
- * 
+ *
  * Usage:
  * {counter assign=i}
  * {counter start=10 skip=2}
  *
- * @author 	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.template.plugin
- * @category 	Community Framework
+ * @author 		Marcel Werk
+ * @copyright		2001-2009 WoltLab GmbH
+ * @package		com.develfusion.ikarus
+ * @subpackage		system
+ * @category		Ikarus Framework
+ * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
+ * @version		1.0.0-0001
  */
 class TemplatePluginFunctionCounter implements TemplatePluginFunction {
 	protected $counters = array();
-	
+
 	/**
 	 * @see TemplatePluginFunction::execute()
 	 */
@@ -54,8 +55,8 @@ class TemplatePluginFunctionCounter implements TemplatePluginFunction {
 		$result = null;
 		if (!isset($tagArgs['print']) || $tagArgs['print']) {
 			$result = $counter['count'];
-		} 
-		
+		}
+
 		if (isset($tagArgs['skip'])) {
 			$counter['skip'] = intval($tagArgs['skip']);
 		}

@@ -4,13 +4,14 @@ require_once(CP_DIR.'lib/system/event/EventHandler.class.php');
 
 /**
  * Template loads and displays template.
- * 
- * @author 	Marcel Werk, Some system modifications by akkarin
- * @copyright	2001-2009 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.template
- * @category 	Community Framework
+ *
+ * @author 		Marcel Werk, Some system modifications by akkarin
+ * @copyright		2001-2009 WoltLab GmbH
+ * @package		com.develfusion.ikarus
+ * @subpackage		system
+ * @category		Ikarus Framework
+ * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
+ * @version		1.0.0-0001
  */
 class Template {
 	protected $languageID = 0;
@@ -23,7 +24,7 @@ class Template {
 	protected $v = array();
 	protected $templateStructure;
 	protected $cachePrefix = '';
-	
+
 	/**
 	 * Creates a new Template object.
 	 *
@@ -38,14 +39,14 @@ class Template {
 		if (!$templatePaths) $templatePaths = array(CP_DIR.'templates/');
 		if (!$pluginDir) $pluginDir = CP_DIR.'lib/system/template/plugin/';
 		if (!$compileDir) $compileDir = CP_DIR.'templates/compiled/';
-		
+
 		$this->setTemplatePaths($templatePaths);
 		$this->setCompileDir($compileDir);
 		$this->setPluginDir($pluginDir);
 		$this->loadTemplateStructure();
 		$this->assignSystemVariables();
 	}
-	
+
 	/**
 	 * Loads the cached template structure.
 	 */
@@ -53,29 +54,29 @@ class Template {
 		CP::getCache()->addResource($this->cachePrefix.'templates', CP_DIR.'cache/cache.'.$this->cachePrefix.'templates.php', CP_DIR.'lib/system/cache/CacheBuilderTemplates.class.php');
 		$this->templateStructure = CP::getCache()->get($this->cachePrefix.'templates');
 	}
-	
+
 	/**
 	 * Assigns some system variables.
 	 */
 	protected function assignSystemVariables() {
 		$this->v['tpl'] = array();
-		
+
 		// assign super globals
 		$this->v['tpl']['get'] =& $_GET;
 		$this->v['tpl']['post'] =& $_POST;
 		$this->v['tpl']['cookie'] =& $_COOKIE;
 		$this->v['tpl']['server'] =& $_SERVER;
 		$this->v['tpl']['env'] =& $_ENV;
-		
+
 		// system info
 		$this->v['tpl']['now'] = TIME_NOW;
 		$this->v['tpl']['template'] = '';
 		$this->v['tpl']['includedTemplates'] = array();
-		
+
 		// section / foreach / capture arrays
 		$this->v['tpl']['section'] = $this->v['tpl']['foreach'] = $this->v['tpl']['capture'] = array();
 	}
-	
+
 	/**
 	 * Sets the id of the current language.
 	 *
@@ -84,7 +85,7 @@ class Template {
 	public function setLanguageID($languageID) {
 		$this->languageID = $languageID;
 	}
-	
+
 	/**
 	 * Sets the dir for the compiled templates.
 	 *
@@ -94,10 +95,10 @@ class Template {
 		if (!is_dir($compileDir)) {
 			throw new SystemException("'%s' is not a valid dir", $compileDir);
 		}
-		
+
 		$this->compileDir = $compileDir;
 	}
-	
+
 	/**
 	 * Sets the path to the template sources.
 	 *
@@ -105,7 +106,7 @@ class Template {
 	 */
 	public function setTemplatePaths($templatePaths) {
 		if (!is_array($templatePaths)) $templatePaths = array($templatePaths);
-		
+
 		foreach ($templatePaths as $templatePath) {
 			if (!is_dir($templatePath)) {
 				throw new SystemException("'%s' is not a valid dir", $templatePath);
@@ -113,7 +114,7 @@ class Template {
 		}
 		$this->templatePaths = $templatePaths;
 	}
-	
+
 	/**
 	 * Sets the path to the template plugins.
 	 *
@@ -125,7 +126,7 @@ class Template {
 		}
 		$this->pluginDir = $pluginDir;
 	}
-	
+
 	/**
 	 * Returns the current path to the template sources.
 	 *
@@ -143,7 +144,7 @@ class Template {
 	public function getPluginDir() {
 		return $this->pluginDir;
 	}
-	
+
 	/**
 	 * Assigns a template variable.
 	 *
@@ -164,7 +165,7 @@ class Template {
 			}
 		}
 	}
-	
+
 	/**
 	 * Appends content to an existing template variable.
 	 *
@@ -188,7 +189,7 @@ class Template {
 							if (isset($this->v[$variable][$key])) {
 								$this->v[$variable][$key] .= $value[$key];
 							}
-							else { 
+							else {
 								$this->v[$variable][$key] = $value[$key];
 							}
 						}
@@ -203,7 +204,7 @@ class Template {
 			}
 		}
 	}
-	
+
 	/**
 	 * Assigns a template variable by reference.
 	 *
@@ -215,7 +216,7 @@ class Template {
 			$this->v[$variable] = &$value;
 		}
 	}
-	
+
 	/**
 	 * Clears an assignment of a template variable.
 	 *
@@ -231,14 +232,14 @@ class Template {
 			unset($this->v[$variable]);
 		}
 	}
-	
+
 	/**
 	 * Clears assignment of all template variables.
 	 */
 	public function clearAllAssign() {
 		$this->v = array();
 	}
-	
+
 	/**
 	 * Outputs a template.
 	 *
@@ -252,7 +253,7 @@ class Template {
 			// call shouldDisplay event
 			if (!defined('NO_IMPORTS')) EventHandler::fireAction($this, 'shouldDisplay');
 		}
-		
+
 		$compiledFilename = $this->getCompiledFilename($templateName);
 		$sourceFilename = $this->getSourceFilename($templateName);
 
@@ -263,13 +264,13 @@ class Template {
 		}
 
 		include($compiledFilename);
-		
+
 		if ($sendHeaders) {
 			// call didDisplay event
 			if (!defined('NO_IMPORTS')) EventHandler::fireAction($this, 'didDisplay');
 		}
 	}
-	
+
 	/**
 	 * Returns the absolute filename of a compiled template.
 	 *
@@ -279,20 +280,20 @@ class Template {
 	 */
 	public function getCompiledFilename($templateName, $packageID = 0) {
 		if ($packageID == 0) $packageID = $this->getPackageID($templateName);
-		
+
 		return $this->compileDir.'_'.$this->languageID.'_'.$templateName.'.php';
 	}
-	
+
 	/**
 	 * Returns the package id of a template.
-	 * 
+	 *
 	 * @param	string		$templateName
 	 * @return	integer		package id
 	 */
 	protected function getPackageID($templateName) {
 		return 0;
 	}
-	
+
 	/**
 	 * Returns the absolute filename of a template source.
 	 *
@@ -302,14 +303,14 @@ class Template {
 	 */
 	public function getSourceFilename($templateName, $packageID = 0) {
 		if ($packageID == 0) $packageID = $this->getPackageID($templateName);
-		
+
 		foreach ($this->templatePaths as $templatePath) {
 			if (file_exists($templatePath.$templateName.'.tpl')) return $templatePath.$templateName.'.tpl';
 		}
-		
+
 		throw new SystemException("Unable to find template '%s'", $templateName);
 	}
-	
+
 	/**
 	 * Checks wheater a template is already compiled or not.
 	 *
@@ -328,7 +329,7 @@ class Template {
 			return !($sourceMTime >= $compileMTime);
 		}
 	}
-	
+
 	/**
 	 * Compiles a template.
 	 *
@@ -341,24 +342,24 @@ class Template {
 		if (!is_object($this->compilerObj)) {
 			$this->compilerObj = $this->getCompiler();
 		}
-		
+
 		// get source
 		$sourceContent = $this->getSourceContent($sourceFilename);
-		
+
 		// compile template
 		$this->compilerObj->compile($templateName, $sourceContent, $compiledFilename);
 	}
-	
+
 	/**
 	 * Returns a new template compiler object.
-	 * 
+	 *
 	 * @return	TemplateCompiler
 	 */
 	protected function getCompiler() {
 		require_once(CP_DIR.'lib/system/template/TemplateCompiler.class.php');
 		return new TemplateCompiler($this);
 	}
-	
+
 	/**
 	 * Reads the content of a template file.
 	 *
@@ -374,7 +375,7 @@ class Template {
 			return $sourceContent;
 		}
 	}
-	
+
 	/**
 	 * Returns the output of a template.
 	 *
@@ -389,7 +390,7 @@ class Template {
 
 		return $output;
 	}
-	
+
 	/**
 	 * Executes a compiled template scripting source and returns the result.
 	 *
@@ -404,7 +405,7 @@ class Template {
 
 		return $output;
 	}
-	
+
 	/**
 	 * Includes a template.
 	 *
@@ -421,14 +422,14 @@ class Template {
 		if (count($variables)) {
 			$this->v = array_merge($this->v, $variables);
 		}
-		
+
 		$this->display($templateName, false);
-		
+
 		if ($sandbox) {
 			$this->v = $templateVars;
 		}
 	}
-	
+
 	/**
 	 * Returns an array with all prefilters.
 	 *
@@ -437,7 +438,7 @@ class Template {
 	public function getPrefilters() {
 		return $this->prefilters;
 	}
-	
+
 	/**
 	 * Returns the filename of a plugin.
 	 *
@@ -448,7 +449,7 @@ class Template {
 	public function getPluginFilename($type, $tag) {
 		return $this->pluginDir.'TemplatePlugin'.StringUtil::firstCharToUpperCase(StringUtil::toLowerCase($type)).StringUtil::firstCharToUpperCase(StringUtil::toLowerCase($tag)).'.class.php';
 	}
-	
+
 	/**
 	 * Registers a prefilter.
 	 * This method accepts a single prefilter name
@@ -466,10 +467,10 @@ class Template {
 			$this->prefilters[$name] = $name;
 		}
 	}
-	
+
 	/**
 	 * Returns the value of a template variable.
-	 * 
+	 *
 	 * @param 	string		$varname
 	 * @return	mixed
 	 */
@@ -477,18 +478,18 @@ class Template {
 		if (isset($this->v[$varname])) {
 			return $this->v[$varname];
 		}
-		
+
 		return null;
 	}
-	
+
 	/**
 	 * Deletes all compiled templates.
-	 * 
+	 *
 	 * @param 	string		$compileDir
 	 */
 	public static function deleteCompiledTemplates($compileDir = '') {
 		if (empty($compileDir)) $compileDir = CP_DIR.'templates/compiled/';
-		
+
 		// delete compiled templates
 		$matches = glob($compileDir . '*_*_*.php');
 		if (is_array($matches)) {

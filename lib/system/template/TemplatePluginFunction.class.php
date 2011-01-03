@@ -4,18 +4,19 @@ require_once(CP_DIR.'lib/system/template/Template.class.php');
 
 /**
  * Template functions are identical to template blocks, but they have no closing tag.
- * 
- * @author 	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.template
- * @category 	Community Framework
+ *
+ * @author 		Marcel Werk
+ * @copyright		2001-2009 WoltLab GmbH
+ * @package		com.develfusion.ikarus
+ * @subpackage		system
+ * @category		Ikarus Framework
+ * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
+ * @version		1.0.0-0001
  */
 interface TemplatePluginFunction {
 	/**
 	 * Executes this template function.
-	 * 
+	 *
 	 * @param	array			$tagArgs
 	 * @param	Template		$tplObj
 	 * @return	string					output

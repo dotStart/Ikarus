@@ -6,16 +6,17 @@ require_once(CP_DIR.'lib/system/template/Template.class.php');
 /**
  * The 'concat' modifier returns the string that results from concatenating the arguments.
  * May have two or more arguments.
- * 
+ *
  * Usage:
  * {"left"|concat:$right}
  *
- * @author 	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.template.plugin
- * @category 	Community Framework
+ * @author 		Marcel Werk
+ * @copyright		2001-2009 WoltLab GmbH
+ * @package		com.develfusion.ikarus
+ * @subpackage		system
+ * @category		Ikarus Framework
+ * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
+ * @version		1.0.0-0001
  */
 class TemplatePluginModifierConcat implements TemplatePluginModifier {
 	/**
@@ -25,13 +26,13 @@ class TemplatePluginModifierConcat implements TemplatePluginModifier {
 		if (count($tagArgs) < 2) {
 			throw new SystemException("concat modifier needs two or more arguments", 12001);
 		}
-		
+
 		$result = '';
 		foreach ($tagArgs as $arg) {
 			$result .= $arg;
 		}
-	
-		return $result;	
+
+		return $result;
 	}
 }
 ?>

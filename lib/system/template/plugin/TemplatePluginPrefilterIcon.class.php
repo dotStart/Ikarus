@@ -5,16 +5,17 @@ require_once(CP_DIR.'lib/system/template/TemplateScriptingCompiler.class.php');
 
 /**
  * The 'icon' prefilter compiles static icon paths.
- * 
+ *
  * Usage:
  * {icon}iconS.png{/icon}
  *
- * @author	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.system.style
- * @subpackage	system.template.plugin
- * @category 	Community Framework
+ * @author		Marcel Werk
+ * @copyright		2001-2009 WoltLab GmbH
+ * @package		com.develfusion.ikarus
+ * @subpackage		system
+ * @category		Ikarus Framework
+ * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
+ * @version		1.0.0-0001
  */
 class TemplatePluginPrefilterIcon implements TemplatePluginPrefilter {
 	/**

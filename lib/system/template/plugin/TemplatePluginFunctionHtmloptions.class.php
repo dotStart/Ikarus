@@ -5,7 +5,7 @@ require_once(CP_DIR.'lib/system/template/Template.class.php');
 
 /**
  * The 'htmloptions' template function generates the options of an html select list.
- * 
+ *
  * Usage:
  * {htmloptions options=$array}
  * {htmloptions options=$array selected=$foo}
@@ -13,16 +13,17 @@ require_once(CP_DIR.'lib/system/template/Template.class.php');
  * {htmloptions output=$outputArray}
  * {htmloptions output=$outputArray values=$valueArray}
  *
- * @author 	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.template.plugin
- * @category 	Community Framework
+ * @author 		Marcel Werk
+ * @copyright		2001-2009 WoltLab GmbH
+ * @package		com.develfusion.ikarus
+ * @subpackage		system
+ * @category		Ikarus Framework
+ * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
+ * @version		1.0.0-0001
  */
 class TemplatePluginFunctionHtmloptions extends TemplatePluginFunctionHtmlcheckboxes {
 	protected $selected = array();
-	
+
 	/**
 	 * @see TemplatePluginFunction::execute()
 	 */
@@ -49,44 +50,44 @@ class TemplatePluginFunctionHtmloptions extends TemplatePluginFunctionHtmlcheckb
 		if (!isset($tagArgs['options']) || !is_array($tagArgs['options'])) {
 			throw new SystemException("missing 'options' argument in htmloptions tag", 12001);
 		}
-		
+
 		if (isset($tagArgs['disableEncoding']) && $tagArgs['disableEncoding']) {
 			$this->disableEncoding = true;
 		}
 		else {
 			$this->disableEncoding = false;
 		}
-		
+
 		// get selected values
 		$this->selected = array();
 		if (isset($tagArgs['selected'])) {
 			$this->selected = $tagArgs['selected'];
-			if (!is_array($this->selected)) $this->selected = array($this->selected);	
+			if (!is_array($this->selected)) $this->selected = array($this->selected);
 		}
-		
+
 		// create option list
 		$htmloptions = $this->makeOptionGroup(null, $tagArgs['options']);
-		
+
 		// create also a 'select' tag
 		if (isset($tagArgs['name'])) {
 			// unset all system vars
 			unset($tagArgs['options'], $tagArgs['selected'], $tagArgs['output'], $tagArgs['values'], $tagArgs['disableEncoding']);
-			
+
 			// generate 'select' parameters
 			$params = '';
 			foreach ($tagArgs as $key => $value) {
 				$params .= ' '.$key.'="'.$this->encodeHTML($value).'"';
 			}
-			
+
 			$htmloptions = '<select'.$params.'>'."\n".$htmloptions."</select>\n";
 		}
-		
+
 		return $htmloptions;
 	}
-	
+
 	/**
 	 * Makes the html for an option group.
-	 * 
+	 *
 	 * @param	string		$key
 	 * @param	array		$values
 	 * @return	string				html code of an option group
@@ -96,7 +97,7 @@ class TemplatePluginFunctionHtmloptions extends TemplatePluginFunctionHtmlcheckb
 		if ($key !== null) {
 			$html = '<optgroup label="'.$this->encodeHTML($key).'">'."\n";
 		}
-		
+
 		foreach ($values as $childKey => $value) {
 			if (is_array($value)) {
 				$html .= $this->makeOptionGroup($childKey, $value);
@@ -105,17 +106,17 @@ class TemplatePluginFunctionHtmloptions extends TemplatePluginFunctionHtmlcheckb
 				$html .= $this->makeOption($childKey, $value);
 			}
 		}
-		
+
 		if ($key !== null) {
 			$html .= "</optgroup>\n";
 		}
-		
+
 		return $html;
 	}
-	
+
 	/**
 	 * Makes the html for an option.
-	 * 
+	 *
 	 * @param	string		$key
 	 * @param	string		$value
 	 * @return	string				html code of an option tag

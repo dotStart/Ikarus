@@ -5,20 +5,21 @@ require_once(CP_DIR.'lib/system/template/Template.class.php');
 
 /**
  * The 'cycle' template function cycles through given values.
- * 
+ *
  * Usage:
  * {cycle values="#eee,#fff"}
  *
- * @author 	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.template.plugin
- * @category 	Community Framework
+ * @author 		Marcel Werk
+ * @copyright		2001-2009 WoltLab GmbH
+ * @package		com.develfusion.ikarus
+ * @subpackage		system
+ * @category		Ikarus Framework
+ * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
+ * @version		1.0.0-0001
  */
 class TemplatePluginFunctionCycle implements TemplatePluginFunction {
 	protected $cycles = array();
-	
+
 	/**
 	 * @see TemplatePluginFunction::execute()
 	 */
@@ -28,7 +29,7 @@ class TemplatePluginFunctionCycle implements TemplatePluginFunction {
 		$print = isset($tagArgs['print']) ? $tagArgs['print'] : 1;
 		$advance = isset($tagArgs['advance']) ? $tagArgs['advance'] : 1;
 		$reset = isset($tagArgs['reset']) ? $tagArgs['reset'] : 0;
-		
+
 		// get values
 		if (!isset($tagArgs['values']) ) {
 			if (!isset($this->cycles[$name]['values'])) {
@@ -41,7 +42,7 @@ class TemplatePluginFunctionCycle implements TemplatePluginFunction {
 			}
 			$this->cycles[$name]['values'] = $tagArgs['values'];
 		}
-		
+
 		// get delimiter
 		if (!isset($this->cycles[$name]['delimiter'])) {
 			// set default delimiter
@@ -50,7 +51,7 @@ class TemplatePluginFunctionCycle implements TemplatePluginFunction {
 		if (isset($tagArgs['delimiter'])) {
 			$this->cycles[$name]['delimiter'] = $tagArgs['delimiter'];
 		}
-		
+
 		// split values
 		if (is_array($this->cycles[$name]['values'])) {
 			$cycleArray = $this->cycles[$name]['values'];
@@ -58,21 +59,21 @@ class TemplatePluginFunctionCycle implements TemplatePluginFunction {
 		else {
 			$cycleArray = explode($this->cycles[$name]['delimiter'], $this->cycles[$name]['values']);
 		}
-		
+
 		// set index
 		if (!isset($this->cycles[$name]['index']) || $reset) {
 			$this->cycles[$name]['index'] = 0;
 		}
-		
+
 		// get result
 		$result = $cycleArray[$this->cycles[$name]['index']];
-		
+
 		// assign result to template var
 		if (isset($tagArgs['assign'])) {
 			$print = false;
 			$tplObj->assign($tagArgs['assign'], $result);
 		}
-		
+
 		// update index
 		if ($advance) {
 			if ($this->cycles[$name]['index'] >= count($cycleArray) - 1) {
@@ -82,7 +83,7 @@ class TemplatePluginFunctionCycle implements TemplatePluginFunction {
 				$this->cycles[$name]['index']++;
 			}
 		}
-		
+
 		// print var
 		if ($print) {
 			return $result;

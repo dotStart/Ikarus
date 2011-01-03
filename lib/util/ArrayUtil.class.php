@@ -2,12 +2,13 @@
 /**
  * Contains Array-related functions.
  *
- * @author 	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	util
- * @category 	Community Framework
+ * @author 		Marcel Werk
+ * @copyright		2001-2009 WoltLab GmbH
+ * @package		com.develfusion.ikarus
+ * @subpackage		system
+ * @category		Ikarus Framework
+ * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
+ * @version		1.0.0-0001
  */
 class ArrayUtil {
 	/**
@@ -30,7 +31,7 @@ class ArrayUtil {
 			return $array;
 		}
 	}
-	
+
 	/**
 	 * Applies intval() to all elements of an array.
 	 *
@@ -48,7 +49,7 @@ class ArrayUtil {
 			return $array;
 		}
 	}
-	
+
 	/**
 	 * Converts html special characters in arrays.
 	 *
@@ -66,8 +67,8 @@ class ArrayUtil {
 			return $array;
 		}
 	}
-	
-	
+
+
 	/**
 	 * Applies stripslashes on all elements of an array.
 	 *
@@ -85,7 +86,7 @@ class ArrayUtil {
 			return $array;
 		}
 	}
-	
+
 	/**
 	 * Appends a suffix to all elements of the given array.
 	 *
@@ -97,17 +98,17 @@ class ArrayUtil {
 		foreach ($array as $key => $value) {
 			$array[$key] = $value . $suffix;
 		}
-		
+
 		return $array;
 	}
-	
+
 	/**
 	 * Computes the intersection of arrays using keys for comparison
 	 * Alias to php array_intersect_key() function
 	 *
-	 * @param 	array 	$array1 	The array with master keys to check. 
+	 * @param 	array 	$array1 	The array with master keys to check.
 	 * @param 	array 	$array2		An array to compare keys against.
-	 * @return 				Returns an associative array containing all the values of array1  which have matching keys that are present in all arguments. 
+	 * @return 				Returns an associative array containing all the values of array1  which have matching keys that are present in all arguments.
 	 * @see					array_intersect_key
 	 */
 	public static function intersectKeys($array1, $array2) {
@@ -122,13 +123,13 @@ class ArrayUtil {
 				}
 			}
 			return $array1;
-		} 
+		}
 		else {
 			$parameters = func_get_args();
 			return call_user_func_array('array_intersect_key', $parameters);
 		}
 	}
-	
+
 	/**
 	 * Converts dos to unix newlines.
 	 *
@@ -146,11 +147,11 @@ class ArrayUtil {
 			return $array;
 		}
 	}
-	
+
 	/**
 	 * Converts a array of strings to requested character encoding.
 	 * @see mb_convert_encoding()
-	 * 
+	 *
 	 * @param 	string		$inCharset
 	 * @param 	string		$outCharset
 	 * @param 	string		$array

@@ -6,17 +6,18 @@ require_once(CP_DIR.'lib/system/template/Template.class.php');
 /**
  * The 'date' modifier formats a unix timestamp.
  * Default date format contains year, month and day.
- * 
+ *
  * Usage:
  * {$timestamp|date}
  * {"132845333"|date:"%Y-%m-%d"}
  *
- * @author 	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.template.plugin
- * @category 	Community Framework
+ * @author 		Marcel Werk
+ * @copyright		2001-2009 WoltLab GmbH
+ * @package		com.develfusion.ikarus
+ * @subpackage		system
+ * @category		Ikarus Framework
+ * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
+ * @version		1.0.0-0001
  */
 class TemplatePluginModifierDate implements TemplatePluginModifier {
 	/**

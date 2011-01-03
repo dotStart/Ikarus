@@ -4,17 +4,18 @@ require_once(CP_DIR.'lib/system/template/TemplatePluginCompiler.class.php');
 
 /**
  * The 'lang' compiler function compiles dynamic language variables.
- * 
+ *
  * Usage:
  * {lang}$blah{/lang}
  * {lang var=$x}foo{/lang}
  *
- * @author 	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.template.plugin
- * @category 	Community Framework
+ * @author 		Marcel Werk
+ * @copyright		2001-2009 WoltLab GmbH
+ * @package		com.develfusion.ikarus
+ * @subpackage		system
+ * @category		Ikarus Framework
+ * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
+ * @version		1.0.0-0001
  */
 class TemplatePluginCompilerLang implements TemplatePluginCompiler {
 	/**
@@ -22,16 +23,16 @@ class TemplatePluginCompilerLang implements TemplatePluginCompiler {
 	 */
 	public function executeStart($tagArgs, TemplateScriptingCompiler $compiler) {
 		$compiler->pushTag('lang');
-		
+
 		$newTagArgs = array();
 		foreach ($tagArgs as $key => $arg) {
 			$newTagArgs[$key] = 'StringUtil::encodeHTML('.$arg.')';
 		}
-		
+
 		$tagArgs = $compiler->makeArgString($newTagArgs);
 		return "<?php \$this->tagStack[] = array('lang', array($tagArgs)); ob_start(); ?>";
 	}
-	
+
 	/**
 	 * @see TemplatePluginCompiler::executeEnd()
 	 */

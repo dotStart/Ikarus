@@ -6,17 +6,18 @@ require_once(CP_DIR.'lib/system/template/Template.class.php');
 /**
  * The 'time' modifier formats a unix timestamp.
  * Default date format contains year, month, day, hour and minute.
- * 
+ *
  * Usage:
  * {$timestamp|time}
  * {"132845333"|time:"%Y-%m-%d %I:%M%p"}
  *
- * @author 	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.template.plugin
- * @category 	Community Framework
+ * @author 		Marcel Werk
+ * @copyright		2001-2009 WoltLab GmbH
+ * @package		com.develfusion.ikarus
+ * @subpackage		system
+ * @category		Ikarus Framework
+ * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
+ * @version		1.0.0-0001
  */
 class TemplatePluginModifierTime implements TemplatePluginModifier {
 	/**

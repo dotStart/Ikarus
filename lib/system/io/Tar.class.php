@@ -7,7 +7,7 @@ if (!defined('NO_IMPORTS')) {
 
 /**
  * Opens tar or tar.gz archives.
- * 
+ *
  * Usage:
  * ------
  * $tar = new Tar('archive.tar');
@@ -15,13 +15,14 @@ if (!defined('NO_IMPORTS')) {
  * foreach ($contentList as $key => $val) {
  * 	$tar->extract($key, DESTINATION);
  * }
- * 
- * @author	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.io
- * @category 	Community Framework
+ *
+ * @author		Marcel Werk
+ * @copyright		2001-2009 WoltLab GmbH
+ * @package		com.develfusion.ikarus
+ * @subpackage		system
+ * @category		Ikarus Framework
+ * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
+ * @version		1.0.0-0001
  */
 class Tar {
 	protected $archiveName = '';
@@ -31,11 +32,11 @@ class Tar {
 	protected $file = null;
 	protected $isZipped = false;
 	protected $mode = 'rb';
-	
+
 	/**
 	 * Creates a new Tar object.
 	 * archiveName must be tarball or gzipped tarball
-	 * 
+	 *
 	 * @param 	string 		$archiveName
 	 */
 	public function __construct($archiveName) {
@@ -43,19 +44,19 @@ class Tar {
 		if (!is_file($archiveName)) {
 			throw new SystemException("unable to find tar archive '".$archiveName."'", 11002);
 		}
-		
+
 		$this->archiveName = $archiveName;
 		$this->open();
 		$this->readContent();
 	}
-	
+
 	/**
 	 * Destructor of this class, closes tar archive.
 	 */
 	public function __destruct() {
 		$this->close();
 	}
-	
+
 	/**
 	 * Opens the tar archive and stores filehandle.
 	 */
@@ -87,10 +88,10 @@ class Tar {
 			$this->opened = false;
 		}
 	}
-	
-	/** 
+
+	/**
 	 * Returns the table of contents (TOC) list for this tar archive.
-	 * 
+	 *
 	 * @return 	array 		list of content
 	 */
 	public function getContentList() {
@@ -100,7 +101,7 @@ class Tar {
 		}
 		return $this->contentList;
 	}
-	
+
 	/**
 	 * Returns an associative array with information
 	 * about a specific file in the archive.
@@ -112,13 +113,13 @@ class Tar {
 		if (!is_int($fileIndex)) {
 			$fileIndex = $this->getIndexByFilename($fileIndex);
 		}
-		
+
 		if (!isset($this->contentList[$fileIndex])) {
 			throw new SystemException("Tar: could find file '".$index."' in archive", 11013);
 		}
 		return $this->contentList[$fileIndex];
 	}
-	
+
 	/**
 	 * Searchs a file in the tar archive
 	 * and returns the numeric fileindex.
@@ -135,11 +136,11 @@ class Tar {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Extracts a specific file and returns the content as string.
 	 * Returns false if extraction failed.
-	 * 
+	 *
 	 * @param 	mixed 		$index		index or name of the requested file
 	 * @return 	string 				content of the requested file
 	 */
@@ -149,15 +150,15 @@ class Tar {
 			$this->readContent();
 		}
 		$header = $this->getFileInfo($index);
-		
+
 		// can not extract a folder
 		if ($header['type'] != 'file') {
 			return false;
 		}
-		
+
 		// seek to offset
 		$this->file->seek($header['offset']);
-		
+
 		// read data
 		$content = '';
 		$n = floor($header['size'] / 512);
@@ -168,14 +169,14 @@ class Tar {
 			$buffer = $this->file->read(512);
 			$content .= substr($buffer, 0, ($header['size'] % 512));
 		}
-		
+
 		return $content;
 	}
-	
+
 	/**
 	 * Extracts a specific file and writes it's content
 	 * to the file specified with $destination.
-	 * 
+	 *
 	 * @param 	mixed 		$index		index or name of the requested file
 	 * @param 	string 		$destination
 	 * @return 	boolean 	$success
@@ -186,17 +187,17 @@ class Tar {
 			$this->readContent();
 		}
 		$header = $this->getFileInfo($index);
-		
+
 		// can not extract a folder
 		if ($header['type'] != 'file') {
 			return false;
 		}
-		
+
 		// seek to offset
 		$this->file->seek($header['offset']);
-		
+
 		$targetFile = new File($destination);
-		
+
 		// read data
 		$n = floor($header['size'] / 512);
 		for ($i = 0; $i < $n; $i++) {
@@ -207,7 +208,7 @@ class Tar {
 			$content = $this->file->read(512);
 			$targetFile->write($content, ($header['size'] % 512));
 		}
-		
+
 		$targetFile->close();
 		if (IS_APACHE_MODULE || !@$targetFile->is_writable()) {
 			@$targetFile->chmod(0777);
@@ -215,19 +216,19 @@ class Tar {
 		else {
 			@$targetFile->chmod(0755);
 		}
-		
+
 		if ($header['mtime']) {
 			@$targetFile->touch($header['mtime']);
 		}
-		
+
 		// check filesize
 		if (filesize($destination) != $header['size']) {
 			throw new SystemException("Could not untar file '".$header['filename']."' to '".$destination."'. Maybe disk quota exceeded in folder '".dirname($destination)."'.", 11015);
 		}
-		
+
 		return true;
-	}	
-	
+	}
+
 	/**
 	 * Reads table of contents (TOC) from tar archive.
 	 * This does not get the entire to memory but only parts of it.
@@ -236,22 +237,22 @@ class Tar {
 		$this->contentList = array();
 		$this->read = true;
 		$i = 0;
-		
+
 		// Read the 512 bytes header
 		while (strlen($binaryData = $this->file->read(512)) != 0) {
 			// read header
 			$header = $this->readHeader($binaryData);
 			if ($header === false) {
-				continue;	
+				continue;
 			}
 			$this->contentList[$i] = $header;
 			$this->contentList[$i]['index'] = $i;
 			$i++;
-			
+
 			$this->file->seek($this->file->tell() + (512 * ceil(($header['size'] / 512))));
 		}
 	}
-	
+
 	/**
 	 * Unpacks file header for one file entry.
 	 *
@@ -260,7 +261,7 @@ class Tar {
 	 */
 	protected function readHeader($binaryData) {
 		if (strlen($binaryData) != 512) {
-			return false;	
+			return false;
 		}
 
 		$header = array();
@@ -282,7 +283,7 @@ class Tar {
 		// Extract the values
 		//$data = unpack("a100filename/a8mode/a8uid/a8gid/a12size/a12mtime/a8checksum/a1typeflag/a100link/a6magic/a2version/a32uname/a32gname/a8devmajor/a8devminor", $binaryData);
 		$data = unpack("a100filename/a8mode/a8uid/a8gid/a12size/a12mtime/a8checksum/a1typeflag/a100link/a6magic/a2version/a32uname/a32gname/a8devmajor/a8devminor/a155prefix", $binaryData);
-		
+
 		// Extract the properties
 		$header['checksum'] = octDec(trim($data['checksum']));
 		if ($header['checksum'] == $checksum) {
@@ -304,17 +305,17 @@ class Tar {
 				$header['type'] = 'file';
 			}
 			$header['offset'] = $this->file->tell();
-			
+
 			return $header;
 		}
 		else {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Returns true, if this tar is (g)zipped.
-	 * 
+	 *
 	 * @return 	boolean
 	 */
 	public function isZipped() {

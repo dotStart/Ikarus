@@ -5,26 +5,27 @@ require_once(WCF_DIR.'lib/system/io/File.class.php');
 
 /**
  * Creates a tar file archive.
- * 
+ *
  * Usage:
  * ------
  * $tar = new TarWriter('archive.tar', true);
  * $tar->add(array('file1', 'file2'));
  * $tar->create();
- * 
- * @author	Marcel Werk
- * @copyright	2001-2009 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
- * @subpackage	system.io
- * @category 	Community Framework
+ *
+ * @author		Marcel Werk
+ * @copyright		2001-2009 WoltLab GmbH
+ * @package		com.develfusion.ikarus
+ * @subpackage		system
+ * @category		Ikarus Framework
+ * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
+ * @version		1.0.0-0001
  */
 class TarWriter extends Tar {
 	protected $mode = 'wb+';
-	
+
 	/**
 	 * Creates a new TarWriter object.
-	 * 
+	 *
 	 * @param	string		$archiveName
 	 * @param	boolean		$compress	enables gzip compression
 	 */
@@ -34,14 +35,14 @@ class TarWriter extends Tar {
 		if ($compress) $this->mode = 'wb9'; // set compression level
 		$this->open();
 	}
-	
+
 	/**
 	 * Writes the last 0 filled block for end of archive.
 	 */
 	protected function writeFooter() {
 		$this->file->write(pack('a512', ''));
 	}
-	
+
 	/**
 	 * Creates the tar archive.
 	 */
@@ -49,17 +50,17 @@ class TarWriter extends Tar {
 		$this->writeFooter();
 		$this->close();
 	}
-	
+
 	/**
 	 * Adds a string to the tar archive.
-	 * 
+	 *
 	 * @param	string		$filename
 	 * @param	string		$string		file content
 	 * @return 	boolean		result
 	 */
 	public function addString($filename, $string) {
 		if (empty($filename)) return false;
-		
+
 		$filename = FileUtil::unifyDirSeperator($filename);
 
 		if (!$this->writeHeaderBlock($filename, strlen($string), TIME_NOW, 33279)) {
@@ -73,10 +74,10 @@ class TarWriter extends Tar {
 
 		return true;
 	}
-	
+
 	/**
 	 * Adds a list of files or directories to the tar archive.
-	 * 
+	 *
 	 * @param	mixed		$files
 	 * @param	string		$addDir
 	 * @param	string		$removeDir
@@ -85,9 +86,9 @@ class TarWriter extends Tar {
 	public function add($files, $addDir = '', $removeDir = '') {
 		if (!is_array($files)) $files = array($files);
 		if (!count($files)) return false;
-		
+
 		$result = true;
-		
+
 		// unify dir seperator
 		$addDir = FileUtil::unifyDirSeperator($addDir);
 		$removeDir = FileUtil::unifyDirSeperator($removeDir);
@@ -120,7 +121,7 @@ class TarWriter extends Tar {
 						$result = $this->add($dirFile, $addDir, $removeDir);
 					}
 				}
-				
+
 				closedir($handle);
 			}
 		}
@@ -130,7 +131,7 @@ class TarWriter extends Tar {
 
 	/**
 	 * Adds a file to the tar archive.
-	 * 
+	 *
 	 * @param	string		$filename
 	 * @param	string		$addDir
 	 * @param	string		$removeDir
@@ -144,17 +145,17 @@ class TarWriter extends Tar {
 		if (is_file($filename)) {
 			// open file
 			$file = new File($filename, 'rb');
-			
+
 			// write header
 			if (!$this->writeFileHeader($filename, $storedFilename)) {
 				return false;
 			}
-			
+
 			// write file content
 			while (($buffer = $file->read(512)) != '') {
 				$this->file->write(pack('a512', $buffer));
 			}
-			
+
 			// close file
 			$file->close();
 		}
@@ -164,13 +165,13 @@ class TarWriter extends Tar {
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * Writes the file header.
-	 * 
+	 *
 	 * @param	string		$filename
 	 * @param	string		$storedFilename
 	 * @return 	boolean		result
@@ -188,13 +189,13 @@ class TarWriter extends Tar {
 			clearstatcache();
 			$size = filesize($filename);
 		}
-		
+
 		return $this->writeHeaderBlock($storedFilename, $size, $mtime, $permissions, $typeFlag, $fileInfo[4], $fileInfo[5]);
 	}
-	
+
 	/**
 	 * Writes header block.
-	 * 
+	 *
 	 * @param 	string		$filename
 	 * @param 	integer		$size
 	 * @param 	integer		$mtime
@@ -231,17 +232,17 @@ class TarWriter extends Tar {
 		for ($i = 0; $i < 148; $i++) $checksum += ord(substr($binaryDataFirst, $i, 1));
 		for ($i = 148; $i < 156; $i++) $checksum += ord(' ');
 	    	for ($i = 156, $j = 0; $i < 512; $i++, $j++) $checksum += ord(substr($binaryDataLast, $j, 1));
-	    	
+
 	    	$this->file->write($binaryDataFirst, 148);
 		$this->file->write(pack("a8", sprintf("%6s ", decOct($checksum))), 8); // write the checksum
 		$this->file->write($binaryDataLast, 356);
-	
+
 		return true;
 	}
-	
+
 	/**
 	 * Writes a long header block.
-	 * 
+	 *
 	 * @param 	string		$filename
 	 * @return	boolean
 	 */
