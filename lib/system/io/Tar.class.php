@@ -1,9 +1,7 @@
 <?php
-// wcf imports
-if (!defined('NO_IMPORTS')) {
-	require_once(WCF_DIR.'lib/system/io/File.class.php');
-	require_once(WCF_DIR.'lib/system/io/ZipFile.class.php');
-}
+// ikarus imports
+require_once(IKARUS_DIR.'lib/system/io/File.class.php');
+require_once(IKARUS_DIR.'lib/system/io/ZipFile.class.php');
 
 /**
  * Opens tar or tar.gz archives.
