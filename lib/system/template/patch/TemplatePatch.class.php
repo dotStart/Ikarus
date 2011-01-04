@@ -306,36 +306,64 @@ class TemplatePatch {
 		}
 
 		if ($this->reverse === true) {
-			$sql = "SELECT		package.packageDir, template.templateName
-				FROM		wcf".WCF_N."_".$this->type."template template
-				LEFT JOIN	wcf".WCF_N."_package package
-						ON (template.packageID = package.packageID)
-				WHERE		template.templateID = ".$this->templateID;
+			$sql = "SELECT
+					package.packageDir,
+					template.templateName
+				FROM
+					ikarus".IKARUS_N."_".$this->type."template template
+				LEFT JOIN
+					ikarus".IKARUS_N."_package package
+				ON
+					(template.packageID = package.packageID)
+				WHERE
+					template.templateID = ".$this->templateID;
 		} elseif ($this->rePatch === true) {
-			$sql = "SELECT		package.packageDir, template.templateName
-				FROM		wcf".WCF_N."_".$this->type."template template
-				LEFT JOIN	wcf".WCF_N."_package package
-						ON (template.packageID = package.packageID)
-				WHERE		template.templateID = ".$this->templateID."
-						AND template.packageID = ".$this->packageID;
+			$sql = "SELECT
+					package.packageDir,
+					template.templateName
+				FROM
+					ikarus".IKARUS_N."_".$this->type."template template
+				LEFT JOIN
+					ikarus".IKARUS_N."_package package
+				ON
+					(template.packageID = package.packageID)
+				WHERE
+					template.templateID = ".$this->templateID."
+				AND
+					template.packageID = ".$this->packageID;
 		} else {
-			$sql = "SELECT		template.packageID
-				FROM		wcf".WCF_N."_".$this->type."template template
-				LEFT JOIN	wcf".WCF_N."_package_dependency dependency
-				ON		dependency.dependency = template.packageID
-				WHERE		dependency.packageID = ".$this->packageID."
-						AND template.templateName = '".escapeString($templateNameShort)."'
-				ORDER BY	template.packageID DESC";
+			$sql = "SELECT
+					template.packageID
+				FROM
+					ikarus".IKARUS_N."_".$this->type."template template
+				LEFT JOIN
+					ikarus".IKARUS_N."_package_dependency dependency
+				ON
+					dependency.dependency = template.packageID
+				WHERE
+					dependency.packageID = ".$this->packageID."
+				AND
+					template.templateName = '".escapeString($templateNameShort)."'
+				ORDER BY
+					template.packageID DESC";
 			$result = IKARUS::getDB()->getFirstRow($sql);
 
 			if ($result) {
-				$sql = "SELECT		package.packageDir, template.templateID
-					FROM		wcf".WCF_N."_".$this->type."template template
-					LEFT JOIN	wcf".WCF_N."_package package
-							ON (template.packageID = package.packageID)
-					WHERE		template.templateName = '".escapeString($templateNameShort)."'
-							AND template.packageID = ".$result['packageID']."
-					ORDER BY	template.templateID DESC";
+				$sql = "SELECT
+						package.packageDir,
+						template.templateID
+					FROM
+						ikarus".IKARUS_N."_".$this->type."template template
+					LEFT JOIN
+						ikarus".IKARUS_N."_package package
+					ON
+						(template.packageID = package.packageID)
+					WHERE
+						template.templateName = '".escapeString($templateNameShort)."'
+					AND
+						template.packageID = ".$result['packageID']."
+					ORDER BY
+						template.templateID DESC";
 			} else return null;
 		}
 		$result = IKARUS::getDB()->getFirstRow($sql);
@@ -346,7 +374,7 @@ class TemplatePatch {
 				$templateName = $result['templateName'].'.tpl';
 			}
 			if ($this->type ? $sub = 'acp/' : $sub = '');
-			return WCF_DIR.$result['packageDir'].$sub.'templates/'.$templateName;
+			return IKARUS_DIR.$result['packageDir'].$sub.'templates/'.$templateName;
 		}
 	}
 
@@ -378,13 +406,14 @@ class TemplatePatch {
 	 * @param	integer		$templateID
 	 */
 	protected function savePatch($patch = '', $templateID = 0) {
-		$sql = "INSERT INTO		wcf".WCF_N."_".$this->type."template_patch
-						(packageID, templateID, patch, success, fuzzFactor)
-			VALUES			(".$this->packageID.",
-						".$templateID.",
-						'".escapeString($patch)."',
-						1,
-						".$this->fuzzFactor.")";
+		$sql = "INSERT INTO
+				ikarus".IKARUS_N."_".$this->type."template_patch (packageID, templateID, patch, success, fuzzFactor)
+			VALUES
+				(".$this->packageID.",
+				 ".$templateID.",
+				 '".escapeString($patch)."',
+				 1,
+				 ".$this->fuzzFactor.")";
 		IKARUS::getDB()->sendQuery($sql);
 	}
 
@@ -393,8 +422,10 @@ class TemplatePatch {
 	 * in case the package that installs this patch is being deinstalled.
 	 */
 	protected function deletePatch() {
-		$sql = "DELETE FROM		wcf".WCF_N."_".$this->type."template_patch
-			WHERE			packageID = ".$this->packageID;
+		$sql = "DELETE FROM
+				ikarus".IKARUS_N."_".$this->type."template_patch
+			WHERE
+				packageID = ".$this->packageID;
 		IKARUS::getDB()->sendQuery($sql);
 	}
 
