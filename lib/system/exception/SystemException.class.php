@@ -63,11 +63,7 @@ class SystemException extends Exception implements PrintableException {
 	 * Removes database password from stack trace.
 	 * @see			Exception::getTraceAsString()
 	 * @author		Marcel Werk
-	 * @copyright	2001-2009 WoltLab GmbH
-	 * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
-	 * @package		com.woltlab.wcf
-	 * @subpackage	system.exception
-	 * @category	Community Framework
+	 * @copyright		2001-2009 WoltLab GmbH
 	 */
 	public function __getTraceAsString() {
 		$string = preg_replace('/Database->__construct\(.*\)/', 'Database->__construct(...)', $this->getTraceAsString());
@@ -81,11 +77,7 @@ class SystemException extends Exception implements PrintableException {
 	/**
 	 * @see	PrintableException::show()
 	 * @author		Marcel Werk, Some little modifications by Johannes Donath
-	 * @copyright	2001-2009 WoltLab GmbH
-	 * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
-	 * @package		com.woltlab.wcf
-	 * @subpackage	system.exception
-	 * @category	Community Framework
+	 * @copyright		2001-2009 WoltLab GmbH
 	 */
 	public function show() {
 		// send status code
