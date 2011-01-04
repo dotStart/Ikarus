@@ -47,7 +47,7 @@ class TemplatePluginFunctionSmallpages implements TemplatePluginFunction {
 	 * @return	string
 	 */
 	protected function makeLink($link, $pageNo) {
-		return '<li><a href="'.$this->insertPageNumber($link, $pageNo).'" title="' . IKARUS::getLanguage()->getDynamicVariable('wcf.page.pageNo', array('pageNo' => $pageNo)) . '">'.StringUtil::formatInteger($pageNo).'</a></li>'."\n";
+		return '<li><a href="'.$this->insertPageNumber($link, $pageNo).'" title="' . IKARUS::getLanguage()->getDynamicVariable('ikarus.page.pageNo', array('pageNo' => $pageNo)) . '">'.StringUtil::formatInteger($pageNo).'</a></li>'."\n";
 	}
 
 	/**
@@ -82,7 +82,7 @@ class TemplatePluginFunctionSmallpages implements TemplatePluginFunction {
 
 			if ($tagArgs['pages'] > self::SHOW_LINKS) {
 				// jumper
-				$html .= '<li><a onclick="var result = prompt(\''.IKARUS::getLanguage()->get('wcf.global.page.input').'\', \''.$tagArgs['pages'].'\'); if (typeof(result) != \'object\' &amp;&amp; typeof(result) != \'undefined\') document.location.href = fixURL((\''.StringUtil::replace("'", "\'", $link).'\').replace(/%d/, result));">&hellip;</a></li>'."\n";
+				$html .= '<li><a onclick="var result = prompt(\''.IKARUS::getLanguage()->get('ikarus.global.page.input').'\', \''.$tagArgs['pages'].'\'); if (typeof(result) != \'object\' &amp;&amp; typeof(result) != \'undefined\') document.location.href = fixURL((\''.StringUtil::replace("'", "\'", $link).'\').replace(/%d/, result));">&hellip;</a></li>'."\n";
 
 				// last page
 				$html .= $this->makeLink($link, $tagArgs['pages']);
