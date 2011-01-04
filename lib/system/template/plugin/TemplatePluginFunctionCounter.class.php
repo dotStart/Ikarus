@@ -1,5 +1,5 @@
 <?php
-// wcf imports
+// ikarus imports
 require_once(IKARUS_DIR.'lib/system/template/TemplatePluginFunction.class.php');
 require_once(IKARUS_DIR.'lib/system/template/Template.class.php');
 
