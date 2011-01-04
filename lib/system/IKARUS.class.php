@@ -355,6 +355,41 @@ class IKARUS {
 	public static final function getUser() {
 		return self::$userObj;
 	}
+	
+	/**
+	 * Handles errors
+	 * @param	integer	$errNo
+	 * @param	string	$errMessage
+	 * @param	string	$errFile
+	 * @param	integer	$errLine
+	 * @throws	SystemException
+	 */
+	public static function handleError($errorNo, $errMessage, $errFile, $errLine) {
+		if (error_reporting() != 0) {
+			$type = 'error';
+			switch ($errorNo) {
+				case 2: $type = 'warning';
+					break;
+				case 8: $type = 'notice';
+					break;
+			}
+			
+			throw new SystemException('PHP '.$type.' in file '.$filename.' ('.$lineNo.'): '.$message, 0);
+		}
+	}
+	
+	/**
+	 * Handles uncought exceptions
+	 * @param	Exception	$ex
+	 */
+	public static function handleException(Exception $ex) {
+		if($ex instanceof PrintableException)
+			$ex->show();
+		else
+			print($ex);
+		
+		exit;
+	}
 
 	/**
 	 * Allows additional method hooks
