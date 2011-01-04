@@ -1,7 +1,7 @@
 <?php
 // cp imports
-require_once(CP_DIR.'lib/system/io/File.class.php');
-require_once(CP_DIR.'lib/system/template/TemplateScriptingCompiler.class.php');
+require_once(IKARUS_DIR.'lib/system/io/File.class.php');
+require_once(IKARUS_DIR.'lib/system/template/TemplateScriptingCompiler.class.php');
 
 /**
  * TemplateCompiler compiles template source in valid php code.

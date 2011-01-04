@@ -1,7 +1,7 @@
 <?php
 // cp imports
-require_once(CP_DIR.'lib/system/template/TemplatePluginFunction.class.php');
-require_once(CP_DIR.'lib/system/template/Template.class.php');
+require_once(IKARUS_DIR.'lib/system/template/TemplatePluginFunction.class.php');
+require_once(IKARUS_DIR.'lib/system/template/Template.class.php');
 
 /**
  * The 'htmlcheckboxes' template function generates a list of html checkboxes.

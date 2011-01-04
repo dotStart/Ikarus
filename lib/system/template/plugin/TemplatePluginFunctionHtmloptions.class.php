@@ -1,7 +1,7 @@
 <?php
 // cp imports
-require_once(CP_DIR.'lib/system/template/plugin/TemplatePluginFunctionHtmlcheckboxes.class.php');
-require_once(CP_DIR.'lib/system/template/Template.class.php');
+require_once(IKARUS_DIR.'lib/system/template/plugin/TemplatePluginFunctionHtmlcheckboxes.class.php');
+require_once(IKARUS_DIR.'lib/system/template/Template.class.php');
 
 /**
  * The 'htmloptions' template function generates the options of an html select list.

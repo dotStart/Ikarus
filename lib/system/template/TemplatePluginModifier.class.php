@@ -1,6 +1,6 @@
 <?php
 // cp imports
-require_once(CP_DIR.'lib/system/template/Template.class.php');
+require_once(IKARUS_DIR.'lib/system/template/Template.class.php');
 
 /**
  * Modifiers are functions that are applied to a variable in the template

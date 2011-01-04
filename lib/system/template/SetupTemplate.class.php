@@ -1,7 +1,7 @@
 <?php
 // cp imports
-require_once(CP_DIR.'lib/system/template/Template.class.php');
-require_once(CP_DIR.'lib/system/template/TemplateCompiler.class.php');
+require_once(IKARUS_DIR.'lib/system/template/Template.class.php');
+require_once(IKARUS_DIR.'lib/system/template/TemplateCompiler.class.php');
 
 /**
  * SetupTemplate loads and displays template in the setup process.

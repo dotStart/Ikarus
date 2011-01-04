@@ -1,6 +1,6 @@
 <?php
 // cp imports
-require_once(CP_DIR.'lib/system/template/TemplatePluginCompiler.class.php');
+require_once(IKARUS_DIR.'lib/system/template/TemplatePluginCompiler.class.php');
 
 /**
  * The 'fetch' compiler function fetches files from the local file system, http, or ftp and displays the content.

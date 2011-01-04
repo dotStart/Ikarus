@@ -1,6 +1,6 @@
 <?php
 // cp imports
-require_once(CP_DIR.'lib/system/template/TemplatePluginPrefilter.class.php');
+require_once(IKARUS_DIR.'lib/system/template/TemplatePluginPrefilter.class.php');
 
 /**
  * The 'lang' prefilter compiles static language variables.

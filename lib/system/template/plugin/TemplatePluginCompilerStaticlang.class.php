@@ -1,6 +1,6 @@
 <?php
 // cp imports
-require_once(CP_DIR.'lib/system/template/TemplatePluginCompiler.class.php');
+require_once(IKARUS_DIR.'lib/system/template/TemplatePluginCompiler.class.php');
 
 /**
  * The 'staticlang' compiler function gets the source of a language variables.

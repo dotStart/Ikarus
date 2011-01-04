@@ -1,8 +1,8 @@
 <?php
 // cp imports
-require_once(CP_DIR.'lib/system/template/Template.class.php');
-require_once(CP_DIR.'lib/system/template/TemplatePluginPrefilter.class.php');
-require_once(CP_DIR.'lib/system/template/TemplatePluginCompiler.class.php');
+require_once(IKARUS_DIR.'lib/system/template/Template.class.php');
+require_once(IKARUS_DIR.'lib/system/template/TemplatePluginPrefilter.class.php');
+require_once(IKARUS_DIR.'lib/system/template/TemplatePluginCompiler.class.php');
 
 /**
  * TemplateScriptingCompiler compiles template source in valid php code.
@@ -141,8 +141,8 @@ class TemplateScriptingCompiler {
 			$compiledAutoloadPlugins = "<?php\n";
 			foreach ($this->autoloadPlugins as $className => $fileName) {
 				$compiledAutoloadPlugins .= "if (!isset(\$this->pluginObjects['$className'])) {\n";
-				if (CP_DIR != '' && strpos($fileName, CP_DIR) === 0) {
-					$compiledAutoloadPlugins .= "require_once(CP_DIR.'".StringUtil::replace(CP_DIR, '', $fileName)."');\n";
+				if (IKARUS_DIR != '' && strpos($fileName, IKARUS_DIR) === 0) {
+					$compiledAutoloadPlugins .= "require_once(IKARUS_DIR.'".StringUtil::replace(IKARUS_DIR, '', $fileName)."');\n";
 				}
 				else {
 					$compiledAutoloadPlugins .= "require_once('".$fileName."');\n";

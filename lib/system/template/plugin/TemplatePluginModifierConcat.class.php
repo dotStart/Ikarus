@@ -1,7 +1,7 @@
 <?php
 // cp imports
-require_once(CP_DIR.'lib/system/template/TemplatePluginModifier.class.php');
-require_once(CP_DIR.'lib/system/template/Template.class.php');
+require_once(IKARUS_DIR.'lib/system/template/TemplatePluginModifier.class.php');
+require_once(IKARUS_DIR.'lib/system/template/Template.class.php');
 
 /**
  * The 'concat' modifier returns the string that results from concatenating the arguments.

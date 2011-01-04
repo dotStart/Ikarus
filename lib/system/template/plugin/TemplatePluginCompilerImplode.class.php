@@ -1,6 +1,6 @@
 <?php
 // cp imports
-require_once(CP_DIR.'lib/system/template/TemplatePluginFunction.class.php');
+require_once(IKARUS_DIR.'lib/system/template/TemplatePluginFunction.class.php');
 
 /**
  * The 'implode' compiler function joins array elements with a string.

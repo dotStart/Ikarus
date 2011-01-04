@@ -1,6 +1,6 @@
 <?php
 // cp imports
-require_once(CP_DIR.'lib/system/event/EventHandler.class.php');
+require_once(IKARUS_DIR.'lib/system/event/EventHandler.class.php');
 
 /**
  * Template loads and displays template.
@@ -36,9 +36,9 @@ class Template {
 	public function __construct($languageID = 0, $templatePaths = array(), $pluginDir = '', $compileDir = '') {
 		$this->setLanguageID($languageID);
 
-		if (!$templatePaths) $templatePaths = array(CP_DIR.'templates/');
-		if (!$pluginDir) $pluginDir = CP_DIR.'lib/system/template/plugin/';
-		if (!$compileDir) $compileDir = CP_DIR.'templates/compiled/';
+		if (!$templatePaths) $templatePaths = array(IKARUS_DIR.'templates/');
+		if (!$pluginDir) $pluginDir = IKARUS_DIR.'lib/system/template/plugin/';
+		if (!$compileDir) $compileDir = IKARUS_DIR.'templates/compiled/';
 
 		$this->setTemplatePaths($templatePaths);
 		$this->setCompileDir($compileDir);
@@ -51,7 +51,7 @@ class Template {
 	 * Loads the cached template structure.
 	 */
 	protected function loadTemplateStructure() {
-		CP::getCache()->addResource($this->cachePrefix.'templates', CP_DIR.'cache/cache.'.$this->cachePrefix.'templates.php', CP_DIR.'lib/system/cache/CacheBuilderTemplates.class.php');
+		CP::getCache()->addResource($this->cachePrefix.'templates', IKARUS_DIR.'cache/cache.'.$this->cachePrefix.'templates.php', IKARUS_DIR.'lib/system/cache/CacheBuilderTemplates.class.php');
 		$this->templateStructure = CP::getCache()->get($this->cachePrefix.'templates');
 	}
 
@@ -356,7 +356,7 @@ class Template {
 	 * @return	TemplateCompiler
 	 */
 	protected function getCompiler() {
-		require_once(CP_DIR.'lib/system/template/TemplateCompiler.class.php');
+		require_once(IKARUS_DIR.'lib/system/template/TemplateCompiler.class.php');
 		return new TemplateCompiler($this);
 	}
 
@@ -488,7 +488,7 @@ class Template {
 	 * @param 	string		$compileDir
 	 */
 	public static function deleteCompiledTemplates($compileDir = '') {
-		if (empty($compileDir)) $compileDir = CP_DIR.'templates/compiled/';
+		if (empty($compileDir)) $compileDir = IKARUS_DIR.'templates/compiled/';
 
 		// delete compiled templates
 		$matches = glob($compileDir . '*_*_*.php');

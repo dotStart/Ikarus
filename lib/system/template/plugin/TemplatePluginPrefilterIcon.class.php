@@ -1,7 +1,7 @@
 <?php
 // cp imports
-require_once(CP_DIR.'lib/system/template/TemplatePluginPrefilter.class.php');
-require_once(CP_DIR.'lib/system/template/TemplateScriptingCompiler.class.php');
+require_once(IKARUS_DIR.'lib/system/template/TemplatePluginPrefilter.class.php');
+require_once(IKARUS_DIR.'lib/system/template/TemplateScriptingCompiler.class.php');
 
 /**
  * The 'icon' prefilter compiles static icon paths.

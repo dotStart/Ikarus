@@ -1,6 +1,6 @@
 <?php
-// cp imports
-require_once(CP_DIR.'lib/system/template/TemplatePluginCompiler.class.php');
+// ikarus imports
+require_once(IKARUS_DIR.'lib/system/template/TemplatePluginCompiler.class.php');
 
 /**
  * The 'append' compiler function calls the append function on the template object.

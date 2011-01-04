@@ -1,8 +1,8 @@
 <?php
 // cp imports
-require_once(CP_DIR.'lib/system/template/TemplatePluginModifier.class.php');
-require_once(CP_DIR.'lib/system/template/Template.class.php');
-require_once(CP_DIR.'lib/system/language/Language.class.php');
+require_once(IKARUS_DIR.'lib/system/template/TemplatePluginModifier.class.php');
+require_once(IKARUS_DIR.'lib/system/template/Template.class.php');
+require_once(IKARUS_DIR.'lib/system/language/Language.class.php');
 
 /**
  * The 'shorttime' modifier formats a unix timestamp.

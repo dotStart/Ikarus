@@ -1,6 +1,6 @@
 <?php
-// cp imports
-require_once(CP_DIR.'lib/system/template/patch/TemplatePatchUnified.class.php');
+// ikarus imports
+require_once(IKARUS_DIR.'lib/system/template/patch/TemplatePatchUnified.class.php');
 
 /**
  * Gets diff hunks from a patch file and passes them to an object of a patch-type specific class

@@ -1,7 +1,7 @@
 <?php
 // wcf imports
-require_once(CP_DIR.'lib/system/template/TemplatePluginFunction.class.php');
-require_once(CP_DIR.'lib/system/template/Template.class.php');
+require_once(IKARUS_DIR.'lib/system/template/TemplatePluginFunction.class.php');
+require_once(IKARUS_DIR.'lib/system/template/Template.class.php');
 
 /**
  * The 'counter' template function is used to print out a count.

@@ -1,6 +1,6 @@
 <?php
 // cp imports
-require_once(CP_DIR.'lib/system/template/TemplateScriptingCompiler.class.php');
+require_once(IKARUS_DIR.'lib/system/template/TemplateScriptingCompiler.class.php');
 
 /**
  * Prefilters are used to process the source of the template immediately before compilation.

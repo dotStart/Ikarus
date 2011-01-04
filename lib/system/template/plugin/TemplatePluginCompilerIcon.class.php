@@ -1,7 +1,7 @@
 <?php
 // CP imports
-require_once(CP_DIR.'lib/system/template/TemplatePluginCompiler.class.php');
-require_once(CP_DIR.'lib/system/template/TemplateScriptingCompiler.class.php');
+require_once(IKARUS_DIR.'lib/system/template/TemplatePluginCompiler.class.php');
+require_once(IKARUS_DIR.'lib/system/template/TemplateScriptingCompiler.class.php');
 
 /**
  * The 'icon' compiler function compiles dynamic icon paths.
