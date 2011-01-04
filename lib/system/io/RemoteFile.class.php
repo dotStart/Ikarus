@@ -1,8 +1,6 @@
 <?php
-// wcf imports
-if (!defined('NO_IMPORTS')) {
-	require_once(WCF_DIR.'lib/system/io/File.class.php');
-}
+// ikarus imports
+require_once(IKARUS_DIR.'lib/system/io/File.class.php');
 
 /**
  * The RemoteFile class opens a connection to a remote host as a file.
