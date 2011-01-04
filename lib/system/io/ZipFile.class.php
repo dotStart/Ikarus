@@ -1,8 +1,6 @@
 <?php
-// wcf imports
-if (!defined('NO_IMPORTS')) {
-	require_once(WCF_DIR.'lib/system/io/File.class.php');
-}
+// ikarus imports
+require_once(IKARUS_DIR.'lib/system/io/File.class.php');
 
 /**
  * The File class handles all file operations on a zipped file.
