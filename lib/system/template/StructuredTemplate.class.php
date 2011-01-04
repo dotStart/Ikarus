@@ -59,8 +59,7 @@ class StructuredTemplate extends Template {
 	 * Loads cached template pack information.
 	 */
 	protected function loadTemplatePackCache() {
-		IKARUS::getCache()->addResource('templatePacks', WCF_DIR.'cache/cache.templatePacks.php', WCF_DIR.'lib/system/cache/CacheBuilderTemplatePack.class.php');
-		$this->templatePackCache = IKARUS::getCache()->get('templatePacks');
+		$this->templatePackCache = IKARUS::getCache()->get(IKARUS_DIR.'cache/cache.templatePacks.php', IKARUS_DIR.'lib/system/cache/CacheBuilderTemplatePack');
 	}
 
 	/**
