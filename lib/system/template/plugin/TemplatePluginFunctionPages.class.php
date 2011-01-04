@@ -91,7 +91,7 @@ class TemplatePluginFunctionPages implements TemplatePluginFunction {
 			$html .= "<div class=\"pageNavigation\">\n<ul>\n";
 
 			// previous page
-			$previousTitle = IKARUS::getLanguage()->getDynamicVariable('wcf.global.page.previous');
+			$previousTitle = IKARUS::getLanguage()->getDynamicVariable('ikarus.global.page.previous');
 			if ($tagArgs['page'] > 1) {
 				$html .= '<li class="skip"><a href="'.$this->insertPageNumber($tagArgs['link'], $tagArgs['page'] - 1).'" title="'.$previousTitle.'"><img src="'.self::getIconPath('previousS.png').'" alt="" /></a></li>'."\n";
 			}
@@ -186,7 +186,7 @@ class TemplatePluginFunctionPages implements TemplatePluginFunction {
 			$html .= $this->makeLink($tagArgs['link'], $tagArgs['pages'], $tagArgs['page']);
 
 			// next page
-			$nextTitle = IKARUS::getLanguage()->getDynamicVariable('wcf.global.page.next');
+			$nextTitle = IKARUS::getLanguage()->getDynamicVariable('ikarus.global.page.next');
 			if ($tagArgs['page'] && $tagArgs['page'] < $tagArgs['pages']) {
 				$html .= '<li class="skip"><a href="'.$this->insertPageNumber($tagArgs['link'], $tagArgs['page'] + 1).'" title="'.$nextTitle.'"><img src="'.self::getIconPath('nextS.png').'" alt="" /></a></li>'."\n";
 			}
@@ -212,7 +212,7 @@ class TemplatePluginFunctionPages implements TemplatePluginFunction {
 			return StyleManager::getStyle()->getIconPath($filename);
 		}
 		else {
-			return RELATIVE_WCF_DIR.'icon/'.$filename;
+			return RELATIVE_IKARUS_DIR.'icon/'.$filename;
 		}
 	}
 }
