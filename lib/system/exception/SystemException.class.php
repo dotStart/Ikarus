@@ -150,7 +150,7 @@ class SystemException extends Exception implements PrintableException {
 				<?php echo $this->information; ?>
 				<b>file:</b> <?php echo StringUtil::encodeHTML($this->getFile()); ?> (<?php echo $this->getLine(); ?>)<br />
 				<b>php version:</b> <?php echo StringUtil::encodeHTML(phpversion()); ?><br />
-				<b>cp version:</b> <?php echo CP_VERSION; ?><br />
+				<b>ikarus version:</b> <?php echo IKARUS_VERSION; ?><br />
 				<b>date:</b> <?php echo gmdate('r'); ?><br />
 				<b>request:</b> <?php if (isset($_SERVER['REQUEST_URI'])) echo StringUtil::encodeHTML($_SERVER['REQUEST_URI']); ?><br />
 				<b>referer:</b> <?php if (isset($_SERVER['HTTP_REFERER'])) echo StringUtil::encodeHTML($_SERVER['HTTP_REFERER']); ?><br />
