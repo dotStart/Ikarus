@@ -68,7 +68,7 @@ class SessionEditor extends Session {
 					".implode(',', $additionalFields)."
 				WHERE
 					sessionID = ".$this->sessionID;
-		WCF::getDB()->sendQuery($sql);
+		IKARUS::getDB()->sendQuery($sql);
 
 		// add additional session information
 		if ($isNew) {
