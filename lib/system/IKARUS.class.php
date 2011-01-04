@@ -199,6 +199,7 @@ class IKARUS {
 	 */
 	protected function initDatabase() {
 		// validate configuration
+		// Ok ... If the configuration file is missing a funny error will occour and the exception will not appear on screen ... shit
 		if (!file_exists(IKARUS_DIR.self::CONFIGURATION_FILE)) throw new SystemException("Cannot read configuration file '".self::CONFIGURATION_FILE."'", 1000);
 
 		// include configuration
