@@ -202,6 +202,15 @@ class LanguageManager {
 	}
 
 	/**
+	 * Alias for LanguageManager::get()
+	 * @see LanguageManager::get()
+	 * @deprecated
+	 */
+	public function getDynamicVariable() {
+		$this->get();
+	}
+	
+	/**
 	 * Returnes a LanguageManager instance
 	 * @return LanguageManager
 	 */
