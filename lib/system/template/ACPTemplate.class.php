@@ -3,7 +3,7 @@
 require_once(IKARUS_DIR.'lib/system/template/Template.class.php');
 
 /**
- * ACPTemplate loads and displays template in the admin control panel of the wcf.
+ * ACPTemplate loads and displays template in the admin control panel of ikarus.
  * ACPTemplate does not support template packs.
  *
  * @author 		Marcel Werk
@@ -21,8 +21,8 @@ class ACPTemplate extends Template {
 	 * @see Template::__construct()
 	 */
 	public function __construct($languageID = 0, $templatePaths = array(), $pluginDir = '', $compileDir = '') {
-		if (!$templatePaths) $templatePaths = WCF_DIR.'acp/templates/';
-		if (!$compileDir) $compileDir = WCF_DIR.'acp/templates/compiled/';
+		if (!$templatePaths) $templatePaths = IKARUS_DIR.'acp/templates/';
+		if (!$compileDir) $compileDir = IKARUS_DIR.'acp/templates/compiled/';
 		parent::__construct($languageID, $templatePaths, $pluginDir, $compileDir);
 	}
 
@@ -32,7 +32,7 @@ class ACPTemplate extends Template {
 	 * @param 	string		$compileDir
 	 */
 	public static function deleteCompiledACPTemplates($compileDir = '') {
-		if (empty($compileDir)) $compileDir = WCF_DIR.'acp/templates/compiled/';
+		if (empty($compileDir)) $compileDir = IKARUS_DIR.'acp/templates/compiled/';
 
 		self::deleteCompiledTemplates($compileDir);
 	}
