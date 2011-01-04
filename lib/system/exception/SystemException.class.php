@@ -153,7 +153,7 @@ class SystemException extends Exception implements PrintableException {
 				<b>ikarus version:</b> <?php echo IKARUS_VERSION; ?><br />
 				<b>date:</b> <?php echo gmdate('r'); ?><br />
 				<b>request:</b> <?php if (isset($_SERVER['REQUEST_URI'])) echo StringUtil::encodeHTML($_SERVER['REQUEST_URI']); ?><br />
-				<b>referer:</b> <?php if (isset($_SERVER['HTTP_REFERER'])) echo StringUtil::encodeHTML($_SERVER['HTTP_REFERER']); ?><br />
+				<?php if (isset($_SERVER['HTTP_REFERER'])): ?><b>referer:</b> <?php if (isset($_SERVER['HTTP_REFERER'])) echo StringUtil::encodeHTML($_SERVER['HTTP_REFERER']); ?><br /><?php endif; ?>
 			</p>
 
 			<h2>Stacktrace:</h2>
