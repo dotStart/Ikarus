@@ -70,7 +70,7 @@ class SystemException extends Exception implements PrintableException {
 		$string = preg_replace('/mysqli->mysqli\(.*\)/', 'mysqli->mysqli(...)', $string);
 		$string = preg_replace('/Database->connect\(.*\)/', 'MySQLDatabase->connect(...)', $string);
 		$string = preg_replace('/(my|)sql_connect\(.*\)/', '$1sql_connect(...)', $string);
-		$string = preg_replace('/DatabaseManager->addConnection\(.*\)/', 'DatabaseManager->addConnection(...)');
+		$string = preg_replace('/DatabaseManager->addConnection\(.*\)/', 'DatabaseManager->addConnection(...)', $string);
 		return $string;
 	}
 
