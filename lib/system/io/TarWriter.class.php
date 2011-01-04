@@ -1,7 +1,7 @@
 <?php
-// wcf imports
-require_once(WCF_DIR.'lib/system/io/Tar.class.php');
-require_once(WCF_DIR.'lib/system/io/File.class.php');
+// ikarus imports
+require_once(IKARUS_DIR.'lib/system/io/Tar.class.php');
+require_once(IKARUS_DIR.'lib/system/io/File.class.php');
 
 /**
  * Creates a tar file archive.
