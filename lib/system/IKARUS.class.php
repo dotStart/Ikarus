@@ -374,7 +374,7 @@ class IKARUS {
 					break;
 			}
 			
-			throw new SystemException('PHP '.$type.' in file '.$filename.' ('.$lineNo.'): '.$message, 0);
+			throw new SystemException('PHP %s in file %s (%u): %s', $type, $errFile, $errLine, $errMessage);
 		}
 	}
 	
