@@ -41,10 +41,6 @@ class SystemException extends Exception implements PrintableException {
 
 		// remove argument1 (message)
 		$message = $arguments[0];
-		unset($arguments[0]);
-
-		// resort array
-		$arguments = array_merge(array(), $arguments);
 
 		// get error code
 		$code = 0;
