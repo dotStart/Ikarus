@@ -107,7 +107,7 @@ class DatabaseManager {
 	 */
 	public function __call($method, $arguments) {
 		if (method_exists($this->availableConnections[$this->activeDriverID], $method))
-			return call_user_func_array($this->availableConnections[$this->activeDriverID], $arguments);
+			return call_user_func_array(array($this->availableConnections[$this->activeDriverID], $method), $arguments);
 
 		throw new SystemException("Method '%s' does not exist in class %s", $method, get_class($this));
 	}
