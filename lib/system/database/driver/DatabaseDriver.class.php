@@ -56,6 +56,12 @@ interface DatabaseDriver {
 	 * @return array
 	 */
 	public function getColumns($tableName);
+	
+	/**
+	 * Returnes the name of this database driver
+	 * @return string
+	 */
+	public function getDatabaseType();
 
 	/**
 	 * Returnes the error number of last error

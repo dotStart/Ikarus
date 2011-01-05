@@ -99,6 +99,13 @@ abstract class AbstractDatabaseDriver implements DatabaseDriver {
 	public function getColumns($tableName) {
 		throw new SystemException("Unfinished %s definition in class %s (Missing method '%s')", 'DatabaseDriver', get_class($this), 'getColumns');
 	}
+	
+	/**
+	 * @see lib/system/database/driver/DatabaseDriver::getDatabaseType()
+	 */
+	public function getDatabaseType() {
+		return get_class($this);
+	}
 
 	/**
 	 * @see lib/system/database/driver/DatabaseDriver::getErrorNumber()
