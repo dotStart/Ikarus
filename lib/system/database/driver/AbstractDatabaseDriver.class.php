@@ -159,7 +159,7 @@ abstract class AbstractDatabaseDriver implements DatabaseDriver {
 	 * @see lib/system/database/driver/DatabaseDriver::getVersion()
 	 */
 	public function getVersion() {
-		throw new SystemException("Unfinished %s definition in class %s (Missing method '%s')", 'DatabaseDriver', get_class($this), 'getVersion');
+		return 'unknown';
 	}
 
 	/**
