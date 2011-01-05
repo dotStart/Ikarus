@@ -181,7 +181,7 @@ class PDOMySQLDriver extends AbstractDatabaseDriver {
 		$query = $this->handleLimitParameter($query, $limit, $offset);
 		
 		// send query
-		$this->lastResult =  $this->linkID->query($query);
+		$this->lastResult = $this->linkID->query($query);
 		
 		// validate
 		if (!$this->lastResult) throw new DatabaseException($this, "Invalid Query: %s", $query);
