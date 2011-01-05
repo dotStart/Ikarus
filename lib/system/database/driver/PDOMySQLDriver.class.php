@@ -186,7 +186,7 @@ class PDOMySQLDriver extends AbstractDatabaseDriver {
 		// validate
 		if (!$this->lastResult) throw new DatabaseException($this, "Invalid Query: %s", $query);
 		
-		return $this->lastQuery;
+		return $this->lastResult;
 	}
 	
 	/**
