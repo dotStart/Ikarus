@@ -11,6 +11,18 @@
  * @version		1.0.0-0001
  */
 abstract class AbstractDatabaseDriver implements DatabaseDriver {
+	
+	/**
+	 * Contains the database that we should use
+	 * @var string
+	 */
+	protected $database = '';
+	
+	/**
+	 * Contains database server's hostname
+	 * @var string
+	 */
+	protected $hostname = '';
 
 	/**
 	 * Contains the result of the last query
@@ -35,12 +47,21 @@ abstract class AbstractDatabaseDriver implements DatabaseDriver {
 	 * @var	integer
 	 */
 	protected $queryCount = 0;
+	
+	/**
+	 * Contains the username that should used to connect to database
+	 * @var string
+	 */
+	protected $username = '';
 
 	/**
 	 * @see lib/system/database/driver/DatabaseDriver::__construct()
 	 */
 	public function __construct($hostname, $username, $password, $database) {
-		throw new SystemException("Unfinished %s definition in class %s (Missing method '%s')", 'DatabaseDriver', get_class($this), '__construct');
+		$this->hostname = $hostname;
+		$this->username = $username;
+		$this->password = $password;
+		$this->database = $database;
 	}
 
 	/**
