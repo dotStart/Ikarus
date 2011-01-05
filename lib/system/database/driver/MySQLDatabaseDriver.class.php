@@ -167,7 +167,7 @@ class MySQLDatabaseDriver extends AbstractDatabaseDriver {
 	 */
 	public function sendQuery($query, $limit = 0, $offset = 0) {
 		// handle limit parameter
-		$query = $this->handleLimitParameter($query, $limit, $offeset);
+		$query = $this->handleLimitParameter($query, $limit, $offset);
 		
 		// send query
 		$this->lastResult =  mysql_query($query, $this->linkID);
