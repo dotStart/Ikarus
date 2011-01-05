@@ -170,12 +170,12 @@ class MySQLDatabaseDriver extends AbstractDatabaseDriver {
 		$query = $this->handleLimitParameter($query, $limit, $offset);
 		
 		// send query
-		$this->lastResult =  mysql_query($query, $this->linkID);
+		$this->lastResult = mysql_query($query, $this->linkID);
 		
 		// validate
 		if (!$this->lastResult) throw new DatabaseException($this, "Invalid Query: %s", $query);
 		
-		return $this->lastQuery;
+		return $this->lastResult;
 	}
 	
 	/**
