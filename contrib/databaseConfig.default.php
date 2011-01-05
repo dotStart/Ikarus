@@ -8,4 +8,5 @@ $dbHostname = 'localhost';
 $dbUsername = 'root';
 $dbPassword = '';
 $dbDatabase = 'ikarus';
+define('IKARUS_N', 1);
 ?>
