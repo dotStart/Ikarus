@@ -25,12 +25,6 @@ class Options {
 	const OPTION_SUFFIX = '';
 
 	/**
-	 * Contains a suffix for option type names
-	 * @var string
-	 */
-	const OPTION_TYPE_SUFFIX = 'OptionType';
-
-	/**
 	 * Generates the option file for given package
 	 * @param	string	$file
 	 * @param	integer	$packageID
@@ -70,7 +64,7 @@ class Options {
 		while($row = IKARUS::getDB()->fetchArray($result)) {
 			require_once($row['classFile']);
 			$className = basename($row['classFile'], '.class.php');
-			$file->write("define('".self::OPTION_PREFIX.StringUtil::toUpperCase($row['optionName']).self::OPTION_SUFFIX."', ".call_user_func(array($className, 'formatOptionValue'), $row['optionValue']).");\n");
+			$file->write("define('".(intval($row['prependPrefix']) ? self::OPTION_PREFIX : '').StringUtil::toUpperCase($row['optionName']).(intval($row['appendSuffix']) ? self::OPTION_SUFFIX : '')."', ".call_user_func(array($className, 'formatOptionValue'), $row['optionValue']).");\n");
 		}
 
 		$file->write("\n/** EOF **/\n?>");
