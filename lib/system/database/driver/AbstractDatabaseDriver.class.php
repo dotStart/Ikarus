@@ -127,9 +127,7 @@ abstract class AbstractDatabaseDriver implements DatabaseDriver {
 	public function getFirstRow($query, $limit = 1, $offset = 0) {
 		$limit = (preg_match('/LIMIT\s+\d/i', $query) ? 0 : $limit);
 
-		$query = $this->handleLimitParameter($query, $limit, $offset);
-
-		$result = $this->sendQuery($query);
+		$result = $this->sendQuery($query, $limit, $offeset);
 
 		if (is_resource($result)) {
 			$row = $this->fetchArray($result);
