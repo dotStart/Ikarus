@@ -69,7 +69,8 @@ class Options {
 
 		while($row = IKARUS::getDB()->fetchArray($result)) {
 			require_once($row['classFile']);
-			$file->write("define('".self::OPTION_PREFIX.StringUtil::toUpperCase($row['optionName']).self::OPTION_SUFFIX."', ".call_user_func(array($row['optionType'].self::OPTION_TYPE_SUFFIX, 'formatOptionValue'), $row['optionValue']).");\n");
+			$className = basename($row['classFile'], '.class.php');
+			$file->write("define('".self::OPTION_PREFIX.StringUtil::toUpperCase($row['optionName']).self::OPTION_SUFFIX."', ".call_user_func(array($className, 'formatOptionValue'), $row['optionValue']).");\n");
 		}
 
 		$file->write("\n/** EOF **/\n?>");
