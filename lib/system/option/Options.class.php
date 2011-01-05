@@ -48,6 +48,10 @@ class Options {
 			FROM
 				ikarus".IKARUS_N."_option systemOption
 			LEFT JOIN
+				ikarus".IKARUS_N."_package_dependency dependency
+			ON
+				systemOption.packageID = dependency.dependencyID
+			LEFT JOIN
 				ikarus".IKARUS_N."_option_type optionType
 			ON
 				(systemOption.optionType = optionType.typeName)
@@ -56,7 +60,7 @@ class Options {
 			ON
 				(optionType.packageID = package.packageID)
 			WHERE
-				systemOption.packageID = ".$packageID;
+				dependency.packageID = ".$packageID;
 		$result = IKARUS::getDatabase()->sendQuery($sql);
 
 		// create file
