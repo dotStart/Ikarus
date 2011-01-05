@@ -41,22 +41,22 @@ class Options {
 
 		// get options
 		$sql = "SELECT
-					systemOption.optionName AS optionName,
-					systemOption.optionValue AS optionValue,
-					systemOption.optionType AS optionType,
-					CONCAT(package.packagePath, optionType.classFile) AS classFile
-				FROM
-					ikarus".IKARUS_N."_option systemOption
-				JOIN
-					ikarus".IKARUS_N."_option_type optionType
-				ON
-					(systemOption.optionType = optionType.typeName)
-				JOIN
-					ikarus".IKARUS_N."_package package
-				ON
-					(optionType.packageID = package.packageID)
-				WHERE
-					systemOption.packageID = ".$packageID;
+				systemOption.optionName AS optionName,
+				systemOption.optionValue AS optionValue,
+				systemOption.optionType AS optionType,
+				CONCAT(package.packagePath, optionType.classFile) AS classFile
+			FROM
+				ikarus".IKARUS_N."_option systemOption
+			LEFT JOIN
+				ikarus".IKARUS_N."_option_type optionType
+			ON
+				(systemOption.optionType = optionType.typeName)
+			LEFT JOIN
+				ikarus".IKARUS_N."_package package
+			ON
+				(optionType.packageID = package.packageID)
+			WHERE
+				systemOption.packageID = ".$packageID;
 		$result = IKARUS::getDatabase()->sendQuery($sql);
 
 		// create file
