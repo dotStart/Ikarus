@@ -36,7 +36,9 @@ class DatabaseException extends SystemException {
 
 		// remove argument1 (DatabaseDriver)
 		$this->databaseDriver = $arguments[0];
-		$arguments[0] = "SQL error: %s";
+		unset($arguments[0]);
+		
+		$arguments = array_merge(array(), $arguments);
 		
 		call_user_func_array(array('parent', '__construct'), $arguments);
 	}
