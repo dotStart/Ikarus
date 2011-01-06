@@ -95,14 +95,14 @@ class DiskCacheSource extends AbstractCacheSource {
 		// validate cache builder
 		if (!($cacheBuilder instanceof CacheBuilder)) throw new SystemException("Invalid cache builder: %s", $cacheBuilderPath);
 		
+		// get content
+		$data = $cacheBuilder->getData($cacheFile);
+		
 		// create new file object
 		$file = new File($cacheFile);
 		
 		// write file header
 		$file->write("<?php /** Ikarus Cache File (Generated on ".gmdate('r').") **/ exit; ?>\n");
-		
-		// get content
-		$data = $cacheBuilder->getData($cacheFile);
 		
 		// write content
 		$file->write(serialize($data));
