@@ -38,6 +38,8 @@ class Options {
 				systemOption.optionName AS optionName,
 				systemOption.optionValue AS optionValue,
 				systemOption.optionType AS optionType,
+				systemOption.prependPrefix AS prependPrefix,
+				systemOption.appendSuffix AS appendSuffix,
 				CONCAT(package.packagePath, optionType.classFile) AS classFile
 			FROM
 				ikarus".IKARUS_N."_option systemOption
