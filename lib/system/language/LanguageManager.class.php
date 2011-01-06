@@ -206,9 +206,11 @@ class LanguageManager {
 	
 	/**
 	 * Gets all available languages from database
+	 * @param	integer	$packageID
+	 * @return array<Language>
 	 */
-	public static function getAvailableLanguages() {
-		return IKARUS::getCache()->get(IKARUS_DIR.'cache/cache.languages-'.PACKAGE_ID.'.php', IKARUS_DIR.'lib/system/cache/CacheBuilderLanguages.class.php');
+	public static function getAvailableLanguages($packageID = PACKAGE_ID) {
+		return IKARUS::getCache()->get(IKARUS_DIR.'cache/cache.'.$packageID.'-languages.php', IKARUS_DIR.'lib/system/cache/CacheBuilderLanguages.class.php');
 	}
 
 	/**
