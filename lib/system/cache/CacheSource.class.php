@@ -15,11 +15,6 @@ require_once(IKARUS_DIR.'lib/system/cache/CacheBuilder.class.php');
 interface CacheSource {
 
 	/**
-	 * Returnes true if this cache source is supported on current system
-	 */
-	public function isSupported();
-
-	/**
 	 * Enables this cache source
 	 */
 	public function enable();
@@ -34,5 +29,10 @@ interface CacheSource {
 	 * @throws SystemException
 	 */
 	public function get($cacheFile, $cacheBuilderPath, $minLifetime, $maxLifetime);
+	
+	/**
+	 * Returnes true if this cache source is supported on current system
+	 */
+	public function isSupported();
 }
 ?>
