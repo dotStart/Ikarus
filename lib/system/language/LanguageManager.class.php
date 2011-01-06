@@ -338,7 +338,7 @@ class LanguageManager {
 				itemName,
 				itemValue
 			FROM
-				ikarus".IKARUS_N."_language
+				ikarus".IKARUS_N."_language_item
 			WHERE
 				packageID = ".PACKAGE_ID."
 			AND
