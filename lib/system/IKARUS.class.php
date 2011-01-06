@@ -20,6 +20,7 @@ define('IKARUS_VERSION_EXTENDED', ' Alpha 1');
 define('IKARUS_VERSION', IKARUS_VERSION_MAJOR.'.'.IKARUS_VERSION_MINOR.'.'.IKARUS_VERSION_PATCH.'-'.IKARUS_VERSION_BUILD.IKARUS_VERSION_EXTENDED);
 define('IKARUS_VERSION_STABLE', false);
 if (!defined('PACKAGE_ID')) define('PACKAGE_ID', 1);
+define('XDEBUG', (function_exists('xdebug_is_enabled') and xdebug_is_enabled()));
 
 /**
  * @author		Johannes Donath
