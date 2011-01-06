@@ -1,4 +1,6 @@
 <?php
+// ikarus imports
+require_once(IKARUS_N.'lib/data/DatabaseObject.class.php');
 
 /**
  * Represents a language row
