@@ -201,6 +201,13 @@ class LanguageManager {
 	public static function fixLanguageCode($languageCode) {
 		return preg_replace('/-[a-z0-9]+/', '', $languageCode);
 	}
+	
+	/**
+	 * Gets all available languages from database
+	 */
+	public static function getAvailableLanguages() {
+		return IKARUS::getCache()->get(IKARUS_DIR.'cache/cache.languages-'.PACKAGE_ID.'.php', IKARUS_N.'lib/system/cache/CacheBuilderLanguages.class.php');
+	}
 
 	/**
 	 * Alias for LanguageManager::get()
