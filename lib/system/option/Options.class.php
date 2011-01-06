@@ -56,7 +56,9 @@ class Options {
 			ON
 				(optionType.packageID = package.packageID)
 			WHERE
-				dependency.packageID = ".$packageID;
+				dependency.packageID = ".$packageID."
+			OR
+				systemOption.packageID = ".$packageID;
 		$result = IKARUS::getDatabase()->sendQuery($sql);
 
 		// create file
