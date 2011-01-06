@@ -284,16 +284,16 @@ class LanguageManager {
 	 */
 	protected function loadCache($language = null) {
 		// create language instance if needed
-		if ($this->language === null) $this->language = new Language($this->languageID);
+		if ($language === null) $language = new Language($this->languageID);
 
 		// validate language
 		if (!$language->languageID) throw new SystemException("Invalid language passed to %s", 'loadCache');
 
 		// get cache
-		if ($this->cacheFileNeedsRebuild($this->language))
-			$this->items = $this->rebuildCacheFile($this->language);
+		if ($this->cacheFileNeedsRebuild($language))
+			$this->items = $this->rebuildCacheFile($language);
 		else
-			$this->items = $this->loadCacheFile($this->language);
+			$this->items = $this->loadCacheFile($language);
 	}
 
 	/**
