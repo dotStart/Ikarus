@@ -77,7 +77,7 @@ class CacheSourceManager {
 	 * Sets a fallback cache source
 	 * @param	string	$fallbackCacheSourceName
 	 */
-	protected function chooseFalbackCacheSource($fallbackCacheSourceName) {
+	protected function chooseFallbackCacheSource($fallbackCacheSourceName) {
 		$this->fallbackCacheSource = $this->getCacheSource($fallbackCacheSourceName);
 
 		// validate
