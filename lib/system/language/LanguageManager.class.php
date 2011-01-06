@@ -190,6 +190,9 @@ class LanguageManager {
 		foreach($languages as $languageCode => $language) {
 			if ($language->isDefault()) $defaultLanguage = $language;
 		}
+		
+		// validate
+		if (!isset($defaultLanguage) and !count($languages)) throw new SystemException("No languages available");
 
 		// get preferred language
 		$this->setActiveLanguage($this->getPreferredLanguage($languages, $defaultLanguage));
