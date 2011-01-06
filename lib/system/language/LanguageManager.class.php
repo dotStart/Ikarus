@@ -212,6 +212,27 @@ class LanguageManager {
 	}
 	
 	/**
+	 * Returnes a language variable
+	 * @throws SystemException
+	 * @return string
+	 */
+	public function get() {
+		// get arguments
+		$arguments = func_get_args();
+		
+		if (count($arguments) >= 1) {
+			if (isset($this->items[$arguments[0]])) {
+				$arguments[0] = $this->items[$arguments[0]];
+				return call_user_func_array('sprintf', $arguments);
+			}
+			
+			return $arguments[0];
+		}
+		
+		throw new SystemException("You must pass at least %s parameter to %s", 'one', 'LanguageManager::get()');
+	}
+	
+	/**
 	 * Gets all available languages from database
 	 * @param	integer	$packageID
 	 * @return array<Language>
