@@ -171,10 +171,10 @@ class LanguageManager {
 		if ($language === null) $language = $this->language;
 
 		// try to find file
-		if (!file_exists(IKARUS_DIR.self::LANGUAGE_CACHE_DIR.'language.'.$language->languageID.'.php')) return true;
+		if (!file_exists(IKARUS_DIR.self::LANGUAGE_CACHE_DIR.'language.'.$language->languageID.'-'.PACKAGE_ID.'.php')) return true;
 
 		// check for readable files
-		if (!is_readable(IKARUS_DIR.self::LANGUAGE_CACHE_DIR.'language.'.$language->languageID.'.php')) return true;
+		if (!is_readable(IKARUS_DIR.self::LANGUAGE_CACHE_DIR.'language.'.$language->languageID.'-'.PACKAGE_ID.'.php')) return true;
 
 		return false;
 	}
@@ -337,10 +337,10 @@ class LanguageManager {
 		if ($language === null) $language = $this->language;
 
 		// try to find file
-		if (!file_exists(IKARUS_DIR.self::LANGUAGE_CACHE_DIR.'language.'.$language->languageID.'.php')) throw new SystemException("Cannot load language cache file '%s'", IKARUS_DIR.self::LANGUAGE_CACHE_DIR.'language.'.$language->languageID.'.php');
+		if (!file_exists(IKARUS_DIR.self::LANGUAGE_CACHE_DIR.'language.'.$language->languageID.'-'.PACKAGE_ID.'.php')) throw new SystemException("Cannot load language cache file '%s'", IKARUS_DIR.self::LANGUAGE_CACHE_DIR.'language.'.$language->languageID.'.php');
 
 		// load file
-		include_once(IKARUS_DIR.self::LANGUAGE_CACHE_DIR.'language.'.$language->languageID.'.php');
+		include_once(IKARUS_DIR.self::LANGUAGE_CACHE_DIR.'language.'.$language->languageID.'-'.PACKAGE_ID.'.php');
 	}
 
 	/**
@@ -352,7 +352,7 @@ class LanguageManager {
 		if ($language === null) $language = $this->language;
 
 		// delete old file
-		if (file_exists(IKARUS_DIR.self::LANGUAGE_CACHE_DIR.'language.'.$language->languageID.'.php')) @unlink(IKARUS_DIR.self::LANGUAGE_CACHE_DIR.'language.'.$language->languageID.'.php');
+		if (file_exists(IKARUS_DIR.self::LANGUAGE_CACHE_DIR.'language.'.$language->languageID.'-'.PACKAGE_ID.'.php')) @unlink(IKARUS_DIR.self::LANGUAGE_CACHE_DIR.'language.'.$language->languageID.'.php');
 
 		// get data
 		$sql = "SELECT
@@ -367,7 +367,7 @@ class LanguageManager {
 		$result = IKARUS::getDatabase()->sendQuery($sql);
 
 		// create file
-		$file = new File(IKARUS_DIR.self::LANGUAGE_CACHE_DIR.'language.'.$language->languageID.'.php');
+		$file = new File(IKARUS_DIR.self::LANGUAGE_CACHE_DIR.'language.'.$language->languageID.'-'.PACKAGE_ID.'.php');
 		$file->write("<?php\n/**\n * Ikarus Language Cache File\n * Generated on ".gmdate('r')."\n **/\n\n");
 
 		while($row = IKARUS::getDatabase()->fetchArray($result)) {
