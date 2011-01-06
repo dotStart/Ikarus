@@ -84,9 +84,6 @@ class DiskCacheSource extends AbstractCacheSource {
 		// delete file
 		@unlink($cacheFile);
 		
-		// create new file object
-		$file = new File($cacheFile);
-		
 		// include cache builder
 		if (!file_exists($cacheBuilderPath)) throw new SystemException("Cannot load cache builder '%s'", $cacheBuilderPath);
 		require_once($cacheBuilderPath);
@@ -97,6 +94,9 @@ class DiskCacheSource extends AbstractCacheSource {
 		
 		// validate cache builder
 		if (!($cacheBuilder instanceof CacheBuilder)) throw new SystemException("Invalid cache builder: %s", $cacheBuilderPath);
+		
+		// create new file object
+		$file = new File($cacheFile);
 		
 		// write file header
 		$file->write("<?php /** Ikarus Cache File (Generated on ".gmdate('r').") **/ exit; ?>\n");
