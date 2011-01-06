@@ -12,7 +12,7 @@ require_once(IKARUS_DIR.'lib/system/option/type/OptionType.class.php');
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		1.0.0-0001
  */
-class BooleanOptionType implements OptionType {
+class TextOptionType implements OptionType {
 	
 	/**
 	 * @see OptionType::formatOptionValue()
