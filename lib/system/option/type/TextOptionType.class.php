@@ -3,7 +3,7 @@
 require_once(IKARUS_DIR.'lib/system/option/type/OptionType.class.php');
 
 /**
- * Option type for boolean values (1 or 0)
+ * Option type for string values
  * @author		Johannes Donath
  * @copyright		2011 DEVel Fusion
  * @package		com.develfusion.ikarus
