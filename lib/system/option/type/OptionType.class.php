@@ -17,5 +17,9 @@ interface OptionType {
 	 * @param	mixed	$value
 	 */
 	public static function formatOptionValue($value);
+	
+	// TODO: Add validation
+	
+	// TODO: Add backend template shit
 }
 ?>
