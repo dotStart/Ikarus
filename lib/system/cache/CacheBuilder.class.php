@@ -15,10 +15,8 @@ interface CacheBuilder {
 	/**
 	 * Returnes the data for new cache file
 	 * @param	string	$file
-	 * @param	mixed	$minLifetime
-	 * @param	mixed	$maxLifetime
 	 * @return mixed
 	 */
-	public function getData($file, $minLifetime, $maxLifetime);
+	public function getData($file);
 }
 ?>
