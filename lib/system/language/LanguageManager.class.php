@@ -273,7 +273,7 @@ class LanguageManager {
 	 */
 	protected function init() {
 		if (!defined('LANGUAGE_CODE')) {
-			define('LANGUAGE_CODE', self::fixLanguageCode($this->data['languageCode']));
+			define('LANGUAGE_CODE', self::fixLanguageCode($this->language->getLanguageCode()));
 			if ((OPTION_CHARSET == 'UTF-8' || self::$supportedCharsets[CHARSET]['multibyte']) && extension_loaded('mbstring')) {
 				define('USE_MBSTRING', true);
 				mb_internal_encoding(OPTION_CHARSET);
