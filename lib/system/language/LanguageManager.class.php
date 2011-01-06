@@ -150,9 +150,9 @@ class LanguageManager {
 
 		// try to load cache
 		try {
-			if (XDEBUG) xdebug_disable();
+			// if (XDEBUG) xdebug_disable();
 			$this->loadCache();
-			if (XDEBUG) xdebug_enable();
+			// if (XDEBUG) xdebug_enable();
 		} catch (SystemException $ex) {
 			// language not found
 			$this->findPreferredLanguage();
