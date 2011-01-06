@@ -66,7 +66,7 @@ class Options {
 		$file->write("<?php\n/**\n * Ikarus Option File\n * Generated on ".gmdate('r')."\n **/\n\n");
 
 		while($row = IKARUS::getDB()->fetchArray($result)) {
-			require_once($row['classFile']);
+			require_once(IKARUS_DIR.$row['classFile']);
 			$className = basename($row['classFile'], '.class.php');
 			$file->write("define('".(intval($row['prependPrefix']) ? self::OPTION_PREFIX : '').StringUtil::toUpperCase($row['optionName']).(intval($row['appendSuffix']) ? self::OPTION_SUFFIX : '')."', ".call_user_func(array($className, 'formatOptionValue'), $row['optionValue']).");\n");
 		}
