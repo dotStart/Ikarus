@@ -250,13 +250,13 @@ class LanguageManager {
 		// check for existing http accept language header
 		if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) and $_SERVER['HTTP_ACCEPT_LANGUAGE']) {
 			// get acceptLanguages header
-			$acceptedLanguages = explode(',', StringUtil::replace('_', '-', StringUtil::toLowerCase($_SERVER['HTTP_ACCEPT_LANGUAGE'])));
+			$acceptedLanguages = explode(',', str_replace('_', '-', strtolower($_SERVER['HTTP_ACCEPT_LANGUAGE'])));
 
 			// loop through accepted languages
 			foreach ($acceptedLanguages as $acceptedLanguage) {
 				// loop through available languages
 				foreach ($availableLanguages as $availableLanguageCode => $language) {
-					$fixedCode = StringUtil::toLowerCase(Language::fixLanguageCode($availableLanguageCode));
+					$fixedCode = strtolower(self::fixLanguageCode($availableLanguageCode));
 
 					if ($fixedCode == $acceptedLanguage or $fixedCode == preg_replace('%^([a-z]{2}).*$%i', '$1', $acceptedLanguage))
 						return $language;
