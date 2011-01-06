@@ -208,7 +208,7 @@ class LanguageManager {
 	 * Gets all available languages from database
 	 */
 	public static function getAvailableLanguages() {
-		return IKARUS::getCache()->get(IKARUS_DIR.'cache/cache.languages-'.PACKAGE_ID.'.php', IKARUS_N.'lib/system/cache/CacheBuilderLanguages.class.php');
+		return IKARUS::getCache()->get(IKARUS_DIR.'cache/cache.languages-'.PACKAGE_ID.'.php', IKARUS_DIR.'lib/system/cache/CacheBuilderLanguages.class.php');
 	}
 
 	/**
