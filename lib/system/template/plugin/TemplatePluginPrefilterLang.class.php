@@ -26,7 +26,7 @@ class TemplatePluginPrefilterLang implements TemplatePluginPrefilter {
 	public function execute($sourceContent, TemplateScriptingCompiler $compiler) {
 		$ldq = preg_quote($compiler->getLeftDelimiter(), '~');
 		$rdq = preg_quote($compiler->getRightDelimiter(), '~');
-		$sourceContent = preg_replace("~{$ldq}lang{$rdq}([\w\.]+){$ldq}/lang{$rdq}~e", 'CP::getLanguage()->get(\'$1\')', $sourceContent);
+		$sourceContent = preg_replace("~{$ldq}lang{$rdq}([\w\.]+){$ldq}/lang{$rdq}~e", 'IKARUS::getLanguage()->get(\'$1\')', $sourceContent);
 
 		return $sourceContent;
 	}

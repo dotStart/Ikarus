@@ -51,8 +51,8 @@ class Template {
 	 * Loads the cached template structure.
 	 */
 	protected function loadTemplateStructure() {
-		CP::getCache()->addResource($this->cachePrefix.'templates', IKARUS_DIR.'cache/cache.'.$this->cachePrefix.'templates.php', IKARUS_DIR.'lib/system/cache/CacheBuilderTemplates.class.php');
-		$this->templateStructure = CP::getCache()->get($this->cachePrefix.'templates');
+		IKARUS::getCache()->addResource($this->cachePrefix.'templates', IKARUS_DIR.'cache/cache.'.$this->cachePrefix.'templates.php', IKARUS_DIR.'lib/system/cache/CacheBuilderTemplates.class.php');
+		$this->templateStructure = IKARUS::getCache()->get($this->cachePrefix.'templates');
 	}
 
 	/**

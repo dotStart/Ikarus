@@ -39,7 +39,7 @@ class TemplatePluginCompilerLang implements TemplatePluginCompiler {
 	public function executeEnd(TemplateScriptingCompiler $compiler) {
 		$compiler->popTag('lang');
 		$hash = StringUtil::getRandomID();
-		return "<?php \$_lang".$hash." = ob_get_contents(); ob_end_clean(); echo CP::getLanguage()->get(\$_lang".$hash.", \$this->tagStack[count(\$this->tagStack) - 1][1]); array_pop(\$this->tagStack); ?>";
+		return "<?php \$_lang".$hash." = ob_get_contents(); ob_end_clean(); echo IKARUS::getLanguage()->get(\$_lang".$hash.", \$this->tagStack[count(\$this->tagStack) - 1][1]); array_pop(\$this->tagStack); ?>";
 	}
 }
 ?>
