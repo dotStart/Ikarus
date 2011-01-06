@@ -37,30 +37,16 @@ class CacheSourceManager {
 		$this->enableCacheSources($disabledCacheSources);
 		$this->chooseFallbackCacheSource($fallbackCacheSourceName);
 	}
-
+	
 	/**
-	 * Loads all available cache sources
-	 * Note: This will automaticly add all sources located in lib/system/cache/source/
+	 * Sets a fallback cache source
+	 * @param	string	$fallbackCacheSourceName
 	 */
-	protected function loadCacheSources() {
-		$dirIterator = new DirectoryIterator(IKARUS_DIR.'lib/system/cache/source/');
+	protected function chooseFallbackCacheSource($fallbackCacheSourceName) {
+		$this->fallbackCacheSource = $this->getCacheSource($fallbackCacheSourceName);
 
-		// loop through iterator index
-		foreach($dirIterator as $dir) {
-			if ($dir->isFile()) {
-				// load definition
-				require_once($dir->getPathname());
-
-				// create new instance
-				$className = $dir->getBasename('.class.php');
-
-				// add to available cache sources array
-				$this->cacheSources[str_replace('CacheSource', '', $dir->getBasename('.class.php'))] = new $className();
-
-				// validate
-				if (!($this->cacheSources[str_replace('CacheSource', '', $dir->getBasename('.class.php'))] instanceof CacheSource)) unset($this->cacheSources[str_replace('CacheSource', '', $dir->getBasename('.class.php'))]);
-			}
-		}
+		// validate
+		if (!$this->fallbackCacheSource) throw new SystemException("Unable to load fallback cache source '%s'", $fallbackCacheSourceName);
 	}
 
 	/**
@@ -72,16 +58,14 @@ class CacheSourceManager {
 			if (!in_array($key, $disabledCacheSources) and $this->cacheSources[$key]->isSupported()) $this->cacheSources[$key]->enable();
 		}
 	}
-
+	
 	/**
-	 * Sets a fallback cache source
-	 * @param	string	$fallbackCacheSourceName
+	 * Flushes all cache sources
 	 */
-	protected function chooseFallbackCacheSource($fallbackCacheSourceName) {
-		$this->fallbackCacheSource = $this->getCacheSource($fallbackCacheSourceName);
-
-		// validate
-		if (!$this->fallbackCacheSource) throw new SystemException("Unable to load fallback cache source '%s'", $fallbackCacheSourceName);
+	public function flush() {
+		foreach($this->cacheSources as $key => $source) {
+			if ($this->cacheSources[$key]->isEnabled()) $this->cacheSources[$key]->flush();
+		}
 	}
 
 	/**
@@ -116,13 +100,29 @@ class CacheSourceManager {
 		// call source method
 		return $source->get($cacheFile, $cacheBuilderPath, $minLifetime, $maxLifetime);
 	}
-
+	
 	/**
-	 * Flushes all cache sources
+	 * Loads all available cache sources
+	 * Note: This will automaticly add all sources located in lib/system/cache/source/
 	 */
-	public function flush() {
-		foreach($this->cacheSources as $key => $source) {
-			if ($this->cacheSources[$key]->isEnabled()) $this->cacheSources[$key]->flush();
+	protected function loadCacheSources() {
+		$dirIterator = new DirectoryIterator(IKARUS_DIR.'lib/system/cache/source/');
+
+		// loop through iterator index
+		foreach($dirIterator as $dir) {
+			if ($dir->isFile()) {
+				// load definition
+				require_once($dir->getPathname());
+
+				// create new instance
+				$className = $dir->getBasename('.class.php');
+
+				// add to available cache sources array
+				$this->cacheSources[str_replace('CacheSource', '', $dir->getBasename('.class.php'))] = new $className();
+
+				// validate
+				if (!($this->cacheSources[str_replace('CacheSource', '', $dir->getBasename('.class.php'))] instanceof CacheSource)) unset($this->cacheSources[str_replace('CacheSource', '', $dir->getBasename('.class.php'))]);
+			}
 		}
 	}
 }
