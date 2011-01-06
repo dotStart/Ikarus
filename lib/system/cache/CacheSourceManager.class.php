@@ -48,6 +48,15 @@ class CacheSourceManager {
 		// validate
 		if (!$this->fallbackCacheSource) throw new SystemException("Unable to load fallback cache source '%s'", $fallbackCacheSourceName);
 	}
+	
+	/**
+	 * Closes all cache sources
+	 */
+	public function closeCacheSources() {
+		foreach($this->cacheSources as $key => $source) {
+			$this->cacheSources[$key]->close();
+		}
+	}
 
 	/**
 	 * Enables all loaded sources
