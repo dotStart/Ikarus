@@ -15,13 +15,6 @@ require_once(IKARUS_DIR.'lib/system/event/EventHandler.class.php');
 class AbstractCacheSource implements CacheSource {
 
 	/**
-	 * @see lib/system/cache/CacheSource::isSupported()
-	 */
-	public function isSupported() {
-		return true;
-	}
-
-	/**
 	 * @see lib/system/cache/CacheSource::enable()
 	 */
 	public function enable() {
@@ -42,6 +35,13 @@ class AbstractCacheSource implements CacheSource {
 	 */
 	function get($cacheFile, $cacheBuilderPath, $minLifetime, $maxLifetime) {
 		return null;
+	}
+	
+	/**
+	 * @see lib/system/cache/CacheSource::isSupported()
+	 */
+	public function isSupported() {
+		return true;
 	}
 }
 ?>
