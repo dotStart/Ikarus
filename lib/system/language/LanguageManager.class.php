@@ -317,14 +317,14 @@ class LanguageManager {
 
 		// get data
 		$sql = "SELECT
-					itemName,
-					itemValue
-				FROM
-					ikarus".IKARUS_N."_language
-				WHERE
-					packageID = ".PACKAGE_ID."
-				AND
-					languageID = ".$language->languageID;
+				itemName,
+				itemValue
+			FROM
+				ikarus".IKARUS_N."_language
+			WHERE
+				packageID = ".PACKAGE_ID."
+			AND
+				languageID = ".$language->languageID;
 		$result = IKARUS::getDatabase()->sendQuery($sql);
 
 		// create file
