@@ -15,6 +15,11 @@ require_once(IKARUS_DIR.'lib/system/cache/CacheBuilder.class.php');
 interface CacheSource {
 
 	/**
+	 * Closes the cache source
+	 */
+	public function close();
+	
+	/**
 	 * Enables this cache source
 	 */
 	public function enable();
