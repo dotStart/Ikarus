@@ -340,7 +340,7 @@ class LanguageManager {
 		if (!file_exists(IKARUS_DIR.self::LANGUAGE_CACHE_DIR.'language.'.$language->languageID.'-'.PACKAGE_ID.'.php')) throw new SystemException("Cannot load language cache file '%s'", IKARUS_DIR.self::LANGUAGE_CACHE_DIR.'language.'.$language->languageID.'.php');
 
 		// load file
-		include_once(IKARUS_DIR.self::LANGUAGE_CACHE_DIR.'language.'.$language->languageID.'-'.PACKAGE_ID.'.php');
+		require_once(IKARUS_DIR.self::LANGUAGE_CACHE_DIR.'language.'.$language->languageID.'-'.PACKAGE_ID.'.php');
 	}
 
 	/**
@@ -371,13 +371,13 @@ class LanguageManager {
 		$file->write("<?php\n/**\n * Ikarus Language Cache File\n * Generated on ".gmdate('r')."\n **/\n\n");
 
 		while($row = IKARUS::getDatabase()->fetchArray($result)) {
-			$file->write("\t\$this->items['".$row['itemName']."'] = '".StringUtil::replace("'", "\'", $row['itemValue'])."';\n");
+			$file->write("\$this->items['".$row['itemName']."'] = '".StringUtil::replace("'", "\'", $row['itemValue'])."';\n");
 		}
 
 		$file->write("\n/** EOF **/\n?>");
 		$file->close();
 
-		$this->loadCache($language);
+		$this->loadCacheFile($language);
 	}
 
 	/**
