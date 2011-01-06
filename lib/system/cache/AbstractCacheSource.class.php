@@ -26,7 +26,7 @@ class AbstractCacheSource implements CacheSource {
 	 */
 	public function enable() {
 		// fire event
-		EventHandler::fire($this, 'enable');
+		// EventHandler::fire($this, 'enable');
 	}
 
 	/**
@@ -34,7 +34,7 @@ class AbstractCacheSource implements CacheSource {
 	 */
 	public function enabled() {
 		// fire event
-		EventHandler::fire($this, 'enabled');
+		// EventHandler::fire($this, 'enabled');
 	}
 
 	/**
