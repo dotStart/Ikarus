@@ -31,12 +31,30 @@ class CacheBuilderLanguages implements CacheBuilder {
 		$data = array();
 		
 		// get data
+		// build monster query from hell
 		$sql = "SELECT
 				*
 			FROM
 				ikarus".IKARUS_N."_language language
 			WHERE
-				language.packageID = ".$packageID;
+				(
+					SELECT
+						COUNT(*)
+					FROM
+						ikarus".IKARUS_N."_language_item item
+					LEFT JOIN
+						ikarus".IKARUS_N."_package_dependency dependency
+					ON
+						item.packageID = dependency.dependencyID
+					WHERE
+						item.languageID = language.languageID
+					AND
+						(
+								item.packageID = ".$packageID."
+							OR
+								dependency.packageID = ".$packageID."
+						)
+				)";
 		$result = IKARUS::getDatabase()->sendQuery($sql);
 		
 		while($row = IKARUS::getDatabase()->fetchArray($result)) {
