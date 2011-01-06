@@ -179,7 +179,7 @@ class IKARUS {
 	 * Reads all additional methods from cache
 	 */
 	protected function initAdditionalMethods() {
-		self::$additionalMethods = self::$cacheObj->get(IKARUS_DIR.'cache/cache.additionalMethods.php', IKARUS_DIR.'lib/system/cache/CacheBuilderAdditionalMethods.class.php');
+		self::$additionalMethods = self::$cacheObj->get(IKARUS_DIR.'cache/cache.'.PACKAGE_ID.'-additionalMethods.php', IKARUS_DIR.'lib/system/cache/CacheBuilderAdditionalMethods.class.php');
 	}
 
 	/**
