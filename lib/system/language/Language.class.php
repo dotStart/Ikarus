@@ -32,5 +32,15 @@ class Language extends DatabaseObject {
 		
 		parent::__construct($row);
 	}
+	
+	/**
+	 * @see DatabaseObject::handleData()
+	 */
+	protected function handleData($data) {
+		parent::handleData($data);
+		
+		// set data
+		if (!$this->data['languageID']) $this->data['languageID'] = 0;
+	}
 }
 ?>
