@@ -146,7 +146,7 @@ class SystemException extends Exception implements PrintableException {
 				<b>error code:</b> <?php echo intval($this->getCode()); ?><br />
 				<?php echo $this->information; ?>
 				<b>file:</b> <?php echo StringUtil::encodeHTML($this->getFile()); ?> (<?php echo $this->getLine(); ?>)<br />
-				<?php if (function_exists('xdebug_peak_memory_usage')): ?><b>memory:</b> <?php echo FileUtil::formatFilesize(xdebug_memory_usage()); ?><br /><?php endif; ?>
+				<?php if (function_exists('xdebug_peak_memory_usage')): ?><b>memory:</b> <?php echo FileUtil::formatFilesize(xdebug_peak_memory_usage()); ?><br /><?php endif; ?>
 				<b>php version:</b> <?php echo StringUtil::encodeHTML(phpversion()); ?><br />
 				<b>ikarus version:</b> <?php echo IKARUS_VERSION; ?><br />
 				<b>date:</b> <?php echo gmdate('r'); ?><br />
