@@ -39,7 +39,7 @@ class DiskCacheSource extends AbstractCacheSource {
 		if (!is_readable($cacheFile)) return true;
 		
 		// check timestamp (min life time)
-		if ((filemtime($cacheFile) + $maxLifetime) < TIME_NOW) return false;
+		if ((filemtime($cacheFile) + $minLifetime) < TIME_NOW) return false;
 		
 		// check timestamp (max life time)
 		if ((filemtime($cacheFile) + $maxLifetime) < TIME_NOW) return true;
