@@ -84,6 +84,9 @@ class DiskCacheSource extends AbstractCacheSource {
 		// delete file
 		@unlink($cacheFile);
 		
+		// try to find dir
+		if (!is_dir(dirname($cacheFile))) @mkdir(dirname($cacheFile));
+		
 		// include cache builder
 		if (!file_exists($cacheBuilderPath)) throw new SystemException("Cannot load cache builder '%s'", $cacheBuilderPath);
 		require_once($cacheBuilderPath);
