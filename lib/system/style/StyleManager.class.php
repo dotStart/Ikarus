@@ -66,7 +66,7 @@ class StyleManager {
 	 * Returnes a StyleManager instance
 	 * @param	string	$environment
 	 */
-	protected static function getInstance($environment = self::DEFAULT_ENVIRONMENT) {
+	public static function getInstance($environment = self::DEFAULT_ENVIRONMENT) {
 		if (!isset(self::$instance[$environment])) {
 			self::$instance[$environment] = new StyleManager($environment);
 		}
