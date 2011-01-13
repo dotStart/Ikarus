@@ -203,16 +203,16 @@ class IKARUS {
 	protected function initDatabase() {
 		// validate configuration
 		// Ok ... If the configuration file is missing a funny error will occour and the exception will not appear on screen ... shit
-		if (!file_exists(IKARUS_DIR.self::CONFIGURATION_FILE)) throw new SystemException("Cannot read configuration file '".self::CONFIGURATION_FILE."'", 1000);
+		if (!file_exists(IKARUS_DIR.static::CONFIGURATION_FILE)) throw new SystemException("Cannot read configuration file '".self::CONFIGURATION_FILE."'", 1000);
 
 		// include configuration
-		require_once(IKARUS_DIR.self::CONFIGURATION_FILE);
+		require_once(IKARUS_DIR.static::CONFIGURATION_FILE);
 
 		// start DatabaseManager
 		self::$dbObj = new DatabaseManager();
 
 		// add connection
-		self::$dbObj->addConnection($dbType.self::DATABASE_DRIVER_SUFFIX, $dbHostname, $dbUsername, $dbPassword, $dbDatabase);
+		self::$dbObj->addConnection($dbType.static::DATABASE_DRIVER_SUFFIX, $dbHostname, $dbUsername, $dbPassword, $dbDatabase);
 	}
 
 	/**
@@ -227,10 +227,10 @@ class IKARUS {
 	 */
 	protected function initOptions() {
 		// regenerate option cache if needed or include option cache
-		if (!file_exists(self::$packageDir.self::OPTION_FILE)) Options::generate(self::$packageDir.self::OPTION_FILE);
+		if (!file_exists(self::$packageDir.static::OPTION_FILE)) Options::generate(self::$packageDir.static::OPTION_FILE);
 
 		// include option file
-		require_once(self::$packageDir.self::OPTION_FILE);
+		require_once(self::$packageDir.static::OPTION_FILE);
 	}
 
 	/**
@@ -261,7 +261,7 @@ class IKARUS {
 	 */
 	protected function initTemplate() {
 		// start Template
-		self::$tplObj = new Template(ArrayUtil::appendSuffix(self::$packageDirs, self::TEMPLATE_DIR));
+		self::$tplObj = new Template(ArrayUtil::appendSuffix(self::$packageDirs, static::TEMPLATE_DIR));
 	}
 
 	/**
