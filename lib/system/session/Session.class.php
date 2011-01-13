@@ -35,11 +35,11 @@ class Session extends DatabaseObject {
 		if ($sessionID !== null) {
 			$sql = "SELECT
 					session.*,
-					data.sessionData as sessionData
+					sessionData.sessionData as sessionData
 				FROM
 					ikarus".IKARUS_N."_session session
 				LEFT JOIN
-					ikarus"._IKARUS_N."_session_data sessionData
+					ikarus".IKARUS_N."_session_data SessionData
 				ON
 					session.sessionID = sessionData.sessionID
 				WHERE
