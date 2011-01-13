@@ -61,6 +61,28 @@ class StyleManager {
 	public function getActiveStyle() {
 		return $this->activeStyle;
 	}
+	
+	/**
+	 * Returnes the default style
+	 * @throws SystemException
+	 * @return Style
+	 */
+	public function getDefaultStyle() {
+		$sql = "SELECT
+				*
+			FROM
+				ikarus".IKARUS_N."_style
+			WHERE
+				environment = '".escapeString($this->environment)."'
+			AND
+				isDefault = 1";
+		$row = IKARUS::getDatabase()->getFirstRow($sql);
+		
+		// style not found?
+		if (!IKARUS::getDatabase()->countRows()) throw new SystemException("What the hell?! No default Style detected?!");
+		
+		return (new Style($row));
+	}
 
 	/**
 	 * Returnes a StyleManager instance
