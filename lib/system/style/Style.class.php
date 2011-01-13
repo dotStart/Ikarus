@@ -22,11 +22,11 @@ class Style extends DatabaseObject {
 	public function __construct($styleID, $row = null) {
 			if ($styleID !== null) {
 				$sql = "SELECT
-							*
-						FROM
-							ikarus".IKARUS_N."_style
-						WHERE
-							styleID = ".$styleID;
+						*
+					FROM
+						ikarus".IKARUS_N."_style
+					WHERE
+						styleID = ".$styleID;
 				$row = IKARUS::getDatabase()->getFirstRow($sql);	
 			}
 			
