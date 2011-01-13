@@ -88,11 +88,13 @@ class SessionEditor extends Session {
 			$data = serialize($this);
 
 			$sql = "UPDATE
-						ikarus".IKARUS_N."_session_data
-					SET
-						sessionData = '".escapeString($data)."'
-					WHERE
-						sessionID = '".escapeString($this->sessionData)."'";
+					ikarus".IKARUS_N."_session_data
+				SET
+					sessionData = '".escapeString($data)."'
+				WHERE
+					sessionID = '".escapeString($this->sessionData)."'
+				AND
+					packageID = ".PACKAGE_ID;
 			IKARUS::getDatabase()->sendQuery($sql);
 		}
 	}
