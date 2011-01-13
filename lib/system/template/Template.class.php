@@ -252,6 +252,9 @@ class Template {
 			// call shouldDisplay event
 			if (!defined('NO_IMPORTS')) EventHandler::fireAction($this, 'shouldDisplay');
 		}
+		
+		// enable xdebug
+		if (XDEBUG) xdebug_enable();
 
 		$compiledFilename = $this->getCompiledFilename($templateName);
 		$sourceFilename = $this->getSourceFilename($templateName);

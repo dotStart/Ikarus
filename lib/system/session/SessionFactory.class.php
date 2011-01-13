@@ -43,7 +43,7 @@ class SessionFactory {
 		session_start();
 		
 		// enable xdebug
-		if (XDEBUG) xdebug_enable();
+		// if (XDEBUG) xdebug_enable();
 
 		// try to find existing session and create new session if no session exists
 		if ($this->loadSession() === false)
