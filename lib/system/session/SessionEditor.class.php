@@ -63,11 +63,11 @@ class SessionEditor extends Session {
 
 		// update session row
 		$sql = "UPDATE
-					ikarus".IKARUS_N."_session
-				SET
-					".implode(',', $additionalFields)."
-				WHERE
-					sessionID = ".$this->sessionID;
+				ikarus".IKARUS_N."_session
+			SET
+				".implode(',', $additionalFields)."
+			WHERE
+				sessionID = '".escapeString($this->sessionID)."'";
 		IKARUS::getDB()->sendQuery($sql);
 
 		// add additional session information
