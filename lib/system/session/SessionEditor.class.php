@@ -40,7 +40,7 @@ class SessionEditor extends Session {
 		$sql = "INSERT INTO
 					ikarus".IKARUS_N."_session (sessionID, ".implode(',', array_keys($additionalFields)).")
 				VALUES
-					('".escapeString($sessionID)."', ".implode("','", array_map('escapeString', $additionalFields))."')";
+					('".escapeString($sessionID)."', '".implode("', '", array_map('escapeString', $additionalFields))."')";
 		IKARUS::getDatabase()->sendQuery($sql);
 
 		$className = __CLASS__;
