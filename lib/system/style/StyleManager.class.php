@@ -73,6 +73,29 @@ class StyleManager {
 
 		return self::$instance[$environment];
 	}
+	
+	/**
+	 * Returnes the style with given ID
+	 * @param	integer	$styleID
+	 * @throws SystemException
+	 * @return Style
+	 */
+	public function getStyle($styleID) {
+		$sql = "SELECT
+				*
+			FROM
+				ikarus".IKARUS_N."_style
+			WHERE
+				environment = '".escapeString($this->environment)."'
+			AND
+				styleID = ".$styleID;
+		$row = IKARUS::getDatabase()->getFirstRow($sql);
+		
+		// style not found?
+		if (!IKARUS::getDatabase()->countRows()) throw new SystemException("Unknown style with ID '%u'", $styleID);
+		
+		return (new Style($row));
+	}
 
 	/**
 	 * Sets a style as active
