@@ -16,5 +16,10 @@ class IllegalLinkException extends UserException {
 	 * @see UserException::$templateName
 	 */
 	public $templateName = 'illegalLinkException';
+	
+	/**
+	 * @see UserException::$header
+	 */
+	public $header = 'HTTP/1.1 404 Not Found';
 }
 ?>
