@@ -127,6 +127,7 @@ class SessionEditor extends Session {
 
 		$additionalInformation['IP'] = (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '');
 		$additionalInformation['userAgent'] = (isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '');
+		$additionalInformation['lastActivity'] = TIME_NOW;
 
 		if (!$basicInformation) {
 			$additionalInformation['requestMethod'] = (isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : '');
