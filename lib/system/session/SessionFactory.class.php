@@ -92,7 +92,7 @@ class SessionFactory {
 			ON
 				session.sessionID = data.sessionID
 			WHERE
-				session.sessionID = ".$sessionID."
+				session.sessionID = '".escapeString($sessionID)."'
 			AND
 				data.packageID = ".PACKAGE_ID;
 		$row = IKARUS::getDatabase()->getFirstRow($sql);
