@@ -69,7 +69,7 @@ abstract class DatabaseObject {
 		}
 
 		// handle undefined methods
-		throw new SystemException("Method '%s' does not exist in class %s", $method, get_class($this));
+		throw new SystemException("Method '%s' does not exist in class %s", $name, get_class($this));
 	}
 }
 ?>
