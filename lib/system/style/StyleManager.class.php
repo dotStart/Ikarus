@@ -45,7 +45,7 @@ class StyleManager {
 		$this->environment = $environment;
 
 		// load cache
-		$this->loadCache($environment);
+		// $this->loadCache($environment);
 
 		// try to set active stle from query parameter
 		try {
