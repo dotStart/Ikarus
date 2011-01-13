@@ -134,6 +134,9 @@ class IKARUS {
 		// handle parameters
 		self::$packageDirs = $packageDirs;
 		self::$packageDir = $packageDir;
+		
+		// disable xdebug
+		if (function_exists('xdebug_disable')/* and !DEBUG*/) xdebug_disable();
 
 		// init components
 		$this->initDatabase();
@@ -157,11 +160,10 @@ class IKARUS {
 	 */
 	public static function destruct() {
 		// flush ouput
-		if (ob_get_level() and ini_get('output_handler')) {
+		if (ob_get_level() and ini_get('output_handler'))
 			ob_flush();
-		} else {
+		else
 			flush();
-		}
 
 		// update session
 		if (self::$sessionObj !== null)
