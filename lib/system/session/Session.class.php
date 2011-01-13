@@ -34,16 +34,16 @@ class Session extends DatabaseObject {
 	public function __construct($sessionID, $row = null) {
 		if ($sessionID !== null) {
 			$sql = "SELECT
-						session.*,
-						data.sessionData as sessionData
-					FROM
-						ikarus".IKARUS_N."_session session
-					LEFT JOIN
-						ikarus"._IKARUS_N."_session_data sessionData
-					ON
-						session.sessionID = sessionData.sessionID
-					WHERE
-						session.sessionID = '".escapeString($sessionID)."'";
+					session.*,
+					data.sessionData as sessionData
+				FROM
+					ikarus".IKARUS_N."_session session
+				LEFT JOIN
+					ikarus"._IKARUS_N."_session_data sessionData
+				ON
+					session.sessionID = sessionData.sessionID
+				WHERE
+					session.sessionID = '".escapeString($sessionID)."'";
 			$row = IKARUS::getDB()->getFirstRow($sql);
 		}
 
