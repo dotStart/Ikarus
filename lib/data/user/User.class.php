@@ -32,5 +32,15 @@ class User extends DatabaseObject {
 		
 		parent::__construct($row);
 	}
+	
+	/**
+	 * @see DatabaseObject::handleData()
+	 */
+	protected function handleData($data) {
+		parent::handleData($data);
+		
+		// set userID to zero value
+		if (!isset($this->data['userID'])) $this->data['userID'] = 0;
+	}
 }
 ?>
