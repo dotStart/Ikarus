@@ -79,9 +79,24 @@ class SystemException extends Exception implements PrintableException {
 	public function show() {
 		// send status code
 		@header('HTTP/1.1 503 Service Unavailable');
+		
+		// save error message
+		if (IKARUS::getDatabase() !== null and defined('IKARUS_N')) {
+			try {
+				$sql = "INSERT INTO
+						ikarus".IKARUS_N."_error_log (message, stacktrace, packageID, timestamp)
+					VALUES
+						('".escapeString(StringUtil::encodeHTML($this->getMessage()))."', '".escapeString(StringUtil::encodeHTML($this->__getTraceAsString()))."', ".PACKAGE_ID.", ".TIME_NOW.")";
+				IKARUS::getDatabase()->sendQuery($sql);
+			} catch (Exception $ex) {
+				// ignore
+			}
+		}
 
 		// print report
 		echo '<?xml version="1.0" encoding="UTF-8"?>';
+		
+		if (DISPLAY_ERRORS) {
 		?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
@@ -164,6 +179,53 @@ class SystemException extends Exception implements PrintableException {
 </html>
 
 <?php
+		} else {
+			// try to display exception template (Localized message)
+			if (IKARUS::getTemplate() !== null) {
+				try {
+					IKARUS::getTemplate()->display('systemException');
+					return;
+				} catch (Exception $ex) {
+					// ignore;
+				}
+			}
+			
+			// Cannot display template -> Show english error message (hardcoded)
+			?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" xml:lang="en">
+<head>
+<title>An error occoured</title>
+<style type="text/css">
+/*<![CDATA[*/
+.systemException {
+	border-width: 2px;
+	border-color: #a2ff81;
+	border-style: solid;
+	padding: 3px;
+	background-color: #c7ffb4;
+	text-align: left;
+	overflow: auto;
+	font-family: Verdana, Helvetica, sans-serif;
+	font-size: .8em;
+}
+
+.systemException h1 {
+	padding: 2px !important;
+	margin: 0 !important;
+}
+/*]]>*/
+</style>
+</head>
+<body>
+	<div class="systemException">
+		<h1>An error occoured</h1>
+		<p>An error occoured while generating this page. If this error persists you should message an administrator!</p>
+	</div>
+</body>
+</html>
+			<?php	
+		}
 	}
 }
 ?>
