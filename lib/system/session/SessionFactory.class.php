@@ -84,17 +84,17 @@ class SessionFactory {
 
 		// try to find a session in database
 		$sql = "SELECT
-					data.sessionData AS sessionData
-				FROM
-					ikarus".IKARUS_N."_session session
-				LEFT JOIN
-					ikarus".IKARUS_N."_session_data data
-				ON
-					session.sessionID = data.sessionID
-				WHERE
-					session.sessionID = ".$sessionID."
-				AND
-					data.packageID = ".PACKAGE_ID;
+				data.sessionData AS sessionData
+			FROM
+				ikarus".IKARUS_N."_session session
+			LEFT JOIN
+				ikarus".IKARUS_N."_session_data data
+			ON
+				session.sessionID = data.sessionID
+			WHERE
+				session.sessionID = ".$sessionID."
+			AND
+				data.packageID = ".PACKAGE_ID;
 		$row = IKARUS::getDatabase()->getFirstRow($sql);
 
 		// no rows found -> return false
