@@ -81,7 +81,7 @@ class StyleManager {
 		// style not found?
 		if (!IKARUS::getDatabase()->countRows()) throw new SystemException("What the hell?! No default Style detected?!");
 		
-		return (new Style($row));
+		return (new Style(null, $row));
 	}
 
 	/**
@@ -116,7 +116,7 @@ class StyleManager {
 		// style not found?
 		if (!IKARUS::getDatabase()->countRows()) throw new SystemException("Unknown style with ID '%u'", $styleID);
 		
-		return (new Style($row));
+		return (new Style(null, $row));
 	}
 
 	/**
