@@ -1,5 +1,6 @@
 <?php
 // ikarus imports
+require_once(IKARUS_DIR.'lib/system/cache/CacheBuilder.class.php');
 require_once(IKARUS_DIR.'lib/system/language/Language.class.php');
 
 /**

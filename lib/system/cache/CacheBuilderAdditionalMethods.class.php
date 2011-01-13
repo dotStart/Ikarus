@@ -1,4 +1,6 @@
 <?php
+// ikarus imports
+require_once(IKARUS_DIR.'lib/system/cache/CacheBuilder.class.php');
 
 /**
  * Reads additional methods for Ikarus core from database
