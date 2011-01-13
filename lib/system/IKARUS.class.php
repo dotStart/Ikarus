@@ -250,7 +250,7 @@ class IKARUS {
 	 */
 	protected function initStyle() {
 		// get StyleManager instance
-		$styleManager = StyleManager::getInstance(self::ENVIRONMENT);
+		$styleManager = StyleManager::getInstance(static::ENVIRONMENT);
 
 		// get active style
 		self::$styleObj = $styleManager->getActiveStyle();
