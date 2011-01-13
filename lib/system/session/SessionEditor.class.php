@@ -1,5 +1,6 @@
 <?php
 require_once(IKARUS_DIR.'lib/system/session/Session.class.php');
+require_once(IKARUS_DIR.'lib/data/user/UserProfile.class.php');
 
 /**
  * Represents a session and provides methods fro creating new, updating or deleting sessions
@@ -46,6 +47,13 @@ class SessionEditor extends Session {
 		$className = __CLASS__;
 
 		return new $className($sessionID, null, true);
+	}
+	
+	/**
+	 * Returnes the UserProfile for active session
+	 */
+	public function getUser() {
+		return (new UserProfile($this->userID));
 	}
 
 	/**
