@@ -136,7 +136,7 @@ class IKARUS {
 		self::$packageDir = $packageDir;
 		
 		// disable xdebug
-		if (function_exists('xdebug_disable')/* and !DEBUG*/) xdebug_disable();
+		if (function_exists('xdebug_disable') and XDEBUG) xdebug_disable();
 
 		// init components
 		$this->initDatabase();
