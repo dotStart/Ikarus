@@ -41,6 +41,9 @@ class SessionFactory {
 	protected function __construct() {
 		// start php sessions
 		session_start();
+		
+		// enable xdebug
+		if (XDEBUG) xdebug_enable();
 
 		// try to find existing session and create new session if no session exists
 		if ($this->loadSession() === false)
