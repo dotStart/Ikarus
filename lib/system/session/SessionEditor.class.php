@@ -79,9 +79,9 @@ class SessionEditor extends Session {
 
 			// insert new data row
 			$sql = "INSERT INTO
-						ikarus".IKARUS_N."_session_data (sessionID, sessionData)
-					VALUES
-						('".escapeString($this->sessionID)."', '".escapeString(serialize($this))."')";
+					ikarus".IKARUS_N."_session_data (sessionID, sessionData, packageID)
+				VALUES
+					('".escapeString($this->sessionID)."', '".escapeString(serialize($this))."', ".PACKAGE_ID.")";
 			IKARUS::getDatabase()->sendQuery($sql);
 		} else {
 			// serialize and update
