@@ -33,7 +33,7 @@ class HeaderUtil {
 		}
 		
 		// send no cache headers
-		if (HTTP_ENABLE_NO_CACHE_HEADERS && !WCF::getSession()->spiderID) {
+		if (HTTP_ENABLE_NO_CACHE_HEADERS && !IKARUS::getSession()->spiderID) {
 			self::sendNoCacheHeaders();
 		}
 		
