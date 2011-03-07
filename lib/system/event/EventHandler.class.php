@@ -45,6 +45,15 @@ class EventHandler {
 			}
 		}
 	}
+	
+	/**
+	 * Alias for EventHandler::fire()
+	 * @see EventHandler::fire()
+	 * @deprecated
+	 */
+	public static function fireAction($class, $event) {
+		return self::fire($class, $event);
+	}
 
 	/**
 	 * Loads the listener cache
