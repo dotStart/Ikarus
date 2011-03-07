@@ -29,10 +29,10 @@ abstract class UserException extends Exception implements PrintableException {
 	 */
 	public function show() {
 		// send headers
-		if (!empty($this->templateName)) @header($this->header);
+		if (!empty($this->header)) @header($this->header);
 
 		// display template
-		if (!empty($this->header)) IKARUS::getTemplate()->display($this->templateName);
+		if (!empty($this->templateName)) IKARUS::getTemplate()->display($this->templateName);
 	}
 }
 ?>
