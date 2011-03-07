@@ -26,7 +26,7 @@ class SessionEditor extends Session {
 
 		// handle additional arguments
 		if ($isNew)
-			$this->update(true);
+		$this->update(true);
 	}
 
 	/**
@@ -48,14 +48,14 @@ class SessionEditor extends Session {
 
 		return new $className($sessionID, null, true);
 	}
-	
+
 	/**
 	 * Returnes the UserProfile for active session
 	 */
 	public function getUser() {
 		return (new UserProfile($this->userID));
 	}
-	
+
 	/**
 	 * Inits the session
 	 */

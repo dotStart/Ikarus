@@ -3,7 +3,7 @@
 require_once(IKARUS_DIR.'lib/system/cache/CacheBuilder.class.php');
 
 /**
- * Caches event listeners 
+ * Caches event listeners
  * @author		Johannes Donath
  * @copyright		2011 DEVel Fusion
  * @package		com.develfusion.ikarus
@@ -20,16 +20,16 @@ class CacheBuilderEventListener implements CacheBuilder {
 	public function getData($file) {
 		// get basename
 		$file = basename($file, '.php');
-		
+
 		// remove 'cache.'
 		$file = substr($file, stripos($file, '.') + 1);
-		
+
 		// split
 		list($file, $packageID) = explode('-', $file);
-		
+
 		// create needed variables
 		$data = array();
-		
+
 		// get data
 		$sql = "SELECT
 				*
@@ -44,11 +44,11 @@ class CacheBuilderEventListener implements CacheBuilder {
 			OR
 				listener.packageID = ".$packageID;
 		$result = IKARUS::getDatabase()->sendQuery($sql);
-		
+
 		while($row = IKARUS::getDatabase()->fetchArray($result)) {
 			$data[$row['className']][$row['event']][] = $row['listenerFile'];
 		}
-		
+
 		return $data;
 	}
 }

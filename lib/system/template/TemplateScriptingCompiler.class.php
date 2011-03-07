@@ -39,16 +39,16 @@ class TemplateScriptingCompiler {
 				'system', 'exec', 'passthru', 'shell_exec', // command line execution
 				'include', 'require', 'include_once', 'require_once', // includes
 				'eval', 'virtual', 'call_user_func_array', 'call_user_func', 'assert' // code execution
-			);
+	);
 
 	protected 	$variableOperatorPattern, $conditionOperatorPattern, $escapedPattern, $validVarnamePattern,
-			$constantPattern, $doubleQuotePattern, $singleQuotePattern, $quotePattern, $numericPattern,
-			$simpleVarPattern, $outputPattern;
+	$constantPattern, $doubleQuotePattern, $singleQuotePattern, $quotePattern, $numericPattern,
+	$simpleVarPattern, $outputPattern;
 
 	protected	$currentIdentifier, $currentLineNo;
 
 	protected 	$modifiers = array(), $autoloadPlugins = array(), $tagStack = array(),
-			$compilerPlugins = array(), $captureStack = array();
+	$compilerPlugins = array(), $captureStack = array();
 
 	protected 	$leftDelimiter = '{', $rightDelimiter = '}';
 	protected 	$ldq, $rdq;
@@ -1019,7 +1019,7 @@ class TemplateScriptingCompiler {
 						throw new SystemException($this->formatSyntaxError("unexpected '.' in tag '".$tag."'", $this->currentIdentifier, $this->currentLineNo), 12004);
 						break;
 
-					// object access
+						// object access
 					case '->':
 						if ($status == 'variable' || $status == 'object') {
 							$result .= $operator;
@@ -1030,7 +1030,7 @@ class TemplateScriptingCompiler {
 						throw new SystemException($this->formatSyntaxError("unexpected '->' in tag '".$tag."'", $this->currentIdentifier, $this->currentLineNo), 12004);
 						break;
 
-					// left parenthesis
+						// left parenthesis
 					case '(':
 						if ($status == 'object') {
 							$statusStack[count($statusStack) - 1] = 'variable';
@@ -1048,7 +1048,7 @@ class TemplateScriptingCompiler {
 						throw new SystemException($this->formatSyntaxError("unexpected '(' in tag '".$tag."'", $this->currentIdentifier, $this->currentLineNo), 12004);
 						break;
 
-					// right parenthesis
+						// right parenthesis
 					case ')':
 						while ($oldStatus = array_pop($statusStack)) {
 							if ($oldStatus != 'variable' && $oldStatus != 'object' && $oldStatus != 'constant' && $oldStatus != 'string') {
@@ -1063,7 +1063,7 @@ class TemplateScriptingCompiler {
 						throw new SystemException($this->formatSyntaxError("unexpected ')' in tag '".$tag."'", $this->currentIdentifier, $this->currentLineNo), 12004);
 						break;
 
-					// bracket open
+						// bracket open
 					case '[':
 						if ($status == 'variable' || $status == 'object') {
 							if ($status == 'object') $statusStack[count($statusStack) - 1] = 'variable';
@@ -1075,7 +1075,7 @@ class TemplateScriptingCompiler {
 						throw new SystemException($this->formatSyntaxError("unexpected '[' in tag '".$tag."'", $this->currentIdentifier, $this->currentLineNo), 12004);
 						break;
 
-					// bracket close
+						// bracket close
 					case ']':
 						while ($oldStatus = array_pop($statusStack)) {
 							if ($oldStatus != 'variable' && $oldStatus != 'object' && $oldStatus != 'constant' && $oldStatus != 'string') {
@@ -1090,7 +1090,7 @@ class TemplateScriptingCompiler {
 						throw new SystemException($this->formatSyntaxError("unexpected ']' in tag '".$tag."'", $this->currentIdentifier, $this->currentLineNo), 12004);
 						break;
 
-					// modifier
+						// modifier
 					case '|':
 						// handle previous modifier
 						if ($modifierData !== null) {
@@ -1110,7 +1110,7 @@ class TemplateScriptingCompiler {
 						$result = '';
 						break;
 
-					// modifier parameter
+						// modifier parameter
 					case ':':
 						while ($oldStatus = array_pop($statusStack)) {
 							if ($oldStatus != 'variable' && $oldStatus != 'object' && $oldStatus != 'constant' && $oldStatus != 'string') {
@@ -1143,7 +1143,7 @@ class TemplateScriptingCompiler {
 						throw new SystemException($this->formatSyntaxError("unexpected ',' in tag '".$tag."'", $this->currentIdentifier, $this->currentLineNo), 12004);
 						break;
 
-					// math operators
+						// math operators
 					case '+':
 					case '-':
 					case '*':

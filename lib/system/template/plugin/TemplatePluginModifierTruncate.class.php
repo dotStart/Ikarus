@@ -48,7 +48,7 @@ class TemplatePluginModifierTruncate implements TemplatePluginModifier {
 			return StringUtil::substring($string, 0, $length).$etc;
 		}
 		else {
-   			return $string;
+			return $string;
 		}
 	}
 }

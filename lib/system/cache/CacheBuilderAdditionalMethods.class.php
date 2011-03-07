@@ -20,16 +20,16 @@ class CacheBuilderAdditionalMethods implements CacheBuilder {
 	public function getData($file) {
 		// get basename
 		$file = basename($file, '.php');
-		
+
 		// remove 'cache.'
 		$file = substr($file, stripos($file, '.') + 1);
-		
+
 		// split
 		list($packageID, $file) = explode('-', $file);
-		
+
 		// create needed variables
 		$data = array();
-		
+
 		// get data
 		$sql = "SELECT
 				*
@@ -44,11 +44,11 @@ class CacheBuilderAdditionalMethods implements CacheBuilder {
 			OR
 				additionalMethods.packageID = ".$packageID;
 		$result = IKARUS::getDatabase()->sendQuery($sql);
-		
+
 		while($row = IKARUS::getDatabase()->fetchArray($result)) {
 			$data[$row['method']] = array($row['target'], $row['method']);
 		}
-		
+
 		return $data;
 	}
 }

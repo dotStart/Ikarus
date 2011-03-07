@@ -57,81 +57,81 @@ class LanguageManager {
 	 * @var array
 	 */
 	public static $supportedCharsets = array(
-		// latin1
+	// latin1
 		'ISO-8859-1' => array(
 			'multibyte' => false,
 			'languages' => array('en', 'de', 'de-informal', 'es', 'it', 'nl', 'pt', 'pt-BR', 'sv', 'da', 'no', 'fi')
-		),
+	),
 
-		// latin2
+	// latin2
 		'ISO-8859-2' => array(
 			'multibyte' => false,
 			'languages' => array('en', 'de', 'de-informal', 'bs', 'hr', 'sr', 'sk', 'pl', 'cs', 'hu', 'ro')
-		),
+	),
 
-		// greek
+	// greek
 		'ISO-8859-7' => array(
 			'multibyte' => false,
 			'languages' => array('en', 'el')
-		),
+	),
 
-		// hebrew
+	// hebrew
 		'ISO-8859-8' => array(
 			'multibyte' => false,
 			'languages' => array('en', 'he')
-		),
+	),
 
-		// latin5 (turkish)
+	// latin5 (turkish)
 		'ISO-8859-9' => array(
 			'multibyte' => false,
 			'languages' => array('en', 'de', 'de-informal', 'tr')
-		),
+	),
 
-		// japanese
+	// japanese
 		'EUC-JP' => array(
 			'multibyte' => true,
 			'languages' => array('en', 'ja')
-		),
+	),
 
 		'SJIS' => array(
 			'multibyte' => true,
 			'languages' => array('ja')
-		),
+	),
 
-		// chinese (traditional)
-		//'BIG-5' => array(
-			// 'multibyte' => true,
-			// 'languages' => array('en', 'zh-TW')
-		// ),
+	// chinese (traditional)
+	//'BIG-5' => array(
+	// 'multibyte' => true,
+	// 'languages' => array('en', 'zh-TW')
+	// ),
 
-		// chinese (simlified)
+	// chinese (simlified)
 		'CP936' => array(
 			'multibyte' => true,
 			'languages' => array('en', 'zh-CN')
-		),
+	),
 
-		// chinese (simplified)
+	// chinese (simplified)
 		'EUC-CN' => array(
 			'multibyte' => true,
 			'languages' => array('en', 'zh-CN')
-		),
+	),
 
-		// russian
+	// russian
 		'KOI8-R' => array(
 			'multibyte' => false,
 			'languages' => array('en', 'ru')
-		),
+	),
 
 		'Windows-1251' => array(
 			'multibyte' => false,
 			'languages' => array('en', 'ru')
-		),
+	),
 
-		// korean
+	// korean
 		'EUC-KR' => array(
 			'multibyte' => true,
 			'languages' => array('en', 'ko')
-		)
+	)
 	);
 
 	/**
@@ -190,10 +190,10 @@ class LanguageManager {
 		foreach($languages as $languageCode => $language) {
 			if ($language->isDefault()) $defaultLanguage = $language;
 		}
-		
+
 		// validate
 		if (!isset($defaultLanguage) or !count($languages)) throw new SystemException("No languages available");
-		
+
 		// get preferred language
 		$this->setActiveLanguage($this->getPreferredLanguage($languages, $defaultLanguage));
 	}
@@ -206,7 +206,7 @@ class LanguageManager {
 	public static function fixLanguageCode($languageCode) {
 		return preg_replace('/-[a-z0-9]+/', '', $languageCode);
 	}
-	
+
 	/**
 	 * Returnes a language variable
 	 * @throws SystemException
@@ -215,19 +215,19 @@ class LanguageManager {
 	public function get() {
 		// get arguments
 		$arguments = func_get_args();
-		
+
 		if (count($arguments) >= 1) {
 			if (isset($this->items[$arguments[0]])) {
 				$arguments[0] = $this->items[$arguments[0]];
 				return call_user_func_array('sprintf', $arguments);
 			}
-			
+				
 			return $arguments[0];
 		}
-		
+
 		throw new SystemException("You must pass at least %s parameter to %s", 'one', 'LanguageManager::get()');
 	}
-	
+
 	/**
 	 * Gets all available languages from database
 	 * @param	integer	$packageID
@@ -245,14 +245,14 @@ class LanguageManager {
 	public function getDynamicVariable() {
 		return call_user_func_array(array($this, 'get'), func_get_args());
 	}
-	
+
 	/**
 	 * Returnes a LanguageManager instance
 	 * @return LanguageManager
 	 */
 	public static function getInstance() {
 		if (self::$instance === null)
-			self::$instance = new LanguageManager();
+		self::$instance = new LanguageManager();
 
 		return self::$instance;
 	}
@@ -276,7 +276,7 @@ class LanguageManager {
 					$fixedCode = strtolower(self::fixLanguageCode($availableLanguageCode));
 
 					if ($fixedCode == $acceptedLanguage or $fixedCode == preg_replace('%^([a-z]{2}).*$%i', '$1', $acceptedLanguage))
-						return $language;
+					return $language;
 				}
 			}
 		}
@@ -319,9 +319,9 @@ class LanguageManager {
 
 		// get cache
 		if ($this->cacheFileNeedsRebuild($language))
-			$this->items = $this->rebuildCacheFile($language);
+		$this->items = $this->rebuildCacheFile($language);
 		else
-			$this->items = $this->loadCacheFile($language);
+		$this->items = $this->loadCacheFile($language);
 	}
 
 	/**
@@ -403,7 +403,7 @@ class LanguageManager {
 
 		// get dateFormatLocalized option
 		if (setlocale(LC_TIME, $this->get('ikarus.global.locale.unix').'.'.OPTION_CHARSET, $this->get('ikarus.global.locale.unix').'.'.StringUtil::replace('ISO-', 'ISO', OPTION_CHARSET), $this->get('ikarus.global.locale.unix'), $this->get('ikarus.global.locale.win')) !== false)
-				self::$dateFormatLocalized = true;
+		self::$dateFormatLocalized = true;
 	}
 }
 ?>

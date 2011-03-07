@@ -244,7 +244,7 @@ class TemplatePatch {
 
 				// remember the byte position in the target.
 				$this->targetPosition = $this->templatePatchUnified->i_pos; // @todo: replace variable names in the PatchUnified like this one
-											    // with better ones according to our coding style.
+				// with better ones according to our coding style.
 				$hunk = array();
 
 			} else {

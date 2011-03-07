@@ -21,16 +21,16 @@ class CacheBuilderLanguages implements CacheBuilder {
 	public function getData($file) {
 		// get basename
 		$file = basename($file, '.php');
-		
+
 		// remove 'cache.'
 		$file = substr($file, stripos($file, '.') + 1);
-		
+
 		// split
 		list($packageID, $file) = explode('-', $file);
-		
+
 		// create needed variables
 		$data = array();
-		
+
 		// get data
 		// build monster query from hell
 		$sql = "SELECT
@@ -57,11 +57,11 @@ class CacheBuilderLanguages implements CacheBuilder {
 						)
 				)";
 		$result = IKARUS::getDatabase()->sendQuery($sql);
-		
+
 		while($row = IKARUS::getDatabase()->fetchArray($result)) {
 			$data[] = new Language(null, $row);
 		}
-		
+
 		return $data;
 	}
 }

@@ -18,7 +18,7 @@ interface CacheSource {
 	 * Closes the cache source
 	 */
 	public function close();
-	
+
 	/**
 	 * Enables this cache source
 	 */
@@ -34,7 +34,7 @@ interface CacheSource {
 	 * @throws SystemException
 	 */
 	public function get($cacheFile, $cacheBuilderPath, $minLifetime, $maxLifetime);
-	
+
 	/**
 	 * Returnes true if this cache source is supported on current system
 	 */

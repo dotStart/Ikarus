@@ -66,9 +66,9 @@ class TemplatePluginFunctionCounter implements TemplatePluginFunction {
 			$counter['direction'] = $tagArgs['direction'];
 		}
 
-    		if ($counter['direction'] == 'down') {
+		if ($counter['direction'] == 'down') {
 			$counter['count'] -= $counter['skip'];
-    		}
+		}
 		else {
 			$counter['count'] += $counter['skip'];
 		}

@@ -118,7 +118,7 @@ class TemplatePatchUnified {
 
 				if (count($position)) break;
 				if (!(preg_match('/^ /', $this->hunk[0]) && array_shift($this->hunk)) ||
-					!(preg_match('/^ /', $this->hunk[count($this->hunk) - 1]) && array_pop($this->hunk))) {
+				!(preg_match('/^ /', $this->hunk[count($this->hunk) - 1]) && array_pop($this->hunk))) {
 					break;
 				}
 
@@ -256,7 +256,7 @@ class TemplatePatchUnified {
 					return array(
 						'pos' => $tell,
 						'lines' => $lineNo
-						);
+					);
 				}
 			}
 			$lineNo++;

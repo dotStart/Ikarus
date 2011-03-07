@@ -20,17 +20,17 @@ class Style extends DatabaseObject {
 	 * @param	array	$row
 	 */
 	public function __construct($styleID, $row = null) {
-			if ($styleID !== null) {
-				$sql = "SELECT
+		if ($styleID !== null) {
+			$sql = "SELECT
 						*
 					FROM
 						ikarus".IKARUS_N."_style
 					WHERE
 						styleID = ".$styleID;
-				$row = IKARUS::getDatabase()->getFirstRow($sql);	
-			}
-			
-			parent::__construct($row);
+			$row = IKARUS::getDatabase()->getFirstRow($sql);
 		}
+			
+		parent::__construct($row);
+	}
 }
 ?>

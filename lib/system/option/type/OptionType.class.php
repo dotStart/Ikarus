@@ -11,15 +11,15 @@
  * @version		1.0.0-0001
  */
 interface OptionType {
-	
+
 	/**
 	 * Formates the given value for options.inc.php
 	 * @param	mixed	$value
 	 */
 	public static function formatOptionValue($value);
-	
+
 	// TODO: Add validation
-	
+
 	// TODO: Add backend template shit
 }
 ?>

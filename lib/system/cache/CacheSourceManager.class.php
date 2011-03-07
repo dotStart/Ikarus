@@ -37,7 +37,7 @@ class CacheSourceManager {
 		$this->enableCacheSources($disabledCacheSources);
 		$this->chooseFallbackCacheSource($fallbackCacheSourceName);
 	}
-	
+
 	/**
 	 * Sets a fallback cache source
 	 * @param	string	$fallbackCacheSourceName
@@ -48,7 +48,7 @@ class CacheSourceManager {
 		// validate
 		if (!$this->fallbackCacheSource) throw new SystemException("Unable to load fallback cache source '%s'", $fallbackCacheSourceName);
 	}
-	
+
 	/**
 	 * Closes all cache sources
 	 */
@@ -67,7 +67,7 @@ class CacheSourceManager {
 			if (!in_array($key, $disabledCacheSources) and $this->cacheSources[$key]->isSupported()) $this->cacheSources[$key]->enable();
 		}
 	}
-	
+
 	/**
 	 * Flushes all cache sources
 	 */
@@ -109,7 +109,7 @@ class CacheSourceManager {
 		// call source method
 		return $source->get($cacheFile, $cacheBuilderPath, $minLifetime, $maxLifetime);
 	}
-	
+
 	/**
 	 * Loads all available cache sources
 	 * Note: This will automaticly add all sources located in lib/system/cache/source/

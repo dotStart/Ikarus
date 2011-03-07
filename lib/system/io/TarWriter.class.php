@@ -99,7 +99,7 @@ class TarWriter extends Tar {
 			}
 
 			if (!$filename || $filename == $this->archiveName) {
-            			continue;
+				continue;
 			}
 
 			if (!file_exists($filename)) {
@@ -231,9 +231,9 @@ class TarWriter extends Tar {
 		$checksum = 0;
 		for ($i = 0; $i < 148; $i++) $checksum += ord(substr($binaryDataFirst, $i, 1));
 		for ($i = 148; $i < 156; $i++) $checksum += ord(' ');
-	    	for ($i = 156, $j = 0; $i < 512; $i++, $j++) $checksum += ord(substr($binaryDataLast, $j, 1));
+		for ($i = 156, $j = 0; $i < 512; $i++, $j++) $checksum += ord(substr($binaryDataLast, $j, 1));
 
-	    	$this->file->write($binaryDataFirst, 148);
+		$this->file->write($binaryDataFirst, 148);
 		$this->file->write(pack("a8", sprintf("%6s ", decOct($checksum))), 8); // write the checksum
 		$this->file->write($binaryDataLast, 356);
 
@@ -253,7 +253,7 @@ class TarWriter extends Tar {
 		$binaryDataLast = pack("a1a100a6a2a32a32a8a8a155a12", $typeFlag, '', '', '', '', '', '', '', '', '');
 
 		// calculate the checksum
-        	$checksum = 0;
+		$checksum = 0;
 		for ($i = 0; $i < 148; $i++) $checksum += ord(substr($binaryDataFirst, $i, 1));
 		for ($i = 148; $i < 156; $i++) $checksum += ord(' ');
 		for ($i = 156, $j = 0; $i < 512; $i++, $j++) $checksum += ord(substr($binaryDataLast, $j, 1));

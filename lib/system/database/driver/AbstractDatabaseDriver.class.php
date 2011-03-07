@@ -11,13 +11,13 @@
  * @version		1.0.0-0001
  */
 abstract class AbstractDatabaseDriver implements DatabaseDriver {
-	
+
 	/**
 	 * Contains the database that we should use
 	 * @var string
 	 */
 	protected $database = '';
-	
+
 	/**
 	 * Contains database server's hostname
 	 * @var string
@@ -47,7 +47,7 @@ abstract class AbstractDatabaseDriver implements DatabaseDriver {
 	 * @var	integer
 	 */
 	protected $queryCount = 0;
-	
+
 	/**
 	 * Contains the username that should used to connect to database
 	 * @var string
@@ -99,7 +99,7 @@ abstract class AbstractDatabaseDriver implements DatabaseDriver {
 	public function getColumns($tableName) {
 		throw new SystemException("Unfinished %s definition in class %s (Missing method '%s')", 'DatabaseDriver', get_class($this), 'getColumns');
 	}
-	
+
 	/**
 	 * @see lib/system/database/driver/DatabaseDriver::getDatabaseType()
 	 */

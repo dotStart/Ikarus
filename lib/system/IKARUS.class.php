@@ -134,7 +134,7 @@ class IKARUS {
 		// handle parameters
 		self::$packageDirs = $packageDirs;
 		self::$packageDir = $packageDir;
-		
+
 		// disable xdebug
 		if (function_exists('xdebug_disable') and XDEBUG) xdebug_disable();
 
@@ -161,21 +161,21 @@ class IKARUS {
 	public static function destruct() {
 		// flush ouput
 		if (ob_get_level() and ini_get('output_handler'))
-			ob_flush();
+		ob_flush();
 		else
-			flush();
+		flush();
 
 		// update session
 		if (self::$sessionObj !== null)
-			self::$sessionObj->update();
+		self::$sessionObj->update();
 
 		// close cache sources
 		if (self::$cacheObj !== null)
-			self::$cacheObj->closeCacheSources();
+		self::$cacheObj->closeCacheSources();
 
 		// shut down database
 		if (self::$dbObj !== null)
-			self::$dbObj->shutdown();
+		self::$dbObj->shutdown();
 	}
 
 	/**
@@ -358,7 +358,7 @@ class IKARUS {
 	public static final function getUser() {
 		return self::$userObj;
 	}
-	
+
 	/**
 	 * Handles errors
 	 * @param	integer	$errNo
@@ -372,25 +372,25 @@ class IKARUS {
 			$type = 'error';
 			switch ($errorNo) {
 				case 2: $type = 'warning';
-					break;
+				break;
 				case 8: $type = 'notice';
-					break;
+				break;
 			}
-			
+				
 			throw new SystemException('PHP %s in file %s (%u): %s', $type, $errFile, $errLine, $errMessage);
 		}
 	}
-	
+
 	/**
 	 * Handles uncought exceptions
 	 * @param	Exception	$ex
 	 */
 	public static function handleException(Exception $ex) {
 		if($ex instanceof PrintableException)
-			$ex->show();
+		$ex->show();
 		else
-			print($ex);
-		
+		print($ex);
+
 		exit;
 	}
 
@@ -421,7 +421,7 @@ class IKARUS {
 		$methodName = 'get'.ucfirst($variable);
 
 		if (method_exists('IKARUS', $methodName))
-			return call_user_func(array('IKARUS', $methodName));
+		return call_user_func(array('IKARUS', $methodName));
 
 		// method does not exist -> error
 		throw new SystemException("Property '%s' does not exist in class %s", $variable, 'IKARUS');

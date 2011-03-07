@@ -13,7 +13,7 @@ require_once(IKARUS_DIR.'lib/system/option/type/OptionType.class.php');
  * @version		1.0.0-0001
  */
 class TextOptionType implements OptionType {
-	
+
 	/**
 	 * @see OptionType::formatOptionValue()
 	 */
@@ -21,10 +21,10 @@ class TextOptionType implements OptionType {
 		// escape value
 		$value = str_replace("'", "\'", $value);
 		$value = str_replace("\\", "\\\\", $value);
-		
+
 		// add quotes
 		$value = "'".$value."'";
-		
+
 		return $value;
 	}
 }

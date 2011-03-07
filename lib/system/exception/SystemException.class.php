@@ -79,7 +79,7 @@ class SystemException extends Exception implements PrintableException {
 	public function show() {
 		// send status code
 		@header('HTTP/1.1 503 Service Unavailable');
-		
+
 		// save error message
 		if (IKARUS::getDatabase() !== null and defined('IKARUS_N')) {
 			try {
@@ -95,14 +95,15 @@ class SystemException extends Exception implements PrintableException {
 
 		// print report
 		echo '<?xml version="1.0" encoding="UTF-8"?>';
-		
+
 		if (DISPLAY_ERRORS) {
-		?>
+			?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" xml:lang="en">
 <head>
-<title>Fatal error: <?php echo StringUtil::encodeHTML($this->getMessage()); ?></title>
+<title>Fatal error: <?php echo StringUtil::encodeHTML($this->getMessage()); ?>
+</title>
 <style type="text/css">
 /*<![CDATA[*/
 .systemException {
@@ -114,10 +115,12 @@ class SystemException extends Exception implements PrintableException {
 	font-family: Verdana, Helvetica, sans-serif;
 	font-size: .8em;
 }
+
 .systemException div {
 	border: 1px inset lightgrey;
 	padding: 4px;
 }
+
 .systemException h1 {
 	background-color: #a92222;
 	padding: 4px;
@@ -125,13 +128,16 @@ class SystemException extends Exception implements PrintableException {
 	margin: 0 0 3px 0;
 	font-size: 1.15em;
 }
+
 .systemException h2 {
 	font-size: 1.1em;
 	margin-bottom: 0;
 }
-.systemException pre, .systemException p {
+
+.systemException pre,.systemException p {
 	margin: 0;
 }
+
 .systemException pre {
 	font-size: .85em;
 	font-family: "Courier New";
@@ -150,27 +156,58 @@ class SystemException extends Exception implements PrintableException {
 </head>
 <body>
 	<div class="systemException">
-		<h1>Fatal error: <?php echo StringUtil::encodeHTML($this->getMessage()); ?></h1>
+		<h1>
+			Fatal error:
+			<?php echo StringUtil::encodeHTML($this->getMessage()); ?>
+		</h1>
 
 		<div>
-			<?php if ($this->getCode()) { ?><p>You get more information about the problem in our knowledge base: <a href="http://ikarus.evil-co.de/help/?code=<?php echo intval($this->getCode()); ?>">http://ikarus.evil-co.de/help/?code=<?php echo intval($this->getCode()); ?></a></p><?php } ?>
+		<?php if ($this->getCode()) { ?>
+			<p>
+				You get more information about the problem in our knowledge base: <a
+					href="http://ikarus.evil-co.de/help/?code=<?php echo intval($this->getCode()); ?>">http://ikarus.evil-co.de/help/?code=<?php echo intval($this->getCode()); ?>
+				</a>
+			</p>
+			<?php } ?>
 
 			<h2>Information:</h2>
 			<p>
-				<b>error message:</b> <?php echo StringUtil::encodeHTML($this->getMessage()); ?><br />
-				<b>error code:</b> <?php echo intval($this->getCode()); ?><br />
+				<b>error message:</b>
+				<?php echo StringUtil::encodeHTML($this->getMessage()); ?>
+				<br /> <b>error code:</b>
+				<?php echo intval($this->getCode()); ?>
+				<br />
 				<?php echo $this->information; ?>
-				<b>file:</b> <?php echo StringUtil::encodeHTML($this->getFile()); ?> (<?php echo $this->getLine(); ?>)<br />
-				<?php if (function_exists('xdebug_peak_memory_usage')): ?><b>memory:</b> <?php echo FileUtil::formatFilesize(xdebug_peak_memory_usage()); ?><br /><?php endif; ?>
-				<b>php version:</b> <?php echo StringUtil::encodeHTML(phpversion()); ?><br />
-				<b>ikarus version:</b> <?php echo IKARUS_VERSION; ?><br />
-				<b>date:</b> <?php echo gmdate('r'); ?><br />
-				<b>request:</b> <?php if (isset($_SERVER['REQUEST_URI'])) echo StringUtil::encodeHTML($_SERVER['REQUEST_URI']); ?><br />
-				<?php if (isset($_SERVER['HTTP_REFERER'])): ?><b>referer:</b> <?php if (isset($_SERVER['HTTP_REFERER'])) echo StringUtil::encodeHTML($_SERVER['HTTP_REFERER']); ?><br /><?php endif; ?>
+				<b>file:</b>
+				<?php echo StringUtil::encodeHTML($this->getFile()); ?>
+				(
+				<?php echo $this->getLine(); ?>
+				)<br />
+				<?php if (function_exists('xdebug_peak_memory_usage')): ?>
+				<b>memory:</b>
+				<?php echo FileUtil::formatFilesize(xdebug_peak_memory_usage()); ?>
+				<br />
+				<?php endif; ?>
+				<b>php version:</b>
+				<?php echo StringUtil::encodeHTML(phpversion()); ?>
+				<br /> <b>ikarus version:</b>
+				<?php echo IKARUS_VERSION; ?>
+				<br /> <b>date:</b>
+				<?php echo gmdate('r'); ?>
+				<br /> <b>request:</b>
+				<?php if (isset($_SERVER['REQUEST_URI'])) echo StringUtil::encodeHTML($_SERVER['REQUEST_URI']); ?>
+				<br />
+				<?php if (isset($_SERVER['HTTP_REFERER'])): ?>
+				<b>referer:</b>
+				<?php if (isset($_SERVER['HTTP_REFERER'])) echo StringUtil::encodeHTML($_SERVER['HTTP_REFERER']); ?>
+				<br />
+				<?php endif; ?>
 			</p>
 
 			<h2>Stacktrace:</h2>
-			<pre><?php echo StringUtil::encodeHTML($this->__getTraceAsString()); ?></pre>
+			<pre>
+			<?php echo StringUtil::encodeHTML($this->__getTraceAsString()); ?>
+			</pre>
 		</div>
 
 		<?php echo $this->functions; ?>
@@ -178,7 +215,7 @@ class SystemException extends Exception implements PrintableException {
 </body>
 </html>
 
-<?php
+		<?php
 		} else {
 			// try to display exception template (Localized message)
 			if (IKARUS::getTemplate() !== null) {
@@ -189,7 +226,7 @@ class SystemException extends Exception implements PrintableException {
 					// ignore;
 				}
 			}
-			
+				
 			// Cannot display template -> Show english error message (hardcoded)
 			?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
@@ -220,11 +257,12 @@ class SystemException extends Exception implements PrintableException {
 <body>
 	<div class="systemException">
 		<h1>An error occoured</h1>
-		<p>An error occoured while generating this page. If this error persists you should message an administrator!</p>
+		<p>An error occoured while generating this page. If this error
+			persists you should message an administrator!</p>
 	</div>
 </body>
 </html>
-			<?php	
+<?php	
 		}
 	}
 }

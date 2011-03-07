@@ -41,13 +41,13 @@ class SessionFactory {
 	protected function __construct() {
 		// start php sessions
 		session_start();
-		
+
 		// enable xdebug
 		// if (XDEBUG) xdebug_enable();
 
 		// try to find existing session and create new session if no session exists
 		if ($this->loadSession() === false)
-			$this->createSession();
+		$this->createSession();
 	}
 
 	/**
@@ -64,7 +64,7 @@ class SessionFactory {
 	 */
 	public static function getInstance() {
 		if (self::$instance === null)
-			self::$instance = new SessionFactory();
+		self::$instance = new SessionFactory();
 
 		return self::$instance;
 	}

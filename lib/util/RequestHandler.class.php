@@ -11,7 +11,7 @@
  * @version		1.0.0-0001
  */
 class RequestHandler {
-	
+
 	/**
 	 * @param	string	$name
 	 * @param	string	$type
@@ -21,23 +21,23 @@ class RequestHandler {
 	protected function __construct($name, $type, $packageDir) {
 		// validate classname
 		if (!preg_match('/^[a-z0-9_]+$/i', $name)) throw new SystemException("Nice classname my friend!");
-		
+
 		// generate path
 		$file = IKARUS_DIR.$packageDir.$type.'/'.$name.ucfirst($type).'.class.php';
-		
+
 		// validate file
 		if (!file_exists($file)) throw new SystemException("No file no fun!");
-		
+
 		// include class
 		require_once($file);
-		
+
 		// get class name
 		$className = basename($file, '.class.php');
-		
+
 		// start page
 		new $className();
 	}
-	
+
 	/**
 	 * Handles a request
 	 * @param	array<string>	$packageDirs
@@ -65,13 +65,13 @@ class RequestHandler {
 							break;
 					}
 				}
-				
+
 				// fallback
 				if (!isset($foundType) or !isset($foundName)) {
 					$foundType = 'page';
 					$foundName = 'Index';
 				}
-				
+
 				// call __construct method
 				new RequestHandler($foundName, $foundType, $dir);
 			}

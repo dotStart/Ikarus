@@ -115,7 +115,7 @@ class ArrayUtil {
 		if (!function_exists('array_intersect_key')) {
 			$numberOfArguments = func_num_args();
 			for ($i = 1; !empty($array1) && $i < $numberOfArguments; $i++) {
-	        		$currentArray = func_get_arg($i);
+				$currentArray = func_get_arg($i);
 				foreach (array_keys($array1) as $key) {
 					if (!isset($currentArray[$key])) {
 						unset($array1[$key]);

@@ -127,7 +127,7 @@ class StringUtil {
 	 */
 	public static function encodeHTML($string) {
 		if (is_object($string))
-			$string = $string->__toString();
+		$string = $string->__toString();
 
 		return @htmlspecialchars($string, ENT_COMPAT, defined('OPTION_CHARSET') ? CHARSET : 'UTF-8');
 	}
@@ -140,7 +140,7 @@ class StringUtil {
 	 */
 	public static function decodeHTML($string) {
 		if (is_object($string))
-			$string = $string->__toString();
+		$string = $string->__toString();
 
 		$string = str_ireplace('&nbsp;', ' ', $string); // convert non-breaking spaces to ascii 32; not ascii 160
 		return @html_entity_decode($string, ENT_COMPAT, defined('OPTION_CHARSET') ? CHARSET : 'UTF-8');
@@ -154,16 +154,16 @@ class StringUtil {
 	 */
 	public static function formatNumeric($numeric) {
 		if (is_int($numeric))
-			return self::formatInteger($numeric);
+		return self::formatInteger($numeric);
 
 		else if (is_float($numeric))
-			return self::formatDouble($numeric);
+		return self::formatDouble($numeric);
 
 		else {
 			if (floatval($numeric) - (float) intval($numeric))
-				return self::formatDouble($numeric);
+			return self::formatDouble($numeric);
 			else
-				return self::formatInteger(intval($numeric));
+			return self::formatInteger(intval($numeric));
 		}
 	}
 
@@ -425,19 +425,19 @@ class StringUtil {
 	public static function getCharValue($c) {
 		$ud = 0;
 		if (ord($c{0}) >= 0 && ord($c{0}) <= 127)
-			$ud = ord($c{0});
+		$ud = ord($c{0});
 		if (ord($c{0}) >= 192 && ord($c{0}) <= 223)
-			$ud = (ord($c{0}) - 192) * 64 + (ord($c{1}) - 128);
+		$ud = (ord($c{0}) - 192) * 64 + (ord($c{1}) - 128);
 		if (ord($c{0}) >= 224 && ord($c{0}) <= 239)
-			$ud = (ord($c{0}) - 224) * 4096 + (ord($c{1}) - 128) * 64 + (ord($c{2}) - 128);
+		$ud = (ord($c{0}) - 224) * 4096 + (ord($c{1}) - 128) * 64 + (ord($c{2}) - 128);
 		if (ord($c{0}) >= 240 && ord($c{0}) <= 247)
-			$ud = (ord($c{0}) - 240) * 262144 + (ord($c{1}) - 128) * 4096 + (ord($c{2}) - 128) * 64 + (ord($c{3}) - 128);
+		$ud = (ord($c{0}) - 240) * 262144 + (ord($c{1}) - 128) * 4096 + (ord($c{2}) - 128) * 64 + (ord($c{3}) - 128);
 		if (ord($c{0}) >= 248 && ord($c{0}) <= 251)
-			$ud = (ord($c{0}) - 248) * 16777216 + (ord($c{1}) - 128) * 262144 + (ord($c{2}) - 128) * 4096 + (ord($c{3}) - 128) * 64 + (ord($c{4}) - 128);
+		$ud = (ord($c{0}) - 248) * 16777216 + (ord($c{1}) - 128) * 262144 + (ord($c{2}) - 128) * 4096 + (ord($c{3}) - 128) * 64 + (ord($c{4}) - 128);
 		if (ord($c{0}) >= 252 && ord($c{0}) <= 253)
-			$ud = (ord($c{0}) - 252) * 1073741824 + (ord($c{1}) - 128) * 16777216 + (ord($c{2}) - 128) * 262144 + (ord($c{3}) - 128) * 4096 + (ord($c{4}) - 128) * 64 + (ord($c{5}) - 128);
+		$ud = (ord($c{0}) - 252) * 1073741824 + (ord($c{1}) - 128) * 16777216 + (ord($c{2}) - 128) * 262144 + (ord($c{3}) - 128) * 4096 + (ord($c{4}) - 128) * 64 + (ord($c{5}) - 128);
 		if (ord($c{0}) >= 254 && ord($c{0}) <= 255)
-			$ud = false; // error
+		$ud = false; // error
 		return $ud;
 	}
 
@@ -476,7 +476,7 @@ class StringUtil {
 	 */
 	public static function isUTF8($string) {
 		/*return preg_match('/^(
-				[\x09\x0A\x0D\x20-\x7E]*		# ASCII
+		 [\x09\x0A\x0D\x20-\x7E]*		# ASCII
 			|	[\xC2-\xDF][\x80-\xBF]			# non-overlong 2-byte
 			|	\xE0[\xA0-\xBF][\x80-\xBF]		# excluding overlongs
 			|	[\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}	# straight 3-byte
@@ -485,7 +485,7 @@ class StringUtil {
 			|	[\xF1-\xF3][\x80-\xBF]{3}		# planes 4-15
 			|	\xF4[\x80-\x8F][\x80-\xBF]{2}		# plane 16
 			)*$/x', $string);
-		*/
+			*/
 		return preg_match('/(
 				[\xC2-\xDF][\x80-\xBF]			# non-overlong 2-byte
 			|	\xE0[\xA0-\xBF][\x80-\xBF]		# excluding overlongs

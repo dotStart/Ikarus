@@ -49,11 +49,11 @@ class File {
 	public function __call($function, $arguments) {
 		if (function_exists('f' . $function)) {
 			array_unshift($arguments, $this->resource);
-	       		return call_user_func_array('f' . $function, $arguments);
+			return call_user_func_array('f' . $function, $arguments);
 		}
 		else if (function_exists($function)) {
 			array_unshift($arguments, $this->filename);
-	       		return call_user_func_array($function, $arguments);
+			return call_user_func_array($function, $arguments);
 		}
 		else {
 			throw new SystemException('Can not call file method ' . $function, 11003);

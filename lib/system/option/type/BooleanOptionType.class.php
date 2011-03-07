@@ -13,7 +13,7 @@ require_once(IKARUS_DIR.'lib/system/option/type/OptionType.class.php');
  * @version		1.0.0-0001
  */
 class BooleanOptionType implements OptionType {
-	
+
 	/**
 	 * @see OptionType::formatOptionValue()
 	 */

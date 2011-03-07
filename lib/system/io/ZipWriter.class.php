@@ -161,13 +161,13 @@ class ZipWriter {
 
 		// construct the final Zip file structure and return it
 		return
-			$headers.
-			$data.
-			$this->endOfData.
-			pack("v", sizeof($this->data)).
-			pack("v", sizeof($this->data)).
-			pack("V", strlen($data)).
-			pack("V", strlen($headers)).
+		$headers.
+		$data.
+		$this->endOfData.
+		pack("v", sizeof($this->data)).
+		pack("v", sizeof($this->data)).
+		pack("V", strlen($data)).
+		pack("V", strlen($headers)).
 			"\x00\x00";
 	}
 

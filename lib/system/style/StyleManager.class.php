@@ -61,7 +61,7 @@ class StyleManager {
 	public function getActiveStyle() {
 		return $this->activeStyle;
 	}
-	
+
 	/**
 	 * Returnes the default style
 	 * @throws SystemException
@@ -77,10 +77,10 @@ class StyleManager {
 			AND
 				isDefault = 1";
 		$row = IKARUS::getDatabase()->getFirstRow($sql);
-		
+
 		// style not found?
 		if (!IKARUS::getDatabase()->countRows()) throw new SystemException("What the hell?! No default Style detected?!");
-		
+
 		return (new Style(null, $row));
 	}
 
@@ -95,7 +95,7 @@ class StyleManager {
 
 		return self::$instance[$environment];
 	}
-	
+
 	/**
 	 * Returnes the style with given ID
 	 * @param	integer	$styleID
@@ -112,10 +112,10 @@ class StyleManager {
 			AND
 				styleID = ".$styleID;
 		$row = IKARUS::getDatabase()->getFirstRow($sql);
-		
+
 		// style not found?
 		if (!IKARUS::getDatabase()->countRows()) throw new SystemException("Unknown style with ID '%u'", $styleID);
-		
+
 		return (new Style(null, $row));
 	}
 

@@ -28,7 +28,7 @@ class ZipFile extends File {
 		$this->resource = gzopen($filename, $mode);
 		/*if ($this->resource === false) {
 			throw new SystemException('Can not open file ' . $filename, 11012);
-		}*/
+			}*/
 	}
 
 	/**
@@ -40,11 +40,11 @@ class ZipFile extends File {
 	public function __call($function, $arguments) {
 		if (function_exists('gz' . $function)) {
 			array_unshift($arguments, $this->resource);
-	       		return call_user_func_array('gz' . $function, $arguments);
+			return call_user_func_array('gz' . $function, $arguments);
 		}
 		else if (function_exists($function)) {
 			array_unshift($arguments, $this->filename);
-	       		return call_user_func_array($function, $arguments);
+			return call_user_func_array($function, $arguments);
 		}
 		else {
 			throw new SystemException('Can not call method ' . $function, 11003);

@@ -20,27 +20,27 @@ class CacheBuilderTemplates implements CacheBuilder {
 	public function getData($file) {
 		// get basename
 		$file = basename($file, '.php');
-		
+
 		// remove 'cache.'
 		$file = substr($file, stripos($file, '.') + 1);
-		
+
 		// split
 		$information = explode('-', $file);
-		
+
 		if (count($information) == 3) {
 			$prefix = $information[0].'_';
 			$packageID = $information[2];
 		} else {
 			$prefix = '';
 			if (isset($information[1]))
-				$packageID = $information[1];
+			$packageID = $information[1];
 			else
-				$packageID = PACKAGE_ID;
+			$packageID = PACKAGE_ID;
 		}
-		
+
 		// create needed variables
 		$data = array();
-		
+
 		// get data
 		// build monster query from hell
 		$sql = "SELECT
@@ -59,11 +59,11 @@ class CacheBuilderTemplates implements CacheBuilder {
 						dependency.packageID = ".$packageID."
 				)";
 		$result = IKARUS::getDatabase()->sendQuery($sql);
-		
+
 		while($row = IKARUS::getDatabase()->fetchArray($result)) {
 			$data[$row['templateName']] = $row['packageID'];
 		}
-		
+
 		return $data;
 	}
 }

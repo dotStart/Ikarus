@@ -13,7 +13,7 @@ require_once(IKARUS_DIR.'lib/system/event/EventHandler.class.php');
  * @version		1.0.0-0001
  */
 class AbstractCacheSource implements CacheSource {
-	
+
 	/**
 	 * @see CacheSource::close()
 	 */
@@ -41,7 +41,7 @@ class AbstractCacheSource implements CacheSource {
 	function get($cacheFile, $cacheBuilderPath, $minLifetime, $maxLifetime) {
 		return null;
 	}
-	
+
 	/**
 	 * @see lib/system/cache/CacheSource::isSupported()
 	 */

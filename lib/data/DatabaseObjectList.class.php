@@ -79,7 +79,7 @@ class DatabaseObjectList implements Iterator {
 	 */
 	public function current() {
 		if (isset($this->objectList[$this->objectPointer]))
-			return $this->objectList[$this->objectPointer];
+		return $this->objectList[$this->objectPointer];
 
 		throw new SystemException("Iterator pointer out of index");
 	}

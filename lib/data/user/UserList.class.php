@@ -14,13 +14,13 @@ require_once(IKARUS_DIR.'lib/data/user/UserProfile.class.php');
  * @version		1.0.0-0001
  */
 class UserList extends DatabaseObjectList {
-	
+
 	/**
 	 * Contains the name of the class that should used in list
 	 * @var string
 	 */
 	protected $listObject = 'UserProfile';
-	
+
 	/**
 	 * Creates a new instance of UserList
 	 * @param	integer	$limit
@@ -35,11 +35,11 @@ class UserList extends DatabaseObjectList {
 				ikarus".IKARUS_N."_user
 			".($whereClouse !== null ? "WHERE ".$whereClouse : "");
 		$result = IKARUS::getDatabase()->sendQuery($sql, $limit, $offset);
-		
+
 		while($row = IKARUS::getDatabase()->fetchArray($result)) {
 			$objectList[] = new $this->listObject(null, $row);
 		}
-		
+
 		parent::__construct($objectList);
 	}
 }

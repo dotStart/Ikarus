@@ -16,7 +16,7 @@ class NamedUserException extends UserException {
 	 * @see UserException::$templateName
 	 */
 	public $templateName = 'namedUserException';
-	
+
 	/**
 	 * @see UserException::$header
 	 */

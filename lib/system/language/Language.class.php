@@ -13,7 +13,7 @@ require_once(IKARUS_DIR.'lib/data/DatabaseObject.class.php');
  * @version		1.0.0-0001
  */
 class Language extends DatabaseObject {
-	
+
 	/**
 	 * Creates a new instance of type Language
 	 * @param	integer	$languageID
@@ -29,16 +29,16 @@ class Language extends DatabaseObject {
 					languageID = ".$languageID;
 			$row = IKARUS::getDatabase()->getFirstRow($sql);
 		}
-		
+
 		parent::__construct($row);
 	}
-	
+
 	/**
 	 * @see DatabaseObject::handleData()
 	 */
 	protected function handleData($data) {
 		parent::handleData($data);
-		
+
 		// set data
 		if (!$this->data['languageID']) $this->data['languageID'] = 0;
 	}

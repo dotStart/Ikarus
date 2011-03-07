@@ -11,12 +11,12 @@
  * @version		1.0.0-0001
  */
 class IllegalLinkException extends UserException {
-	
+
 	/**
 	 * @see UserException::$templateName
 	 */
 	public $templateName = 'illegalLinkException';
-	
+
 	/**
 	 * @see UserException::$header
 	 */
