@@ -55,6 +55,11 @@ class SessionEditor extends Session {
 	public function getUser() {
 		return (new UserProfile($this->userID));
 	}
+	
+	/**
+	 * Inits the session
+	 */
+	public function init() { }
 
 	/**
 	 * Updates a session row
