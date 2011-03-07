@@ -192,12 +192,8 @@ class LanguageManager {
 		}
 		
 		// validate
-		if (!isset($defaultLanguage) and !count($languages)) throw new SystemException("No languages available");
+		if (!isset($defaultLanguage) or !count($languages)) throw new SystemException("No languages available");
 		
-		// WORKAROUND
-		// Set first language if default language isn't available
-		$defaultLanguage = $languages[0];
-
 		// get preferred language
 		$this->setActiveLanguage($this->getPreferredLanguage($languages, $defaultLanguage));
 	}
