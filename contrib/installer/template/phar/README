@@ -1,0 +1,4 @@
+This is the one file phar installer. It uses PHP's phar extension to install several applications with only one file that must uploaded
+to webspace (install.php). The phar content itself is located at the end of file and will detected via __halt_compiler(). The script
+will extract the phar file automaticaly if it does not exist and include it's install.php. From now the application will work with
+phar's content.
