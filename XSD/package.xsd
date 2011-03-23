@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.ikarus-framework.de" xmlns="http://www.w3schools.com" elementFormDefault="qualified">
+	<xs:element name="package">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="packageinformation" maxOccurs="1" minOccurs="1">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="packagename" maxOccurs="unbounded" minOccurs="1">
+								<xs:complexType>
+									<xs:attribute name="lang" type="xs:string" default="en" />
+								</xs:complexType>
+							</xs:element>
+							
+							<xs:element name="packagedescription" maxOccurs="unbounded" minOccurs="1">
+								<xs:complexType>
+									<xs:attribute name="lang" type="xs:string" default="en" />
+								</xs:complexType>
+							</xs:element>
+
+							<xs:element name="version" type="xs:string" maxOccurs="1" minOccurs="1" />
+							
+							<xs:element name="standalone" type="xs:integer" maxOccurs="1" minOccurs="0" default="0" />
+							
+							<xs:element name="plugin" type="xs:string" maxOccurs="1" minOccurs="0" default="com.develfusion.ikarus" />
+							
+							<xs:element name="packageurl" maxOccurs="1" minOccurs="0">
+								<xs:complexType>
+									<xs:attribute name="display" type="xs:string" />
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				
+				<xs:element name="authorinformation" maxOccurs="1" minOccurs="1">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="authorname" maxOccurs="1" minOccurs="1">
+								<xs:complexType>
+									<xs:attribute name="alias" type="xs:string" />
+								</xs:complexType>
+							</xs:element>
+							
+							<xs:element name="authorurl" type="xs:string" maxOccurs="1" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				
+				<xs:element name="requiredpackages" maxOccurs="1" minOccurs="1">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="requiredpackage" maxOccurs="unbounded" minOccurs="1">
+								<xs:complexType>
+									<xs:attribute name="minversion" type="xs:string" />
+									<xs:attribute name="maxversion" type="xs:string" />
+									<xs:attribute name="file" type="xs:string" />
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				
+				<xs:element name="excludedpackages" maxOccurs="1" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="excludedpackage">
+								<xs:complexType>
+									<xs:attribute name="version" type="xs:string" />
+									<xs:attribute name="startversion" type="xs:string" />
+									<xs:attribute name="endversion" type="xs:string" />
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				
+				<xs:element name="instructions" maxOccurs="unbounded" minOccurs="1">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="instruction" maxOccurs="unbounded" minOccurs="1">
+								<xs:complexType>
+									<xs:attribute name="type" type="xs:string" />
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						
+						<xs:attribute name="type" type="xs:string" />
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
