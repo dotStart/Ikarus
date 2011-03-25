@@ -18,33 +18,8 @@ set_error_handler(array('IKARUS', 'handleError'), E_ALL);
 // register shutdown method
 register_shutdown_function(array('IKARUS', 'destruct'));
 
-/**
- * Loads missing class definitions from framework dir
- * Supported dirs are:
- * 		lib/system/exception
- * 		lib/util/
- * Note: This will search in all available package dirs include Ikarus
- * @param	string	$className
- */
-function __autoload($className) {
-	// get packageDirs variable
-	global $packageDirs;
-
-	// loop through package dirs
-	foreach($packageDirs as $dir) {
-		// search exceptions
-		if (file_exists($dir.'lib/system/exception/'.$className.'.class.php')) {
-			require_once($dir.'lib/system/exception/'.$className.'.class.php');
-			return;
-		}
-
-		// search utils
-		if (file_exists($dir.'lib/util/'.$className.'.class.php')) {
-			require_once($dir.'lib/util/'.$className.'.class.php');
-			return;
-		}
-	}
-}
+// register autoloader
+spl_autoload_register(array('IKARUS', 'autoload'));
 
 /**
  * Escapes a string with the correct method for the current database connection
