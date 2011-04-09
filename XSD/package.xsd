@@ -1,96 +1,162 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.ikarus-framework.de" xmlns="http://www.w3schools.com" elementFormDefault="qualified">
+	<!-- Include basic ikarus types -->
+	<xs:include schemaLocation="http://www.ikarus-framework.de/XSD/types.xsd" />
+
+	<!-- Information for root element -->
 	<xs:element name="package">
 		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="packageinformation" maxOccurs="1" minOccurs="1">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="packagename" maxOccurs="unbounded" minOccurs="1">
-								<xs:complexType>
-									<xs:attribute name="lang" type="xs:string" default="en" />
-								</xs:complexType>
-							</xs:element>
-							
-							<xs:element name="packagedescription" maxOccurs="unbounded" minOccurs="1">
-								<xs:complexType>
-									<xs:attribute name="lang" type="xs:string" default="en" />
-								</xs:complexType>
-							</xs:element>
-
-							<xs:element name="version" type="xs:string" maxOccurs="1" minOccurs="1" />
-							
-							<xs:element name="standalone" type="xs:integer" maxOccurs="1" minOccurs="0" default="0" />
-							
-							<xs:element name="plugin" type="xs:string" maxOccurs="1" minOccurs="0" default="com.develfusion.ikarus" />
-							
-							<xs:element name="packageurl" maxOccurs="1" minOccurs="0">
-								<xs:complexType>
-									<xs:attribute name="display" type="xs:string" />
-								</xs:complexType>
-							</xs:element>
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				
-				<xs:element name="authorinformation" maxOccurs="1" minOccurs="1">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="authorname" maxOccurs="1" minOccurs="1">
-								<xs:complexType>
-									<xs:attribute name="alias" type="xs:string" />
-								</xs:complexType>
-							</xs:element>
-							
-							<xs:element name="authorurl" type="xs:string" maxOccurs="1" minOccurs="0"/>
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				
-				<xs:element name="requiredpackages" maxOccurs="1" minOccurs="1">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="requiredpackage" maxOccurs="unbounded" minOccurs="1">
-								<xs:complexType>
-									<xs:attribute name="minversion" type="xs:string" />
-									<xs:attribute name="maxversion" type="xs:string" />
-									<xs:attribute name="file" type="xs:string" />
-								</xs:complexType>
-							</xs:element>
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				
-				<xs:element name="excludedpackages" maxOccurs="1" minOccurs="0">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="excludedpackage">
-								<xs:complexType>
-									<xs:attribute name="version" type="xs:string" />
-									<xs:attribute name="startversion" type="xs:string" />
-									<xs:attribute name="endversion" type="xs:string" />
-								</xs:complexType>
-							</xs:element>
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				
-				<xs:element name="instructions" maxOccurs="unbounded" minOccurs="1">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="instruction" maxOccurs="unbounded" minOccurs="1">
-								<xs:complexType>
-									<xs:attribute name="type" type="xs:string" />
-								</xs:complexType>
-							</xs:element>
-						</xs:sequence>
-						
-						<xs:attribute name="type" type="xs:string" />
-					</xs:complexType>
-				</xs:element>
-			</xs:sequence>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="packageinformation" type="packageInformation" maxOccurs="1" minOccurs="1" />
+				<xs:element name="authorinformation" type="authorInformation" maxOccurs="1" minOccurs="1" />
+				<xs:element name="requiredpackages" type="requiredPackages" maxOccurs="1" minOccurs="1" />
+				<xs:element name="excludedpackages" type="excludedPackages" maxOccurs="1" minOccurs="0" />
+				<xs:element name="instructions" type="instructions" maxOccurs="unbounded" minOccurs="1" />
+			</xs:choice>
 			
-			<xs:attribute name="name" type="xs:string" />
+			<xs:attribute name="name" type="ikarus_varchar" />
 		</xs:complexType>
 	</xs:element>
+	
+	<!-- Basic definition for packageInformation elements -->
+	<xs:complexType name="packageInformation">
+		<xs:sequence>
+			<!-- Basic definition for packageName element -->
+			<xs:element name="packagename" maxOccurs="unbounded" minOccurs="1">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="ikarus_varchar">
+							<!-- Language definition with lang tag -->
+							<xs:attribute name="lang" type="xs:string" default="en" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			
+			<!-- Basic definition for packageDescription element -->
+			<xs:element name="packagedescription" maxOccurs="unbounded" minOccurs="1">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<!-- Language definition with lang tag -->
+							<xs:attribute name="lang" type="xs:string" default="en" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			
+			<!-- Basic definition for version element -->
+			<xs:element name="version" maxOccurs="1" minOccurs="1" type="ikarus_varchar" />
+			
+			<!-- Basic definition for standalone element -->
+			<xs:element name="standalone" maxOccurs="1" type="ikarus_boolean" />
+			
+			<!-- Basic definition for plugin element -->
+			<xs:element name="plugin" maxOccurs="1" type="ikarus_varchar" />
+			
+			<!-- Basic definition for projectStartDate element -->
+			<xs:element name="projectstartdate" maxOccurs="1" type="xs:date" />
+			
+			<!-- Basic definition for date element -->
+			<xs:element name="date" maxOccurs="1" type="xs:date" />
+			
+			<!-- Basic definition for packageurl element -->
+			<xs:element name="packageurl" maxOccurs="1">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<!-- Definition of an alias (e.g. organisation's title) -->
+							<xs:attribute name="alias" type="ikarus_varchar" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- Basic definition for authorInformation elements -->
+	<xs:complexType name="authorInformation">
+		<xs:sequence>
+			<!-- Basic definition for authorname element -->
+			<xs:element name="authorname" maxOccurs="1" minOccurs="1">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<!-- Definition of an alias (e.g. author's nickname) -->
+							<xs:attribute name="alias" type="ikarus_varchar" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			
+			<!-- Basic definition for authorurl element -->
+			<xs:element name="authorurl" type="xs:string" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- Basic definition for requiredPackages elements -->
+	<xs:complexType name="requiredPackages">
+		<xs:sequence>
+			<!-- Basic definition for requiredpackage element -->
+			<xs:element name="requiredpackage" maxOccurs="unbounded" minOccurs="1">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="ikarus_varchar">
+							<!-- Definition of minimal required version -->
+							<xs:attribute name="minversion" type="xs:string" />
+							
+							<!-- Definition of maximal required version -->
+							<xs:attribute name="maxversion" type="xs:string" />
+							
+							<!-- Definition of a package file where required package is available -->
+							<xs:attribute name="file" type="xs:string" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- Basic definition for excludedPackages elements -->
+	<xs:complexType name="excludedPackages">
+		<xs:sequence>
+			<!-- Basic definition for excludedpackage element -->
+			<xs:element name="excludedpackage" maxOccurs="unbounded" minOccurs="1">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="ikarus_varchar">
+							<!-- Definition of exactly one version that is banned -->
+							<xs:attribute name="version" type="xs:string" />
+							
+							<!-- Definition of start version (version from those up will be banned) -->
+							<xs:attribute name="startversion" type="xs:string" />
+							
+							<!-- Definition of end version (version below this are banned (including this). Versions above are installable. -->
+							<xs:attribute name="endversion" type="xs:string" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- Basic definition for instructions elements -->
+	<xs:complexType name="instructions">
+		<xs:choice maxOccurs="unbounded">
+			<!-- Basic definition for instruction element -->
+			<xs:element name="instruction" maxOccurs="unbounded" minOccurs="1">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<!-- Definition of instruction type (e.g. action) -->
+							<xs:attribute name="type" type="xs:string" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:choice>
+		
+		<!-- Definition of type (installation or update?) -->
+		<xs:attribute name="type" type="ikarus_instructionsType" />
+	</xs:complexType>
 </xs:schema>
