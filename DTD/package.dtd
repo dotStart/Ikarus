@@ -7,10 +7,10 @@
 	<!ELEMENT packageinformation (packagename+,packagedescription*,version,standalone?,plugin?,packageurl?)>
 
 		<!ELEMENT packagename (#PCDATA)>
-			<!ATTLIST packagename languagecode CDATA #IMPLIED>
+			<!ATTLIST packagename lang CDATA #IMPLIED>
 			
 		<!ELEMENT packagedescription (#PCDATA)>
-			<!ATTLIST packagename languagecode CDATA #IMPLIED>
+			<!ATTLIST packagename lang CDATA #IMPLIED>
 		
 		<!ELEMENT version (#PCDATA)>
 		
