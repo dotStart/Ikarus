@@ -14,7 +14,7 @@
 				<xs:element name="instructions" type="instructions" maxOccurs="unbounded" minOccurs="1" />
 			</xs:choice>
 			
-			<xs:attribute name="name" type="ikarus_varchar" />
+			<xs:attribute name="name" type="ikarus_packageIdentifier" />
 		</xs:complexType>
 	</xs:element>
 	
@@ -46,13 +46,13 @@
 			</xs:element>
 			
 			<!-- Basic definition for version element -->
-			<xs:element name="version" maxOccurs="1" minOccurs="1" type="ikarus_varchar" />
+			<xs:element name="version" maxOccurs="1" minOccurs="1" type="ikarus_version" />
 			
 			<!-- Basic definition for standalone element -->
 			<xs:element name="standalone" maxOccurs="1" type="ikarus_boolean" />
 			
 			<!-- Basic definition for plugin element -->
-			<xs:element name="plugin" maxOccurs="1" type="ikarus_varchar" />
+			<xs:element name="plugin" maxOccurs="1" type="ikarus_packageIdentifier" />
 			
 			<!-- Basic definition for projectStartDate element -->
 			<xs:element name="projectstartdate" maxOccurs="1" type="xs:date" />
@@ -101,12 +101,12 @@
 			<xs:element name="requiredpackage" maxOccurs="unbounded" minOccurs="1">
 				<xs:complexType>
 					<xs:simpleContent>
-						<xs:extension base="ikarus_varchar">
+						<xs:extension base="ikarus_packageIdentifier">
 							<!-- Definition of minimal required version -->
-							<xs:attribute name="minversion" type="xs:string" />
+							<xs:attribute name="minversion" type="ikarus_version" />
 							
 							<!-- Definition of maximal required version -->
-							<xs:attribute name="maxversion" type="xs:string" />
+							<xs:attribute name="maxversion" type="ikarus_version" />
 							
 							<!-- Definition of a package file where required package is available -->
 							<xs:attribute name="file" type="xs:string" />
@@ -124,15 +124,15 @@
 			<xs:element name="excludedpackage" maxOccurs="unbounded" minOccurs="1">
 				<xs:complexType>
 					<xs:simpleContent>
-						<xs:extension base="ikarus_varchar">
+						<xs:extension base="ikarus_packageIdentifier">
 							<!-- Definition of exactly one version that is banned -->
-							<xs:attribute name="version" type="xs:string" />
+							<xs:attribute name="version" type="ikarus_version" />
 							
 							<!-- Definition of start version (version from those up will be banned) -->
-							<xs:attribute name="startversion" type="xs:string" />
+							<xs:attribute name="startversion" type="ikarus_version" />
 							
 							<!-- Definition of end version (version below this are banned (including this). Versions above are installable. -->
-							<xs:attribute name="endversion" type="xs:string" />
+							<xs:attribute name="endversion" type="ikarus_version" />
 						</xs:extension>
 					</xs:simpleContent>
 				</xs:complexType>
