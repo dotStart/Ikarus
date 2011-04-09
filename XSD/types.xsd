@@ -11,7 +11,7 @@
 	<!-- Defines a nullable varchar (up to 255 chars. Can be empty) -->
 	<xs:simpleType name="ikarus_varchar_nullable">
 		<xs:restriction base="xs:string">
-			<xs:minLength value="1" />
+			<xs:minLength value="0" />
 			<xs:maxLength value="255" />
 		</xs:restriction>
 	</xs:simpleType>
