@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.ikarus-framework.de" xmlns="http://www.w3schools.com" elementFormDefault="qualified">
+	<!-- Defines a default varchar (up to 255 chars. Cannot be empty) -->
+	<xs:simpleType name="ikarus_varchar">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1" />
+			<xs:maxLength value="255" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- Defines a nullable varchar (up to 255 chars. Can be empty) -->
+	<xs:simpleType name="ikarus_varchar_nullable">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1" />
+			<xs:maxLength value="255" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- Defines a default boolean (1 or 0) -->
+	<xs:simpleType name="ikarus_boolean">
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0" />
+			<xs:maxInclusive value="1" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- Defines an instruction type value (install or update) -->
+	<xs:simpleType name="ikarus_instructionsType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="install" />
+			<xs:enumeration value="installation" /> <!-- Alias for install -->
+			<xs:enumeration value="update" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- Defines a default version string -->
+	<xs:simpleType name="ikarus_version">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="([0-9]+)\.([0-9]+)\.([0-9]+)(|\-([0-9]+))" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- Defines a default package identifier -->
+	<xs:simpleType name="ikarus_packageIdentifier">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="([A-Za-z0-9]+)(\.[A-Za-z0-9]+){3}" />
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
