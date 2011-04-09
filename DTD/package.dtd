@@ -2,7 +2,7 @@
 	<!ATTLIST package name CDATA #REQUIRED>
 	<!ATTLIST package xmlns CDATA #FIXED "http://www.ikarus-framework.de">
 	<!ATTLIST package xmlns:xsi CDATA #FIXED "http://www.w3.org/2001/XMLSchema-instance">
-	<!ATTLIST package xsi:schemaLocation CDATA #FIXED "http://www.ikarus-framework.de/XSD/package.xsd">
+	<!ATTLIST package xsi:schemaLocation CDATA #FIXED "http://www.ikarus-framework.de http://www.ikarus-framework.de/XSD/package.xsd">
 
 	<!ELEMENT packageinformation (packagename+,packagedescription*,version,standalone?,plugin?,packageurl?)>
 
