@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE package SYSTEM "http://www.ikarus-framework.de/DTD/package.dtd">
 <package name="de.ikarus-framework.example" xmlns="http://www.ikarus-framework.de" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ikarus-framework.de http://www.ikarus-framework.de/XSD/package.xsd">
 	<packageinformation>
 		<packagename><![CDATA[Example Package]]></packagename>
