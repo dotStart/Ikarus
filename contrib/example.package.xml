@@ -10,12 +10,19 @@
 		<version>1.0.0 Alpha 1</version>
 		<plugin>com.develfusion.ikarus</plugin>
 		<packageurl display="Ikarus Framework"><![CDATA[http://www.ikarus-framework.de/]]></packageurl>
+		<documentationurl><![CDATA[http://www.ikarus-framework.de/doc/package/de.ikarus-framework.example-documentation.pdf]]></documentationurl>
+		<developerdocumentationurl><![CDATA[http://www.ikarus-framework.de/doc/package/de.ikarus-framework.example-developer-documentation.pdf]]></developerdocumentationurl>
 	</packageinformation>
 	
 	<authorinformation>
 		<authorname alias="Akkarin"><![CDATA[Johannes Donath]]></authorname>
 		<authorurl><![CDATA[http://www.ikarus-framework.de/]]></authorurl>
 	</authorinformation>
+	
+	<licenseinformation>
+		<licensename><![CDATA[GNU Lesser Public License]]></licensename>
+		<licenseurl><![CDATA[http://www.gnu.org/licenses/lgpl.txt]]></licenseurl>
+	</licenseinformation>
 	
 	<requiredpackages>
 		<requiredpackage minversion="1.0.0 Alpha 1" maxversion="1.0.0">com.develfusion.ikarus</requiredpackage>
