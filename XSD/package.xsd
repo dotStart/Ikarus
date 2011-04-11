@@ -3,8 +3,8 @@
 	<!--
 	Ikarus Framework Package Specification
 	author:		Johannes Donath
-	updated:	10.04.2011
-	version:	1.0.0
+	updated:	11.04.2011
+	version:	1.1.0
 	-->
 	
 	<!-- Include basic ikarus types -->
@@ -78,6 +78,15 @@
 					</xs:simpleContent>
 				</xs:complexType>
 			</xs:element>
+			
+			<!-- Basic definition for documentationurl element -->
+			<xs:element name="documentationurl" maxOccurs="1" type="xs:string" />
+			
+			<!-- Basic definition for developerdocumentationurl element -->
+			<xs:element name="developerdocumentationurl" maxOccurs="1" type="xs:string" />
+			
+			<!-- Basic definition for supporturl element -->
+			<xs:element name="supporturl" maxOccurs="1" type="xs:string" />
 		</xs:sequence>
 	</xs:complexType>
 	
