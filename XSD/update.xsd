@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.ikarus-framework.de" xmlns="http://www.ikarus-framework.de" elementFormDefault="qualified">
+	<!--
+	Ikarus Framework Package Server Specification
+	author:		Johannes Donath
+	updated:	11.04.2011
+	version:	1.0.0
+	-->
+	
+	<!-- Include basic ikarus types -->
+	<xs:include schemaLocation="http://www.ikarus-framework.de/XSD/types.xsd" />
+	
+	<!-- Definition of root element -->
+	<xs:element name="server">
+		<xs:complexType>
+			<xs:choice maxOccurs="1">
+				<xs:element name="section" type="section" />
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	
+	<!-- Definition of section element -->
+	<xs:complexType name="section">
+		<xs:sequence>
+			<xs:element name="package" type="package" />
+		</xs:sequence>
+		
+		<xs:attribute name="versiontype" type="ikarus_varchar" />
+	</xs:complexType>
+	
+	<!-- Definition of package element -->
+	<xs:complexType name="package">
+		<xs:simpleContent>
+			<xs:extension base="ikarus_varchar">
+				<xs:attribute name="currentversion" type="ikarus_version" />
+				<xs:attribute name="file" type="xs:string" />
+				<xs:attribute name="versioninformation" type="xs:string" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+</xs:schema>
