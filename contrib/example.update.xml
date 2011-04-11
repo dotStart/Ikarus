@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server xmlns="http://www.ikarus-framework.de" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ikarus-framework.de http://www.ikarus-framework.de/XSD/update.xsd">
+	<section versiontype="stable">
+		<package name="de.ikarus-framework.example" currentversion="1.0.0">
+			<packagename><![CDATA[Example Package]]></packagename>
+			<packagename lang="de"><![CDATA[Beispiel Paket]]></packagename>
+			<packagename lang="de-informal"><![CDATA[Beispiel Paket]]></packagename>
+			<packagedescription><![CDATA[This is an example package.]]></packagedescription>
+			<packagedescription lang="de"><![CDATA[Dies ist ein beispiel Paket.]]></packagedescription>
+			<packagedescription lang="de-informal"><![CDATA[Dies ist ein beispiel Paket.]]></packagedescription>
+			<file><![CDATA[http://packages.example.org/?packageName=de.ikarus-framework.example&versionType=stable]]></file>
+			<versioninformation><![CDATA[http://packages.example.org/information.xml?packageName=de.ikarus-framework.example&versionType=stable]]></versioninformation>
+			<licensename><![CDATA[GNU Lesser Public License]]></licensename>
+			<licenseurl><![CDATA[http://www.gnu.org/licenses/lgpl.txt]]></licenseurl>
+			<authorname alias="Akkarin"><![CDATA[Johannes Donath]]></authorname>
+			<authorurl><![CDATA[http://www.ikarus-framework.de/]]></authorurl>
+		</package>
+		
+		<package name="de.ikarus-framework.example2" currentversion="1.2.0">
+			<packagename><![CDATA[Example Package 2]]></packagename>
+			<packagename lang="de"><![CDATA[Beispiel Paket 2]]></packagename>
+			<packagename lang="de-informal"><![CDATA[Beispiel Paket 2]]></packagename>
+			<packagedescription><![CDATA[This is an example package.]]></packagedescription>
+			<packagedescription lang="de"><![CDATA[Dies ist ein beispiel Paket.]]></packagedescription>
+			<packagedescription lang="de-informal"><![CDATA[Dies ist ein beispiel Paket.]]></packagedescription>
+			<file><![CDATA[http://packages.example.org/?packageName=de.ikarus-framework.example2&versionType=stable]]></file>
+			<versioninformation><![CDATA[http://packages.example.org/information.xml?packageName=de.ikarus-framework.example2&versionType=stable]]></versioninformation>
+			<licensename><![CDATA[GNU Lesser Public License]]></licensename>
+			<licenseurl><![CDATA[http://www.gnu.org/licenses/lgpl.txt]]></licenseurl>
+			<authorname alias="Akkarin"><![CDATA[Johannes Donath]]></authorname>
+			<authorurl><![CDATA[http://www.ikarus-framework.de/]]></authorurl>
+		</package>
+	</section>
+	
+	<section versiontype="unstable">
+		<package name="de.ikarus-framework.example" currentversion="1.0.0 Alpha 1">
+			<packagename><![CDATA[Example Package]]></packagename>
+			<packagename lang="de"><![CDATA[Beispiel Paket]]></packagename>
+			<packagename lang="de-informal"><![CDATA[Beispiel Paket]]></packagename>
+			<packagedescription><![CDATA[This is an example package.]]></packagedescription>
+			<packagedescription lang="de"><![CDATA[Dies ist ein beispiel Paket.]]></packagedescription>
+			<packagedescription lang="de-informal"><![CDATA[Dies ist ein beispiel Paket.]]></packagedescription>
+			<file><![CDATA[http://packages.example.org/?packageName=de.ikarus-framework.example&versionType=unstable]]></file>
+			<versioninformation><![CDATA[http://packages.example.org/information.xml?packageName=de.ikarus-framework.example&versionType=unstable]]></versioninformation>
+			<licensename><![CDATA[GNU Lesser Public License]]></licensename>
+			<licenseurl><![CDATA[http://www.gnu.org/licenses/lgpl.txt]]></licenseurl>
+			<authorname alias="Akkarin"><![CDATA[Johannes Donath]]></authorname>
+			<authorurl><![CDATA[http://www.ikarus-framework.de/]]></authorurl>
+		</package>
+		
+		<package name="de.ikarus-framework.example2" currentversion="1.2.0 Alpha 1">
+			<packagename><![CDATA[Example Package 2]]></packagename>
+			<packagename lang="de"><![CDATA[Beispiel Paket 2]]></packagename>
+			<packagename lang="de-informal"><![CDATA[Beispiel Paket 2]]></packagename>
+			<packagedescription><![CDATA[This is an example package.]]></packagedescription>
+			<packagedescription lang="de"><![CDATA[Dies ist ein beispiel Paket.]]></packagedescription>
+			<packagedescription lang="de-informal"><![CDATA[Dies ist ein beispiel Paket.]]></packagedescription>
+			<file><![CDATA[http://packages.example.org/?packageName=de.ikarus-framework.example2&versionType=unstable]]></file>
+			<versioninformation><![CDATA[http://packages.example.org/information.xml?packageName=de.ikarus-framework.example2&versionType=unstable]]></versioninformation>
+			<licensename><![CDATA[GNU Lesser Public License]]></licensename>
+			<licenseurl><![CDATA[http://www.gnu.org/licenses/lgpl.txt]]></licenseurl>
+			<authorname alias="Akkarin"><![CDATA[Johannes Donath]]></authorname>
+			<authorurl><![CDATA[http://www.ikarus-framework.de/]]></authorurl>
+		</package>
+	</section>
+	
+	<section versiontype="testing">
+		<package name="de.ikarus-framework.example" currentversion="1.0.0 Alpha 1">
+			<packagename><![CDATA[Example Package]]></packagename>
+			<packagename lang="de"><![CDATA[Beispiel Paket]]></packagename>
+			<packagename lang="de-informal"><![CDATA[Beispiel Paket]]></packagename>
+			<packagedescription><![CDATA[This is an example package.]]></packagedescription>
+			<packagedescription lang="de"><![CDATA[Dies ist ein beispiel Paket.]]></packagedescription>
+			<packagedescription lang="de-informal"><![CDATA[Dies ist ein beispiel Paket.]]></packagedescription>
+			<file><![CDATA[http://packages.example.org/?packageName=de.ikarus-framework.example&versionType=testing]]></file>
+			<versioninformation><![CDATA[http://packages.example.org/information.xml?packageName=de.ikarus-framework.example&versionType=testing]]></versioninformation>
+			<licensename><![CDATA[GNU Lesser Public License]]></licensename>
+			<licenseurl><![CDATA[http://www.gnu.org/licenses/lgpl.txt]]></licenseurl>
+			<authorname alias="Akkarin"><![CDATA[Johannes Donath]]></authorname>
+			<authorurl><![CDATA[http://www.ikarus-framework.de/]]></authorurl>
+		</package>
+		
+		<package name="de.ikarus-framework.example2" currentversion="1.2.0 Alpha 1">
+			<packagename><![CDATA[Example Package 2]]></packagename>
+			<packagename lang="de"><![CDATA[Beispiel Paket 2]]></packagename>
+			<packagename lang="de-informal"><![CDATA[Beispiel Paket 2]]></packagename>
+			<packagedescription><![CDATA[This is an example package.]]></packagedescription>
+			<packagedescription lang="de"><![CDATA[Dies ist ein beispiel Paket.]]></packagedescription>
+			<packagedescription lang="de-informal"><![CDATA[Dies ist ein beispiel Paket.]]></packagedescription>
+			<file><![CDATA[http://packages.example.org/?packageName=de.ikarus-framework.example2&versionType=testing]]></file>
+			<versioninformation><![CDATA[http://packages.example.org/information.xml?packageName=de.ikarus-framework.example2&versionType=testing]]></versioninformation>
+			<licensename><![CDATA[GNU Lesser Public License]]></licensename>
+			<licenseurl><![CDATA[http://www.gnu.org/licenses/lgpl.txt]]></licenseurl>
+			<authorname alias="Akkarin"><![CDATA[Johannes Donath]]></authorname>
+			<authorurl><![CDATA[http://www.ikarus-framework.de/]]></authorurl>
+		</package>
+	</section>
+</server>
