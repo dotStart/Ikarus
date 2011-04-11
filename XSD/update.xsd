@@ -4,7 +4,7 @@
 	Ikarus Framework Package Server Specification
 	author:		Johannes Donath
 	updated:	11.04.2011
-	version:	1.0.0
+	version:	1.1.0
 	-->
 	
 	<!-- Include basic ikarus types -->
@@ -30,12 +30,32 @@
 	
 	<!-- Definition of package element -->
 	<xs:complexType name="package">
-		<xs:simpleContent>
-			<xs:extension base="ikarus_varchar">
-				<xs:attribute name="currentversion" type="ikarus_version" />
-				<xs:attribute name="file" type="xs:string" />
-				<xs:attribute name="versioninformation" type="xs:string" />
-			</xs:extension>
-		</xs:simpleContent>
+		<xs:sequence>
+			<xs:element name="packagename">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="lang" type="ikarus_varchar" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="pacakgedescription">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="lang" type="ikarus_varchar" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="file" type="xs:string" />
+			<xs:element name="versioninformation" type="xs:string" /> <!-- FIXME: Placeholder -->
+			<xs:element name="licensename" type="xs:string" />
+			<xs:element name="licenseurl" type="xs:string" />
+		</xs:sequence>
+
+		<xs:attribute name="name" type="ikarus_varchar" />
+		<xs:attribute name="currentversion" type="ikarus_version" />
 	</xs:complexType>
 </xs:schema>
