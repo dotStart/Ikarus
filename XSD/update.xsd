@@ -4,7 +4,7 @@
 	Ikarus Framework Package Server Specification
 	author:		Johannes Donath
 	updated:	11.04.2011
-	version:	1.1.0
+	version:	1.2.0
 	-->
 	
 	<!-- Include basic ikarus types -->
@@ -13,8 +13,8 @@
 	<!-- Definition of root element -->
 	<xs:element name="server">
 		<xs:complexType>
-			<xs:choice maxOccurs="1">
-				<xs:element name="section" type="section" />
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="section" type="section" maxOccurs="unbounded" minOccurs="1" />
 			</xs:choice>
 		</xs:complexType>
 	</xs:element>
@@ -22,7 +22,7 @@
 	<!-- Definition of section element -->
 	<xs:complexType name="section">
 		<xs:sequence>
-			<xs:element name="package" type="package" />
+			<xs:element name="package" type="package" maxOccurs="unbounded" minOccurs="1" />
 		</xs:sequence>
 		
 		<xs:attribute name="versiontype" type="ikarus_varchar" />
@@ -31,7 +31,7 @@
 	<!-- Definition of package element -->
 	<xs:complexType name="package">
 		<xs:sequence>
-			<xs:element name="packagename">
+			<xs:element name="packagename" maxOccurs="unbounded" minOccurs="1">
 				<xs:complexType>
 					<xs:simpleContent>
 						<xs:extension base="xs:string">
@@ -40,7 +40,7 @@
 					</xs:simpleContent>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="pacakgedescription">
+			<xs:element name="pacakgedescription" maxOccurs="unbounded" minOccurs="1">
 				<xs:complexType>
 					<xs:simpleContent>
 						<xs:extension base="xs:string">
@@ -49,10 +49,20 @@
 					</xs:simpleContent>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="file" type="xs:string" />
-			<xs:element name="versioninformation" type="xs:string" /> <!-- FIXME: Placeholder -->
-			<xs:element name="licensename" type="xs:string" />
-			<xs:element name="licenseurl" type="xs:string" />
+			<xs:element name="file" type="xs:string" maxOccurs="1" minOccurs="1" />
+			<xs:element name="versioninformation" type="xs:string" maxOccurs="1" minOccurs="0" /> <!-- FIXME: Placeholder -->
+			<xs:element name="licensename" type="xs:string" maxOccurs="1" minOccurs="0" />
+			<xs:element name="licenseurl" type="xs:string" maxOccurs="1" minOccurs="0" />
+			<xs:element name="authorname" maxOccurs="1" minOccurs="1">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="alias" type="ikarus_varchar" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="authorurl" type="xs:string" maxOccurs="1" minOccurs="0" />
 		</xs:sequence>
 
 		<xs:attribute name="name" type="ikarus_varchar" />
