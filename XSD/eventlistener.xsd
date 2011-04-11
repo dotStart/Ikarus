@@ -4,7 +4,7 @@
 	Ikarus Framework DEventListener Specification
 	author:		Johannes Donath
 	updated:	11.04.2011
-	version:	1.0.0
+	version:	1.0.1
 	-->
 
 	<!-- Include basic ikarus types -->
@@ -14,8 +14,8 @@
 	<xs:element name="eventlistener">
 		<xs:complexType>
 			<xs:choice maxOccurs="unbounded">
-				<xs:element name="import" type="import" />
-				<xs:element name="delete" type="delete" />
+				<xs:element name="import" type="import" maxOccurs="1" />
+				<xs:element name="delete" type="delete" maxOccurs="1" />
 			</xs:choice>
 		</xs:complexType>
 	</xs:element>
