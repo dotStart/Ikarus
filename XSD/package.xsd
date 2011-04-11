@@ -4,7 +4,7 @@
 	Ikarus Framework Package Specification
 	author:		Johannes Donath
 	updated:	11.04.2011
-	version:	1.1.0
+	version:	1.2.0
 	-->
 	
 	<!-- Include basic ikarus types -->
@@ -16,6 +16,7 @@
 			<xs:choice maxOccurs="unbounded">
 				<xs:element name="packageinformation" type="packageInformation" maxOccurs="1" minOccurs="1" />
 				<xs:element name="authorinformation" type="authorInformation" maxOccurs="1" minOccurs="1" />
+				<xs:element name="licenseinformation" type="licenseInformation" maxOccurs="1" minOccurs="0" />
 				<xs:element name="requiredpackages" type="requiredPackages" maxOccurs="1" minOccurs="1" />
 				<xs:element name="excludedpackages" type="excludedPackages" maxOccurs="1" minOccurs="0" />
 				<xs:element name="instructions" type="instructions" maxOccurs="unbounded" minOccurs="1" />
@@ -107,6 +108,15 @@
 			
 			<!-- Basic definition for authorurl element -->
 			<xs:element name="authorurl" type="xs:string" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- Basic definition for licenseInformation elements -->
+	<xs:complexType name="licenseInformation">
+		<xs:sequence>
+			<!-- Basic definition for licensename element -->
+			<xs:element name="licensename" maxOccurs="1" minOccurs="1" type="xs:string" />
+			<xs:element name="licenseurl" maxOccurs="1" minOccurs="1" type="xs:string" />
 		</xs:sequence>
 	</xs:complexType>
 	
