@@ -68,7 +68,7 @@ class Options {
 		while($row = IKARUS::getDB()->fetchArray($result)) {
 			require_once(IKARUS_DIR.$row['classFile']);
 			$className = basename($row['classFile'], '.class.php');
-			$file->write("define('".(intval($row['prependPrefix']) ? self::OPTION_PREFIX : '').strtoupper($row['optionName']).(intval($row['appendSuffix']) ? self::OPTION_SUFFIX : '')."', ".call_user_func(array($className, 'formatOptionValue'), $row['optionValue']).");\n");
+			$file->write("if (!defined('".(intval($row['prependPrefix']) ? self::OPTION_PREFIX : '').strtoupper($row['optionName']).(intval($row['appendSuffix']) ? self::OPTION_SUFFIX : '')."')) define('".(intval($row['prependPrefix']) ? self::OPTION_PREFIX : '').strtoupper($row['optionName']).(intval($row['appendSuffix']) ? self::OPTION_SUFFIX : '')."', ".call_user_func(array($className, 'formatOptionValue'), $row['optionValue']).");\n");
 		}
 
 		$file->write("\n/** EOF **/\n?>");
