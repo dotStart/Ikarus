@@ -803,7 +803,7 @@ function smartyAutoload($class)
 /**
  * Smarty exception class
  */
-Class SmartyException extends Exception {
+Class SmartyException extends SystemException {
 }
 
 /**
