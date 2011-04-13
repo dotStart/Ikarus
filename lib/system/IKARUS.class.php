@@ -23,6 +23,9 @@ if (!defined('PACKAGE_ID')) define('PACKAGE_ID', 1);
 define('XDEBUG', (function_exists('xdebug_is_enabled') and xdebug_is_enabled()));
 if (!defined('DISPLAY_ERRORS')) define('DISPLAY_ERRORS', true);
 
+// FIXME: Set timezone dynamicly
+date_default_timezone_set('Europe/Berlin');
+
 /**
  * @author		Johannes Donath
  * @copyright		2010 DEVel Fusion
