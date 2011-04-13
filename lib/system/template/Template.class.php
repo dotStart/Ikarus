@@ -22,5 +22,12 @@ class Template extends Smarty {
 		
 		$this->setTemplateDir($templateDirs);
 	}
+	
+	/**
+	 * @see Smarty::fetch()
+	 */
+	public function fetch($template, $cache_id = null, $compile_id = null, $parent = null, $display = false) {
+		parent::fetch($template.'.tpl', $cache_id, $compile_id, $parent, $display);
+	}
 }
 ?>
