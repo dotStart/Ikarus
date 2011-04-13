@@ -20,7 +20,7 @@ class Template extends Smarty {
 	public function __construct($templateDirs = array()) {
 		parent::__construct();
 		
-		$this->$this->template_dir($templateDirs);
+		$this->setTemplateDir($templateDirs);
 	}
 }
 ?>
