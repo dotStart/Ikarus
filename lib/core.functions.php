@@ -9,15 +9,6 @@
  * @version		1.0.0-0001
  */
 
-// set exception handler
-set_exception_handler(array('IKARUS', 'handleException'));
-
-// set error handler
-set_error_handler(array('IKARUS', 'handleError'), E_ALL);
-
-// register shutdown method
-register_shutdown_function(array('IKARUS', 'destruct'));
-
 /**
  * Autoloads classes in namespaces
  * 
