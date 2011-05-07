@@ -14,6 +14,10 @@
 define('IKARUS_DIR', dirname(__FILE__).'/');
 define('TIME_NOW', time());
 
+// define packages
+if (!isset($packageList)) $packageList = array();
+$packageList['ikarus'] = IKARUS_DIR;
+
 // include framework core class
 require_once(IKARUS_DIR.'lib/system/IKARUS.class.php');
 ?>
