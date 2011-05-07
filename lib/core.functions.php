@@ -37,13 +37,14 @@ function autoload($className) {
 			$className .= '.class.php';
 			
 			// try to find file and include
-			if (file_exists($packageDir.$className)) require_once($packageDir.$className);
+			if (file_exists($packageDir.'lib/'.$className)) require_once($packageDir.'lib/'.$className);
 			
 			// exit the autoloader here. We've unique prefixes.
 			return;
 		}
 	}
 }
+// register autoloader
 spl_autoload_register('autoload');
 
 /**
@@ -52,6 +53,6 @@ spl_autoload_register('autoload');
  * @return string
  */
 function escapeString($string) {
-	return IKARUS::getDatabase()->escapeString($string);
+	return ikarus\system\IKARUS::getDatabase()->escapeString($string);
 }
 ?>
