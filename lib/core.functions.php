@@ -28,7 +28,7 @@ function autoload($className) {
 	foreach($packageList as $packagePrefix => $packageDir) {
 		if ($namespaceParts[0] == $packagePrefix) {
 			// remove prefix
-			$className = substr($className, (strlen($packagePrefix + 1)));
+			$className = substr($className, (strlen($packagePrefix) + 1));
 			
 			// replace backslashes
 			$className = str_replace('\\', '/', $className);
