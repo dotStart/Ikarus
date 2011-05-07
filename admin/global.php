@@ -19,6 +19,5 @@ $packageDirs = array(dirname(dirname(__FILE__)).'/');
 require_once(RELATIVE_IKARUS_DIR.'global.php');
 
 // start admin panel
-require_once(IKARUS_DIR.'lib/system/IKARUSACP.class.php');
-new IKARUSACP();
+new ikarus\system\IKARUSACP();
 ?>
