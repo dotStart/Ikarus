@@ -151,30 +151,6 @@ class IKARUS {
 		// fire event
 		EventHandler::fire('IKARUS', 'finishedInit');
 	}
-	
-	/**
-	 * Autoloads missing classes
-	 * @param	string	$className
-	 */
-	public static function autoload($className) {
-		// get packageDirs variable
-		global $packageDirs;
-	
-		// loop through package dirs
-		foreach($packageDirs as $dir) {
-			// search exceptions
-			if (file_exists($dir.'lib/system/exception/'.$className.'.class.php')) {
-				require_once($dir.'lib/system/exception/'.$className.'.class.php');
-				return;
-			}
-	
-			// search utils
-			if (file_exists($dir.'lib/util/'.$className.'.class.php')) {
-				require_once($dir.'lib/util/'.$className.'.class.php');
-				return;
-			}
-		}
-	}
 
 	/**
 	 * Replacement of the "__destruct()" method.
