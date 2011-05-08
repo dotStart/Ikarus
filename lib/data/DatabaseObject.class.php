@@ -43,11 +43,14 @@ abstract class DatabaseObject {
 	 * @throws SystemException
 	 */
 	public function __get($variable) {
+		// debugging
+		if (DEBUG) assert(isset($this->data[$variable]));
+		
 		// handle variables in data array
 		if (isset($this->data[$variable])) return $this->data[$variable];
-
-		// handle non existent properties
-		throw new SystemException("Property '%s' does not exist in class %s", $variable, get_class($this));
+		
+		// no variable found
+		return null;
 	}
 
 	/**
