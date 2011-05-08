@@ -7,6 +7,7 @@ use ikarus\system\event\EventHandler;
 use ikarus\system\exception\PrintableException;
 use ikarus\system\exception\SystemException;
 use ikarus\system\language\LanguageManager;
+use ikarus\system\option\Options;
 use ikarus\system\session\SessionFactory;
 use ikarus\system\style\StyleManager;
 use ikarus\system\template\Template;
