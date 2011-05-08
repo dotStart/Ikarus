@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.ikarus-framework.de" xmlns="http://www.ikarus-framework.de" elementFormDefault="qualified">
+	<!--
+	Ikarus Framework Type Specification
+	author:		Johannes Donath
+	updated:	10.04.2011
+	version:	1.0.0
+	-->
+	
 	<!-- Defines a default varchar (up to 255 chars. Cannot be empty) -->
 	<xs:simpleType name="ikarus_varchar">
 		<xs:restriction base="xs:string">

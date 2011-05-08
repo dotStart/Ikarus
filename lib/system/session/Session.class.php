@@ -41,7 +41,7 @@ class Session extends DatabaseObject {
 				FROM
 					ikarus".IKARUS_N."_session session
 				LEFT JOIN
-					ikarus".IKARUS_N."_session_data SessionData
+					ikarus".IKARUS_N."_session_data sessionData
 				ON
 					session.sessionID = sessionData.sessionID
 				WHERE

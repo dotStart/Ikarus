@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.ikarus-framework.de" xmlns="http://www.ikarus-framework.de" elementFormDefault="qualified">
+	<!--
+	Ikarus Framework Database Specification
+	author:		Johannes Donath
+	updated:	11.04.2011
+	version:	1.0.1
+	-->
+
+	<!-- Include basic ikarus types -->
+	<xs:include schemaLocation="http://www.ikarus-framework.de/XSD/types.xsd" />
+
+	<!-- Define root element -->
+	<xs:element name="database">
+		<xs:complexType>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="instruction" type="instruction" minOccurs="1" maxOccurs="unbounded" />
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	
+	<!-- Define instruction element -->
+	<xs:complexType name="instruction">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="row" type="row" />
+				<xs:element name="table" type="table" />
+				<xs:element name="conditions" type="conditions" />
+			</xs:choice>
+		</xs:sequence>
+		
+		<!-- Action argument (Defines what ikarus should do) -->
+		<xs:attribute name="action" type="instructionType" />
+		
+		<!-- Table argument (Defines on what table the action should executed) -->
+		<xs:attribute name="table" type="xs:string" />
+	</xs:complexType>
+	
+	<!-- Define row element -->
+	<xs:complexType name="row">
+		<xs:sequence>
+			<xs:element name="field">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="name" type="xs:string" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- Define table element -->
+	<xs:complexType name="table">
+		<xs:sequence>
+			<xs:element name="field">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="name" type="xs:string" />
+							<xs:attribute name="type" type="xs:string" />
+							<xs:attribute name="length" type="xs:integer" />
+							<xs:attribute name="key" type="xs:string" />
+							<xs:attribute name="autoincrement" type="ikarus_boolean" />
+							<xs:attribute name="action" type="fieldActionType" />
+							<xs:attribute name="newname" type="xs:string" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="conditions">
+		<xs:sequence>
+			<!-- Conditions -->
+			<xs:element name="field">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="operator" type="xs:string" />
+							<xs:attribute name="name" type="xs:string" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		
+			<!-- Operators -->
+			<xs:element name="and" />
+			<xs:element name="or" />
+			<xs:element name="not" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- Defines allowed actions -->
+	<xs:simpleType name="instructionType">
+		<xs:restriction base="xs:string">
+			<!-- CREATE TABLE -->
+			<xs:enumeration value="create" />
+			
+			<!-- ALTER TABLE -->
+			<xs:enumeration value="alter" />
+			
+			<!-- DROP TABLE -->
+			<xs:enumeration value="drop" />
+			
+			<!-- UPDATE -->
+			<xs:enumeration value="update" />
+			
+			<!-- INSERT INTO -->
+			<xs:enumeration value="insert" />
+			
+			<!-- DELETE FROM -->
+			<xs:enumeration value="delete" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- Define allowed field actions -->
+	<xs:simpleType name="fieldActionType">
+		<xs:restriction base="xs:string">
+			<!-- ALTER table ADD xyz -->
+			<xs:enumeration value="add" />
+			
+			<!-- ALTER table MODIFY xyz -->
+			<xs:enumeration value="modify" />
+			
+			<!-- ALTER table RENAME COLUMN xyz abc -->
+			<xs:enumeration value="rename" />
+			
+			<!-- ALTER table DROP xyz -->
+			<xs:enumeration value="drop" />
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

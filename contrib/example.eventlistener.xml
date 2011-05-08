@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventlistener xmlns="http://www.ikarus-framework.de" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ikarus-framework.de http://www.ikarus-framework.de/XSD/eventlistener.xsd">
+	<import>
+		<listener event="event@ClassName">
+			<file><![CDATA[lib/system/event/listener/SampleListener.class.php]]></file>
+			<inerhit>1</inerhit>
+		</listener>
+		
+		<listener event="event2@ClassName">
+			<file><![CDATA[lib/system/event/listener/SampleListener.class.php]]></file>
+			<inerhit>1</inerhit>
+		</listener>
+	</import>
+	<delete>
+		<listener event="event2@ClassName">
+			<file><![CDATA[lib/system/event/listener/SampleListener.class.php]]></file>
+		</listener>
+	</delete>
+</eventlistener>

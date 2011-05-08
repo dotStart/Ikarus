@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.ikarus-framework.de" xmlns="http://www.ikarus-framework.de" elementFormDefault="qualified">
+	<!--
+	Ikarus Framework Option Specification
+	author:		Johannes Donath
+	updated:	11.04.2011
+	version:	1.0.0
+	-->
+
+	<!-- Include basic ikarus types -->
+	<xs:include schemaLocation="http://www.ikarus-framework.de/XSD/types.xsd" />
+	
+	<!-- Define root element -->
+	<xs:element name="options">
+		<xs:complexType>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="import" type="import" />
+				<xs:element name="delete" type="import" />
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	
+	<!-- Define import element -->
+	<xs:complexType name="import">
+		<xs:sequence>
+			<xs:element name="options">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="option">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="category" type="ikarus_varchar" />
+									<xs:element name="type" type="xs:string" />
+									<xs:element name="enableoptions" type="xs:string" />
+									<xs:element name="disableoptions" type="xs:string" />
+									<xs:element name="defaultvalue" type="xs:string" />
+									<xs:element name="selectoptions" type="xs:string" />
+									<xs:element name="options" type="xs:string" />
+								</xs:sequence>
+								
+								<xs:attribute name="name" type="ikarus_varchar" />
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			
+			<xs:element name="categories">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="category">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="parentcategory" type="ikarus_varchar" />
+									<xs:element name="options" type="xs:string" />
+								</xs:sequence>
+								
+								<xs:attribute name="name" type="ikarus_varchar" />
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
