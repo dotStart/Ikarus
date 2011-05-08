@@ -1,15 +1,16 @@
 <?php
-// ikarus imports
-require_once(IKARUS_DIR.'lib/core.functions.php');
-
-require_once(IKARUS_DIR.'lib/system/cache/CacheSourceManager.class.php');
-require_once(IKARUS_DIR.'lib/system/database/DatabaseManager.class.php');
-require_once(IKARUS_DIR.'lib/system/event/EventHandler.class.php');
-require_once(IKARUS_DIR.'lib/system/language/LanguageManager.class.php');
-require_once(IKARUS_DIR.'lib/system/option/Options.class.php');
-require_once(IKARUS_DIR.'lib/system/session/SessionFactory.class.php');
-require_once(IKARUS_DIR.'lib/system/style/StyleManager.class.php');
-require_once(IKARUS_DIR.'lib/system/template/Template.class.php');
+namespace ikarus\system;
+use \Exception;
+use ikarus\system\cache\CacheSourceManager;
+use ikarus\system\database\DatabaseManager;
+use ikarus\system\event\EventHandler;
+use ikarus\system\exception\PrintableException;
+use ikarus\system\exception\SystemException;
+use ikarus\system\language\LanguageManager;
+use ikarus\system\session\SessionFactory;
+use ikarus\system\style\StyleManager;
+use ikarus\system\template\Template;
+use ikarus\util\ArrayUtil;
 
 // defines
 define('IKARUS_VERSION_MAJOR', 1);
@@ -134,6 +135,15 @@ class IKARUS {
 		// handle parameters
 		self::$packageDirs = $packageDirs;
 		self::$packageDir = $packageDir;
+		
+		// set exception handler
+		set_exception_handler(array($this, 'handleException'));
+
+		// set error handler
+		set_error_handler(array($this, 'handleError'), E_ALL);
+
+		// register shutdown method
+		register_shutdown_function(array($this, 'destruct'));
 
 		// disable xdebug
 		if (function_exists('xdebug_disable') and XDEBUG) xdebug_disable();
@@ -158,24 +168,19 @@ class IKARUS {
 	 * So we use the php register_shutdown_function to register an own destructor method.
 	 * Flushs the output, updates the session and executes the shutdown queries.
 	 */
-	public static function destruct() {
+	public function destruct() {
 		// flush ouput
-		if (ob_get_level() and ini_get('output_handler'))
-		ob_flush();
-		else
-		flush();
+		if (ob_get_level() and ini_get('output_handler')) ob_flush();
+		else flush();
 
 		// update session
-		if (self::$sessionObj !== null)
-		self::$sessionObj->update();
+		if (self::$sessionObj !== null) self::$sessionObj->update();
 
 		// close cache sources
-		if (self::$cacheObj !== null)
-		self::$cacheObj->closeCacheSources();
+		if (self::$cacheObj !== null) self::$cacheObj->closeCacheSources();
 
 		// shut down database
-		if (self::$dbObj !== null)
-		self::$dbObj->shutdown();
+		if (self::$dbObj !== null) self::$dbObj->shutdown();
 	}
 
 	/**
@@ -367,7 +372,7 @@ class IKARUS {
 	 * @param	integer	$errLine
 	 * @throws	SystemException
 	 */
-	public static function handleError($errorNo, $errMessage, $errFile, $errLine) {
+	public function handleError($errorNo, $errMessage, $errFile, $errLine) {
 		if (error_reporting() != 0) {
 			$type = 'error';
 			switch ($errorNo) {
@@ -385,11 +390,11 @@ class IKARUS {
 	 * Handles uncought exceptions
 	 * @param	Exception	$ex
 	 */
-	public static function handleException(Exception $ex) {
+	public function handleException(Exception $ex) {
 		if($ex instanceof PrintableException)
-		$ex->show();
+			$ex->show();
 		else
-		print($ex);
+			print($ex);
 
 		exit;
 	}

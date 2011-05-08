@@ -1,4 +1,6 @@
 <?php
+namespace ikarus\data;
+use ikarus\system\exception\SystemException;
 
 /**
  * Represents a database row

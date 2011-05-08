@@ -1,6 +1,7 @@
 <?php
-require_once(IKARUS_DIR.'lib/system/session/Session.class.php');
-require_once(IKARUS_DIR.'lib/data/user/UserProfile.class.php');
+namespace ikarus\system\session;
+use ikarus\data\user\UserProfile;
+use ikarus\system\IKARUS;
 
 /**
  * Represents a session and provides methods fro creating new, updating or deleting sessions
@@ -25,8 +26,7 @@ class SessionEditor extends Session {
 		parent::__construct($sessionID, $row);
 
 		// handle additional arguments
-		if ($isNew)
-		$this->update(true);
+		if ($isNew) $this->update(true);
 	}
 
 	/**
@@ -99,13 +99,13 @@ class SessionEditor extends Session {
 		} else {
 			// serialize and update
 			$data = serialize($this);
-
+			
 			$sql = "UPDATE
 					ikarus".IKARUS_N."_session_data
 				SET
 					sessionData = '".escapeString($data)."'
 				WHERE
-					sessionID = '".escapeString($this->sessionData)."'
+					sessionID = '".escapeString($this->sessionID)."'
 				AND
 					packageID = ".PACKAGE_ID;
 			IKARUS::getDatabase()->sendQuery($sql);

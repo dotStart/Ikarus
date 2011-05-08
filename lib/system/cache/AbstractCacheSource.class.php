@@ -1,7 +1,7 @@
 <?php
-// ikarus imports
-require_once(IKARUS_DIR.'lib/system/cache/CacheSource.class.php');
-require_once(IKARUS_DIR.'lib/system/event/EventHandler.class.php');
+namespace ikarus\system\cache;
+use ikarus\system\cache\CacheSource;
+use ikarus\system\event\EventHandler;
 
 /**
  * @author		Johannes Donath

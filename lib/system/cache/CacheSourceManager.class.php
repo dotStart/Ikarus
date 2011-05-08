@@ -1,7 +1,8 @@
 <?php
-// ikarus imports
-require_once(IKARUS_DIR.'lib/system/cache/CacheSource.class.php');
-require_once(IKARUS_DIR.'lib/system/cache/AbstractCacheSource.class.php');
+namespace ikarus\system\cache;
+use \DirectoryIterator;
+use ikarus\system\cache\source;
+use ikarus\system\exception\SystemException;
 
 /**
  * Manages cache sources
@@ -124,7 +125,7 @@ class CacheSourceManager {
 				require_once($dir->getPathname());
 
 				// create new instance
-				$className = $dir->getBasename('.class.php');
+				$className = 'ikarus\\system\\cache\\source\\'.$dir->getBasename('.class.php');
 
 				// add to available cache sources array
 				$this->cacheSources[str_replace('CacheSource', '', $dir->getBasename('.class.php'))] = new $className();

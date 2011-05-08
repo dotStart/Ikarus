@@ -1,4 +1,6 @@
 <?php
+namespace ikarus\util;
+
 /**
  * Contains Array-related functions.
  *

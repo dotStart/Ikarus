@@ -1,4 +1,6 @@
 <?php
+namespace ikarus\system\database\driver;
+use ikarus\system\exception\DatabaseException;
 
 /**
  * Database driver for PDO MySQL connections

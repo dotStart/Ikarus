@@ -1,6 +1,7 @@
 <?php
-// ikarus imports
-require_once(IKARUS_DIR.'lib/system/style/Style.class.php');
+namespace ikarus\system\style;
+use ikarus\system\IKARUS;
+use ikarus\system\exception\SystemException;
 
 /**
  * Manages styles for environments
@@ -49,7 +50,10 @@ class StyleManager {
 
 		// try to set active stle from query parameter
 		try {
-			$this->setActiveStyle($this->getStyle(intval($_REQUEST['styleID'])));
+			if (isset($_REQUEST['styleID']))
+				$this->setActiveStyle($this->getStyle(intval($_REQUEST['styleID'])));
+			else
+				throw new SystemException("No styleID given");
 		} catch (SystemException $ex) {
 			$this->setActiveStyle($this->getDefaultStyle());
 		}

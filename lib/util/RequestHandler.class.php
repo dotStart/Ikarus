@@ -1,4 +1,8 @@
 <?php
+namespace ikarus\util;
+use ikarus\system\exception\IllegalLinkException;
+use ikarus\system\exception\NamedUserException;
+use ikarus\system\exception\SystemException;
 
 /**
  * Handles requests

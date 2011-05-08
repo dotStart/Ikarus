@@ -10,5 +10,5 @@
  */
 
 require_once('./global.php');
-RequestHandler::handle(ArrayUtil::appendSuffix($packageDirs, 'lib/acp/'));
+ikarus\util\RequestHandler::handle(ikarus\util\ArrayUtil::appendSuffix($packageDirs, 'lib/acp/'));
 ?>

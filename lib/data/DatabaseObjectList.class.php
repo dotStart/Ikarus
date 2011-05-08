@@ -1,6 +1,7 @@
 <?php
-// ikarus imports
-require_once(IKARUS_DIR.'lib/data/DatabaseObject.class.php');
+namespace ikarus\data;
+use \Iterator;
+use ikarus\system\exception\SystemException;
 
 /**
  * Handles a list of database objects

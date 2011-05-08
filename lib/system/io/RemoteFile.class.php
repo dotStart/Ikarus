@@ -1,6 +1,6 @@
 <?php
-// ikarus imports
-require_once(IKARUS_DIR.'lib/system/io/File.class.php');
+namespace ikarus\system\io;
+use ikarus\system\exception\SystemException;
 
 /**
  * The RemoteFile class opens a connection to a remote host as a file.

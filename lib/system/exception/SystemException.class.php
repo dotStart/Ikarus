@@ -1,4 +1,10 @@
 <?php
+namespace ikarus\system\exception;
+use \Exception;
+use ikarus\system\IKARUS;
+use ikarus\system\exception\PrintableException;
+use ikarus\util\FileUtil;
+use ikarus\util\StringUtil;
 
 /**
  * This exception will thrown if an system error occours
@@ -183,10 +189,13 @@ class SystemException extends Exception implements PrintableException {
 				(
 				<?php echo $this->getLine(); ?>
 				)<br />
-				<?php if (function_exists('xdebug_peak_memory_usage')): ?>
-				<b>memory:</b>
-				<?php echo FileUtil::formatFilesize(xdebug_peak_memory_usage()); ?>
-				<br />
+				<?php if (function_exists('xdebug_peak_memory_usage') and IKARUS::getLanguage() !== null): ?>
+					<?php try { ?>
+						<?php $memorySize = FileUtil::formatFilesize(xdebug_peak_memory_usage()); ?>
+						<b>memory:</b>
+						<?php echo $memorySize; ?>
+						<br />
+					<?php } Catch(Exception $ex) { } ?>
 				<?php endif; ?>
 				<b>php version:</b>
 				<?php echo StringUtil::encodeHTML(phpversion()); ?>
@@ -205,9 +214,7 @@ class SystemException extends Exception implements PrintableException {
 			</p>
 
 			<h2>Stacktrace:</h2>
-			<pre>
-			<?php echo StringUtil::encodeHTML($this->__getTraceAsString()); ?>
-			</pre>
+			<pre><?php echo StringUtil::encodeHTML($this->__getTraceAsString()); ?></pre>
 		</div>
 
 		<?php echo $this->functions; ?>

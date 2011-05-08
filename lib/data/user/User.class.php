@@ -1,6 +1,7 @@
 <?php
-// ikarus imports
-require_once(IKARUS_DIR.'lib/data/DatabaseObject.class.php');
+namespace ikarus\data\user;
+use ikarus\data\DatabaseObject;
+use ikarus\system\IKARUS;
 
 /**
  * Represents a user row

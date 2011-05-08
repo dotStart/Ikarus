@@ -1,4 +1,5 @@
 <?php
+namespace ikarus\system\option\type;
 
 /**
  * Defines default methods for option types

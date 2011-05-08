@@ -1,4 +1,7 @@
 <?php
+namespace ikarus\util;
+use ikarus\system\IKARUS;
+
 /**
  * Contains string-related functions.
  *

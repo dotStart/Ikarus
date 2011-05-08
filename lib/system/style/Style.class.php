@@ -1,6 +1,7 @@
 <?php
-// ikarus imports
-require_once(IKARUS_DIR.'lib/data/DatabaseObject.class.php');
+namespace ikarus\system\style;
+use ikarus\data\DatabaseObject;
+use ikarus\system\IKARUS;
 
 /**
  * Represents a style row

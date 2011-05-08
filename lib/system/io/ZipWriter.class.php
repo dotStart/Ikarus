@@ -1,4 +1,7 @@
 <?php
+namespace ikarus\system\io;
+use ikarus\util\StringUtil;
+
 /**
  * Creates a Zip file archive.
  *

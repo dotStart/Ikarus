@@ -1,6 +1,5 @@
 <?php
-// ikarus imports
-require_once(IKARUS_DIR.'lib/system/option/type/TextOptionType.class.php');
+namespace ikarus\system\option\type;
 
 /**
  * Option type for string values with specified set of values

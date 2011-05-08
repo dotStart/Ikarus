@@ -1,6 +1,5 @@
 <?php
-// includes
-require_once(IKARUS_DIR.'lib/system/option/type/OptionType.class.php');
+namespace ikarus\system\option\type;
 
 /**
  * Option type for integer values

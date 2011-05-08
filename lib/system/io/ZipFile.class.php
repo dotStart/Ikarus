@@ -1,6 +1,6 @@
 <?php
-// ikarus imports
-require_once(IKARUS_DIR.'lib/system/io/File.class.php');
+namespace ikarus\system\io;
+use ikarus\system\exception\SystemException;
 
 /**
  * The File class handles all file operations on a zipped file.

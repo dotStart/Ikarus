@@ -1,4 +1,7 @@
 <?php
+namespace ikarus\system\event;
+use ikarus\system\IKARUS;
+use ikarus\system\exception\SystemException;
 
 /**
  * Manages events
@@ -34,7 +37,7 @@ class EventHandler {
 				require_once($listenerFile);
 
 				// create instance
-				$className = basename($listenerFile, '.class.php');
+				$className = 'ikarus\\system\\event\\listener\\'.basename($listenerFile, '.class.php');
 				$instance = new $className();
 
 				// validate instance

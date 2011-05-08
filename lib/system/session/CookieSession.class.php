@@ -1,6 +1,6 @@
 <?php
-// ikarus imports
-require_once(IKARUS_DIR.'lib/system/session/SessionEditor.class.php');
+namespace ikarus\system\session;
+use ikarus\util\UserUtil;
 
 /**
  * @author		Johannes Donath

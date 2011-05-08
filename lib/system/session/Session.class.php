@@ -1,6 +1,8 @@
 <?php
-// ikarus imports
-require_once(IKARUS_DIR.'lib/data/DatabaseObject.class.php');
+namespace ikarus\system\session;
+use ikarus\data\DatabaseObject;
+use ikarus\system\IKARUS;
+use ikarus\system\exception\SystemException;
 
 /**
  * Represents a session row

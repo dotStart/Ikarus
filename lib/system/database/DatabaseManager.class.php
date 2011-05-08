@@ -1,7 +1,7 @@
 <?php
-// ikarus imports
-require_once(IKARUS_DIR.'lib/system/database/driver/DatabaseDriver.class.php');
-require_once(IKARUS_DIR.'lib/system/database/driver/AbstractDatabaseDriver.class.php');
+namespace ikarus\system\database;
+use ikarus\system\database\driver;
+use ikarus\system\exception\SystemException;
 
 /**
  * Manages database connections
@@ -43,11 +43,15 @@ class DatabaseManager {
 
 		// include driver
 		require_once(IKARUS_DIR.'lib/system/database/driver/'.$driver.'.class.php');
-
+		
 		// create new instance
 		$linkID = $database.'.'.str_replace('DatabaseDriver', '', $driver);
 
-		if (call_user_func(array($driver, 'isSupported'))) {
+		if (call_user_func(array('ikarus\\system\\database\\driver\\'.$driver, 'isSupported'))) {
+			// add namespace
+			$driver = 'ikarus\\system\\database\\driver\\'.$driver;
+			
+			// construct!
 			$this->availableConnections[$linkID] = new $driver($hostname, $username, $password, $database);
 
 			// set active

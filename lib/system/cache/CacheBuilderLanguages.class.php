@@ -1,7 +1,7 @@
 <?php
-// ikarus imports
-require_once(IKARUS_DIR.'lib/system/cache/CacheBuilder.class.php');
-require_once(IKARUS_DIR.'lib/system/language/Language.class.php');
+namespace ikarus\system\cache;
+use ikarus\system\IKARUS;
+use ikarus\system\language\Language;
 
 /**
  * Reads all available languages from database
@@ -59,7 +59,7 @@ class CacheBuilderLanguages implements CacheBuilder {
 		$result = IKARUS::getDatabase()->sendQuery($sql);
 
 		while($row = IKARUS::getDatabase()->fetchArray($result)) {
-			$data[] = new Language(null, $row);
+			$data[] = $row;
 		}
 
 		return $data;

@@ -1,6 +1,10 @@
 <?php
-// ikarus imports
-require_once(IKARUS_DIR.'lib/system/cache/AbstractCacheSource.class.php');
+namespace ikarus\system\cache\source;
+use ikarus\system\cache;
+use ikarus\system\cache\AbstractCacheSource;
+use ikarus\system\cache\CacheBuilder;
+use ikarus\system\exception\SystemException;
+use ikarus\system\io\File;
 
 /**
  * Provides a cache builder that stores his data on disk
@@ -19,9 +23,9 @@ class DiskCacheSource extends AbstractCacheSource {
 	 */
 	function get($cacheFile, $cacheBuilderPath, $minLifetime, $maxLifetime) {
 		if ($this->needsRebuild($cacheFile, $minLifetime, $maxLifetime))
-		return $this->rebuildFile($cacheFile, $cacheBuilderPath);
+			return $this->rebuildFile($cacheFile, $cacheBuilderPath);
 		else
-		return $this->readFile($cacheFile);
+			return $this->readFile($cacheFile);
 	}
 
 	/**
@@ -92,7 +96,7 @@ class DiskCacheSource extends AbstractCacheSource {
 		require_once($cacheBuilderPath);
 
 		// start cache builder
-		$className = basename($cacheBuilderPath, '.class.php');
+		$className = 'ikarus\\system\\cache\\'.basename($cacheBuilderPath, '.class.php');
 		$cacheBuilder = new $className();
 
 		// validate cache builder

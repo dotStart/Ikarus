@@ -1,4 +1,7 @@
 <?php
+namespace ikarus\system\io;
+use ikarus\system\exception\SystemException;
+
 /**
  * The File class handles all file operations.
  *

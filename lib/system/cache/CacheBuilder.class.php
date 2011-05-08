@@ -1,4 +1,5 @@
 <?php
+namespace ikarus\system\cache;
 
 /**
  * Defines default methods for cache builders

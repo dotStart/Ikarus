@@ -1,4 +1,5 @@
 <?php
+namespace ikarus\util;
 
 /**
  * Contains header-related functions.

@@ -1,4 +1,5 @@
 <?php
+namespace ikarus\system\exception;
 
 /**
  * Abstract exception that displays predefined templates

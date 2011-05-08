@@ -1,4 +1,5 @@
 <?php
+namespace ikarus\system\exception;
 
 /**
  * This exception is senseless

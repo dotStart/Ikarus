@@ -1,8 +1,8 @@
 <?php
-// ikarus imports
-require_once(IKARUS_DIR.'lib/system/io/File.class.php');
-require_once(IKARUS_DIR.'lib/system/io/ZipFile.class.php');
-require_once(IKARUS_DIR.'lib/system/io/FTP.class.php');
+namespace ikarus\util;
+use ikarus\system\io\File;
+use ikarus\system\io\ZipFile;
+use ikarus\system\io\FTP;
 
 /**
  * Contains file-related functions.

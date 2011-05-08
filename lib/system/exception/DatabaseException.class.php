@@ -1,4 +1,5 @@
 <?php
+namespace ikarus\system\exception;
 
 /**
  * This exception will thrown if a database problem occoures

@@ -1,7 +1,9 @@
 <?php
-// ikarus imports
-require_once(IKARUS_DIR.'lib/system/io/File.class.php');
-require_once(IKARUS_DIR.'lib/system/language/Language.class.php');
+namespace ikarus\system\language;
+use ikarus\system\IKARUS;
+use ikarus\system\exception\SystemException;
+use ikarus\system\io\File;
+use ikarus\util\StringUtil;
 
 /**
  * Provides methods for localisations
@@ -234,7 +236,14 @@ class LanguageManager {
 	 * @return array<Language>
 	 */
 	public static function getAvailableLanguages($packageID = PACKAGE_ID) {
-		return IKARUS::getCache()->get(IKARUS_DIR.'cache/cache.'.$packageID.'-languages.php', IKARUS_DIR.'lib/system/cache/CacheBuilderLanguages.class.php');
+		// get array
+		$languages = IKARUS::getCache()->get(IKARUS_DIR.'cache/cache.'.$packageID.'-languages.php', IKARUS_DIR.'lib/system/cache/CacheBuilderLanguages.class.php');
+	
+		foreach($languages as $key => $row) {
+			$languages[$key] = new Language(null, $row);
+		}
+		
+		return $languages;
 	}
 
 	/**

@@ -1,8 +1,6 @@
 <?php
-// ikarus imports
-require_once(IKARUS_DIR.'lib/system/session/Session.class.php');
-require_once(IKARUS_DIR.'lib/system/session/SessionEditor.class.php');
-require_once(IKARUS_DIR.'lib/system/session/CookieSession.class.php');
+namespace ikarus\system\session;
+use ikarus\system\IKARUS;
 
 /**
  * Creates and identifies sessions
@@ -32,7 +30,7 @@ class SessionFactory {
 	 * Contains the class name of the class that should used for Sessions
 	 * @var string
 	 */
-	protected $sessionClassName = 'CookieSession';
+	protected $sessionClassName = 'ikarus\\system\\session\\CookieSession';
 
 	/**
 	 * Creates a new instance of SessionFactory
@@ -46,8 +44,7 @@ class SessionFactory {
 		// if (XDEBUG) xdebug_enable();
 
 		// try to find existing session and create new session if no session exists
-		if ($this->loadSession() === false)
-		$this->createSession();
+		if ($this->loadSession() === false) $this->createSession();
 	}
 
 	/**

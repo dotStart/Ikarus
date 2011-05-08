@@ -1,6 +1,5 @@
 <?php
-// ikarus imports
-require_once(IKARUS_DIR.'lib/system/IKARUS.class.php');
+namespace ikarus\system;
 
 /**
  * @author		Johannes Donath

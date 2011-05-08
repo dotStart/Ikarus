@@ -1,4 +1,8 @@
 <?php
+namespace ikarus\system\option;
+use ikarus\system\IKARUS;
+use ikarus\system\io\File;
+use ikarus\system\option\type;
 
 /**
  * Manages option files of applications
@@ -63,11 +67,11 @@ class Options {
 
 		// create file
 		$file = new File($file);
-		$file->write("<?php\n/**\n * Ikarus Option File\n * Generated on ".gmdate('r')."\n **/\n\n");
+		$file->write("<?php\nnamespace \;\n/**\n * Ikarus Option File\n * Generated on ".gmdate('r')."\n **/\n\n");
 
 		while($row = IKARUS::getDB()->fetchArray($result)) {
 			require_once(IKARUS_DIR.$row['classFile']);
-			$className = basename($row['classFile'], '.class.php');
+			$className = 'ikarus\\system\\option\\type\\'.basename($row['classFile'], '.class.php');
 			$file->write("define('".(intval($row['prependPrefix']) ? self::OPTION_PREFIX : '').strtoupper($row['optionName']).(intval($row['appendSuffix']) ? self::OPTION_SUFFIX : '')."', ".call_user_func(array($className, 'formatOptionValue'), $row['optionValue']).");\n");
 		}
 

@@ -1,7 +1,7 @@
 <?php
-// ikarus imports
-require_once(IKARUS_DIR.'lib/data/DatabaseObjectList.class.php');
-require_once(IKARUS_DIR.'lib/data/user/UserProfile.class.php');
+namespace ikarus\data\user;
+use ikarus\data\DatabaseObjectList;
+use ikarus\system\IKARUS;
 
 /**
  * Manages a list of users

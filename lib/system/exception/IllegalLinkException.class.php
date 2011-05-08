@@ -1,4 +1,5 @@
 <?php
+namespace ikarus\system\exception;
 
 /**
  * This exception displays a little "Page Not Found" message

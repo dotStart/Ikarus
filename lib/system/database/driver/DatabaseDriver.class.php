@@ -1,4 +1,5 @@
 <?php
+namespace ikarus\system\database\driver;
 
 /**
  * Defines needed default methods for database drivers

@@ -1,7 +1,8 @@
 <?php
-// ikarus imports
-require_once(IKARUS_DIR.'lib/system/io/Tar.class.php');
-require_once(IKARUS_DIR.'lib/system/io/File.class.php');
+namespace ikarus\system\io;
+use ikarus\system\exception\SystemException;
+use ikarus\util\FileUtil;
+use ikarus\util\StringUtil;
 
 /**
  * Creates a tar file archive.

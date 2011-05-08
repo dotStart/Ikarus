@@ -1,7 +1,6 @@
 <?php
-// ikarus imports
-require_once(IKARUS_DIR.'lib/system/io/File.class.php');
-require_once(IKARUS_DIR.'lib/system/io/ZipFile.class.php');
+namespace ikarus\system\io;
+use ikarus\system\exception\SystemException;
 
 /**
  * Opens tar or tar.gz archives.

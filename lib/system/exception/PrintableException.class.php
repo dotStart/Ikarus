@@ -1,4 +1,5 @@
 <?php
+namespace ikarus\system\exception;
 
 /**
  * @author		Johannes Donath

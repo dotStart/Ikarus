@@ -1,6 +1,6 @@
 <?php
-// ikarus imports
-require_once(IKARUS_DIR.'lib/system/database/driver/AbstractDatabaseDriver.class.php');
+namespace ikarus\system\database\driver;
+use ikarus\system\exception\DatabaseException;
 
 /**
  * Database driver for MySQL database system

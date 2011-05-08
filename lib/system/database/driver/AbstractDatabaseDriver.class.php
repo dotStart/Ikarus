@@ -1,4 +1,6 @@
 <?php
+namespace ikarus\system\database\driver;
+use ikarus\system\exception\SystemException;
 
 /**
  * Defines default methods for database drivers

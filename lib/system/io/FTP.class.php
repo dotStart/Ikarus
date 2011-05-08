@@ -1,4 +1,6 @@
 <?php
+namespace ikarus\system\io;
+use ikarus\system\exception\SystemException;
 
 /**
  * The FTP class handles all ftp operations.
