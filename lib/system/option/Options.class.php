@@ -67,7 +67,7 @@ class Options {
 
 		// create file
 		$file = new File($file);
-		$file->write("<?php\nnamespace \;\n/**\n * Ikarus Option File\n * Generated on ".gmdate('r')."\n **/\n\n");
+		$file->write("<?php\n/**\n * Ikarus Option File\n * Generated on ".gmdate('r')."\n **/\n\n");
 
 		while($row = IKARUS::getDB()->fetchArray($result)) {
 			require_once(IKARUS_DIR.$row['classFile']);
