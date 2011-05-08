@@ -271,7 +271,7 @@ class IKARUS {
 	 */
 	protected function initTemplate() {
 		// start Template
-		self::$tplObj = new Template(ArrayUtil::appendSuffix(self::$packageDirs, static::TEMPLATE_DIR));
+		self::$tplObj = new Template(ArrayUtil::appendSuffix(self::$packageDirs, static::TEMPLATE_DIR), IKARUS_DIR.static::TEMPLATE_DIR.'compiled/');
 	}
 
 	/**
