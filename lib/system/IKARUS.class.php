@@ -147,6 +147,12 @@ class IKARUS {
 		// set error handler
 		set_error_handler(array($this, 'handleError'), E_ALL);
 
+		// register assert handler
+		assert_options(ASSERT_ACTIVE, 1);
+		assert_options(ASSERT_WARNING, 0);
+		assert_options(ASSERT_QUIET_EVAL, 1);
+		assert_options(ASSERT_CALLBACK, array($this, 'handleAssertion'));
+		
 		// register shutdown method
 		register_shutdown_function(array($this, 'destruct'));
 
@@ -369,6 +375,17 @@ class IKARUS {
 		return self::$userObj;
 	}
 
+	/**
+	 * Handles assertions
+	 * @param		string		$file
+	 * @param		integer		$line
+	 * @param		integer		$code
+	 * @throws		SystemException
+	 */
+	public function handleAssertion($file, $line, $code) {
+		throw new SystemException("Assertion filed in file %s on line %u with code %u", $file, $line, $code);
+	}
+	
 	/**
 	 * Handles errors
 	 * @param	integer	$errNo
