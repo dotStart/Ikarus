@@ -19,10 +19,11 @@ class Template extends \Smarty {
 	/**
 	 * @see Smarty::__construct()
 	 */
-	public function __construct($templateDirs = array()) {
+	public function __construct($templateDirs = array(), $compileDir = '') {
 		parent::__construct();
 		
 		$this->setTemplateDir($templateDirs);
+		$this->compile_dir = $compileDir;
 	}
 	
 	/**
