@@ -198,6 +198,14 @@ class PackageFileReader {
 	}
 	
 	/**
+	 * Returnes the gzip file
+	 * @return		string
+	 */
+	public function getFileContents() {
+		return $this->fileContentSplit[2];
+	}
+	
+	/**
 	 * Reads the complete file content
 	 * @return		void
 	 */
@@ -207,7 +215,7 @@ class PackageFileReader {
 			$this->fileContent .= $file->gets(1024);
 		
 		// split content
-		$this->fileContentSplit = explode(chr(0), $this->fileContent, 2);
+		$this->fileContentSplit = explode(chr(0), $this->fileContent, 3);
 	}
 	
 	/**
