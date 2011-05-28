@@ -188,7 +188,16 @@
 	<xs:complexType name="installs">
 		<xs:sequence>
 			<!-- Basic definition for install element -->
-			<xs:element name="install" maxOccurs="unbounded" minOccurs="1" type="ikarus_packageIdentifier" />
+			<xs:element name="install" maxOccurs="unbounded" minOccurs="1">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="ikarus_packageIdentifier">
+							<!-- Definition of file path -->
+							<xs:attribute name="file" type="xs:string" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	
