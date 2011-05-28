@@ -16,8 +16,8 @@ use ikarus\system\exception\SystemException;
  * $file->write('...');
  * $file->close();
  *
- * @author		Marcel Werk
- * @copyright		2001-2009 WoltLab GmbH
+ * @author		Marcel Werk, Johannes Donath
+ * @copyright		2001-2009 WoltLab GmbH, 2011 Evil-Co.de
  * @package		com.develfusion.ikarus
  * @subpackage		system
  * @category		Ikarus Framework
@@ -25,7 +25,17 @@ use ikarus\system\exception\SystemException;
  * @version		1.0.0-0001
  */
 class File {
+	
+	/**
+	 * Contains the file resource
+	 * @var		resource
+	 */
 	protected $resource = null;
+	
+	/**
+	 * Contains the filename
+	 * @var		string
+	 */
 	protected $filename;
 
 	/**
@@ -40,6 +50,14 @@ class File {
 		if ($this->resource === false) {
 			throw new SystemException('Can not open file ' . $filename, 11012);
 		}
+	}
+	
+	/**
+	 * Returnes the given filename
+	 * @return		string
+	 */
+	public function getFilename() {
+		return $this->filename;
 	}
 
 	/**
