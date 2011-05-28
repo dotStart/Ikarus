@@ -4,7 +4,7 @@
 	Ikarus Framework Package Specification
 	author:		Johannes Donath
 	updated:	28.05.2011
-	version:	1.2.1
+	version:	1.2.2
 	-->
 	
 	<!-- Include basic ikarus types -->
@@ -176,9 +176,6 @@
 						<xs:extension base="xs:string">
 							<!-- Definition of instruction type (e.g. action) -->
 							<xs:attribute name="type" type="xs:string" />
-							
-							<!-- Definition of updateable version (e.g. 1.0.0) -->
-							<xs:attribute name="fromversion" type="ikarus_version" />
 						</xs:extension>
 					</xs:simpleContent>
 				</xs:complexType>
@@ -187,5 +184,8 @@
 		
 		<!-- Definition of type (installation or update?) -->
 		<xs:attribute name="type" type="ikarus_instructionsType" />
+		
+		<!-- Definition of updateable version (e.g. 1.0.0) -->
+		<xs:attribute name="fromversion" type="ikarus_version" />
 	</xs:complexType>
 </xs:schema>
