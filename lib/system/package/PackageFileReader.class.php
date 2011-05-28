@@ -183,7 +183,9 @@ class PackageFileReader {
 		$this->readFileInformation();
 		$this->readPackageInformation();
 		$this->readPackageDependencies();
+		$this->readPacakgeSystemRequirements();
 		$this->readPackageExcludes();
+		$this->readPackageInstallations();
 		$this->readPackageInstructions();
 	}
 	
@@ -222,54 +224,6 @@ class PackageFileReader {
 		
 		// get raw information array
 		$this->filePackageArray = json_decode(gzinflate($this->fileContentSplit[1]));
-	}
-	
-	/**
-	 * Reads package information
-	 * @return		void
-	 * @throws		PackageFileException
-	 */
-	protected function readPackageInformation() {
-		// validate information
-		if (!isset($this->filePackageArray['information'])) throw new PackageFileException("Cannot read IPF file %s: No package information found!", $this->file->getFilename());
-		if (count(array_diff(array('packageIdentifier', 'packageName', 'packageDescription', 'version'), array_keys($this->filePackageArray['information'])))) throw new PackageFileException("Cannot read IPF file %s: Missing package information!", $this->file->getFilename());
-		
-		// get needed information
-		$this->packageIdentifier = StringUtil::trim($this->filePackageArray['information']['packageIdentifier']);
-		$this->packageName = $this->filePackageArray['information']['packageName'];
-		$this->packageDescription = $this->filePackageArray['information']['packageDescription'];
-		$this->version = $this->filePackageArray['information']['version'];
-		
-		// handle file errors
-		if (!is_array($this->packageDescription) or !is_array($this->packageName)) throw new PackageFileException("Cannot read IPF file %s: Corrupt package information detected!", $this->file->getFilename());
-		
-		// get optional information
-		if (isset($this->filePackageArray['information']['standalone'])) $this->standalone = (bool) $this->filePackageArray['information']['standalone'];
-		if (isset($this->filePackageArray['information']['plugin'])) $this->plugin = StringUtil::trim($this->filePackageArray['information']['plugin']);
-		if (isset($this->filePackageArray['information']['projectStartDate'])) $this->projectStartDate = $this->filePackageArray['information']['projectStartDate'];
-		if (isset($this->filePackageArray['information']['date'])) $this->date = $this->filePackageArray['information']['date'];
-		if (isset($this->filePackageArray['information']['packageUrl'][0])) $this->packageUrl = $this->filePackageArray['information']['packageUrl'][0];
-		if (isset($this->filePackageArray['information']['packageUrl'][1])) $this->packageUrlAlias = $this->filePackageArray['information']['packageUrl'][1];
-		if (isset($this->filePackageArray['information']['documentationUrl'])) $this->documentationUrl = $this->filePackageArray['information']['documentationUrl'];
-		if (isset($this->filePackageArray['information']['supportUrl'])) $this->supportUrl = $this->filePackageArray['information']['supportUrl'];
-		
-		// validate author information
-		if (!isset($this->filePackageArray['information']['authorName'][0])) throw new PackageFileException("Cannot read IPF file %s: Corrupt author information detected!", $this->file->getFilename());
-
-		// read author information
-		$this->authorName = $this->filePackageArray['information']['authorName'][0];
-		if (isset($this->filePackageArray['information']['authorName'][1])) $this->authorAlias = $this->filePackageArray['information']['authorName'][1];
-		if (isset($this->filePackageArray['information']['authorUrl'])) $this->authorUrl = $this->filePackageArray['information']['authorUrl'];
-		
-		// license information
-		if (isset($this->filePackageArray['licenseInformation'])) {
-			// validate information
-			if (!isset($this->filePackageArray['licenseInformation']['licenseName']) or !isset($this->filePackageArray['licenseInformation']['licenseUrl'])) throw new PackageFileException("Cannot read IPF file %s: Corrupt license information detected!", $this->file->getFilename());
-			
-			// read license information
-			$this->licenseName = $this->filePackageArray['licenseInformation']['licenseName'];
-			$this->licenseUrl = $this->filePackageArray['licenseInformation']['licenseUrl'];
-		}
 	}
 	
 	/**
@@ -324,6 +278,79 @@ class PackageFileReader {
 	}
 	
 	/**
+	 * Reads package information
+	 * @return		void
+	 * @throws		PackageFileException
+	 */
+	protected function readPackageInformation() {
+		// validate information
+		if (!isset($this->filePackageArray['information'])) throw new PackageFileException("Cannot read IPF file %s: No package information found!", $this->file->getFilename());
+		if (count(array_diff(array('packageIdentifier', 'packageName', 'packageDescription', 'version'), array_keys($this->filePackageArray['information'])))) throw new PackageFileException("Cannot read IPF file %s: Missing package information!", $this->file->getFilename());
+		
+		// get needed information
+		$this->packageIdentifier = StringUtil::trim($this->filePackageArray['information']['packageIdentifier']);
+		$this->packageName = $this->filePackageArray['information']['packageName'];
+		$this->packageDescription = $this->filePackageArray['information']['packageDescription'];
+		$this->version = $this->filePackageArray['information']['version'];
+		
+		// handle file errors
+		if (!is_array($this->packageDescription) or !is_array($this->packageName)) throw new PackageFileException("Cannot read IPF file %s: Corrupt package information detected!", $this->file->getFilename());
+		
+		// get optional information
+		if (isset($this->filePackageArray['information']['standalone'])) $this->standalone = (bool) $this->filePackageArray['information']['standalone'];
+		if (isset($this->filePackageArray['information']['plugin'])) $this->plugin = StringUtil::trim($this->filePackageArray['information']['plugin']);
+		if (isset($this->filePackageArray['information']['projectStartDate'])) $this->projectStartDate = $this->filePackageArray['information']['projectStartDate'];
+		if (isset($this->filePackageArray['information']['date'])) $this->date = $this->filePackageArray['information']['date'];
+		if (isset($this->filePackageArray['information']['packageUrl'][0])) $this->packageUrl = $this->filePackageArray['information']['packageUrl'][0];
+		if (isset($this->filePackageArray['information']['packageUrl'][1])) $this->packageUrlAlias = $this->filePackageArray['information']['packageUrl'][1];
+		if (isset($this->filePackageArray['information']['documentationUrl'])) $this->documentationUrl = $this->filePackageArray['information']['documentationUrl'];
+		if (isset($this->filePackageArray['information']['supportUrl'])) $this->supportUrl = $this->filePackageArray['information']['supportUrl'];
+		
+		// validate author information
+		if (!isset($this->filePackageArray['information']['authorName'][0])) throw new PackageFileException("Cannot read IPF file %s: Corrupt author information detected!", $this->file->getFilename());
+
+		// read author information
+		$this->authorName = $this->filePackageArray['information']['authorName'][0];
+		if (isset($this->filePackageArray['information']['authorName'][1])) $this->authorAlias = $this->filePackageArray['information']['authorName'][1];
+		if (isset($this->filePackageArray['information']['authorUrl'])) $this->authorUrl = $this->filePackageArray['information']['authorUrl'];
+		
+		// license information
+		if (isset($this->filePackageArray['licenseInformation'])) {
+			// validate information
+			if (!isset($this->filePackageArray['licenseInformation']['licenseName']) or !isset($this->filePackageArray['licenseInformation']['licenseUrl'])) throw new PackageFileException("Cannot read IPF file %s: Corrupt license information detected!", $this->file->getFilename());
+			
+			// read license information
+			$this->licenseName = $this->filePackageArray['licenseInformation']['licenseName'];
+			$this->licenseUrl = $this->filePackageArray['licenseInformation']['licenseUrl'];
+		}
+	}
+	
+	/**
+	 * Reads package installations information
+	 * @return		void
+	 * @throws		PackageFileException
+	 */
+	protected function readPackageInstallations() {
+		// stop if no installations are required
+		if (!isset($this->filePackageArray['installs'])) return;
+		
+		// validate
+		if (!is_array($this->filePackageArray['installs']) or !count($this->filePackageArray['installs'])) throw new PackageFileException("Cannot read IPF file %s: Corrupt package installation information!", $this->file->getFilename());
+		
+		// parste installations
+		foreach($this->filePackageArray['installs'] as $installation) {
+			// validate
+			if (!isset($installation['file']) or !isset($installation['packageIdentifier'])) throw new PackageFileException("Cannot read IPF file %s: Corrupt installation information!", $this->file->getFilename());
+			
+			// add
+			$this->installations[] = array(
+				'file'				=>	$installation['file'],
+				'packageIdentifier'		=>	$installation['packageIdentifier']
+			);
+		}
+	}
+	
+	/**
 	 * Reads package instructions
 	 * @return		void
 	 * @throws		PackageFileException
@@ -359,6 +386,31 @@ class PackageFileReader {
 						'argument'	=>	$action['argument']
 					);
 			}
+		}
+	}
+	
+	/**
+	 * Reads all system requirements
+	 * @return		void
+	 * @throws		PackageFileException
+	 */
+	protected function readPacakgeSystemRequirements() {
+		// stop if no system requirements set
+		if (!isset($this->filePackageArray['systemRequirements'])) return;
+		
+		// validate
+		if (!is_array($this->filePackageArray['systemRequirements']) or !count($this->filePackageArray['systemRequirements'])) throw new PackageFileException("Cannot read IPF file %s: Corrupt system requirement information!", $this->file->getFilename());
+		
+		// loop throug requirements
+		foreach($this->filePackageArray['systemRequirements'] as $requirement) {
+			// validate
+			if (!isset($requirement['type']) or !isset($requirement['what'])) throw new PackageFileException("Cannot read IPF file %s: Corrupt requirement information!", $this->file->getFilename());
+			
+			// add
+			$this->systemRequirements[] = array(
+				'type'		=>	$requirement['type'],
+				'what'		=>	$requirement['what']
+			);
 		}
 	}
 }
