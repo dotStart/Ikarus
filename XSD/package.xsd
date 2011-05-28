@@ -4,7 +4,7 @@
 	Ikarus Framework Package Specification
 	author:		Johannes Donath
 	updated:	28.05.2011
-	version:	1.2.2
+	version:	1.3.0
 	-->
 	
 	<!-- Include basic ikarus types -->
@@ -19,6 +19,7 @@
 				<xs:element name="licenseinformation" type="licenseInformation" maxOccurs="1" minOccurs="0" />
 				<xs:element name="requiredpackages" type="requiredPackages" maxOccurs="1" minOccurs="1" />
 				<xs:element name="excludedpackages" type="excludedPackages" maxOccurs="1" minOccurs="0" />
+				<xs:element name="installs" type="installs" maxOccurs="1" minOccurs="0" />
 				<xs:element name="instructions" type="instructions" maxOccurs="unbounded" minOccurs="1" />
 			</xs:choice>
 			
@@ -163,6 +164,14 @@
 					</xs:simpleContent>
 				</xs:complexType>
 			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- Basic definition for installs elements -->
+	<xs:complexType name="installs">
+		<xs:sequence>
+			<!-- Basic definition for install element -->
+			<xs:element name="install" maxOccurs="unbounded" minOccurs="1" type="ikarus_packageIdentifier" />
 		</xs:sequence>
 	</xs:complexType>
 	
