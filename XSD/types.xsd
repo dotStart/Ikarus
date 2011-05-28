@@ -3,8 +3,8 @@
 	<!--
 	Ikarus Framework Type Specification
 	author:		Johannes Donath
-	updated:	10.04.2011
-	version:	1.0.0
+	updated:	28.05.2011
+	version:	1.1.0
 	-->
 	
 	<!-- Defines a default varchar (up to 255 chars. Cannot be empty) -->
@@ -51,6 +51,17 @@
 	<xs:simpleType name="ikarus_packageIdentifier">
 		<xs:restriction base="xs:string">
 			<xs:pattern value="[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- Defines valid system requirement types -->
+	<xs:simpleType name="ikarus_systemRequirement_type">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="phpversion" />
+			<xs:enumeration value="phpfunction" />
+			<xs:enumeration value="phpmodule" />
+			<xs:enumeration value="databaseversion" />
+			<xs:enumeration value="databasetype" />
 		</xs:restriction>
 	</xs:simpleType>
 </xs:schema>
