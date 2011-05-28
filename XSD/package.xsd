@@ -18,6 +18,7 @@
 				<xs:element name="authorinformation" type="authorInformation" maxOccurs="1" minOccurs="1" />
 				<xs:element name="licenseinformation" type="licenseInformation" maxOccurs="1" minOccurs="0" />
 				<xs:element name="requiredpackages" type="requiredPackages" maxOccurs="1" minOccurs="1" />
+				<xs:element name="systemrequirements" type="systemRequirements" maxOccurs="1" minOccurs="0" />
 				<xs:element name="excludedpackages" type="excludedPackages" maxOccurs="1" minOccurs="0" />
 				<xs:element name="installs" type="installs" maxOccurs="1" minOccurs="0" />
 				<xs:element name="instructions" type="instructions" maxOccurs="unbounded" minOccurs="1" />
@@ -137,6 +138,22 @@
 							
 							<!-- Definition of a package file where required package is available -->
 							<xs:attribute name="file" type="xs:string" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="systemRequirements">
+		<xs:sequence>
+			<!-- Basic definition for requirement element -->
+			<xs:element name="requirement" maxOccurs="unbounded" minOccurs="1">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<!-- Definition for type -->
+							<xs:attribute name="type" type="ikarus_systemRequirement_type" />
 						</xs:extension>
 					</xs:simpleContent>
 				</xs:complexType>
