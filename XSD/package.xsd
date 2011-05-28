@@ -90,6 +90,9 @@
 			
 			<!-- Basic definition for supporturl element -->
 			<xs:element name="supporturl" maxOccurs="1" type="xs:string" />
+			
+			<!-- Basic definitions for provides element -->
+			<xs:element name="provides" maxOccurs="1" type="xs:string" />
 		</xs:sequence>
 	</xs:complexType>
 	
