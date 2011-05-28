@@ -135,6 +135,12 @@ class PackageFileReader {
 	protected $packageUrlAlias = '';
 	
 	/**
+	 * Contains a string that describes what apis are implemented
+	 * @var		string
+	 */
+	protected $provides = '';
+	
+	/**
 	 * Contains the identifier of parent package
 	 * @var		string
 	 */
@@ -305,6 +311,7 @@ class PackageFileReader {
 		if (isset($this->filePackageArray['information']['packageUrl'][1])) $this->packageUrlAlias = $this->filePackageArray['information']['packageUrl'][1];
 		if (isset($this->filePackageArray['information']['documentationUrl'])) $this->documentationUrl = $this->filePackageArray['information']['documentationUrl'];
 		if (isset($this->filePackageArray['information']['supportUrl'])) $this->supportUrl = $this->filePackageArray['information']['supportUrl'];
+		if (isset($this->filePackageArray['information']['provides'])) $this->provides = $this->filePackageArray['information']['provides'];
 		
 		// validate author information
 		if (!isset($this->filePackageArray['information']['authorName'][0])) throw new PackageFileException("Cannot read IPF file %s: Corrupt author information detected!", $this->file->getFilename());
