@@ -1,5 +1,7 @@
 <?php
 namespace ikarus\system\package;
+use ikarus\system\exception\SystemException;
+
 use ikarus\system\io\File;
 use ikarus\util\StringUtil;
 
@@ -419,6 +421,22 @@ class PackageFileReader {
 				'what'		=>	$requirement['what']
 			);
 		}
+	}
+	
+	/**
+	 * I'm to lazy to implement getter methods ...
+	 * @param		string		$method
+	 * @param		array		$arguments
+	 * @return		mixed
+	 * @throws		SystemException
+	 */
+	public function __call($method, $arguments) {
+		if (substr($method, 0, 3) == 'get' and strlen($method) > 3) {
+			$variable = StringUtil::toLowerCase($method{4}).substr($method, 0, 4);
+			if (property_exists($this, $variable)) return $this->{$variable};
+		}
+		
+		throw new SystemException("Method '%s' does not exist in class %s", $method, get_class($this));
 	}
 }
 ?>
