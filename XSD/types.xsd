@@ -43,7 +43,7 @@
 	<!-- Defines a default version string -->
 	<xs:simpleType name="ikarus_version">
 		<xs:restriction base="xs:string">
-			<xs:pattern value="([0-9]+)\.([0-9]+)\.([0-9]+)(|\-([0-9]+))" />
+			<xs:pattern value="([0-9]+)\.([0-9]+)\.([0-9]+)(|\-([0-9]+))(| (Alpha|Beta|RC|PL) ([0-9]+))" />
 		</xs:restriction>
 	</xs:simpleType>
 	
