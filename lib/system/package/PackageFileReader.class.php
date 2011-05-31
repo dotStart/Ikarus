@@ -20,6 +20,12 @@ class PackageFileReader {
 	const MAGIC_NUMBER = '%IPF';
 	
 	/**
+	 * Contains the version of package's api
+	 * @var		string
+	 */
+	protected $apiVersion = '';
+	
+	/**
 	 * Contains package's author
 	 * @var		string
 	 */
@@ -155,6 +161,12 @@ class PackageFileReader {
 	protected $projectStartDate = '';
 	
 	/**
+	 * Contains a list of required apis
+	 * @var		array
+	 */
+	protected $requiredApis = array();
+	
+	/**
 	 * Contains true if this package is a standalone application
 	 * @var		boolean
 	 */
@@ -264,6 +276,22 @@ class PackageFileReader {
 				'file'				=> (isset($dependency['file']) ? $dependency['file'] : null)
 			);
 		}
+		
+		// get api requirements
+		if (isset($this->filePackageArray['requiredApis']) and is_array($this->filePackageArray['requiredApis']) and count($this->filePackageArray['requiredApis'])) {
+			foreach($this->filePackageArray['requiredApis'] as $api) {
+				// validate
+				if (!isset($api['apiIdentifier'])) throw new PackageFileException("Cannot read IPF file %s: Corrupt api requirement information", $this->file->getFilename());
+				
+				// add
+				$this->requiredApis[] = array(
+					'apiIdentifier'		=> $api['apiIdentifier'],
+					'minimalVersion'	=> (isset($api['minimalVersion']) ? $api['minimalVersion'] : null),
+					'maximalVersion'	=> (isset($api['maximalVersion']) ? $api['maximalVersion'] : null),
+					'file'			=> (isset($api['file']) ? $api['file'] : null)
+				);
+			}
+		}
 	}
 	
 	/**
@@ -322,6 +350,7 @@ class PackageFileReader {
 		if (isset($this->filePackageArray['information']['documentationUrl'])) $this->documentationUrl = $this->filePackageArray['information']['documentationUrl'];
 		if (isset($this->filePackageArray['information']['supportUrl'])) $this->supportUrl = $this->filePackageArray['information']['supportUrl'];
 		if (isset($this->filePackageArray['information']['provides'])) $this->provides = $this->filePackageArray['information']['provides'];
+		if (isset($this->filePackageArray['information']['apiVersion'])) $this->apiVersion = $this->filePackageArray['information']['apiVersion'];
 		
 		// validate author information
 		if (!isset($this->filePackageArray['information']['authorName'][0])) throw new PackageFileException("Cannot read IPF file %s: Corrupt author information detected!", $this->file->getFilename());
