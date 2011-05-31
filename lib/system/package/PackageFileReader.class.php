@@ -469,7 +469,7 @@ class PackageFileReader {
 	 */
 	public function __call($method, $arguments) {
 		if (substr($method, 0, 3) == 'get' and strlen($method) > 3) {
-			$variable = StringUtil::toLowerCase($method{4}).substr($method, 0, 4);
+			$variable = StringUtil::toLowerCase($method{4}).StringUtil::substring($method, 4);
 			if (property_exists($this, $variable)) return $this->{$variable};
 		}
 		
