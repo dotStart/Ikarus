@@ -1,5 +1,7 @@
 <?php
 namespace ikarus\system\exception;
+use \Exception;
+use ikarus\system\IKARUS;
 
 /**
  * Abstract exception that displays predefined templates
@@ -33,7 +35,9 @@ abstract class UserException extends Exception implements PrintableException {
 		if (!empty($this->header)) @header($this->header);
 
 		// display template
-		if (!empty($this->templateName)) IKARUS::getTemplate()->display($this->templateName);
+		try {
+			if (!empty($this->templateName)) IKARUS::getTemplate()->display($this->templateName);
+		} Catch(Exception $ex) { echo $ex->getMessage(); echo $ex->getTraceAsString(); }
 	}
 }
 ?>
