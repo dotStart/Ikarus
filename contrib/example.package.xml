@@ -9,7 +9,7 @@
 		<packagedescription lang="de-informal"><![CDATA[Dies ist ein beispiel Paket.]]></packagedescription>
 		<version>1.0.0 Alpha 1</version>
 		<plugin>com.develfusion.ikarus</plugin>
-		<packageurl display="Ikarus Framework"><![CDATA[http://www.ikarus-framework.de/]]></packageurl>
+		<packageurl alias="Ikarus Framework"><![CDATA[http://www.ikarus-framework.de/]]></packageurl>
 		<documentationurl><![CDATA[http://www.ikarus-framework.de/doc/package/de.ikarus-framework.example-documentation.pdf]]></documentationurl>
 		<developerdocumentationurl><![CDATA[http://www.ikarus-framework.de/doc/package/de.ikarus-framework.example-developer-documentation.pdf]]></developerdocumentationurl>
 	</packageinformation>
