@@ -79,7 +79,11 @@ class RequestHandler {
 				// call __construct method
 				new RequestHandler($foundName, $foundType, $dir);
 			}
-		} catch(Exception $ex) {
+		}
+		Catch(NamedUserException $ex) {
+			$ex->show();
+		}
+		Catch(SystemException $ex) {
 			throw new IllegalLinkException;
 		}
 	}
