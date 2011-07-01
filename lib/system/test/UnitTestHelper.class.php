@@ -1,5 +1,6 @@
 <?php
 namespace ikarus\system\test;
+use ikarus\pattern\Singelton;
 
 /**
  * This class provides methods for running unit tests
@@ -11,13 +12,7 @@ namespace ikarus\system\test;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		1.0.0-0001
  */
-class UnitTestHelper {
-	
-	/**
-	 * Contains an instance of type UnitTestHelper
-	 * @var			UnitTestHelper
-	 */
-	protected static $instance = null;
+class UnitTestHelper extends Singelton {
 	
 	/**
 	 * Contains a count of succeeded tests
@@ -36,17 +31,6 @@ class UnitTestHelper {
 	 * @var			integer
 	 */
 	protected $executedTests = 0;
-	
-	/**
-	 * Creates a new instance of type UnitTestHelper
-	 */
-	protected function __construct() { }
-	
-	/**
-	 * Clones an instance of type UnitTestHelper
-	 * @return		UnitTestHelper
-	 */
-	protected function __clone() { }
 	
 	/**
 	 * Executes an assertion for given variable
@@ -134,16 +118,6 @@ class UnitTestHelper {
 				$ex->show();
 			}
 		}
-	}
-	
-	/**
-	 * Returnes an instance of type UnitTestHelper
-	 * @return		UnitTestHelper
-	 */
-	public static function getInstance() {
-		// create new instance if needed
-		if (static::$instance === null) static::$instance = new static();
-		return static::$instance;
 	}
 }
 ?>
