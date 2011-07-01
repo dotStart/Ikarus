@@ -48,6 +48,6 @@ interface TemplateCompiler {
 	 * Returnes an instance of type TemplateCompiler
 	 * @return		TemplateCompiler
 	 */
-	public function getInstance();
+	public static function getInstance();
 }
 ?>
