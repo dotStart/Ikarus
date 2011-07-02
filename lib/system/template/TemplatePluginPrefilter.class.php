@@ -11,7 +11,6 @@ namespace ikarus\system\template;
  * @category		Ikarus Framework
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		1.0.0-0001
- * @todo		Fix Exceptions
  */
 interface TemplatePluginPrefilter {
 	
