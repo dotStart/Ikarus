@@ -11,7 +11,6 @@ namespace ikarus\system\template;
  * @category		Ikarus Framework
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		1.0.0-0001
- * @todo		Fix Exceptions
  */
 class StructuredTemplate extends Template {
 	
@@ -59,7 +58,7 @@ class StructuredTemplate extends Template {
 	public function setTemplatePackID($templatePackID) {
 		if ($templatePackID && !isset($this->templatePackCache[$templatePackID])) {
 			$templatePackID = 0;
-			// throw new SystemException("Unknown template pack id '".$templatePackID."'", 12006);
+			// throw new SystemException("Unknown template pack id '%u'", $templatePackID);
 		}
 		
 		$this->templatePackID = $templatePackID;
@@ -98,7 +97,7 @@ class StructuredTemplate extends Template {
 			}
 		}
 		
-		throw new SystemException("Unable to find template '$templateName'", 12005);
+		throw new SystemException("Unable to find template '%s'", $templateName);
 	}
 	
 	/**
