@@ -724,18 +724,25 @@ class TemplateScriptingCompiler {
 	 */
 	public static function formatSyntaxError($file, $line, $errorMsg) {
 		$errorMsg = 'Template compilation failed: '.$errorMsg;
+		
 		if ($file && $line) {
 			$errorMsg .= " in template '%s' on line %u";
+			$additionalArguments = array($file, $line);
 		}
 		elseif ($file && !$line) {
 			$errorMsg .= " in template '%s'";
+			$additionalArguments = array($file);
 		}
 		
+				
 		// get arguments
 		$arguments = func_get_args();
 		
-		// remove first and second argument
-		$arguments = array_slice($arguments, 3);
+		// remove arguments
+		$arguments = array_splice($arguments, 3);
+		
+		// add additional arguments
+		if (isset($additionalArguments)) foreach($additionalArguments as $val) $arguments[] = $val;
 		
 		// throw exception
 		throw new SystemException($errorMsg, $arguments);
