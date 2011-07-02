@@ -265,6 +265,14 @@ class LanguageManager {
 
 		return self::$instance;
 	}
+	
+	/**
+	 * Returnes the current active language object
+	 * @return		Language
+	 */
+	public function getLanguage() {
+		return $this->language;
+	}
 
 	/**
 	 * Returnes the preferred language
