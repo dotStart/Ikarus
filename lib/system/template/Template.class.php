@@ -2,6 +2,7 @@
 namespace ikarus\system\template;
 use ikarus\system\IKARUS;
 use ikarus\system\event\EventHandler;
+use ikarus\system\exception\SystemException;
 use ikarus\system\template\TemplateCompiler;
 use ikarus\util\HeaderUtil;
 use ikarus\util\StringUtil;
