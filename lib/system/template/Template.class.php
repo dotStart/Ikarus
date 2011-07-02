@@ -17,7 +17,6 @@ use ikarus\util\StringUtil;
  * @category		Ikarus Framework
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		1.0.0-0001
- * @todo		Fix Exceptions
  */
 class Template {
 	
@@ -148,7 +147,7 @@ class Template {
 	 */
 	public function setCompileDir($compileDir) {
 		if (!is_dir($compileDir)) {
-			throw new SystemException("'".$compileDir."' is not a valid dir", 11014);
+			throw new SystemException("'%s' is not a valid dir", $compileDir);
 		}
 		
 		$this->compileDir = $compileDir;
@@ -164,7 +163,7 @@ class Template {
 		
 		foreach ($templatePaths as $templatePath) {
 			if (!is_dir($templatePath)) {
-				throw new SystemException("'".$templatePath."' is not a valid dir", 11014);
+				throw new SystemException("'%s' is not a valid dir", $templatePath);
 			}
 		}
 		$this->templatePaths = $templatePaths;
@@ -177,7 +176,7 @@ class Template {
 	 */
 	public function setPluginDir($pluginDir) {
 		if (!is_dir($pluginDir)) {
-			throw new SystemException("'".$pluginDir."' is not a valid dir", 11014);
+			throw new SystemException("'%s' is not a valid dir", $pluginDir);
 		}
 		$this->pluginDir = $pluginDir;
 	}
@@ -372,7 +371,7 @@ class Template {
 			if (file_exists($templatePath.$templateName.'.tpl')) return $templatePath.$templateName.'.tpl';
 		}
 		
-		throw new SystemException("Unable to find template '$templateName'", 12005);
+		throw new SystemException("Unable to find template '%s'", $templateName);
 	}
 	
 	/**
@@ -432,7 +431,7 @@ class Template {
 	public function getSourceContent($sourceFilename) {
 		$sourceContent = '';
 		if (!file_exists($sourceFilename) || (($sourceContent = @file_get_contents($sourceFilename)) === false)) {
-			throw new SystemException("Could not open template '$sourceFilename' for reading", 12005);
+			throw new SystemException("Could not open template '%s' for reading", $sourceFilename);
 		}
 		else {
 			return $sourceContent;
