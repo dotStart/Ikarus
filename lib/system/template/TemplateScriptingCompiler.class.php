@@ -14,7 +14,6 @@ use ikarus\util\StringStack;
  * @category		Ikarus Framework
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		1.0.0-0001
- * @todo		Fix Exceptions
  * @todo		Fix compiled templates (Missing namespaces)
  */
 class TemplateScriptingCompiler {
@@ -128,7 +127,7 @@ class TemplateScriptingCompiler {
 		// throw error messages for unclosed tags
 		if (count($this->tagStack) > 0) {
 			foreach ($this->tagStack as $tagStack) {
-				throw new SystemException($this->formatSyntaxError('unclosed tag {'.$tagStack[0].'}', $this->currentIdentifier, $tagStack[1]), 12002);
+				$this->formatSyntaxError($this->currentIdentifier, $tagStack[1], 'unclosed tag {%s}', $tagStack[0]);
 			}
 			return false;
 		}
@@ -199,7 +198,7 @@ class TemplateScriptingCompiler {
 				case 'elseif':
 					list($openTag) = end($this->tagStack);
 					if ($openTag != 'if' && $openTag != 'elseif') {
-						throw new SystemException($this->formatSyntaxError('unxepected {elseif}', $this->currentIdentifier, $this->currentLineNo));
+						$this->formatSyntaxError($this->currentIdentifier, $this->currentLineNo, 'unxepected {%s}', 'elseif');
 					}
 					else if ($openTag == 'if') {
 						$this->pushTag('elseif');
@@ -209,7 +208,7 @@ class TemplateScriptingCompiler {
 				case 'else':
 					list($openTag) = end($this->tagStack);
 					if ($openTag != 'if' && $openTag != 'elseif') {
-						throw new SystemException($this->formatSyntaxError('unexpected {else}', $this->currentIdentifier, $this->currentLineNo));
+						$this->formatSyntaxError($this->currentIdentifier, $this->currentLineNo, 'unexpected {%s}', 'else');
 					}
 					else {
 						$this->pushTag('else');
@@ -219,7 +218,7 @@ class TemplateScriptingCompiler {
 				case '/if':
 					list($openTag) = end($this->tagStack);
 					if ($openTag != 'if' && $openTag != 'elseif' && $openTag != 'else') {
-						throw new SystemException($this->formatSyntaxError('unexpected {/if}', $this->currentIdentifier, $this->currentLineNo));
+						$this->formatSyntaxError($this->currentIdentifier, $this->currentLineNo, 'unexpected {%s}', '/if');
 					}
 					else {
 						$this->popTag('if');
@@ -236,7 +235,7 @@ class TemplateScriptingCompiler {
 				case 'foreachelse':
 					list($openTag) = end($this->tagStack);
 					if ($openTag != 'foreach') {
-						throw new SystemException($this->formatSyntaxError('unexpected {foreachelse}', $this->currentIdentifier, $this->currentLineNo));
+						$this->formatSyntaxError($this->currentIdentifier, $this->currentLineNo, 'unexpected {%s}', 'foreachelse');
 					}
 					else {
 						$this->pushTag('foreachelse');
@@ -254,7 +253,7 @@ class TemplateScriptingCompiler {
 				case 'sectionelse':
 					list($openTag) = end($this->tagStack);
 					if ($openTag != 'section') {
-						throw new SystemException($this->formatSyntaxError('unexpected {sectionelse}', $this->currentIdentifier, $this->currentLineNo));
+						$this->formatSyntaxError($this->currentIdentifier, $this->currentLineNo, 'unexpected {%s}', 'sectionelse');
 					}
 					else {
 						$this->pushTag('sectionelse');
@@ -295,7 +294,7 @@ class TemplateScriptingCompiler {
 			}
 		}
 		
-		throw new SystemException($this->formatSyntaxError('unknown tag {'.$tag.'}', $this->currentIdentifier, $this->currentLineNo), 12003);
+		$this->formatSyntaxError($this->currentIdentifier, $this->currentLineNo, 'unknown tag {%s}', $tag);
 	}
 	
 	/**
@@ -397,13 +396,13 @@ class TemplateScriptingCompiler {
 			
 			include_once($pluginFilename);
 			if (!class_exists($className)) {
-				throw new SystemException($this->formatSyntaxError('unable to find compiler plugin class '.$className, $this->currentIdentifier), 11001);
+				$this->formatSyntaxError($this->currentIdentifier, null, "unable to find compiler plugin class '%s'", $className);
 			}
 			
 			$this->compilerPlugins[$className] = new $className();
 			
 			if (!($this->compilerPlugins[$className] instanceof TemplatePluginCompiler)) {
-				throw new SystemException($this->formatSyntaxError("Compiler plugin '".$tagCommand."' does not implement the interface 'TemplatePluginCompiler'", $this->currentIdentifier), 11010);
+				$this->formatSyntaxError($this->currentIdentifier, null, "Compiler plugin '%s' does not implement the interface 'TemplatePluginCompiler'", $tagCommand);
 			}
 		}
 		
@@ -469,10 +468,10 @@ class TemplateScriptingCompiler {
 
 		// check arguments
 		if (!isset($args['loop'])) {
-			throw new SystemException($this->formatSyntaxError("missing 'loop' attribute in section tag", $this->currentIdentifier, $this->currentLineNo), 12001);
+			$this->formatSyntaxError($this->currentIdentifier, $this->currentLineNo, "missing 'loop' attribute in section tag");
 		}
 		if (!isset($args['name'])) {
-			throw new SystemException($this->formatSyntaxError("missing 'name' attribute in section tag", $this->currentIdentifier, $this->currentLineNo), 12001);
+			$this->formatSyntaxError($this->currentIdentifier, $this->currentLineNo, "missing 'name' attribute in section tag");
 		}
 		if (!isset($args['show'])) {
 			$args['show'] = true;
@@ -543,10 +542,10 @@ class TemplateScriptingCompiler {
 
 		// check arguments
 		if (!isset($args['from'])) {
-			throw new SystemException($this->formatSyntaxError("missing 'from' attribute in foreach tag", $this->currentIdentifier, $this->currentLineNo), 12001);
+			$this->formatSyntaxError($this->currentIdentifier, $this->currentLineNo, "missing 'from' attribute in foreach tag");
 		}
 		if (!isset($args['item'])) {
-			throw new SystemException($this->formatSyntaxError("missing 'item' attribute in foreach tag", $this->currentIdentifier, $this->currentLineNo), 12001);
+			$this->formatSyntaxError($this->currentIdentifier, $this->currentLineNo, "missing 'item' attribute in foreach tag");
 		}
 
 		$foreachProp = '';
@@ -591,7 +590,7 @@ class TemplateScriptingCompiler {
 		
 		// check arguments
 		if (!isset($args['file'])) {
-			throw new SystemException($this->formatSyntaxError("missing 'file' attribute in include tag", $this->currentIdentifier, $this->currentLineNo), 12001);
+			$this->formatSyntaxError($this->currentIdentifier, $this->currentLineNo, "missing 'file' attribute in include tag");
 		}
 
 		// get filename
@@ -664,7 +663,7 @@ class TemplateScriptingCompiler {
 		
 		// validate tag arguments
 		if (!preg_match('~^(?:\s+\w+\s*=\s*[^=]*(?=\s|$))*$~s', $tagArgs)) {
-			throw new SystemException($this->formatSyntaxError('syntax error in tag {'.$tag.'}', $this->currentIdentifier, $this->currentLineNo), 12000);
+			$this->formatSyntaxError($this->currentIdentifier, $this->currentLineNo, 'syntax error in tag {%s}');
 		}
 
 		// parse tag arguments
@@ -723,7 +722,7 @@ class TemplateScriptingCompiler {
 	 * @param	integer		$line
 	 * @return	string				formatted error message
 	 */
-	public static function formatSyntaxError($errorMsg, $file = null, $line = null) {
+	public static function formatSyntaxError($file, $line, $errorMsg) {
 		$errorMsg = 'Template compilation failed: '.$errorMsg;
 		if ($file && $line) {
 			$errorMsg .= " in template '%s' on line %u";
@@ -731,7 +730,15 @@ class TemplateScriptingCompiler {
 		elseif ($file && !$line) {
 			$errorMsg .= " in template '%s'";
 		}
-		return $errorMsg;
+		
+		// get arguments
+		$arguments = func_get_args();
+		
+		// remove first and second argument
+		$arguments = array_slice($arguments, 3);
+		
+		// throw exception
+		throw new SystemException($errorMsg, $arguments);
 	}
 	
 	/**
@@ -756,7 +763,7 @@ class TemplateScriptingCompiler {
 			$operator = (isset($operators[$i]) ? $operators[$i] : null);
 			
 			if ($operator !== '!' && $values[$i] == '') {
-				throw new SystemException($this->formatSyntaxError('syntax error in tag {'.($elseif ? 'elseif' : 'if').'}', $this->currentIdentifier, $this->currentLineNo), 12000);
+				$this->formatSyntaxError($this->currentIdentifier, $this->currentLineNo, 'syntax error in tag {%s}', ($elseif ? 'elseif' : 'if'));
 			}
 			
 			$leftParenthesis = StringUtil::countSubstring($values[$i], '(');
@@ -767,7 +774,7 @@ class TemplateScriptingCompiler {
 				$result .= str_repeat('(', $leftParenthesis - $rightParenthesis);
 				
 				if (str_replace('(', '', StringUtil::substring($values[$i], 0, $leftParenthesis - $rightParenthesis)) != '') {
-					throw new SystemException($this->formatSyntaxError('syntax error in tag {'.($elseif ? 'elseif' : 'if').'}', $this->currentIdentifier, $this->currentLineNo), 12000);
+					$this->formatSyntaxError($this->currentIdentifier, $this->currentLineNo, 'syntax error in tag {%s}', ($elseif ? 'elseif' : 'if'));
 				}
 			}
 			else if ($leftParenthesis < $rightParenthesis) {
@@ -775,7 +782,7 @@ class TemplateScriptingCompiler {
 				$value = StringUtil::substring($values[$i], 0, $leftParenthesis - $rightParenthesis);
 				
 				if ($leftParentheses < 0 || str_replace(')', '', StringUtil::substring($values[$i], $leftParenthesis - $rightParenthesis)) != '') {
-					throw new SystemException($this->formatSyntaxError('syntax error in tag {'.($elseif ? 'elseif' : 'if').'}', $this->currentIdentifier, $this->currentLineNo), 12000);
+					$this->formatSyntaxError($this->currentIdentifier, $this->currentLineNo, 'syntax error in tag {%s}', ($elseif ? 'elseif' : 'if'));
 				}
 			}
 			else $value = $values[$i];
@@ -784,7 +791,7 @@ class TemplateScriptingCompiler {
 				$result .= $this->compileVariableTag($value, false);
 			}
 			catch (SystemException $e) {
-				throw new SystemException($this->formatSyntaxError('syntax error in tag {'.($elseif ? 'elseif' : 'if').'}', $this->currentIdentifier, $this->currentLineNo), 12000);
+				$this->formatSyntaxError($this->currentIdentifier, $this->currentLineNo, 'syntax error in tag {%s}', ($elseif ? 'elseif' : 'if'));
 			}
 			
 			if ($leftParenthesis < $rightParenthesis) {
@@ -947,7 +954,7 @@ class TemplateScriptingCompiler {
 						
 					case 'object access':
 						if (/*strpos($values[$i], '$') !== false || */strpos($values[$i], '@@') !== false) {
-							throw new SystemException($this->formatSyntaxError("unexpected '->".$values[$i]."' in tag '".$tag."'", $this->currentIdentifier, $this->currentLineNo), 12003);
+							$this->formatSyntaxError($this->currentIdentifier, $this->currentLineNo, "unexpected '->%s' in tag '%s'", $values[$i], $tag);
 						}
 						if (strpos($values[$i], '$') !== false) $result .= '{'.$this->compileSimpleVariable($values[$i], $variableType).'}';
 						else $result .= $values[$i];
@@ -995,7 +1002,7 @@ class TemplateScriptingCompiler {
 					
 					case 'modifier':
 						if (strpos($values[$i], '$') !== false || strpos($values[$i], '@@') !== false) {
-							throw new SystemException($this->formatSyntaxError("unknown modifier '".$values[$i]."'", $this->currentIdentifier, $this->currentLineNo), 12004);
+							$this->formatSyntaxError($this->currentIdentifier, $this->currentLineNo, "unknown modifier '".$values[$i]."'", $values[$i]);
 						}
 						
 						// handle modifier name
@@ -1005,7 +1012,7 @@ class TemplateScriptingCompiler {
 							$this->autoloadPlugins[$modifierData['className']] = $pluginFilename;	
 						}
 						else if ((!function_exists($modifierData['name']) && !in_array($modifierData['name'], $this->unknownPHPFunctions)) || in_array($modifierData['name'], $this->disabledPHPFunctions)) {
-							throw new SystemException($this->formatSyntaxError("unknown modifier '".$values[$i]."'", $this->currentIdentifier, $this->currentLineNo), 12004);
+							$this->formatSyntaxError($this->currentIdentifier, $this->currentLineNo, "unknown modifier '%s'", $values[$i]);
 						}
 						
 						$statusStack[count($statusStack) - 1] = $status = 'modifier end';
@@ -1015,7 +1022,7 @@ class TemplateScriptingCompiler {
 					case 'constant': 
 					case 'variable':
 					case 'string': 
-						throw new SystemException($this->formatSyntaxError('unknown tag {'.$tag.'}', $this->currentIdentifier, $this->currentLineNo), 12003);
+						$this->formatSyntaxError($this->currentIdentifier, $this->currentLineNo, 'unknown tag {%s}', $tag);
 						break;
 				}
 			}
@@ -1031,7 +1038,7 @@ class TemplateScriptingCompiler {
 							break;
 						}
 						
-						throw new SystemException($this->formatSyntaxError("unexpected '.' in tag '".$tag."'", $this->currentIdentifier, $this->currentLineNo), 12004);
+						$this->formatSyntaxError($this->currentIdentifier, $this->currentLineNo, "unexpected '.' in tag '%s'", $tag);
 						break;
 					
 					// object access
@@ -1042,7 +1049,7 @@ class TemplateScriptingCompiler {
 							break;
 						}
 						
-						throw new SystemException($this->formatSyntaxError("unexpected '->' in tag '".$tag."'", $this->currentIdentifier, $this->currentLineNo), 12004);
+						$this->formatSyntaxError($this->currentIdentifier, $this->currentLineNo, "unexpected '->' in tag '%s'", $tag);
 						break;
 					
 					// left parenthesis
@@ -1060,7 +1067,7 @@ class TemplateScriptingCompiler {
 							break;
 						}
 						
-						throw new SystemException($this->formatSyntaxError("unexpected '(' in tag '".$tag."'", $this->currentIdentifier, $this->currentLineNo), 12004);
+						$this->formatSyntaxError($this->currentIdentifier, $this->currentLineNo, "unexpected '(' in tag '%s'", $tag);
 						break;
 					
 					// right parenthesis
@@ -1075,7 +1082,7 @@ class TemplateScriptingCompiler {
 							}
 						}
 						
-						throw new SystemException($this->formatSyntaxError("unexpected ')' in tag '".$tag."'", $this->currentIdentifier, $this->currentLineNo), 12004);
+						$this->formatSyntaxError($this->currentIdentifier, $this->currentLineNo, "unexpected ')' in tag '%s'", $tag);
 						break;
 					
 					// bracket open
@@ -1087,7 +1094,7 @@ class TemplateScriptingCompiler {
 							break;
 						}
 						
-						throw new SystemException($this->formatSyntaxError("unexpected '[' in tag '".$tag."'", $this->currentIdentifier, $this->currentLineNo), 12004);
+						$this->formatSyntaxError($this->currentIdentifier, $this->currentLineNo, "unexpected '[' in tag '%s'", $tag);
 						break;
 					
 					// bracket close
@@ -1102,7 +1109,7 @@ class TemplateScriptingCompiler {
 							}
 						}
 						
-						throw new SystemException($this->formatSyntaxError("unexpected ']' in tag '".$tag."'", $this->currentIdentifier, $this->currentLineNo), 12004);
+						$this->formatSyntaxError($this->currentIdentifier, $this->currentLineNo, "unexpected ']' in tag '%s'", $tag);
 						break;
 
 					// modifier
@@ -1116,7 +1123,7 @@ class TemplateScriptingCompiler {
 						// clear status stack
 						while ($oldStatus = array_pop($statusStack)) {
 							if ($oldStatus != 'variable' && $oldStatus != 'object' && $oldStatus != 'constant' && $oldStatus != 'string' && $oldStatus != 'modifier end') {
-								throw new SystemException($this->formatSyntaxError("unexpected '|' in tag '".$tag."'", $this->currentIdentifier, $this->currentLineNo), 12004);
+								$this->formatSyntaxError($this->currentIdentifier, $this->currentLineNo, "unexpected '|' in tag '%s'");
 							}
 						}
 						
@@ -1139,7 +1146,7 @@ class TemplateScriptingCompiler {
 							}
 						}
 						
-						throw new SystemException($this->formatSyntaxError("unexpected ':' in tag '".$tag."'", $this->currentIdentifier, $this->currentLineNo), 12004);
+						$this->formatSyntaxError($this->currentIdentifier, $this->currentLineNo, "unexpected ':' in tag '%s'");
 						break;
 						
 					case ',':
@@ -1155,7 +1162,7 @@ class TemplateScriptingCompiler {
 							}
 						}
 						
-						throw new SystemException($this->formatSyntaxError("unexpected ',' in tag '".$tag."'", $this->currentIdentifier, $this->currentLineNo), 12004);
+						$this->formatSyntaxError($this->currentIdentifier, $this->currentLineNo, "unexpected ',' in tag '%s'");
 						break;
 					
 					// math operators	
@@ -1171,7 +1178,7 @@ class TemplateScriptingCompiler {
 							break;
 						}
 						
-						throw new SystemException($this->formatSyntaxError("unexpected '".$operator."' in tag '".$tag."'", $this->currentIdentifier, $this->currentLineNo), 12004);
+						$this->formatSyntaxError($this->currentIdentifier, $this->currentLineNo, "unexpected '%s' in tag '%s'", $operator, $tag);
 						break;
 				}
 			}
@@ -1297,13 +1304,13 @@ class TemplateScriptingCompiler {
 			if (!is_object($prefilter)) {
 				$filename = $this->template->getPluginFilename('prefilter', $prefilter);
 				if (!file_exists($filename)) {
-					throw new SystemException('unable to find class file '.$filename, 11000);
+					throw new SystemException("unable to find class file '%s'", $filename);
 				}
 				require_once($filename);
 				$className = 'TemplatePluginPrefilter'.StringUtil::firstCharToUpperCase(StringUtil::toLowerCase($prefilter));
 				
 				if (!class_exists($className)) {
-					throw new SystemException($this->formatSyntaxError('unable to find prefilter class '.$className, $this->currentIdentifier), 11001);
+					$this->formatSyntaxError($this->currentIdentifier, null, "unable to find prefilter class '%s'", $className);
 				}
 				$prefilter = new $className();
 			}
@@ -1312,7 +1319,7 @@ class TemplateScriptingCompiler {
 				$string = $prefilter->execute($string, $this);
 			}
 			else {
-				throw new SystemException($this->formatSyntaxError("Prefilter '".$prefilter."' does not implement the interface 'TemplatePluginPrefilter'", $this->currentIdentifier), 11010);
+				$this->formatSyntaxError($this->currentIdentifier, null, "Prefilter '%s' does not implement the interface 'TemplatePluginPrefilter'", $className);
 			}
 		}
 		
