@@ -56,7 +56,7 @@ class SystemException extends Exception implements PrintableException {
 		$code = $code * 100;
 
 		// format new message
-		$message = call_user_func_array('sprintf', $arguments);
+		if (count($arguments) > 1) $message = call_user_func_array('sprintf', $arguments);
 
 		// call Exception::__construct()
 		parent::__construct($message, $code);
