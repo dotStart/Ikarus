@@ -54,6 +54,14 @@ class SystemException extends Exception implements PrintableException {
 			$code = $code + ($i + 1) + ord($message{$i});
 		}
 		$code = $code * 100;
+		
+		// little workaround
+		// Note this is absolutly senseless ... xD
+		if (is_array($arguments[1])) {
+			$fixedArguments = array(0 => $message);
+			call_user_func_array('array_push', array($fixedArguments, $arguments[1]));
+			$arguments = $fixedArguments;
+		}
 
 		// format new message
 		if (count($arguments) > 1) $message = call_user_func_array('sprintf', $arguments);
