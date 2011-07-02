@@ -1,5 +1,6 @@
 <?php
 namespace ikarus\system\template;
+use ikarus\system\exception\SystemException;
 use ikarus\util\StringUtil;
 use ikarus\util\StringStack;
 
