@@ -106,8 +106,7 @@ class Template {
 	 * Loads the cached template structure.
 	 */
 	protected function loadTemplateStructure() {
-		IKARUS::getCache()->addResource($this->cachePrefix.'templates-'.PACKAGE_ID, IKARUS_DIR.'cache/cache.'.$this->cachePrefix.'templates-'.PACKAGE_ID.'.php', IKARUS_DIR.'lib/system/cache/CacheBuilderTemplates.class.php');
-		$this->templateStructure = IKARUS::getCache()->get($this->cachePrefix.'templates-'.PACKAGE_ID);
+		$this->templateStructure = IKARUS::getCache()->get(IKARUS_DIR.'cache/cache.'.$this->cachePrefix.'templates-'.PACKAGE_ID.'.php', IKARUS_DIR.'lib/system/cache/CacheBuilderTemplates.class.php');
 	}
 	
 	/**
