@@ -1,5 +1,6 @@
 <?php
 namespace ikarus\system\template;
+use ikarus\system\exception\SystemException;
 
 /**
  * StructuredTemplate extends Template by template pack support.
