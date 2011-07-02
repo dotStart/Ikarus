@@ -1,6 +1,6 @@
 <?php
 namespace ikarus\system\test;
-use ikarus\pattern\Singelton;
+use ikarus\pattern\Singleton;
 
 /**
  * This class provides methods for running unit tests
@@ -12,7 +12,7 @@ use ikarus\pattern\Singelton;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		1.0.0-0001
  */
-class UnitTestHelper extends Singelton {
+class UnitTestHelper extends Singleton {
 	
 	/**
 	 * Contains a count of succeeded tests
