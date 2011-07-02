@@ -1,5 +1,6 @@
 <?php
 namespace ikarus\system\template\patch;
+use ikarus\system\exception\TemplatePatchException;
 use ikarus\util\FileUtil;
 
 /**
@@ -15,7 +16,6 @@ use ikarus\util\FileUtil;
  * @category		Ikarus Framework
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		1.0.0-0001
- * @todo		Fix Exceptions
  */
 class TemplatePatch {
 	/**
@@ -205,7 +205,7 @@ class TemplatePatch {
 			}
 			
 		} else {
-			throw new TemplatePatchException("No diff string has been given.", 20000);
+			throw new TemplatePatchException(null, "No diff string has been given.");
 		}
 	}
 	
@@ -227,11 +227,11 @@ class TemplatePatch {
 		
 		// create a filehandle to the output file.
 		if (!$this->tempOutputFile = FileUtil::getTemporaryFilename('patchOutput_')) {
-			throw new TemplatePatchException("Can't create tempfile for output.", 20001);
+			throw new TemplatePatchException(null, "Can't create tempfile for output.");
 		}
 		
 		if (!$this->outputFileHandle = fopen($this->tempOutputFile, 'wb+')) {
-			throw new TemplatePatchException("Can't open tempfile for output.", 20002);
+			throw new TemplatePatchException(null, "Can't open tempfile for output.");
 		}
 		
 		// go through the lines of the patchfile.
@@ -310,7 +310,7 @@ class TemplatePatch {
 				// @todo: make sure to fclose all filehandles after processing!
 				// get a filehandle to the original file.
 				if (!$this->inputFileHandle = fopen($this->originalFile, 'rb')) {
-					throw new TemplatePatchException("Can't open original file ".$this->originalFile.".", 20003, $this->originalFile);
+					throw new TemplatePatchException($this->originalFile, "Can't open original file '%s'.", $this->originalFile);
 				}
 				
 				// attempt to apply this hunk.
@@ -331,7 +331,7 @@ class TemplatePatch {
 		
 		// there is no correct range information line, so we can't be sure that this is a unified patch.
 		if ($isUnifiedDiff === false) {
-			throw new TemplatePatchException("This is not a unified diff -- aborting.", 20004);
+			throw new TemplatePatchException(null, "This is not a unified diff -- aborting.");
 		} else {
 			if (($this->rePatch === false) && ($this->reverse === false) && isset($this->patch[$patchNo])) {
 				// save the applied patches to the database (with comments and blank lines omitted).
@@ -469,7 +469,7 @@ class TemplatePatch {
 	protected function copyPatchedFile() {
 		$this->tail();
 		if (!copy($this->tempOutputFile, $this->originalFile)) { // @todo!!!
-			throw new TemplatePatchException("Patched file cannot be copied to target ".$this->originalFile, 20006, $this->originalFile);
+			throw new TemplatePatchException($this->originalFile, "Patched file cannot be copied to target '%s'", $this->originalFile);
 		}
 	}
 	
