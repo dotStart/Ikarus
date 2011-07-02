@@ -1,5 +1,6 @@
 <?php
 namespace ikarus\system\template\patch;
+use ikarus\system\exception\TemplatePatchException;
 
 /**
  * Applies a patch hunk to an original file resulting in a patched file.
@@ -15,7 +16,6 @@ namespace ikarus\system\template\patch;
  * @category		Ikarus Framework
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		1.0.0-0001
- * @todo		Fix Exceptions
  */
 class TemplatePatchUnified {
 	
@@ -122,7 +122,7 @@ class TemplatePatchUnified {
 			$this->apply();
 			
 		} else {
-			throw new TemplatePatchException("No file containing a diff has been given.", 20000, $originalfile);
+			throw new TemplatePatchException($originalfile, "No file containing a diff has been given.");
 		}
 	}
 	
@@ -185,7 +185,7 @@ class TemplatePatchUnified {
 			}
 			
 			if (!count($position) || $position == 0) {
-				throw new TemplatePatchException("Can't find an appropriate location for applying this hunk.", 20015, $this->originalfile);
+				throw new TemplatePatchException($this->originalfile, "Can't find an appropriate location for applying this hunk.");
 			}
 			
 		} else {
@@ -198,7 +198,7 @@ class TemplatePatchUnified {
 		
 		// Make sure we're at the point where we left off.
 		if (fseek($in, $this->i_pos, 0) == -1) {
-			throw new TemplatePatchException("Could not set byte position in the original file.", 20010, $this->originalfile);
+			throw new TemplatePatchException($this->originalfile, "Could not set byte position in the original file.");
 		}
 		
 		// @todo: $line is now a new variable, maybe better rename it for better distinction.
@@ -264,7 +264,7 @@ class TemplatePatchUnified {
 		$in = $this->i_fh;
 		
 		if (fseek($in, $pos, 0) == -1) {
-			throw new TemplatePatchException("Could not set byte position in the original file.", 20010, $this->originalfile);
+			throw new TemplatePatchException($this->originalfile, "Could not set byte position in the original file.");
 		}
 		
 		while ($lines > 0) {
@@ -301,7 +301,7 @@ class TemplatePatchUnified {
 				
 				if ($fail > 0) {
 					if (fseek($in, $tell, 0) == -1) {
-						throw new TemplatePatchException("Could not set byte position in the original file.", 20010, $this->originalfile);
+						throw new TemplatePatchException($this->originalfile, "Could not set byte position in the original file.");
 					} else {
 						// get the next line of the filehandle.
 						$nextLine = fgets($in);
@@ -343,7 +343,7 @@ class TemplatePatchUnified {
 		// put the $line's bytes to an array.
 		$workArray = unpack('C*', $lineBreaks);
 		if (!is_array($workArray)) {
-			throw new TemplatePatchException("Unable to disassemble line of original file into bytes.", 20011, $this->originalfile);
+			throw new TemplatePatchException($this->originalfile, "Unable to disassemble line of original file into bytes.");
 		}
 		
 		if (count($workArray) == 1) {
@@ -381,7 +381,7 @@ class TemplatePatchUnified {
 		// disassemble one line of the original file into its bytes.
 		$input = unpack('C*', $line);
 		if (!is_array($input)) {
-			throw new TemplatePatchException("Unable to disassemble line of original file into bytes.", 20011, $this->originalfile);
+			throw new TemplatePatchException($this->originalfile, "Unable to disassemble line of original file into bytes.");
 		}
 		$result = array_merge($input, $this->newLine);
 		array_values($result);
