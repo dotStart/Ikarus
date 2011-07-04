@@ -16,7 +16,7 @@
 			<authorurl><![CDATA[http://www.ikarus-framework.de/]]></authorurl>
 		</package>
 		
-		<package name="de.ikarus-framework.example2" currentversion="1.2.0">
+		<package name="de.ikarus-framework.example2" currentversion="1.2.0" commercial="1">
 			<packagename><![CDATA[Example Package 2]]></packagename>
 			<packagename lang="de"><![CDATA[Beispiel Paket 2]]></packagename>
 			<packagename lang="de-informal"><![CDATA[Beispiel Paket 2]]></packagename>
