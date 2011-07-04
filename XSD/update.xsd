@@ -70,5 +70,6 @@
 
 		<xs:attribute name="name" type="ikarus_varchar" />
 		<xs:attribute name="currentversion" type="ikarus_version" />
+		<xs:attribute name="commercial" type="ikarus_boolean" />
 	</xs:complexType>
 </xs:schema>
