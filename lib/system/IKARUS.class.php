@@ -72,7 +72,7 @@ class IKARUS {
 	/**
 	 * Contains a list of additional methods
 	 * With this little variable we can add additional methods such as getCronjob() to this core
-	 * A little tip: Use the factory pattern
+	 * A little tip: Use the singleton pattern
 	 * Note: All method calls will redirected to defined method. See call_user_func_array syntax
 	 * @var	array
 	 */
