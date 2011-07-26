@@ -57,7 +57,7 @@ class SystemException extends Exception implements PrintableException {
 		
 		// little workaround
 		// Note this is absolutly senseless ... xD
-		if (is_array($arguments[1])) {
+		if (isset($arguments[1]) && is_array($arguments[1])) {
 			$fixedArguments = array(0 => $message);
 			foreach($arguments[1] as $val) {
 				$fixedArguments[] = $val;
