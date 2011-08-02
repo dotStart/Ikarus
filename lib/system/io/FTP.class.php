@@ -4,13 +4,13 @@ use ikarus\system\exception\SystemException;
 
 /**
  * The FTP class handles all ftp operations.
- * @author		Marcel Werk
+ * @author		Originally developed by Marcel Werk
  * @copyright		2001-2009 WoltLab GmbH
  * @package		com.develfusion.ikarus
  * @subpackage		system
  * @category		Ikarus Framework
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
- * @version		1.0.0-0001
+ * @version		2.0.0-0001
  */
 class FTP {
 	protected $resource;

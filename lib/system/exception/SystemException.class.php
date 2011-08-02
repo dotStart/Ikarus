@@ -15,7 +15,7 @@ use ikarus\util\StringUtil;
  * @subpackage		system
  * @category		Ikarus Framework
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
- * @version		1.0.0-0001
+ * @version		2.0.0-0001
  */
 class SystemException extends Exception implements PrintableException {
 
@@ -181,7 +181,7 @@ class SystemException extends Exception implements PrintableException {
 		<?php if ($this->getCode()) { ?>
 			<p>
 				You get more information about the problem in our knowledge base: <a
-					href="http://ikarus.evil-co.de/help/?code=<?php echo intval($this->getCode()); ?>">http://ikarus.evil-co.de/help/?code=<?php echo intval($this->getCode()); ?>
+					href="http://www.ikarus-framework.de/help/?code=<?php echo intval($this->getCode()); ?>">http://ikarus.evil-co.de/help/?code=<?php echo intval($this->getCode()); ?>
 				</a>
 			</p>
 			<?php } ?>

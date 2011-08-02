@@ -343,7 +343,7 @@ class TemplateScriptingCompiler {
 			return false;
 		}
 			
-		$className = 'TemplatePluginBlock'.StringUtil::firstCharToUpperCase(StringUtil::toLowerCase($tagCommand));
+		$className = 'ikarus\system\template\plugin\TemplatePluginBlock'.StringUtil::firstCharToUpperCase(StringUtil::toLowerCase($tagCommand));
 		$this->autoloadPlugins[$className] = $pluginFilename;
 		
 		if ($startTag) {
@@ -387,7 +387,7 @@ class TemplateScriptingCompiler {
 			$startTag = true;
 		}
 
-		$className = 'TemplatePluginCompiler'.StringUtil::firstCharToUpperCase(StringUtil::toLowerCase($tagCommand));
+		$className = 'ikarus\system\template\plugin\TemplatePluginCompiler'.StringUtil::firstCharToUpperCase(StringUtil::toLowerCase($tagCommand));
 		// if necessary load plugin from plugin-dir
 		if (!isset($this->compilerPlugins[$className])) {
 			if (!file_exists($pluginFilename = $this->template->getPluginFilename('compiler', $tagCommand))) {
@@ -867,12 +867,12 @@ class TemplateScriptingCompiler {
 		// the @ operator at the beginning of an output avoids
 		// the default call of StringUtil::encodeHTML()
 		if ($encodeHTML) {
-			$parsedTag = 'StringUtil::encodeHTML('.$parsedTag.')';
+			$parsedTag = 'ikarus\util\StringUtil::encodeHTML('.$parsedTag.')';
 		}
 		// the # operator at the beginning of an output instructs
 		// the complier to call the StringUtil::formatNumeric() method
 		else if ($formatNumeric) {
-			$parsedTag = 'StringUtil::formatNumeric('.$parsedTag.')';
+			$parsedTag = 'ikarus\util\StringUtil::formatNumeric('.$parsedTag.')';
 		}
 		
 		return '<?php echo '.$parsedTag.'; ?>';

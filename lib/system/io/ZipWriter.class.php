@@ -5,13 +5,13 @@ use ikarus\util\StringUtil;
 /**
  * Creates a Zip file archive.
  *
- * @author		Marcel Werk
+ * @author		Originally developed by Marcel Werk
  * @copyright		2001-2009 WoltLab GmbH
  * @package		com.develfusion.ikarus
  * @subpackage		system
  * @category		Ikarus Framework
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
- * @version		1.0.0-0001
+ * @version		2.0.0-0001
  */
 class ZipWriter {
 	protected $headers = array();

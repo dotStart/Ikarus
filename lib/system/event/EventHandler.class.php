@@ -11,7 +11,7 @@ use ikarus\system\exception\SystemException;
  * @subpackage		system
  * @category		Ikarus Framework
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
- * @version		1.0.0-0001
+ * @version		2.0.0-0001
  */
 class EventHandler {
 

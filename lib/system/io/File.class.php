@@ -16,13 +16,13 @@ use ikarus\system\exception\SystemException;
  * $file->write('...');
  * $file->close();
  *
- * @author		Marcel Werk, Johannes Donath
+ * @author		Johannes Donath (Originally developed by Marcel Werk)
  * @copyright		2001-2009 WoltLab GmbH, 2011 Evil-Co.de
  * @package		com.develfusion.ikarus
  * @subpackage		system
  * @category		Ikarus Framework
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
- * @version		1.0.0-0001
+ * @version		2.0.0-0001
  */
 class File {
 	

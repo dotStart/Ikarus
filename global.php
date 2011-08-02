@@ -18,6 +18,11 @@ define('TIME_NOW', time());
 if (!isset($packageList)) $packageList = array();
 $packageList['ikarus'] = IKARUS_DIR;
 
-// include core functions
+// define current package dir
+if (!isset($packageDir)) $packageDir = IKARUS_DIR;
+
+// include core functions and application core
+require_once(IKARUS_DIR.'lib/system/IKARUS.class.php');
 require_once(IKARUS_DIR.'lib/core.functions.php');
+ikarus\system\IKARUS::init($packageList, $packageDir);
 ?>
