@@ -1,6 +1,9 @@
 <?php
 namespace ikarus\system;
 
+// includes
+require_once(IKARUS_DIR.'lib/core.functions.php');
+
 /**
  * Manages all core instances
  * @author		Johannes Donath
