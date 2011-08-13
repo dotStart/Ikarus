@@ -16,5 +16,5 @@ define('RELATIVE_IKARUS_DIR', '../');
 require_once(RELATIVE_IKARUS_DIR.'global.php');
 
 // start admin panel
-ikarus\system\IKARUS::init($packageDirs, $packageDir);
+ikarus\system\IKARUS::init();
 ?>
