@@ -1,5 +1,8 @@
+.admin/templates/compiled
 .buildpath
+.gource*
 .project
 .settings
-/config.inc.php
-/options.inc.php
+.settings/*
+config.inc.php
+options.inc.php
