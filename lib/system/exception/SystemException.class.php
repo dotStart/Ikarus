@@ -17,7 +17,7 @@ use ikarus\util\StringUtil;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-class SystemException extends Exception implements PrintableException {
+class SystemException extends Exception implements IPrintableException {
 
 	/**
 	 * Contains additional error information

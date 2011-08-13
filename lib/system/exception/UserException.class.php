@@ -13,7 +13,7 @@ use ikarus\system\IKARUS;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-abstract class UserException extends Exception implements PrintableException {
+abstract class UserException extends Exception implements IPrintableException {
 
 	/**
 	 * Contains the name of the template that should displayed
