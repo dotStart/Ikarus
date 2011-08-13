@@ -110,13 +110,10 @@ class SystemException extends Exception implements IPrintableException {
 		}
 
 		// print report
-		echo '<?xml version="1.0" encoding="UTF-8"?>';
+		echo '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"><html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" xml:lang="en">';
 
 		if (DISPLAY_ERRORS) {
 			?>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" xml:lang="en">
 <head>
 <title>Fatal error: <?php echo StringUtil::encodeHTML($this->getMessage()); ?>
 </title>
@@ -230,7 +227,6 @@ class SystemException extends Exception implements IPrintableException {
 		<?php echo $this->functions; ?>
 	</div>
 </body>
-</html>
 
 		<?php
 		} else {
@@ -246,8 +242,6 @@ class SystemException extends Exception implements IPrintableException {
 				
 			// Cannot display template -> Show english error message (hardcoded)
 			?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" xml:lang="en">
 <head>
 <title>An error occoured</title>
 <style type="text/css">
@@ -278,9 +272,9 @@ class SystemException extends Exception implements IPrintableException {
 			persists you should message an administrator!</p>
 	</div>
 </body>
-</html>
-<?php	
+<?php
 		}
+		echo '</html>';
 	}
 }
 ?>
