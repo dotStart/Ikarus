@@ -16,5 +16,5 @@ define('TIME_NOW', time());
 
 // include core functions and application core
 require_once(IKARUS_DIR.'lib/system/IKARUS.class.php');
-ikarus\system\IKARUS::init($packageList, $packageDir);
+ikarus\system\IKARUS::init();
 ?>
