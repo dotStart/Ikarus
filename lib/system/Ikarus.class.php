@@ -1,7 +1,11 @@
 <?php
 namespace ikarus\system;
+use ikarus\system\configuration\Configuration;
+use ikarus\system\database\DatabaseManager;
+use ikarus\system\exception\SystemException;
 
 // includes
+require_once(IKARUS_DIR.'lib/core.defines.php');
 require_once(IKARUS_DIR.'lib/core.functions.php');
 
 /**
@@ -63,11 +67,11 @@ class Ikarus {
 	 * @return		void
 	 */
 	public final function init() {
-		static::initConfiguration();
 		static::initDatabaseManager();
 		static::initCacheManager();
 		static::initEventManager();
 		static::initApplicationManager();
+		static::initConfiguration();
 		static::initExtensionManager();
 		
 		static::$applicationManagerObj->boot();
@@ -143,7 +147,7 @@ class Ikarus {
 	 * @return		void
 	 */
 	protected final function initConfiguration() {
-		static::$configurationObj = new Configuration(IKARUS_DIR.static::CONFIRUGRATION_FILE);
+		static::$configurationObj = new Configuration(IKARUS_DIR.static::CONFIGURATION_FILE);
 	}
 	
 	/**
@@ -189,7 +193,7 @@ class Ikarus {
 			// check for registered applications
 			if ($applicationPrefix == 'ikarus') { // FIXME: This should not be hardcoded
 				// generate class path
-				$classPath = IKARUS_DIR.implode('/', $namespaces) . '.class.php';
+				$classPath = IKARUS_DIR.'lib/'.implode('/', $namespaces).'.class.php';
 				
 				// include needed file
 				if (file_exists($classPath)) {
@@ -198,7 +202,7 @@ class Ikarus {
 				}
 			} elseif (static::$applicationManagerObj->applicationPrefixExists($applicationPrefix)) {
 				// generate class path
-				$classPath = static::$applicationManagerObj->getApplication($applicationPrefix)->getPath().implode('/', $namespaces) . '.class.php';
+				$classPath = static::$applicationManagerObj->getApplication($applicationPrefix)->getLibraryPath().implode('/', $namespaces) . '.class.php';
 				
 				// include needed file
 				if (file_exists($classPath)) require_once($classPath);
@@ -223,7 +227,7 @@ class Ikarus {
 				case 8: $type = 'notice'; break;
 			}
 			
-			throw new SystemException('PHP '.$type.' in file %s (%s): %s', $fileName, $lineNo, $message);
+			throw new SystemException('PHP '.$type.' in file %s (%s): %s', $filename, $lineNo, $message);
 		}
 	}
 	
@@ -233,7 +237,7 @@ class Ikarus {
 	 * @return		void
 	 */
 	public static final function handleException(\Exception $ex) {
-		if ($ex instanceof IPrintableException) {
+		if ($ex instanceof exception\IPrintableException and static::$applicationManagerObj !== null) {
 			$ex->show();
 			exit;
 		}
