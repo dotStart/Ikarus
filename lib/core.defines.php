@@ -1,4 +1,6 @@
 <?php
+namespace ikarus;
+
 /**
  * @author		Johannes Donath
  * @copyright		2010 DEVel Fusion

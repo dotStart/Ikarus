@@ -1,12 +1,13 @@
 <?php
 namespace ikarus\system;
+use ikarus\pattern\Singleton;
 use ikarus\system\configuration\Configuration;
 use ikarus\system\database\DatabaseManager;
 use ikarus\system\exception\SystemException;
 
 // includes
 require_once(IKARUS_DIR.'lib/core.defines.php');
-require_once(IKARUS_DIR.'lib/core.functions.php');
+require_once(IKARUS_DIR.'lib/pattern/Singleton.class.php');
 
 /**
  * Manages all core instances
@@ -18,7 +19,7 @@ require_once(IKARUS_DIR.'lib/core.functions.php');
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-class Ikarus {
+class Ikarus extends Singleton {
 	
 	/**
 	 * Contains the name of the file wich contains the core configuration
@@ -245,5 +246,22 @@ class Ikarus {
 		print $ex;
 		exit;
 	}
+	
+	/**
+	 * Forwardes normal method calls to our static methods (Needed for template engine)
+	 * @param		string			$methodName
+	 * @param		array			$arguments
+	 * @throws		SystemException
+	 */
+	public function __call($methodName, $arguments) {
+		// call static method if exists
+		if (method_exists(__CLASS__, $methodName)) call_user_func_array(array(__CLASS__, $methodName), $arguments);
+		
+		// failed
+		throw new SystemException("Method %s does not exist in class %s", $methodName, __CLASS__);
+	}
 }
+
+// post includes
+require_once(IKARUS_DIR.'lib/core.functions.php');
 ?>
