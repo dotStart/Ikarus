@@ -461,6 +461,34 @@ class PackageFileReader {
 	}
 	
 	/**
+	 * Verifies packages with SSL public keys (if available)
+	 * @throws			PackageFileException
+	 * @return			boolean
+	 */
+	public function verify() {
+		// openssl not available
+		if (!extension_loaded('openssl')) return false;
+		
+		// information for verification not available!
+		if (!isset($this->filePackageArray['verifier'])) return false;
+		if (!isset($this->filePackageArray['verifier']['signature'], $this->filePackageArray['verifier']['publicKey'])) return false;
+		
+		// read public key
+		$publicKey = openssl_get_publickey($this->filePackageArray['verifier']['publicKey']);
+		
+		// check for invalid public key
+		if (!$publicKey) throw new PackageFileException("Package File %s contains an invalid public key! Cannot verify package information");
+		
+		// verify information
+		$result = (openssl_verify($this->fileContentSplit[2], $this->filePackageArray['verifier']['signature'], $publicKey) == 1 ? true : false);
+		
+		// free key
+		openssl_free_key($publicKey);
+		
+		return $result;
+	}
+	
+	/**
 	 * I'm to lazy to implement getter methods ...
 	 * @param		string		$method
 	 * @param		array		$arguments
