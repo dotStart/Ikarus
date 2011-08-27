@@ -15,6 +15,6 @@ define('IKARUS_DIR', dirname(__FILE__).'/');
 define('TIME_NOW', time());
 
 // include core functions and application core
-require_once(IKARUS_DIR.'lib/system/IKARUS.class.php');
-ikarus\system\IKARUS::init();
+require_once(IKARUS_DIR.'lib/system/Ikarus.class.php');
+ikarus\system\Ikarus::init();
 ?>

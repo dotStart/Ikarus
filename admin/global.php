@@ -14,7 +14,4 @@ define('RELATIVE_IKARUS_DIR', '../');
 
 // include IKARUS
 require_once(RELATIVE_IKARUS_DIR.'global.php');
-
-// start admin panel
-ikarus\system\IKARUS::init();
 ?>
