@@ -3,10 +3,12 @@
  * IKARUS DATABASE CONFIGURATION
  * Note: This is an example layout for database configurations
  */
-$dbType = 'MySQL';
-$dbHostname = 'localhost';
-$dbUsername = 'root';
-$dbPassword = '';
-$dbDatabase = 'ikarus';
+$adapterName = 'PDO';
+$hostname = 'localhost';
+$user = 'root';
+$password = '';
+$databaseName = 'ikarus';
+$databaseParameters = 'connectionType=MySQL';
+$charset = 'UTF8';
 define('IKARUS_N', 1);
 ?>
