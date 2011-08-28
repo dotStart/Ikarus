@@ -26,6 +26,12 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	const PREPARED_STATEMENT_CLASS = 'ikarus\system\database\PreparedStatement';
 	
 	/**
+	 * Contains the current connection object
+	 * @var			mixed
+	 */
+	protected $connection = null;
+	
+	/**
 	 * Contains an instance of IDatabaseEditor
 	 * @var			ikarus\system\database\IDatabaseEditor
 	 */
@@ -48,6 +54,12 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	 * @var			string
 	 */
 	protected $hostname = '';
+	
+	/**
+	 * Contains a list of needed database parameters
+	 * @var			array<string>
+	 */
+	protected $neededDatabaseParameters = array();
 	
 	/**
 	 * Contains the password used to connect
@@ -83,6 +95,9 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 		$this->user = $user;
 		$this->password = $password;
 		parse_str($databaseParameters, $this->databaseParameters);
+		
+		// check database parameters
+		if (count(array_diff($this->neededDatabaseParameters, array_keys($this->databaseParameters)))) throw new SystemException("Cannot start database adapter %s: Needed database parameters are missing", __CLASS__);
 	}
 	
 	/**
@@ -179,6 +194,13 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	public function handleLimitParameter($query, $limit = 0, $offset = 0) {
 		if ($limit != 0) $query .= " LIMIT ".$limit." OFFSET ". $offset;
 		return $query;
+	}
+	
+	/**
+	 * @see ikarus\system\atabase\adapter.IDatabaseAdapter::isSupported()
+	 */
+	public static function isSupported() {
+		return true;
 	}
 	
 	/**
