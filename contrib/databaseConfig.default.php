@@ -3,7 +3,7 @@
  * IKARUS DATABASE CONFIGURATION
  * Note: This is an example layout for database configurations
  */
-$adapterName = 'PDO';
+$adapterName = 'GenericPDO';
 $hostname = 'localhost';
 $port = 3306;
 $user = 'root';
