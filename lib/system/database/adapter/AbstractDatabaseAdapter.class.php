@@ -148,7 +148,7 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	/**
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::getInsertID()
 	 */
-	public function getInsertID() {
+	public function getInsertID($table = null, $field = null) {
 		return null;
 	}
 	
