@@ -71,6 +71,14 @@ class SystemException extends Exception implements IPrintableException {
 		// call Exception::__construct()
 		parent::__construct($message, $code);
 	}
+	
+	/**
+	 * Removes full paths from issuer file
+	 * @return		string
+	 */
+	public function __getFile() {
+		return FileUtil::removeTrailingSlash(FileUtil::getRelativePath(IKARUS_DIR, $this->getFile()));
+	}
 
 	/**
 	 * Removes database password from stack trace.
@@ -79,7 +87,44 @@ class SystemException extends Exception implements IPrintableException {
 	 * @copyright		2001-2009 WoltLab GmbH
 	 */
 	public function __getTraceAsString() {
-		$string = preg_replace('/Database->__construct\(.*\)/', 'Database->__construct(...)', $this->getTraceAsString());
+		// get trace array
+		$trace = $this->getTrace();
+		
+		// init variables
+		$string = "";
+		
+		// add elements
+		foreach($trace as $index => $element) {
+			$string .= "#".$index." ".$this->prepareFilePath($element['file'])."(".$element['line']."): ".(isset($element['class']) ? $element['class'].$element['type'] : '').$element['function'].'(';
+			foreach($element['args'] as $key => $argument) {
+				if ($key < 0) $string .= ' ,';
+				$string .= gettype($argument);
+				
+				switch(gettype($argument)) {
+					case 'array':
+						$string .= '('.count($argument).')';
+						break;
+					case 'boolean':
+						$string .= '('.($argument ? 'true' : 'false');
+						break;
+					case 'integer':
+					case 'float':
+					case 'double':
+						$string .= '('.$argument.')';
+						break;
+					case 'object':
+						if (function_exists('spl_object_hash')) $string .= '('.spl_object_hash($argument).')';
+						break;
+					case 'string':
+						$string .= '('.strlen($argument).')';
+						break;
+				}
+			}
+			$string .= ")\n";
+		}
+		
+		
+		$string = preg_replace('/Database->__construct\(.*\)/', 'Database->__construct(...)', $string);
 		$string = preg_replace('/mysqli->mysqli\(.*\)/', 'mysqli->mysqli(...)', $string);
 		$string = preg_replace('/Database->connect\(.*\)/', 'MySQLDatabase->connect(...)', $string);
 		$string = preg_replace('/(my|)sql_connect\(.*\)/', '$1sql_connect(...)', $string);
@@ -125,7 +170,7 @@ class SystemException extends Exception implements IPrintableException {
 							<b>error message:</b> <?php echo StringUtil::encodeHTML($this->getMessage()); ?><br />
 							<b>error code:</b> <?php echo intval($this->getCode()); ?><br />
 							<?php echo $this->information; ?>
-							<b>file:</b> <?php echo StringUtil::encodeHTML($this->getFile()); ?> (<?php echo $this->getLine(); ?>)<br />
+							<b>file:</b> <?php echo StringUtil::encodeHTML($this->__getFile()); ?> (<?php echo $this->getLine(); ?>)<br />
 							<b>php version:</b> <?php echo StringUtil::encodeHTML(phpversion()); ?><br />
 							<b>ikarus version:</b> <?php echo IKARUS_VERSION; ?><br />
 							<b>include path:</b> <?php echo get_include_path(); ?><br />
