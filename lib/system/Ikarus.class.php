@@ -238,8 +238,12 @@ class Ikarus extends Singleton {
 	 * @return		void
 	 */
 	public static final function handleException(\Exception $ex) {
-		if ($ex instanceof exception\IPrintableException and static::$applicationManagerObj !== null) {
-			$ex->show();
+		if ($ex instanceof exception\IPrintableException) {
+			if (static::$applicationManagerObj !== null)
+				$ex->show();
+			else
+				$ex->showMinimal();
+				
 			exit;
 		}
 		

@@ -16,5 +16,10 @@ interface IPrintableException {
 	 * Displays the exception
 	 */
 	public function show();
+	
+	/**
+	 * Shows a minimal error message
+	 */
+	public function showMinimal();
 }
 ?>

@@ -1,7 +1,7 @@
 <?php
 namespace ikarus\system\exception;
 use \Exception;
-use ikarus\system\IKARUS;
+use ikarus\system\Ikarus;
 use ikarus\system\exception\PrintableException;
 use ikarus\util\FileUtil;
 use ikarus\util\StringUtil;
@@ -97,7 +97,68 @@ class SystemException extends Exception implements IPrintableException {
 		@header('HTTP/1.1 503 Service Unavailable');
 
 		// notify application manager
-		IKARUS::getApplicationManager()->handleApplicationError($this);
+		Ikarus::getApplicationManager()->handleApplicationError($this);
+	}
+	
+	public function showMinimal() {
+		// send status code
+		@header('HTTP/1.1 503 Service Unavailable');
+		
+		// print report
+		echo '<?xml version="1.0" encoding="UTF-8"?>';
+		
+		?>
+		<!DOCTYPE html>
+		<html>
+			<head>
+				<title>Fatal error: <?php echo StringUtil::encodeHTML($this->getMessage()); ?></title>
+				<link rel="stylesheet" type="text/css" href="<?php echo RELATIVE_IKARUS_DIR; ?>style/fatalError.css" />
+				<script type="text/javascript" src="<?php echo RELATIVE_IKARUS_DIR; ?>js/3rdParty/jquery.min.js"></script>
+				<script type="text/javascript" src="<?php echo RELATIVE_IKARUS_DIR; ?>js/3rdParty/jquery-ui.min.js"></script>
+			</head>
+			<body>
+				<div class="systemException">
+					<h1>Core error: <?php echo StringUtil::encodeHTML($this->getMessage()); ?></h1>
+					
+					<div>
+						<p>
+							<b>error message:</b> <?php echo StringUtil::encodeHTML($this->getMessage()); ?><br />
+							<b>error code:</b> <?php echo intval($this->getCode()); ?><br />
+							<?php echo $this->information; ?>
+							<b>file:</b> <?php echo StringUtil::encodeHTML($this->getFile()); ?> (<?php echo $this->getLine(); ?>)<br />
+							<b>php version:</b> <?php echo StringUtil::encodeHTML(phpversion()); ?><br />
+							<b>ikarus version:</b> <?php echo IKARUS_VERSION; ?><br />
+							<b>include path:</b> <?php echo get_include_path(); ?><br />
+							<b>memory:</b> <?php echo memory_get_peak_usage(); ?> bytes<br />
+							<b>date:</b> <?php echo gmdate('r'); ?><br />
+							<b>request:</b> <?php if (isset($_SERVER['REQUEST_URI'])) echo StringUtil::encodeHTML($_SERVER['REQUEST_URI']); ?><br />
+							<b>referer:</b> <?php if (isset($_SERVER['HTTP_REFERER'])) echo StringUtil::encodeHTML($_SERVER['HTTP_REFERER']); ?><br />
+						</p>
+						
+						<h2><a href="javascript:void(0);" onclick="$('#stacktrace').toggle('blind'); $(this).text(($(this).text() == '+' ? '-' : '+'));">+</a>Stacktrace</h2>
+						<pre id="stacktrace" style="display: none;"><?php echo StringUtil::encodeHTML($this->__getTraceAsString()); ?></pre>
+						
+						<h2><a href="javascript:void(0);" onclick="$('#files').toggle('blind'); $(this).text(($(this).text() == '+' ? '-' : '+'));">+</a>Files</h2>
+						<pre id="files" style="display: none;"><?php $includes = array_map(array($this, 'prepareFilePath'), get_included_files()); asort($includes); foreach($includes as $file) echo $file."\n"; ?></pre>
+
+						<h2><a href="javascript:void(0);" onclick="$('#definedConstants').toggle('blind'); $(this).text(($(this).text() == '+' ? '-' : '+'));">+</a>Constants</h2>
+						<pre id="definedConstants" style="display: none;"><?php $constants = get_defined_constants(true); $constants = array_keys($constants['user']); asort($constants); foreach($constants as $constant) echo $constant."\n"; ?></pre>
+					</div>
+					
+					<?php echo $this->functions; ?>
+				</div>
+			</body>
+		</html>
+		<?php
+	}
+	
+	/**
+	 * Calculates the relative path to given file
+	 * @param			string		$path
+	 * @return			string
+	 */
+	protected function prepareFilePath($path) {
+		return FileUtil::removeTrailingSlash(FileUtil::getRelativePath(IKARUS_DIR, $path));	
 	}
 }
 ?>
