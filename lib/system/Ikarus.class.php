@@ -67,7 +67,7 @@ class Ikarus extends Singleton {
 	 * Starts all core instances
 	 * @return		void
 	 */
-	public final function init() {
+	public static final function init() {
 		static::initDatabaseManager();
 		static::initCacheManager();
 		static::initEventManager();
@@ -129,7 +129,7 @@ class Ikarus extends Singleton {
 	/**
 	 * Starts the application manager instance
 	 */
-	protected final function initApplicationManager() {
+	protected static final function initApplicationManager() {
 		static::$applicationManagerObj = new ApplicationManager();
 	}
 	
@@ -137,7 +137,7 @@ class Ikarus extends Singleton {
 	 * Starts the cache manager instance
 	 * @return		void
 	 */
-	protected final function initCacheManager() {
+	protected static final function initCacheManager() {
 		static::$cacheManagerObj = new CacheManager();
 		
 		static::$cacheManagerObj->startDefaultAdapter();
@@ -147,7 +147,7 @@ class Ikarus extends Singleton {
 	 * Starts the configuration instance
 	 * @return		void
 	 */
-	protected final function initConfiguration() {
+	protected static final function initConfiguration() {
 		static::$configurationObj = new Configuration(IKARUS_DIR.static::CONFIGURATION_FILE);
 	}
 	
@@ -155,7 +155,7 @@ class Ikarus extends Singleton {
 	 * Starts the database manager instance
 	 * @return		void
 	 */
-	protected final function initDatabaseManager() {
+	protected static final function initDatabaseManager() {
 		static::$databaseManagerObj = new DatabaseManager();
 		
 		static::$databaseManagerObj->startDefaultAdapter();
@@ -165,7 +165,7 @@ class Ikarus extends Singleton {
 	 * Starts the event manager instance
 	 * @return		void
 	 */
-	protected final function initEventManager() {
+	protected static final function initEventManager() {
 		static::$eventManagerObj = new EventManager();
 	}
 	
@@ -173,7 +173,7 @@ class Ikarus extends Singleton {
 	 * Starts the extension manager instance
 	 * @return		void
 	 */
-	protected final function initExtensionManager() {
+	protected static final function initExtensionManager() {
 		static::$extensionManagerObj = new ExtensionManager();
 	}
 	
