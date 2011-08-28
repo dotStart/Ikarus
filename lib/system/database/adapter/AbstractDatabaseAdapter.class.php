@@ -94,7 +94,7 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::escapeString()
 	 */
 	public function escapeString($string) {
-		throw new SystemException("%s::escapeString() is deprecated! Use prepared statements instead", __CLASS__);
+		return addslashes($string);
 	}
 	
 	/**

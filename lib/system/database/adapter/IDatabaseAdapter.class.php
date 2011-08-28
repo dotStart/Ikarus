@@ -26,7 +26,6 @@ interface IDatabaseAdapter {
 	/**
 	 * Escapes a string for use in queries
 	 * @param			string			$string
-	 * @deprecated			Use prepared statements instead
 	 * @return			string
 	 */
 	public function escapeString($string);
