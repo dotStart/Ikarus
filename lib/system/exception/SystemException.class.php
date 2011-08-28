@@ -173,7 +173,6 @@ class SystemException extends Exception implements IPrintableException {
 							<b>file:</b> <?php echo StringUtil::encodeHTML($this->__getFile()); ?> (<?php echo $this->getLine(); ?>)<br />
 							<b>php version:</b> <?php echo StringUtil::encodeHTML(phpversion()); ?><br />
 							<b>ikarus version:</b> <?php echo IKARUS_VERSION; ?><br />
-							<b>include path:</b> <?php echo get_include_path(); ?><br />
 							<b>memory:</b> <?php echo memory_get_peak_usage(); ?> bytes<br />
 							<b>date:</b> <?php echo gmdate('r'); ?><br />
 							<b>request:</b> <?php if (isset($_SERVER['REQUEST_URI'])) echo StringUtil::encodeHTML($_SERVER['REQUEST_URI']); ?><br />
