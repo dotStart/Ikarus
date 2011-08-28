@@ -77,6 +77,12 @@ interface IDatabaseAdapter {
 	public function getQueryCount();
 	
 	/**
+	 * Returnes a list of valid quote delimiters (Such as ' or ")
+	 * @return			array
+	 */
+	public function getQuoteDelimiter();
+	
+	/**
 	 * Returns the username of current connection
 	 * @return			string
 	 */
@@ -118,6 +124,13 @@ interface IDatabaseAdapter {
 	 * @return			void
 	 */
 	public function selectDatabase($databaseName);
+	
+	/**
+	 * Sends a query to database
+	 * @param			string			$sql
+	 * @return			mixed
+	 */
+	public function sendQuery($sql);
 	
 	/**
 	 * Sets the charset for current connection
