@@ -1,5 +1,6 @@
 <?php
 namespace ikarus\system\exception;
+use ikarus\util\StringUtil;
 
 /**
  * This exception will thrown if a database problem occoures
@@ -39,9 +40,14 @@ class DatabaseException extends SystemException {
 		$this->databaseDriver = $arguments[0];
 		unset($arguments[0]);
 
+		// resort
 		$arguments = array_merge(array(), $arguments);
 
+		// call parent
 		call_user_func_array(array('parent', '__construct'), $arguments);
+		
+		// modify information
+		$this->modifyInformation();
 	}
 
 	/**
@@ -49,7 +55,7 @@ class DatabaseException extends SystemException {
 	 * @return	string
 	 */
 	public function getDatabaseType() {
-		return $this->databaseDriver->getDatabaseType();
+		return get_class($this->databaseDriver);
 	}
 
 	/**
@@ -57,7 +63,7 @@ class DatabaseException extends SystemException {
 	 * @return	string
 	 */
 	public function getErrorDesc() {
-		return $this->databaseDriver->getErrorDesc();
+		return $this->databaseDriver->getErrorDescription();
 	}
 
 	/**
@@ -80,15 +86,14 @@ class DatabaseException extends SystemException {
 	}
 
 	/**
-	 * @see SystemException::show()
+	 * Modifies error information
+	 * @return			void
 	 */
-	public function show() {
+	public function modifyInformation() {
 		$this->information .= '<b>database driver:</b> ' . StringUtil::encodeHTML($this->getDatabaseType()) . '<br />';
 		$this->information .= '<b>sql error:</b> ' . StringUtil::encodeHTML($this->getErrorDesc()) . '<br />';
 		$this->information .= '<b>sql error number:</b> ' . StringUtil::encodeHTML($this->getErrorNumber()) . '<br />';
 		$this->information .= '<b>sql version:</b> ' . StringUtil::encodeHTML($this->getSQLVersion()) . '<br />';
-
-		parent::show();
 	}
 }
 ?>
