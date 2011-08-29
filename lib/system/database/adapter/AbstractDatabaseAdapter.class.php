@@ -98,6 +98,9 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 		
 		// check database parameters
 		if (count(array_diff($this->neededDatabaseParameters, array_keys($this->databaseParameters)))) throw new SystemException("Cannot start database adapter %s: Needed database parameters are missing", __CLASS__);
+	
+		// start connection
+		$this->connect();
 	}
 	
 	/**
