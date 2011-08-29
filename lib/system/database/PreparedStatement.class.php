@@ -64,7 +64,7 @@ class PreparedStatement implements IPreparedStatement {
 	/**
 	 * @see ikarus\system\database.IPreparedStatement::__construct()
 	 */
-	public function __construct(ikarus\system\database\adapter\IDatabaseAdapter $adapter, $statement) {
+	public function __construct(adapter\IDatabaseAdapter $adapter, $statement) {
 		// save arguments
 		$this->adapter = $adapter;
 		$this->statement = $statement;

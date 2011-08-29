@@ -18,7 +18,7 @@ interface IPreparedStatement {
 	 * @param			ikarus\system\database\adapter\IDatabaseAdapter		$adapter
 	 * @param			string							$statement
 	 */
-	public function __construct(ikarus\system\database\adapter\IDatabaseAdapter $adapter, $statement);
+	public function __construct(adapter\IDatabaseAdapter $adapter, $statement);
 	
 	/**
 	 * Binds a parameter
