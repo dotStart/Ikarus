@@ -207,7 +207,7 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::prepareStatement()
 	 */
 	public function prepareStatement($statement, $limit = 0, $offset = 0) {
-		$statement = $this->handleLimitParameter($query, $limit, $offset);
+		$statement = $this->handleLimitParameter($statement, $limit, $offset);
 		
 		$className = static::PREPARED_STATEMENT_CLASS;
 		return (new $className($this, $statement));
