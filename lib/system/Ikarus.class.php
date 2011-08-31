@@ -81,7 +81,7 @@ class Ikarus extends Singleton {
 	
 	/**
 	 * Returns the current ApplicationManager instance
-	 * @return		ApplicationManager
+	 * @return		ikarus\system\application\ApplicationManager
 	 */
 	public static final function getApplicationManager() {
 		return static::$applicationManagerObj;
@@ -89,7 +89,7 @@ class Ikarus extends Singleton {
 	
 	/**
 	 * Returns the current Configuration instance
-	 * @return		Configuration
+	 * @return		ikarus\system\configuration\Configuration
 	 */
 	public static final function getConfiguration() {
 		return static::$configurationObj;
@@ -97,7 +97,7 @@ class Ikarus extends Singleton {
 	
 	/**
 	 * Returns the current CacheManager instance
-	 * @return		CacheManager
+	 * @return		ikarus\system\cache\CacheManager
 	 */
 	public static final function getCacheManagger() {
 		return static::$cacheManagerObj;
@@ -105,7 +105,7 @@ class Ikarus extends Singleton {
 	
 	/**
 	 * Returns the current DatabaseManager instance
-	 * @return		DatabaseManager
+	 * @return		ikarus\system\database\DatabaseManager
 	 */
 	public static final function getDatabaseManager() {
 		return static::$databaseManagerObj;
@@ -113,7 +113,7 @@ class Ikarus extends Singleton {
 	
 	/**
 	 * Returns the current EventManager instance
-	 * @return		ExtensionManager
+	 * @return		ikarus\system\event\ExtensionManager
 	 */
 	public static final function getEventManager() {
 		return static::$eventManagerObj;
@@ -121,7 +121,7 @@ class Ikarus extends Singleton {
 	
 	/**
 	 * Returns the current ExtensionManager instance
-	 * @return		ExtensionManager
+	 * @return		ikarus\system\extension\ExtensionManager
 	 */
 	public static final function getExtensionManager() {
 		return static::$extensionManagerObj;
@@ -129,6 +129,7 @@ class Ikarus extends Singleton {
 	
 	/**
 	 * Starts the application manager instance
+	 * @return			void
 	 */
 	protected static final function initApplicationManager() {
 		static::$applicationManagerObj = new ApplicationManager();
