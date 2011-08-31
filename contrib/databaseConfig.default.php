@@ -9,7 +9,7 @@ $port = 3306;
 $user = 'root';
 $password = '';
 $databaseName = 'ikarus';
-$databaseParameters = 'connectionType=MySQL';
+$databaseParameters = 'connectionType=mysql';
 $charset = 'UTF8';
 define('IKARUS_N', 1);
 ?>
