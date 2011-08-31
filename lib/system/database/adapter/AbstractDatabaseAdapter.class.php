@@ -1,5 +1,7 @@
 <?php
 namespace ikarus\system\database\adapter;
+use ikarus\system\database\DatabaseResult;
+use ikarus\system\database\DatabaseResultList;
 use ikarus\system\exception\SystemException;
 
 /**
@@ -182,6 +184,19 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	 */
 	public function getQuoteDelimiter() {
 		return array('\'', '"');
+	}
+	
+	/**
+	 * Returns a result object for use in application
+	 * @param			mixed				$result
+	 * @return			mixed
+	 */
+	protected function getResultObject($result) {
+		if (count($result) > 1) {
+			return (new DatabaseResultList($result));
+		} else {
+			return (new DatabaseResult($result));
+		}
 	}
 	
 	/**

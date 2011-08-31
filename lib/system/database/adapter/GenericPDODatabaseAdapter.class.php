@@ -34,7 +34,6 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 		
 			// set attributes
 			$this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$this->connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_CLASS);
 		} catch (PDOException $ex) {
 			throw new DatabaseException($this, "Cannot connect to database: %s", $ex->getMessage());
 		}
@@ -89,8 +88,7 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 	 */
 	public function sendQuery($sql) {
 		try {
-			$this->lastResult = $this->connection->query($sql);
-			return $this->lastResult;
+			return $this->lastResult = $this->getResultObject($this->connection->query($sql));
 		} catch (PDOException $ex) {
 			throw new DatabaseException($this, 'Error with query: %s', $sql);
 		}
