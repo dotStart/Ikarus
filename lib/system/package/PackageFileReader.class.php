@@ -8,6 +8,18 @@ use ikarus\util\StringUtil;
 class PackageFileReader {
 	
 	/**
+	 * Contains the algorithm used to crypt package contents
+	 * @var			string
+	 */
+	const CRYPT_ALGORITM = 'rijndael-256';
+	
+	/**
+	 * Contains the mode used to crypt package contents
+	 * @var			string
+	 */
+	const CRYPT_MODE = 'cbc';
+	
+	/**
 	 * Contains the fallback language code
 	 * @var 	string
 	 */
@@ -210,11 +222,34 @@ class PackageFileReader {
 	}
 	
 	/**
+	 * Decrypts an encrypted package
+	 * @param			string			$key
+	 * @return			boolean
+	 */
+	public function decrypt($key) {
+		// file encrypted?
+		if (!$this->isEncrypted()) throw new PackageFileException("Cannot decrypt package %s: The package is not encrypted", $this->file->getFilename());
+		
+		// decrypt file contents
+		$this->fileContentSplit[2] = mcrypt_decrypt(static::CRYPT_ALGORITM, $key, $this->fileContentSplit[2], static::CRYPT_MODE, $this->filePackageArray['crypt']['iv']);
+	}
+	
+	/**
 	 * Returnes the gzip file
 	 * @return		string
 	 */
 	public function getFileContents() {
 		return $this->fileContentSplit[2];
+	}
+	
+	/**
+	 * Returns true if the package is encrypted
+	 * @return			boolean
+	 */
+	public function isEncrypted() {
+		if (!isset($this->filePackageArray['crypt']['enabled'], $this->filePackageArray['crypt']['iv'])) return false;
+		if (!$this->filePackageArray['crypt']['iv']['enabled']) return false;
+		return true;
 	}
 	
 	/**
