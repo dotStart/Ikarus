@@ -133,6 +133,9 @@ class DatabaseManager {
 	 * @return		void
 	 */
 	public function startDefaultAdapter() {
+		// check for existing default adapter
+		if ($this->defaultAdapter !== null) throw new SystemException("The default connection was already set");
+		
 		// validate configuration file
 		if (!file_exists(IKARUS_DIR.static::DATABASE_CONFIGURATION_FILE)) throw new SystemException("Database configuration file '%s' does not exist", static::DATABASE_CONFIGURATION_FILE);
 		if (!is_readable(IKARUS_DIR.static::DATABASE_CONFIGURATION_FILE)) throw new SystemException("Database configuration file '%s' is not readable", static::DATABASE_CONFIGURATION_FILE);
