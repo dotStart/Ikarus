@@ -1,5 +1,6 @@
 <?php
 namespace ikarus\system\database\adapter;
+use ikarus\system\exception\SystemException;
 
 /**
  * Implements default methods for database adapters
@@ -54,6 +55,12 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	 * @var			string
 	 */
 	protected $hostname = '';
+	
+	/**
+	 * Contains the result set of last query
+	 * @var			mixed
+	 */
+	protected $lastResult = null;
 	
 	/**
 	 * Contains a list of needed database parameters
@@ -217,11 +224,17 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	}
 	
 	/**
+	 * @see ikarus\system\database\adapter.IDatabaseAdapter::quote()
+	 */
+	public function quote($string) {
+		return "'".$this->escapeString($string)."'";
+	}
+	
+	/**
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::selectDatabase()
 	 */
 	public function selectDatabase($databaseName) {
-		$stmt = $this->prepareStatement("USE ?");
-		$stmt->bind($databaseName);
+		$stmt = $this->prepareStatement("USE ".$databaseName);
 		$stmt->execute();
 		
 		$this->databaseName = $databaseName;
@@ -231,7 +244,7 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::sendQuery()
 	 */
 	public function sendQuery($sql) {
-		throw new SystemException("The adapter %s is not completely implemented and does not support method %s", __CLASS__, __FUNCTION__);
+		throw new SystemException("The adapter %s is not completely implemented and does not support method %s", get_class($this), __FUNCTION__);
 	}
 	
 	/**

@@ -118,6 +118,13 @@ interface IDatabaseAdapter {
 	public function prepareStatement($statement, $limit = 0, $offset = 0);
 	
 	/**
+	 * Quotes a string
+	 * @param			string			$string
+	 * @return			string
+	 */
+	public function quote($string);
+	
+	/**
 	 * Selects the specified database for use
 	 * @param			string			$databaseName
 	 * @return			void

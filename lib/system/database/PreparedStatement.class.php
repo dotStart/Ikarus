@@ -1,5 +1,6 @@
 <?php
 namespace ikarus\system\database;
+use ikarus\system\exception\SystemException;
 
 /**
  * Implements a default prepared statement
@@ -30,6 +31,12 @@ class PreparedStatement implements IPreparedStatement {
 	 * @var			ikarus\system\database\adapter\IDatabaseAdapter
 	 */
 	protected $adapter = null;
+	
+	/**
+	 * Contains all bound variables with their positions
+	 * @var			array
+	 */
+	protected $boundVariables = array();
 	
 	/**
 	 * Contains the statement (in SQL syntax)
@@ -81,7 +88,7 @@ class PreparedStatement implements IPreparedStatement {
 		if ($position === null) $position = $this->variablePosition;
 		
 		// validate position
-		if ($position >= $this->variableCount) throw new SystemException("Invalid variable position %u: The position is higher than the available amount of variables");
+		if ($position >= $this->variableCount) throw new SystemException("Invalid variable position %u: The position is higher than the available amount of variables", $position);
 		
 		// save information
 		$this->boundVariables[$position] = $value;
@@ -119,15 +126,15 @@ class PreparedStatement implements IPreparedStatement {
 			case 'array':
 			case 'object':
 				// convert object to string
-				if (is_object($value) and method_exists($value, '__toString()')) return "'".$this->adapter->escapeString($value->__toString())."'";
+				if (is_object($value) and method_exists($value, '__toString()')) return $this->adapter->quote($value->__toString());
 				
 				// serialize object
-				return "'".$this->adapter->escapeString(serialize($value))."'";
+				return $this->adapter->quote(serialize($value));
 				break;
 			case 'string':
 			default:
 				// we'll handle unknown data types in the same way as strings
-				return "'".$this->adapter->escapeString($value)."'";
+				return $this->adapter->quote($value);
 				break;
 		}
 	}
