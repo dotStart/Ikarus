@@ -98,11 +98,11 @@ class DatabaseException extends SystemException {
 	 * @return			void
 	 */
 	public function modifyInformation() {
-		$this->information .= '<b>database driver:</b> ' . StringUtil::encodeHTML($this->getDatabaseType()) . '<br />';
-		$this->information .= '<b>sql error:</b> ' . StringUtil::encodeHTML($this->getErrorDesc()) . '<br />';
-		$this->information .= '<b>sql error number:</b> ' . StringUtil::encodeHTML($this->getErrorNumber()) . '<br />';
-		$this->information .= '<b>sql version:</b> ' . StringUtil::encodeHTML($this->getSQLVersion()) . '<br />';
-		$this->information .= '<b>sql client version:</b> ' . StringUtil::encodeHTML($this->getSQLClientVersion()) . '<br />';
+		$this->information['database driver'] = StringUtil::encodeHTML($this->getDatabaseType());
+		$this->information['sql error'] = StringUtil::encodeHTML($this->getErrorDesc());
+		$this->information['sql error number'] = StringUtil::encodeHTML($this->getErrorNumber());
+		$this->information['sql version'] = StringUtil::encodeHTML($this->getSQLVersion());
+		$this->information['sql client version'] = StringUtil::encodeHTML($this->getSQLClientVersion());
 	}
 }
 ?>

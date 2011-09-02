@@ -23,7 +23,7 @@ class SystemException extends Exception implements IPrintableException {
 	 * Contains additional error information
 	 * @var	string
 	 */
-	protected $information = '';
+	protected $information = array();
 
 	/**
 	 * Contains additional html code for error
@@ -169,7 +169,9 @@ class SystemException extends Exception implements IPrintableException {
 						<p>
 							<b>error message:</b> <?php echo StringUtil::encodeHTML($this->getMessage()); ?><br />
 							<b>error code:</b> <a href="http://www.ikarus-framework.de/error/<?php echo intval($this->getCode()); ?>"><?php echo intval($this->getCode()); ?></a><br />
-							<?php echo $this->information; ?>
+							<?php 
+							foreach($this->information as $label => $value) echo '<b>'.$label.':</b> '.$value.'<br />';
+							?>
 							<b>file:</b> <?php echo StringUtil::encodeHTML($this->__getFile()); ?> (<?php echo $this->getLine(); ?>)<br />
 							<b>php version:</b> <?php echo StringUtil::encodeHTML(phpversion()); ?> (<?php echo PHP_OS; ?>)<br />
 							<b>ikarus version:</b> <?php echo IKARUS_VERSION; ?><br />
