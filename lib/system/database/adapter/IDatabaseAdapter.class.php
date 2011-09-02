@@ -31,6 +31,12 @@ interface IDatabaseAdapter {
 	public function escapeString($string);
 	
 	/**
+	 * Returns the client library version (if available)
+	 * @return			string
+	 */
+	public function getClientVersion();
+	
+	/**
 	 * Returns an instance of type IDatabaseEditor
 	 * @return			ikarus\system\database\IDatabaseEditor
 	 */
@@ -47,6 +53,12 @@ interface IDatabaseAdapter {
 	 * @return			string
 	 */
 	public function getErrorDescription();
+	
+	/**
+	 * Returns additional information for DatabaseExceptions
+	 * @return			array
+	 */
+	public function getErrorInformation();
 	
 	/**
 	 * Returns the last error number (if any)

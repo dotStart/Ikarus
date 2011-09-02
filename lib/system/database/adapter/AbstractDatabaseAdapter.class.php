@@ -125,6 +125,13 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	}
 	
 	/**
+	 * @see ikarus\system\database\adapter.IDatabaseAdapter::getClientVersion()
+	 */
+	public function getClientVersion() {
+		return 'unknown';
+	}
+	
+	/**
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::getDatabaseEditor()
 	 */
 	public function getDatabaseEditor() {
@@ -148,6 +155,13 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	 */
 	public function getErrorDescription() {
 		return '';
+	}
+	
+	/**
+	 * @see ikarus\system\database\adapter.IDatabaseAdapter::getErrorInformation()
+	 */
+	public function getErrorInformation() {
+		return array();
 	}
 	
 	/**
@@ -266,9 +280,7 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::setCharset()
 	 */
 	public function setCharset($charset) {
-		$stmt = $this->prepareStatement("SET NAMES ?");
-		$stmt->bind($charset);
-		$stmt->execute();
+		$this->sendQuery("SET NAMES ".$this->quote($charset));
 	}
 	
 	/**
