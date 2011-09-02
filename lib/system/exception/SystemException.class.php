@@ -200,7 +200,7 @@ class SystemException extends Exception implements IPrintableException {
 						<pre id="definedConstants" style="display: none;"><?php $constants = get_defined_constants(true); $constants = array_keys($constants['user']); asort($constants); foreach($constants as $constant) echo $constant."\n"; ?></pre>
 					
 						<h2><a href="javascript:void(0);" onclick="$('#errorReport').toggle('blind'); $(this).text(($(this).text() == '+' ? '-' : '+'));">+</a>Report</h2>
-						<pre id="errorReport" style="display: none;">Ikarus Framework Error Report<br /><br />-------- REPORT BEGIN --------<br /><?php echo chunk_split(base64_encode(serialize($this->information))); ?><br />-------- REPORT END ---------</pre>
+						<pre id="errorReport" style="display: none;">Ikarus Framework Error Report<br /><br />-------- REPORT BEGIN --------<br /><?php echo chunk_split(base64_encode(serialize($this->information))); ?>-------- REPORT END ---------</pre>
 					</div>
 					
 					<?php echo $this->functions; ?>
