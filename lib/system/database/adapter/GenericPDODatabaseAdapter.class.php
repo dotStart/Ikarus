@@ -40,6 +40,17 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 	}
 	
 	/**
+	 * @see ikarus\system\database\adapter.AbstractDatabaseAdapter::getClientVersion()
+	 */
+	public function getClientVersion() {
+		try {
+			if ($this->connection !== null) return $this->connection->getAttribute(PDO::ATTR_CLIENT_VERSION);
+		} Catch (PDOException $ex) { }
+		
+		return 'unknown';
+	}
+	
+	/**
 	 * @see ikarus\system\database\adapter.AbstractDatabaseAdapter::getErrorDescription()
 	 */
 	public function getErrorDescription() {
@@ -67,6 +78,16 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 		} catch (PDOException $ex) {
 			throw new DatabaseException($this, "Cannot fetch last insert ID");
 		}
+	}
+	
+	/**
+	 * @see ikarus\system\database\adapter.AbstractDatabaseAdapter::getVersion()
+	 */
+	public function getVersion() {
+		try {
+			if ($this->connection !== null) return $this->connection->getAttribute(PDO::ATTR_SERVER_VERSION);
+		} Catch (PDOException $ex) { }
+		return 'unknown';
 	}
 	
 	/**
