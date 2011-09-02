@@ -70,6 +70,9 @@ class SystemException extends Exception implements IPrintableException {
 
 		// call Exception::__construct()
 		parent::__construct($message, $code);
+		
+		// modify information
+		$this->modifyInformation();
 	}
 	
 	/**
@@ -131,6 +134,21 @@ class SystemException extends Exception implements IPrintableException {
 		$string = preg_replace('/DatabaseManager->addConnection\(.*\)/', 'DatabaseManager->addConnection(...)', $string);
 		return $string;
 	}
+	
+	/**
+	 * Modifies current error information
+	 */
+	public function modifyInformation() {
+		$this->information['error message'] = StringUtil::encodeHTML($this->getMessage());
+		$this->information['error code'] = '<a href="http://www.ikarus-framework.de/error/'.intval($this->getCode()).'">'.intval($this->getCode()).'</a>';
+		$this->information['file'] = StringUtil::encodeHTML($this->__getFile()).' ('.$this->getLine().')';
+		$this->information['php version'] = StringUtil::encodeHTML(phpversion()).' ('.PHP_OS.')';
+		$this->information['ikarus version'] = IKARUS_VERSION;
+		$this->information['memory'] = memory_get_peak_usage().' bytes';
+		$this->information['data'] = gmdate('r');
+		if (isset($_SERVER['REQUEST_URI'])) $this->information['request'] = StringUtil::encodeHTML($_SERVER['REQUEST_URI']);
+		if (isset($_SERVER['HTTP_REFERER'])) $this->information['referer'] = StringUtil::encodeHTML($_SERVER['HTTP_REFERER']);
+	}
 
 	/**
 	 * @see	PrintableException::show()
@@ -167,18 +185,9 @@ class SystemException extends Exception implements IPrintableException {
 					
 					<div>
 						<p>
-							<b>error message:</b> <?php echo StringUtil::encodeHTML($this->getMessage()); ?><br />
-							<b>error code:</b> <a href="http://www.ikarus-framework.de/error/<?php echo intval($this->getCode()); ?>"><?php echo intval($this->getCode()); ?></a><br />
 							<?php 
 							foreach($this->information as $label => $value) echo '<b>'.$label.':</b> '.$value.'<br />';
 							?>
-							<b>file:</b> <?php echo StringUtil::encodeHTML($this->__getFile()); ?> (<?php echo $this->getLine(); ?>)<br />
-							<b>php version:</b> <?php echo StringUtil::encodeHTML(phpversion()); ?> (<?php echo PHP_OS; ?>)<br />
-							<b>ikarus version:</b> <?php echo IKARUS_VERSION; ?><br />
-							<b>memory:</b> <?php echo memory_get_peak_usage(); ?> bytes<br />
-							<b>date:</b> <?php echo gmdate('r'); ?><br />
-							<b>request:</b> <?php if (isset($_SERVER['REQUEST_URI'])) echo StringUtil::encodeHTML($_SERVER['REQUEST_URI']); ?><br />
-							<b>referer:</b> <?php if (isset($_SERVER['HTTP_REFERER'])) echo StringUtil::encodeHTML($_SERVER['HTTP_REFERER']); ?><br />
 						</p>
 						
 						<h2><a href="javascript:void(0);" onclick="$('#stacktrace').toggle('blind'); $(this).text(($(this).text() == '+' ? '-' : '+'));">+</a>Stacktrace</h2>
@@ -189,6 +198,9 @@ class SystemException extends Exception implements IPrintableException {
 
 						<h2><a href="javascript:void(0);" onclick="$('#definedConstants').toggle('blind'); $(this).text(($(this).text() == '+' ? '-' : '+'));">+</a>Constants</h2>
 						<pre id="definedConstants" style="display: none;"><?php $constants = get_defined_constants(true); $constants = array_keys($constants['user']); asort($constants); foreach($constants as $constant) echo $constant."\n"; ?></pre>
+					
+						<h2><a href="javascript:void(0);" onclick="$('#errorReport').toggle('blind'); $(this).text(($(this).text() == '+' ? '-' : '+'));">+</a>Report</h2>
+						<pre id="errorReport" style="display: none;">Ikarus Framework Error Report<br /><br />-------- REPORT BEGIN --------<br /><?php echo chunk_split(base64_encode(serialize($this->information))); ?><br />-------- REPORT END ---------</pre>
 					</div>
 					
 					<?php echo $this->functions; ?>
