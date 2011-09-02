@@ -62,6 +62,23 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 	}
 	
 	/**
+	 * @see ikarus\system\database\adapter.AbstractDatabaseAdapter::getErrorInformation()
+	 */
+	public function getErrorInformation() {
+		$information = array();
+		
+		try {
+			if (!$this->connection) return $information;
+			
+			$information['pdo driver'] = $this->connection->getAttribute(PDO::ATTR_DRIVER_NAME);
+			$information['connection status'] = $this->connection->getAttribute(PDO::ATTR_CONNECTION_STATUS);
+			$information['server information'] = $this->connection->getAttribute(PDO::ATTR_SERVER_INFO);
+		} Catch (PDOException $ex) { }
+		
+		return $information;
+	}
+	
+	/**
 	 * @see ikarus\system\database\adapter.AbstractDatabaseAdapter::getErrorNumber()
 	 */
 	public function getErrorNumber() {
