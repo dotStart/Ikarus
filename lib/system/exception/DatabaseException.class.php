@@ -45,9 +45,6 @@ class DatabaseException extends SystemException {
 
 		// call parent
 		call_user_func_array(array('parent', '__construct'), $arguments);
-		
-		// modify information
-		$this->modifyInformation();
 	}
 
 	/**
@@ -98,6 +95,8 @@ class DatabaseException extends SystemException {
 	 * @return			void
 	 */
 	public function modifyInformation() {
+		parent::modifyInformation();
+		
 		$this->information['database driver'] = StringUtil::encodeHTML($this->getDatabaseType());
 		$this->information['sql error'] = StringUtil::encodeHTML($this->getErrorDesc());
 		$this->information['sql error number'] = StringUtil::encodeHTML($this->getErrorNumber());
