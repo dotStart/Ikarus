@@ -73,6 +73,14 @@ class DatabaseException extends SystemException {
 	public function getErrorNumber() {
 		return $this->databaseDriver->getErrorNumber();
 	}
+	
+	/**
+	 * Returns the sql client version of php installation
+	 * @return			string
+	 */
+	public function getSQLCLientVersion() {
+		return $this->databaseDriver->getClientVersion();
+	}
 
 	/**
 	 * Returns the current sql version of the database.
@@ -94,6 +102,7 @@ class DatabaseException extends SystemException {
 		$this->information .= '<b>sql error:</b> ' . StringUtil::encodeHTML($this->getErrorDesc()) . '<br />';
 		$this->information .= '<b>sql error number:</b> ' . StringUtil::encodeHTML($this->getErrorNumber()) . '<br />';
 		$this->information .= '<b>sql version:</b> ' . StringUtil::encodeHTML($this->getSQLVersion()) . '<br />';
+		$this->information .= '<b>sql client version:</b> ' . StringUtil::encodeHTML($this->getSQLClientVersion()) . '<br />';
 	}
 }
 ?>
