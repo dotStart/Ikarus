@@ -24,6 +24,12 @@ class SystemException extends Exception implements IPrintableException {
 	 * @var	string
 	 */
 	protected $information = array();
+	
+	/**
+	 * Contains additional error information that should only appear in encoded error reports
+	 * @var			string
+	 */
+	protected $hiddenInformation = array();
 
 	/**
 	 * Contains additional html code for error
@@ -203,7 +209,7 @@ class SystemException extends Exception implements IPrintableException {
 						<pre id="extensions" style="display: none;"><?php $extensions = get_loaded_extensions(); asort($extensions); foreach($extensions as $extension) echo $extension."\n"; ?></pre>
 					
 						<h2><a href="javascript:void(0);" onclick="$('#errorReport').toggle('blind'); $(this).text(($(this).text() == '+' ? '-' : '+'));">+</a>Report</h2>
-						<pre id="errorReport" style="display: none;">Ikarus Framework Error Report<br /><br />-------- REPORT BEGIN --------<br /><?php echo chunk_split(base64_encode(serialize($this->information))); ?>-------- REPORT END ---------</pre>
+						<pre id="errorReport" style="display: none;">Ikarus Framework Error Report<br /><br />-------- REPORT BEGIN --------<br /><?php echo chunk_split(base64_encode(serialize(array_merge($this->information, $this->hiddenInformation)))); ?>-------- REPORT END ---------</pre>
 					</div>
 					
 					<?php echo $this->functions; ?>
