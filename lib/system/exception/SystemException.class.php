@@ -145,6 +145,7 @@ class SystemException extends Exception implements IPrintableException {
 	 * Modifies current error information
 	 */
 	public function modifyInformation() {
+		// core information
 		$this->information['error message'] = StringUtil::encodeHTML($this->getMessage());
 		$this->information['error code'] = '<a href="http://www.ikarus-framework.de/error/'.intval($this->getCode()).'">'.intval($this->getCode()).'</a>';
 		$this->information['file'] = StringUtil::encodeHTML($this->__getFile()).' ('.$this->getLine().')';
@@ -154,6 +155,17 @@ class SystemException extends Exception implements IPrintableException {
 		$this->information['data'] = gmdate('r');
 		if (isset($_SERVER['REQUEST_URI'])) $this->information['request'] = StringUtil::encodeHTML($_SERVER['REQUEST_URI']);
 		if (isset($_SERVER['HTTP_REFERER'])) $this->information['referer'] = StringUtil::encodeHTML($_SERVER['HTTP_REFERER']);
+		
+		// hidden information
+		$this->hiddenInformation['files'] = array_map(array($this, 'prepareFilePath'), get_included_files());
+		$this->hiddenInformation['constants'] = get_defined_constants(true);
+		$this->hiddenInformation['constants'] = array_keys($this->hiddenInformation['constants']['user']);
+		$this->hiddenInformation['extensions'] = get_loaded_extensions();
+		
+		// sort hidden information
+		asort($this->hiddenInformation['files']);
+		asort($this->hiddenInformation['constants']);
+		asort($this->hiddenInformation['extensions']);
 	}
 
 	/**
