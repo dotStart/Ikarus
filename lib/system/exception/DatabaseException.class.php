@@ -103,6 +103,7 @@ class DatabaseException extends SystemException {
 		$this->information['sql error number'] = StringUtil::encodeHTML($this->getErrorNumber());
 		$this->information['sql version'] = StringUtil::encodeHTML($this->getSQLVersion());
 		$this->information['sql client version'] = StringUtil::encodeHTML($this->getSQLClientVersion());
+		$this->information = array_merge($this->information, $this->databaseDriver->getErrorInformation());
 	}
 }
 ?>
