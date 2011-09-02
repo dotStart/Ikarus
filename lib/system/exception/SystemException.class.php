@@ -152,7 +152,7 @@ class SystemException extends Exception implements IPrintableException {
 		$this->information['php version'] = StringUtil::encodeHTML(phpversion()).' ('.PHP_OS.')';
 		$this->information['ikarus version'] = IKARUS_VERSION;
 		$this->information['memory'] = memory_get_peak_usage().' bytes';
-		$this->information['data'] = gmdate('r');
+		$this->information['date'] = gmdate('r');
 		if (isset($_SERVER['REQUEST_URI'])) $this->information['request'] = StringUtil::encodeHTML($_SERVER['REQUEST_URI']);
 		if (isset($_SERVER['HTTP_REFERER'])) $this->information['referer'] = StringUtil::encodeHTML($_SERVER['HTTP_REFERER']);
 		
