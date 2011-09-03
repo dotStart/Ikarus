@@ -104,7 +104,7 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 	/**
 	 * @see ikarus\system\database\adapter.AbstractDatabaseAdapter::getResultObject()
 	 */
-	protected function getResultObject($result, $forceList) {
+	protected function getResultObject($result, $forceList = false) {
 		if ($result->rowCount() <= 0) return (new DatabaseResultList(array()));
 		return parent::getResultObject($result, $forceList);
 	}
@@ -136,7 +136,7 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 	/**
 	 * @see ikarus\system\database\adapter.AbstractDatabaseAdapter::sendQuery()
 	 */
-	public function sendQuery($sql) {
+	public function sendQuery($sql, $forceList = false) {
 		try {
 			// save query
 			$this->lastQuery = $sql;
@@ -148,7 +148,7 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 			$this->queryCount++;
 			
 			// return result object (if any)
-			return $this->lastResult = $this->getResultObject($result);
+			return $this->lastResult = $this->getResultObject($result, $forceList = false);
 		} catch (PDOException $ex) {
 			$e = new DatabaseException($this, 'An error occoured while executing a database query');
 			$e->setErrorQuery($sql);

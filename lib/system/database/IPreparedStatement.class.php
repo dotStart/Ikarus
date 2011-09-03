@@ -17,8 +17,9 @@ interface IPreparedStatement {
 	 * Creates a new instance of type IPreparedStatement
 	 * @param			ikarus\system\database\adapter\IDatabaseAdapter		$adapter
 	 * @param			string							$statement
+	 * @param			boolean							$forceList
 	 */
-	public function __construct(adapter\IDatabaseAdapter $adapter, $statement);
+	public function __construct(adapter\IDatabaseAdapter $adapter, $statement, $forceList = false);
 	
 	/**
 	 * Binds a parameter

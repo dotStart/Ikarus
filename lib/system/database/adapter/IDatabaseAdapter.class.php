@@ -137,9 +137,10 @@ interface IDatabaseAdapter {
 	 * @param			string			$statement
 	 * @param			integer			$limit
 	 * @param			integer			$offset
+	 * @param			boolean			$forceList
 	 * @return			ikarus\system\database\IPreparedStatement
 	 */
-	public function prepareStatement($statement, $limit = 0, $offset = 0);
+	public function prepareStatement($statement, $limit = 0, $offset = 0, $forceList = false);
 	
 	/**
 	 * Quotes a string
@@ -158,9 +159,10 @@ interface IDatabaseAdapter {
 	/**
 	 * Sends a query to database
 	 * @param			string			$sql
+	 * @param			boolean			$forceList
 	 * @return			mixed
 	 */
-	public function sendQuery($sql);
+	public function sendQuery($sql, $forceList = false);
 	
 	/**
 	 * Sets the charset for current connection

@@ -39,6 +39,12 @@ class PreparedStatement implements IPreparedStatement {
 	protected $boundVariables = array();
 	
 	/**
+	 * Contains true if the initiator of this statement requested a DatabaseResultList
+	 * @var			boolean
+	 */
+	protected $forceList = false;
+	
+	/**
 	 * Contains the statement (in SQL syntax)
 	 * @var			string
 	 */
@@ -71,10 +77,11 @@ class PreparedStatement implements IPreparedStatement {
 	/**
 	 * @see ikarus\system\database.IPreparedStatement::__construct()
 	 */
-	public function __construct(adapter\IDatabaseAdapter $adapter, $statement) {
+	public function __construct(adapter\IDatabaseAdapter $adapter, $statement, $forceList = false) {
 		// save arguments
 		$this->adapter = $adapter;
 		$this->statement = $statement;
+		$this->forceList = $forceList;
 		
 		// process statement
 		$this->processStatement();
@@ -157,7 +164,7 @@ class PreparedStatement implements IPreparedStatement {
 				$sql .= $element;
 		}
 		
-		return $this->adapter->sendQuery($sql);
+		return $this->adapter->sendQuery($sql, $this->forceList);
 	}
 	
 	/**

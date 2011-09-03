@@ -218,9 +218,13 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	/**
 	 * Returns a result object for use in application
 	 * @param			mixed				$result
+	 * @param			boolean				$forceList
 	 * @return			mixed
 	 */
-	protected function getResultObject($result) {
+	protected function getResultObject($result, $forceList = false) {
+		// lists are forced?
+		if (count($result) <= 0 and $forceList) $result = array(0 => $result);
+		
 		if (count($result) > 1) {
 			return (new DatabaseResultList($result));
 		} else {
@@ -260,11 +264,11 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	/**
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::prepareStatement()
 	 */
-	public function prepareStatement($statement, $limit = 0, $offset = 0) {
+	public function prepareStatement($statement, $limit = 0, $offset = 0, $forceList = false) {
 		$statement = $this->handleLimitParameter($statement, $limit, $offset);
 		
 		$className = static::PREPARED_STATEMENT_CLASS;
-		return (new $className($this, $statement));
+		return (new $className($this, $statement, $forceList));
 	}
 	
 	/**
@@ -287,7 +291,7 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	/**
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::sendQuery()
 	 */
-	public function sendQuery($sql) {
+	public function sendQuery($sql, $forceList = false) {
 		throw new SystemException("The adapter %s is not completely implemented and does not support method %s", get_class($this), __FUNCTION__);
 	}
 	
