@@ -1,6 +1,6 @@
 <?php
 namespace ikarus\system\database\adapter;
-use ikarus\system\database\DatabaseResult;
+use ikarus\system\database\DatabaseResultList;
 use ikarus\system\exception\DatabaseException;
 use \PDO;
 use \PDOException;
@@ -104,9 +104,9 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 	/**
 	 * @see ikarus\system\database\adapter.AbstractDatabaseAdapter::getResultObject()
 	 */
-	protected function getResultObject($result) {
-		if ($result->rowCount() <= 0) return (new DatabaseResult(array()));
-		return parent::getResultObject($result);
+	protected function getResultObject($result, $forceList) {
+		if ($result->rowCount() <= 0) return (new DatabaseResultList(array()));
+		return parent::getResultObject($result, $forceList);
 	}
 	
 	/**
