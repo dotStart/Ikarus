@@ -82,9 +82,6 @@ class SystemException extends Exception implements IPrintableException {
 
 		// call Exception::__construct()
 		parent::__construct($message, $code);
-		
-		// modify information
-		$this->modifyInformation();
 	}
 	
 	/**
@@ -177,11 +174,12 @@ class SystemException extends Exception implements IPrintableException {
 	}
 
 	/**
-	 * @see	PrintableException::show()
-	 * @author		Marcel Werk, Some little modifications by Johannes Donath
-	 * @copyright		2001-2009 WoltLab GmbH
+	 * @see ikarus\system\exception.IPrintableException::show()
 	 */
 	public function show() {
+		// modify information
+		$this->modifyInformation();
+		
 		// send status code
 		@header('HTTP/1.1 503 Service Unavailable');
 
@@ -189,7 +187,13 @@ class SystemException extends Exception implements IPrintableException {
 		Ikarus::getApplicationManager()->handleApplicationError($this);
 	}
 	
+	/**
+	 * @see ikarus\system\exception.IPrintableException::showMinimal()
+	 */
 	public function showMinimal() {
+		// modify information
+		$this->modifyInformation();
+		
 		// send status code
 		@header('HTTP/1.1 503 Service Unavailable');
 		
