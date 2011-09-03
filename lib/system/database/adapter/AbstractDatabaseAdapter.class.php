@@ -298,5 +298,11 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 		
 		$this->databaseParameters[$parameter] = $value;
 	}
+	
+	/**
+	 * Closes the database connection
+	 * @return			void
+	 */
+	abstract public function shutdown();
 }
 ?>
