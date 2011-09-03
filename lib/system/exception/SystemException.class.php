@@ -109,7 +109,7 @@ class SystemException extends Exception implements IPrintableException {
 		foreach($trace as $index => $element) {
 			$string .= "#".$index." ".(isset($element['file']) ? $this->prepareFilePath($element['file']) : 'unknown')."(".(isset($element['line']) ? $element['line'] : 0)."): ".(isset($element['class']) ? $element['class'].$element['type'] : '').$element['function'].'(';
 			foreach($element['args'] as $key => $argument) {
-				if ($key < 0) $string .= ' ,';
+				if ($key > 0) $string .= ', ';
 				$string .= gettype($argument);
 				
 				switch(gettype($argument)) {
@@ -117,7 +117,7 @@ class SystemException extends Exception implements IPrintableException {
 						$string .= '('.count($argument).')';
 						break;
 					case 'boolean':
-						$string .= '('.($argument ? 'true' : 'false');
+						$string .= '('.($argument ? 'true' : 'false').')';
 						break;
 					case 'integer':
 					case 'float':
