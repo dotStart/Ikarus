@@ -222,13 +222,12 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	 * @return			mixed
 	 */
 	protected function getResultObject($result, $forceList = false) {
-		// lists are forced?
-		if (count($result) <= 0 and $forceList) $result = array(0 => $result);
-		
-		if (count($result) > 1) {
+		if (count($result) > 1 or $forceList) {
 			return (new DatabaseResultList($result));
 		} else {
-			return (new DatabaseResult($result));
+			foreach($result as $realResult) {
+				return (new DatabaseResult($result));
+			}
 		}
 	}
 	

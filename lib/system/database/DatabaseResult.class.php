@@ -22,7 +22,7 @@ class DatabaseResult extends DatabaseObject {
 		if (is_array($data)) return parent::handleData($data);
 		
 		// handle objects
-		foreach($data as $row) {
+		foreach($data as $key => $value) {
 			$this->data[$key] = $value;
 		}
 	}

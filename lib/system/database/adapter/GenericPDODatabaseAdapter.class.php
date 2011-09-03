@@ -148,7 +148,7 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 			$this->queryCount++;
 			
 			// return result object (if any)
-			return $this->lastResult = $this->getResultObject($result, $forceList = false);
+			return $this->lastResult = $this->getResultObject($result, $forceList);
 		} catch (PDOException $ex) {
 			$e = new DatabaseException($this, 'An error occoured while executing a database query');
 			$e->setErrorQuery($sql);
