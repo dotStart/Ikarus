@@ -34,6 +34,9 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 		
 			// set attributes
 			$this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$this->connection->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
+			$this->connection->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
+			$this->connection->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);
 		} catch (PDOException $ex) {
 			throw new DatabaseException($this, "Cannot connect to database: %s", $ex->getMessage());
 		}
