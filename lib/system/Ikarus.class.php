@@ -80,6 +80,21 @@ class Ikarus extends Singleton {
 	}
 	
 	/**
+	 * Shuts the whole framework down
+	 * @return		void
+	 */
+	public static final function shutdown() {
+		// shut down components
+		if (static::getExtensionManager() !== null) static::getExtensionManager()->shutdown();
+		if (static::getApplicationManager() !== null) static::getApplicationManager()->shutdown();
+		if (static::getCacheManagger() !== null) static::getCacheManagger()->shutdown();
+		if (static::getDatabaseManager() !== null) static::getDatabaseManager()->shutdown();
+		
+		// stop output buffer (if any)
+		if (ob_get_level() > 0) ob_end_flush();
+	}
+	
+	/**
 	 * Returns the current ApplicationManager instance
 	 * @return		ikarus\system\application\ApplicationManager
 	 */

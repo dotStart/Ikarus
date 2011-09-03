@@ -20,6 +20,9 @@ set_error_handler(array('ikarus\system\Ikarus', 'handleError'), E_ALL);
 // register autoloader
 spl_autoload_register(array('ikarus\system\Ikarus', 'autoload'));
 
+// register shutdown method
+register_shutdown_function(array('ikarus\system\Ikarus', 'shutdown'));
+
 /**
  * Escapes a string with the correct method for the current database connection
  * @param		string			$string
