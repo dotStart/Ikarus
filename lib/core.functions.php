@@ -23,6 +23,10 @@ spl_autoload_register(array('ikarus\system\Ikarus', 'autoload'));
 // register shutdown method
 register_shutdown_function(array('ikarus\system\Ikarus', 'shutdown'));
 
+// assert settings
+assert_options(ASSERT_WARNING, false);
+assert_options(ASSERT_CALLBACK, array('ikarus\system\Ikarus', 'handleAssertion'));
+
 /**
  * Escapes a string with the correct method for the current database connection
  * @param		string			$string

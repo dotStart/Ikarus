@@ -5,6 +5,7 @@ use ikarus\system\cache\CacheManager;
 use ikarus\system\configuration\Configuration;
 use ikarus\system\database\DatabaseManager;
 use ikarus\system\exception\SystemException;
+use ikarus\util\FileUtil;
 
 // includes
 require_once(IKARUS_DIR.'lib/core.defines.php');
@@ -226,6 +227,22 @@ class Ikarus extends Singleton {
 				if (file_exists($classPath)) require_once($classPath);
 			}
 		}
+	}
+	
+	/**
+	 * Handles failed assertions
+	 * @param			string			$file
+	 * @param			integer			$line
+	 * @param			integer			$message
+	 * @throws			SystemException
+	 * @return			void
+	 */
+	public static function handleAssertion($file, $line, $code) {
+		// get the relative version of file parameter
+		$file = FileUtil::removeTrailingSlash(FileUtil::getRelativePath(IKARUS_DIR, $file));
+		
+		// print error message
+		throw new SystemException("Assertion failed in file %s on line %u", $file, $line);
 	}
 	
 	/**
