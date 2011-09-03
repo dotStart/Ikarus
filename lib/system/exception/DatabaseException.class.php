@@ -112,6 +112,8 @@ class DatabaseException extends SystemException {
 		if (is_string($this->errorQuery)) {
 			$this->additionalInformationElements .= '<h2><a href="javascript:void(0);" onclick="$(\'#errorQuery\').toggle(\'blind\'); $(this).text(($(this).text() == \'+\' ? \'-\' : \'+\'));">+</a>Query</h2>';
 			$this->additionalInformationElements .= '<pre id="errorQuery" style="display: none;">'.StringUtil::encodeHTML($this->errorQuery).'</pre>';
+			
+			$this->hiddenInformation['error query'] = StringUtil::encodeHTML($this->errorQuery);
 		}
 	}
 	
