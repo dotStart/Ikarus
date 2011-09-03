@@ -30,7 +30,7 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 	public function connect() {
 		try {
 			// connect
-			$this->connection = new PDO($this->databaseParameters['connectionType'].':host='.$this->hostname.';port='.$this->port, $this->user, $this->password);
+			$this->connection = new PDO($this->databaseParameters['connectionType'].':host='.$this->hostname.';port='.$this->port, $this->user, $this->password, array(PDO::ATTR_PERSISTENT => true));
 		
 			// set attributes
 			$this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
