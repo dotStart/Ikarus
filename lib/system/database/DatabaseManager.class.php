@@ -128,41 +128,6 @@ class DatabaseManager {
 	}
 	
 	/**
-	 * Starts the default database connection
-	 * @throws		SystemException
-	 * @return		void
-	 */
-	public function startDefaultAdapter() {
-		// check for existing default adapter
-		if ($this->defaultAdapter !== null) throw new SystemException("The default connection was already set");
-		
-		// validate configuration file
-		if (!file_exists(IKARUS_DIR.static::DATABASE_CONFIGURATION_FILE)) throw new SystemException("Database configuration file '%s' does not exist", static::DATABASE_CONFIGURATION_FILE);
-		if (!is_readable(IKARUS_DIR.static::DATABASE_CONFIGURATION_FILE)) throw new SystemException("Database configuration file '%s' is not readable", static::DATABASE_CONFIGURATION_FILE);
-		
-		// include configuration
-		require_once(IKARUS_DIR.static::DATABASE_CONFIGURATION_FILE);
-		
-		// validate configuration content
-		foreach($this->neededConfigurationVariables as $variable) if (!in_array($variable, array_keys(get_defined_vars()))) throw new SystemException("Needed variable '%s' was not found in database configuration file '%s'", $variable, static::DATABASE_CONFIGURATION_FILE);
-		
-		// load adapter
-		$this->loadAdapter($adapterName);
-		
-		// create connection
-		$connectionHandle = $this->createConnection($adapterName, $hostname, $port, $user, $password, $databaseParameters);
-		
-		// set charset
-		$connectionHandle->setCharset($charset);
-		
-		// select correct database
-		$connectionHandle->selectDatabase($databaseName);
-		
-		// set as default
-		$this->setDefaultAdapter($connectionHandle);
-	}
-	
-	/**
 	 * Loads an adapter
 	 * @param			string		$adapterName
 	 * @throws			SystemException
@@ -201,6 +166,51 @@ class DatabaseManager {
 	 */
 	public function setDefaultAdapter(adapter\IDatabaseAdapter $handle) {
 		$this->defaultAdapter = $handle;
+	}
+	
+	/**
+	 * Starts the default database connection
+	 * @throws		SystemException
+	 * @return		void
+	 */
+	public function startDefaultAdapter() {
+		// check for existing default adapter
+		if ($this->defaultAdapter !== null) throw new SystemException("The default connection was already set");
+		
+		// validate configuration file
+		if (!file_exists(IKARUS_DIR.static::DATABASE_CONFIGURATION_FILE)) throw new SystemException("Database configuration file '%s' does not exist", static::DATABASE_CONFIGURATION_FILE);
+		if (!is_readable(IKARUS_DIR.static::DATABASE_CONFIGURATION_FILE)) throw new SystemException("Database configuration file '%s' is not readable", static::DATABASE_CONFIGURATION_FILE);
+		
+		// include configuration
+		require_once(IKARUS_DIR.static::DATABASE_CONFIGURATION_FILE);
+		
+		// validate configuration content
+		foreach($this->neededConfigurationVariables as $variable) if (!in_array($variable, array_keys(get_defined_vars()))) throw new SystemException("Needed variable '%s' was not found in database configuration file '%s'", $variable, static::DATABASE_CONFIGURATION_FILE);
+		
+		// load adapter
+		$this->loadAdapter($adapterName);
+		
+		// create connection
+		$connectionHandle = $this->createConnection($adapterName, $hostname, $port, $user, $password, $databaseParameters);
+		
+		// set charset
+		$connectionHandle->setCharset($charset);
+		
+		// select correct database
+		$connectionHandle->selectDatabase($databaseName);
+		
+		// set as default
+		$this->setDefaultAdapter($connectionHandle);
+	}
+	
+	/**
+	 * Closes all active connections
+	 * @return			void
+	 */
+	public function shutdown() {
+		foreach($this->connections as $handle) {
+			$handle->shutdown();
+		}
 	}
 }
 ?>
