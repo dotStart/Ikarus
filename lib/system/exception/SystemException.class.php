@@ -150,7 +150,9 @@ class SystemException extends Exception implements IPrintableException {
 		$this->information['error code'] = '<a href="http://www.ikarus-framework.de/error/'.intval($this->getCode()).'">'.intval($this->getCode()).'</a>';
 		$this->information['file'] = StringUtil::encodeHTML($this->__getFile()).' ('.$this->getLine().')';
 		$this->information['php version'] = StringUtil::encodeHTML(phpversion()).' ('.PHP_OS.')';
+		$this->information['zend version'] = StringUtil::encodeHTML(zend_version());
 		$this->information['ikarus version'] = IKARUS_VERSION;
+		$this->information['sapi'] = StringUtil::encodeHTML(php_sapi_name());
 		$this->information['memory'] = memory_get_peak_usage().' bytes';
 		$this->information['date'] = gmdate('r');
 		if (isset($_SERVER['REQUEST_URI'])) $this->information['request'] = StringUtil::encodeHTML($_SERVER['REQUEST_URI']);
