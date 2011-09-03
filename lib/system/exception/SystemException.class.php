@@ -18,6 +18,12 @@ use ikarus\util\StringUtil;
  * @version		2.0.0-0001
  */
 class SystemException extends Exception implements IPrintableException {
+	
+	/**
+	 * Contains additional elements that should added to message body
+	 * @var			string
+	 */
+	protected $additionalInformationElements = "";
 
 	/**
 	 * Contains additional error information
@@ -221,6 +227,8 @@ class SystemException extends Exception implements IPrintableException {
 					
 						<h2><a href="javascript:void(0);" onclick="$('#extensions').toggle('blind'); $(this).text(($(this).text() == '+' ? '-' : '+'));">+</a>Extensions</h2>
 						<pre id="extensions" style="display: none;"><?php $extensions = get_loaded_extensions(); asort($extensions); foreach($extensions as $extension) echo $extension."\n"; ?></pre>
+					
+						<?php echo $this->additionalInformationElements; ?>
 					
 						<h2><a href="javascript:void(0);" onclick="$('#errorReport').toggle('blind'); $(this).text(($(this).text() == '+' ? '-' : '+'));">+</a>Report</h2>
 						<pre id="errorReport" style="display: none;">Ikarus Framework Error Report<br /><br />-------- REPORT BEGIN --------<br /><?php echo chunk_split(base64_encode(serialize(array_merge($this->information, $this->hiddenInformation)))); ?>-------- REPORT END ---------</pre>
