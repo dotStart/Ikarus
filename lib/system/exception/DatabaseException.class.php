@@ -25,6 +25,12 @@ class DatabaseException extends SystemException {
 	 * @var string
 	 */
 	protected $sqlVersion = null;
+	
+	/**
+	 * Contains an error query (if any)
+	 * @var			string
+	 */
+	protected $errorQuery = null;
 
 	/**
 	 * Creates a new instance of DatabaseException
@@ -91,8 +97,7 @@ class DatabaseException extends SystemException {
 	}
 
 	/**
-	 * Modifies error information
-	 * @return			void
+	 * @see ikarus\system\exception.SystemException::modifyInformation()
 	 */
 	public function modifyInformation() {
 		parent::modifyInformation();
@@ -103,6 +108,20 @@ class DatabaseException extends SystemException {
 		$this->information['sql version'] = StringUtil::encodeHTML($this->getSQLVersion());
 		$this->information['sql client version'] = StringUtil::encodeHTML($this->getSQLClientVersion());
 		$this->information = array_merge($this->information, $this->databaseDriver->getErrorInformation());
+		
+		if (is_string($this->errorQuery)) {
+			$this->additionalInformationElements .= '<h2><a href="javascript:void(0);" onclick="$(\'#errorQuery\').toggle(\'blind\'); $(this).text(($(this).text() == \'+\' ? \'-\' : \'+\'));">+</a>Query</h2>';
+			$this->additionalInformationElements .= '<pre id="errorQuery" style="display: none;">'.StringUtil::encodeHTML($this->errorQuery).'</pre>';
+		}
+	}
+	
+	/**
+	 * Sets the query that produces this exception (if any)
+	 * @param			string			$query
+	 * @return			void
+	 */
+	public function setErrorQuery($query) {
+		$this->errorQuery = $query;
 	}
 }
 ?>
