@@ -91,5 +91,12 @@ class DatabaseObjectList implements Iterator {
 	public function next() {
 		$this->objectPointer++;
 	}
+	
+	/**
+	 * @see Iterator::valid()
+	 */
+	public function valid() {
+		return (isset($this->objectList[$this->objectPointer]));
+	}
 }
 ?>
