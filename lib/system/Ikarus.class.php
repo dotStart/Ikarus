@@ -70,10 +70,10 @@ class Ikarus extends Singleton {
 	 */
 	public static final function init() {
 		static::initDatabaseManager();
+		static::initConfiguration();
 		static::initCacheManager();
 		static::initEventManager();
 		static::initApplicationManager();
-		static::initConfiguration();
 		static::initExtensionManager();
 		
 		static::$applicationManagerObj->boot();
