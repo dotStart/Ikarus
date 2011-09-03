@@ -75,6 +75,18 @@ interface IDatabaseAdapter {
 	public function getInsertID($table = null, $field = null);
 	
 	/**
+	 * Returns the last executed query
+	 * @return			string
+	 */
+	public function getLastQuery();
+	
+	/**
+	 * Returns the result of last executed query
+	 * @return			mixed
+	 */
+	public function getLastResult();
+	
+	/**
 	 * Returns the value of specified parameter
 	 * @param			string			$parameter
 	 * @return			mixed

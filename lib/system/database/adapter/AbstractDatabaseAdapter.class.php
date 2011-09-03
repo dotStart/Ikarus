@@ -66,6 +66,12 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	protected $lastResult = null;
 	
 	/**
+	 * Contains the last executed query
+	 * @var			string
+	 */
+	protected $lastQuery = "";
+	
+	/**
 	 * Contains a list of needed database parameters
 	 * @var			array<string>
 	 */
@@ -177,6 +183,14 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	 */
 	public function getInsertID($table = null, $field = null) {
 		return null;
+	}
+	
+	public function getLastQuery() {
+		return $this->lastQuery;
+	}
+	
+	public function getLastResult() {
+		return $this->lastResult;
 	}
 	
 	/**

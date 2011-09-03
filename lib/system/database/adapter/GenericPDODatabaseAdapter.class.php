@@ -129,9 +129,12 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 	 */
 	public function sendQuery($sql) {
 		try {
+			$this->lastQuery = $sql;
 			return $this->lastResult = $this->getResultObject($this->connection->query($sql));
 		} catch (PDOException $ex) {
-			throw new DatabaseException($this, 'Error with query: %s', $sql);
+			$e = new DatabaseException($this, 'An error occoured while executing a database query');
+			$e->setErrorQuery($sql);
+			throw $e;
 		}
 	}
 	
