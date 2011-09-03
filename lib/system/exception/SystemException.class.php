@@ -107,7 +107,7 @@ class SystemException extends Exception implements IPrintableException {
 		
 		// add elements
 		foreach($trace as $index => $element) {
-			$string .= "#".$index." ".$this->prepareFilePath($element['file'])."(".$element['line']."): ".(isset($element['class']) ? $element['class'].$element['type'] : '').$element['function'].'(';
+			$string .= "#".$index." ".(isset($element['file']) ? $this->prepareFilePath($element['file']) : 'unknown')."(".(isset($element['line']) ? $element['line'] : 0)."): ".(isset($element['class']) ? $element['class'].$element['type'] : '').$element['function'].'(';
 			foreach($element['args'] as $key => $argument) {
 				if ($key < 0) $string .= ' ,';
 				$string .= gettype($argument);
