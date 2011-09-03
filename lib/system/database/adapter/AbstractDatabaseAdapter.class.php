@@ -2,6 +2,7 @@
 namespace ikarus\system\database\adapter;
 use ikarus\system\database\DatabaseResult;
 use ikarus\system\database\DatabaseResultList;
+use ikarus\system\exception\DatabaseException;
 use ikarus\system\exception\SystemException;
 
 /**
@@ -280,7 +281,9 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::setCharset()
 	 */
 	public function setCharset($charset) {
-		$this->sendQuery("SET NAMES ".$this->quote($charset));
+		try {
+			$this->sendQuery("SET NAMES ".$this->quote($charset));
+		} Catch (DatabaseException $ex) { }
 	}
 	
 	/**
