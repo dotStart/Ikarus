@@ -1,5 +1,6 @@
 <?php
 namespace ikarus\system\database\adapter;
+use ikarus\system\database\DatabaseResult;
 use ikarus\system\exception\DatabaseException;
 use \PDO;
 use \PDOException;
@@ -101,6 +102,14 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 	}
 	
 	/**
+	 * @see ikarus\system\database\adapter.AbstractDatabaseAdapter::getResultObject()
+	 */
+	protected function getResultObject($result) {
+		if ($result->rowCount() <= 0) return (new DatabaseResult(array()));
+		return parent::getResultObject($result);
+	}
+	
+	/**
 	 * @see ikarus\system\database\adapter.AbstractDatabaseAdapter::getVersion()
 	 */
 	public function getVersion() {
@@ -129,8 +138,17 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 	 */
 	public function sendQuery($sql) {
 		try {
+			// save query
 			$this->lastQuery = $sql;
-			return $this->lastResult = $this->getResultObject($this->connection->query($sql));
+			
+			// get results
+			$result = $this->connection->query($sql);
+			
+			// update query count
+			$this->queryCount++;
+			
+			// return result object (if any)
+			return $this->lastResult = $this->getResultObject($result);
 		} catch (PDOException $ex) {
 			$e = new DatabaseException($this, 'An error occoured while executing a database query');
 			$e->setErrorQuery($sql);
