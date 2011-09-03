@@ -134,5 +134,12 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 			throw new DatabaseException($this, 'Error with query: %s', $sql);
 		}
 	}
+	
+	/**
+	 * @see ikarus\system\database\adapter.AbstractDatabaseAdapter::shutdown()
+	 */
+	public function shutdown() {
+		$this->connection = null;
+	}
 }
 ?>
