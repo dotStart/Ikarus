@@ -134,7 +134,7 @@ class DatabaseManager {
 	 * @return			void
 	 */
 	public function loadAdapter($adapterName) {
-		// we don't need to reload adapters with are already loaded
+		// we don't need to reload adapters wich are already loaded
 		if ($this->adapterIsLoaded($adapterName)) return;
 		
 		// generate class name
