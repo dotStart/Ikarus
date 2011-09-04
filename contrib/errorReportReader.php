@@ -16,6 +16,9 @@
 			// get contents
 			$content = trim($_REQUEST['report']);
 			
+			// check for encrypted reports
+			if (preg_match('~-------- ENCRYPTED REPORT BEGIN --------~i', $content)) die("Encrypted reports are currently not supported!");
+			
 			// remove start and end tags
 			if (preg_match('~-------- REPORT BEGIN --------~i', $content)) {
 				$contentSplit = preg_split('~-------- REPORT (BEGIN|END) --------~i', $content);
