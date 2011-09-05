@@ -4,6 +4,7 @@ use \Exception;
 use ikarus\system\Ikarus;
 use ikarus\system\exception\PrintableException;
 use ikarus\util\FileUtil;
+use ikarus\util\EncryptionManager;
 use ikarus\util\StringUtil;
 
 /**
@@ -145,6 +146,24 @@ class SystemException extends Exception implements IPrintableException {
 	}
 	
 	/**
+	 * Generates the error report
+	 * @return			string
+	 */
+	protected final function generateErrorReport() {
+		// get serialized information
+		$report = serialize(array_merge($this->information, $this->hiddenInformation));
+		
+		// encrypt
+		try {
+			$report = EncryptionManager::encryptForMaintainer($report);
+			$encrypted = true;
+		} Catch (SystemException $ex) { }
+		
+		// put all together
+		return $report = "-------- ".(isset($encrypted) ? "ENCRYPTED " : "")."REPORT BEGIN --------\n".chunk_split(base64_encode($report), 76, "\n")."-------- REPORT END ---------";
+	}
+	
+	/**
 	 * Modifies current error information
 	 */
 	public function modifyInformation() {
@@ -235,7 +254,7 @@ class SystemException extends Exception implements IPrintableException {
 						<?php echo $this->additionalInformationElements; ?>
 					
 						<h2><a href="javascript:void(0);" onclick="$('#errorReport').toggle('blind'); $(this).text(($(this).text() == '+' ? '-' : '+'));">+</a>Report</h2>
-						<pre id="errorReport" style="display: none;">Ikarus Framework Error Report<br /><br />-------- REPORT BEGIN --------<br /><?php echo chunk_split(base64_encode(serialize(array_merge($this->information, $this->hiddenInformation)))); ?>-------- REPORT END ---------</pre>
+						<pre id="errorReport" style="display: none;">Ikarus Framework Error Report<br /><br /><?php echo $this->generateErrorReport(); ?></pre>
 					</div>
 					
 					<?php echo $this->functions; ?>
