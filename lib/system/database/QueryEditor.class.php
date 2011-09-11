@@ -168,7 +168,7 @@ class QueryEditor {
 			$correlationName = '';
 		}
 			
-		return (empty($correlationName) ? '' : $correlationName.'.').$columnName.(empty($alias) ? '' : static::SQL_AS.' '.$alias);
+		return (empty($correlationName) ? '' : $correlationName.'.').$columnName.(empty($alias) ? '' : ' '.static::SQL_AS.' '.$alias);
 	}
 	
 	/**
