@@ -429,7 +429,7 @@ class QueryEditor {
 
 			// add join conditions (if applicable)
 			if (!empty($from) and !empty($table['joinCondition'])) {
-				$tmp .= ' ' . static::SQL_ON . ' ' . $table['joinCondition'];
+				$tmp .= ' '.static::SQL_ON . ' ('.$table['joinCondition'].')';
 			}
 
 			// add the table name and condition add to the list
