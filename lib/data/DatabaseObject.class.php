@@ -44,10 +44,10 @@ abstract class DatabaseObject {
 	 */
 	public function __get($variable) {
 		// debugging
-		assert(isset($this->data[$variable]));
+		assert(array_key_exists($variable, $this->data));
 		
 		// handle variables in data array
-		if (isset($this->data[$variable])) return $this->data[$variable];
+		if (array_key_exists($variable, $this->data)) return $this->data[$variable];
 		
 		// no variable found
 		return null;
