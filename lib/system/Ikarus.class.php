@@ -5,6 +5,7 @@ use ikarus\system\cache\CacheManager;
 use ikarus\system\configuration\Configuration;
 use ikarus\system\database\DatabaseManager;
 use ikarus\system\exception\SystemException;
+use ikarus\system\io\FilesystemManager;
 use ikarus\util\FileUtil;
 
 // includes
@@ -64,6 +65,12 @@ class Ikarus extends Singleton {
 	 * @var		ExtensionManager
 	 */
 	protected static $extensionManagerObj = null;
+	
+	/**
+	 * Contains an instance of FilesystemManager
+	 * @var		FilesystemManager
+	 */
+	protected static $filesystemManagerObj = null;
 	
 	/**
 	 * Starts all core instances
@@ -144,6 +151,15 @@ class Ikarus extends Singleton {
 	}
 	
 	/**
+	 * Returns the current FilesystemManager instance
+	 * @return		ikarus\system\io\FilesystemManager
+	 */
+	public static final function getFilesystemManager() {
+		if (static::$filesystemManagerObj === null) static::initFilesystemManager();
+		return static::$filesystemManagerObj;
+	}
+	
+	/**
 	 * Starts the application manager instance
 	 * @return			void
 	 */
@@ -167,6 +183,10 @@ class Ikarus extends Singleton {
 	 */
 	protected static final function initConfiguration() {
 		static::$configurationObj = new Configuration(IKARUS_DIR.static::CONFIGURATION_FILE);
+		static::$configurationObj->loadOptions();
+		
+		// disable or enable assertions
+		assert_options(ASSERT_ACTIVE, static::$configurationObj->get('global.advanced.debug'));
 	}
 	
 	/**
@@ -193,6 +213,14 @@ class Ikarus extends Singleton {
 	 */
 	protected static final function initExtensionManager() {
 		static::$extensionManagerObj = new ExtensionManager();
+	}
+	
+	/**
+	 * Starts the filesystem manager instance
+	 * @return		void
+	 */
+	protected static final function initFilesystemManager() {;
+		static::$filesystemManagerObj = new FilesystemManager();
 	}
 	
 	/**
