@@ -65,7 +65,7 @@ class DatabaseObjectList implements Iterator {
 	 * @see Iterator::rewind()
 	 */
 	public function rewind() {
-		$this->objectPointer--;
+		$this->objectPointer = 0;
 	}
 
 	/**
