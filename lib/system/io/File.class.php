@@ -28,21 +28,21 @@ class File {
 	
 	/**
 	 * Contains the file resource
-	 * @var		resource
+	 * @var			resource
 	 */
 	protected $resource = null;
 	
 	/**
 	 * Contains the filename
-	 * @var		string
+	 * @var			string
 	 */
-	protected $filename;
+	protected $filename = '';
 
 	/**
 	 * Opens a new file.
 	 *
-	 * @param 	string		$filename
-	 * @param 	string		$mode
+	 * @param 		string			$filename
+	 * @param 		string			$mode
 	 */
 	public function __construct($filename, $mode = 'wb') {
 		$this->filename = $filename;
@@ -54,18 +54,27 @@ class File {
 	
 	/**
 	 * Returnes the given filename
-	 * @return		string
+	 * @return			string
 	 */
 	public function getFilename() {
 		return $this->filename;
+	}
+	
+	/**
+	 * Returns the current file handle
+	 * @return			Resource
+	 */
+	public function getResource() {
+		return $this->resource;
 	}
 
 	/**
 	 * Calls the specified function on the open file.
 	 * Do not call this function directly. Use $file->write('') instead.
 	 *
-	 * @param 	string		$function
-	 * @param 	array		$arguments
+	 * @param 			string			$function
+	 * @param 			array			$arguments
+	 * @return			mixed
 	 */
 	public function __call($function, $arguments) {
 		if (function_exists('f' . $function)) {
