@@ -2,7 +2,9 @@
 namespace ikarus\system\configuration;
 use ikarus\system\Ikarus;
 use ikarus\system\database\QueryEditor;
+use ikarus\system\exception\StrictStandardException;
 use ikarus\system\exception\SystemException;
+use ikarus\util\ClassUtil;
 use ikarus\util\DependencyUtil;
 
 /**
@@ -77,6 +79,9 @@ class Configuration {
 		// read options
 		$this->readOptionsFromDatabase();
 		
+		// delete old file
+		Ikarus::getFilesystemManager()->deleteFile($this->fileName);
+		
 		// create file handle
 		$this->file = Ikarus::getFilesystemManager()->createFile($this->fileName);
 		
@@ -114,7 +119,7 @@ class Configuration {
 	 */
 	public function get($optionName) {
 		if (isset($this->options[$optionName])) return $this->options[$optionName];
-		// throw new SystemException("There is no option named '%s', $optionName);
+		// throw new StrictStandardException("There is no option named '%s', $optionName);
 		return null;
 	}
 	
@@ -125,10 +130,11 @@ class Configuration {
 	 */
 	protected function getRealOptionValue($type, $value) {
 		// get type class name
-		$className = static::OPTION_CLASS_PREFIX.$type.static::OPTION_CLASS_SUFFIX;
+		$className = static::OPTION_CLASS_PREFIX.ucfirst($type).static::OPTION_CLASS_SUFFIX;
 		
-		// check for existing method
-		if (!method_exists($className, 'getRealValue')) return $value;
+		// check for existing class
+		if (!class_exists($className)) throw new StrictStandardException("The class '%s' for option type '%s' is missing", $className, $type);
+		if (!ClassUtil::isInstanceOf($className, 'ikarus\system\configuration\type\ConfigurationType')) throw new StrictStandardException("The class '%s' of option type '%s' is not an implementation of ikarus\\system\\configuration\\type\\ConfigurationType", $className, $type);
 		
 		// get real variable content
 		return call_user_func(array($className, 'getRealValue'), $value);
@@ -142,6 +148,8 @@ class Configuration {
 	public function loadOptions() {
 		try {
 			$this->readOptions();
+		} Catch(StrictStandardException $ex) { // Bugfix: If an StrictStandardException occurs while reading the configuration file it will regenerate.
+			throw $ex;
 		} Catch(SystemException $ex) {
 			$this->createOptionFile();
 		}
