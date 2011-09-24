@@ -40,10 +40,59 @@ class FilesystemManager {
 	 * @return			ikarus\system\io\FilesystemHandle
 	 */
 	public function createFile($fileName) {
+		// validate path
+		if ($fileName{0} == '.') throw new SystemException("You really should not use relative paths!");
+		
+		// create file handle
 		return (new FilesystemHandle($fileName, true));
 	}
 	
+	/**
+	 * Deletes the given file (if existing)
+	 * @param			string			$fileName
+	 * @throws			SystemException
+	 * @return			void
+	 */
+	public function deleteFile($fileName) {
+		// validate path
+		if ($fileName{0} == '.') throw new SystemException("You really should not use relative paths!");
+		
+		// catch errors
+		if (!file_exists($fileName)) return;
+		
+		// ftp
+		if (Ikarus::getConfiguration()->get('filesystem.general.useFtp')) {
+			// calculate path
+			$filePath = $this->getFtpFilePath($fileName);
+			
+			// create FTP connection
+			$this->createConnection();
+			
+			// delete file
+			$this->ftpConnection->delete($filePath);
+		} else
+			unlink($fileName);
+	}
+	
+	/**
+	 * Returns the correct path on FTP to given file
+	 * @param			string			$path
+	 * @return			string
+	 */
+	protected function getFtpFilePath($path) {
+		return FileUtil::getRelativePath(IKARUS_DIR, dirname($path)).basename($path);
+	}
+	
+	/**
+	 * Reads a complete file from filesystem
+	 * @param			string			$fileName
+	 * @throws			SystemException
+	 * @return			string
+	 */
 	public function readFileContents($fileName) {
+		// validate path
+		if ($fileName{0} == '.') throw new SystemException("You really should not use relative paths!");
+		
 		// readable?
 		if (!is_readable($fileName) and !Ikarus::getConfiguration()->get('filesystem.general.useFtp')) throw new SystemException("Cannot read file '%s'");
 		
@@ -53,8 +102,30 @@ class FilesystemManager {
 		// ftp
 		$this->createConnection();
 		
+		// check connection
+		if ($this->ftpConnection === null) throw new SystemException("There is no way available to access file '%s'", $fileName); // This should really never happen ...
+		
 		// calculate path
-		$filePath = FileUtil::getRelativePath(IKARUS_DIR, dirname($fileName)).basename($fileName);
+		$filePath = $this->getFtpFilePath($fileName);
+		
+		// create dummy file
+		$dummyFileName = FileUtil::getTemporaryFilename('filesystem_', '.dat');
+		$dummyFile = new File($dummyFileName);
+		
+		// read file from ftp
+		$this->ftpConnection->get($dummyFile->getResource(), $filePath, FTP_ASCII);
+		
+		// flush file contents
+		$dummyFile->flush();
+		
+		// get dummy file contents
+		$contents = file_get_contents($dummyFileName);
+		
+		// close file
+		$dummyFile->close();
+		
+		// delete file
+		@$dummyFile->unlink();
 	}
 	
 	/**
@@ -71,7 +142,7 @@ class FilesystemManager {
 		// ftp
 		if (Ikarus::getConfiguration()->get('filesystem.general.useFtp')) {
 			// calculate path
-			$filePath = FileUtil::getRelativePath(IKARUS_DIR, dirname($fileName)).basename($fileName);
+			$filePath = $this->getFtpFilePath($fileName);
 			
 			// create FTP connection
 			$this->createConnection();
