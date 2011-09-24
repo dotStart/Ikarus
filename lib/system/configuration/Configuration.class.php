@@ -102,7 +102,7 @@ class Configuration {
 		
 		// add each option
 		foreach($this->rawOptionList as $option) {
-			$this->file->append("\$this->rawOptionList[] = '".addslashes(serialize($option))."';\n");
+			$this->file->append("\$this->rawOptionList[] = '".preg_replace('~(|\\\)\'~', '\\\'', serialize($option))."';\n");
 		}
 		
 		// write footer of file
