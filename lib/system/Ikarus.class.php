@@ -77,6 +77,7 @@ class Ikarus extends Singleton {
 	 * @return		void
 	 */
 	public static final function init() {
+		static::fixMagicQuotes();
 		static::initDatabaseManager();
 		static::initConfiguration();
 		static::initCacheManager();
@@ -100,6 +101,33 @@ class Ikarus extends Singleton {
 		
 		// stop output buffer (if any)
 		if (ob_get_level() > 0) ob_end_flush();
+	}
+	
+	/**
+	 * Fixes damage created by magic quotes
+	 * @return			void
+	 */
+	protected static final function fixMagicQuotes() {
+		// check for php 5.4+ (magic quotes are deprecated since php 5.4)
+		if (version_compare(PHP_VERSION, '5.4') >= 0) return;
+		
+		// fix damage
+		if (function_exists('get_magic_quotes_gpc')) {
+			if (get_magic_quotes_gpc()) {
+				if (count($_REQUEST)) $_REQUEST = util\ArrayUtil::stripslashes($_REQUEST);
+				if (count($_POST)) $_POST = util\ArrayUtil::stripslashes($_POST);
+				if (count($_GET)) $_GET = util\ArrayUtil::stripslashes($_GET);
+				if (count($_COOKIE)) $_COOKIE = util\ArrayUtil::stripslashes($_COOKIE);
+				
+				if (count($_FILES))
+					foreach ($_FILES as $name => $attributes)
+						foreach ($attributes as $key => $value)
+							if ($key != 'tmp_name') $_FILES[$name][$key] = util\ArrayUtil::stripslashes($value);
+			}
+		}
+		
+		// disable magic quotes
+		if (function_exists('set_magic_quotes_runtime')) set_magic_quotes_runtime(0);
 	}
 	
 	/**
