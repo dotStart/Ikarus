@@ -21,6 +21,12 @@ use ikarus\util\StringUtil;
 class SystemException extends Exception implements IPrintableException {
 	
 	/**
+	 * Contains a title that will appear in error messages and in error logs
+	 * @var			string
+	 */
+	const EXCEPTION_TITLE = 'Core error';
+	
+	/**
 	 * Contains additional elements that should added to message body
 	 * @var			string
 	 */
@@ -223,14 +229,14 @@ class SystemException extends Exception implements IPrintableException {
 		<!DOCTYPE html>
 		<html>
 			<head>
-				<title>Fatal error: <?php echo StringUtil::encodeHTML($this->getMessage()); ?></title>
+				<title><?php echo static::EXCEPTION_TITLE; ?>: <?php echo StringUtil::encodeHTML($this->getMessage()); ?></title>
 				<link rel="stylesheet" type="text/css" href="<?php echo RELATIVE_IKARUS_DIR; ?>style/fatalError.css" />
 				<script type="text/javascript" src="<?php echo RELATIVE_IKARUS_DIR; ?>js/3rdParty/jquery.min.js"></script>
 				<script type="text/javascript" src="<?php echo RELATIVE_IKARUS_DIR; ?>js/3rdParty/jquery-ui.min.js"></script>
 			</head>
 			<body>
 				<div class="systemException">
-					<h1>Core error: <?php echo StringUtil::encodeHTML($this->getMessage()); ?></h1>
+					<h1><?php echo static::EXCEPTION_TITLE; ?>: <?php echo StringUtil::encodeHTML($this->getMessage()); ?></h1>
 					
 					<div>
 						<p>
