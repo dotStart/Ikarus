@@ -33,3 +33,12 @@ CREATE TABLE ikarus1_package_dependency (
 
 -- rows
 INSERT INTO ikarus1_cache_adapter (adapterClass) VALUES ('DiskCacheAdapter');
+
+INSERT INTO ikarus1_option (optionID, optionName, optionValue, optionType, packageID) VALUES
+	(NULL,	'global.advanced.debug',			'1',	'boolean',	1),
+	(NULL,	'filesystem.general.useFtp',		'0',	'boolean',	1),
+	(NULL,	'filesystem.general.ftpHostname',	NULL,	'text',		1),
+	(NULL,	'filesystem.general.ftpPort',		'21',	'integer',	1),
+	(NULL,	'filesystem.general.ftpUsername',	NULL,	'text',		1),
+	(NULL,	'filesystem.general.ftpPassword',	NULL,	'password',	1),
+	(NULL,	'filesystem.general.ftpDirectory',	'/',	'text',		1);
