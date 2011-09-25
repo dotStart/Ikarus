@@ -5,8 +5,8 @@ use ikarus\system\Ikarus;
 /**
  * Manages filesystem actions
  * @author		Johannes Donath
- * @copyright		2011 DEVel Fusion
- * @package		com.develfusion.ikarus
+ * @copyright		2011 Evil-Co.de
+ * @package		de.ikarus-framework.core
  * @subpackage		system
  * @category		Ikarus Framework
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
@@ -37,10 +37,10 @@ class FilesystemHandle {
 	 * @param			string			$fileName
 	 * @param			boolean			$newFile
 	 */
-	public function __construct($fileName, $newFile = false) {
+	public function __construct($fileName, $newFile = false, ikarus\system\io\adapter\IFilesystemAdapter $adapter = null) {
 		$this->fileName = $fileName;
 		$this->newFile = $newFile;
-		if (!$newFile) $this->buffer = Ikarus::getFilesystemManager()->readFileContents($this->fileName);
+		if (!$newFile) $this->buffer = ($adapter === null ? Ikarus::getFilesystemManager()->getDefaultAdapter()->readFileContents($this->fileName) : $adapter->readFileContents($this->fileName));
 	}
 	
 	/**
@@ -64,8 +64,12 @@ class FilesystemHandle {
 	/**
 	 * @see ikarus\system\io.FilesystemManager::writeFile()
 	 */
-	public function write() {
-		return Ikarus::getFilesystemManager()->writeFile($this->fileName, $this->buffer);
+	public function write(ikarus\system\io\adapter\IFilesystemAdapter $adapter = null) {
+		if ($adapter === null) $adapter = Ikarus::getFilesystemManager()->getDefaultAdapter();
+		if ($this->newFile)
+			$adapter->createFile($this->fileName, $this->buffer);
+		else
+			$adapter->modifyFile($this->fileName, $this->buffer);
 	}
 	
 	/**
