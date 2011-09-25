@@ -33,6 +33,7 @@ CREATE TABLE ikarus1_package_dependency (
 
 -- rows
 INSERT INTO ikarus1_cache_adapter (adapterClass) VALUES ('DiskCacheAdapter');
+INSERT INTO ikarus1_cache_source (adapterID, adapterParameters, isDefaultConnection, fallbackFor, isDisabled) VALUES (1, '', 1, 0, 0);
 
 INSERT INTO ikarus1_option (optionID, optionName, optionValue, optionType, packageID) VALUES
 	(NULL,	'global.advanced.debug',				'1',	'boolean',	1),
