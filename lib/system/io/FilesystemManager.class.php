@@ -16,162 +16,101 @@ use ikarus\util\FileUtil;
 class FilesystemManager {
 	
 	/**
-	 * Contains the current FTP connection (if any)
-	 * @var				ikarus\system\io\FTP
+	 * Contains a prefix used for adapter class names
+	 * @var			string
 	 */
-	protected $ftpConnection = null;
+	const FILESYSTEM_ADAPTER_CLASS_PREFIX = 'ikarus\\system\\io\\adapter\\';
 	
 	/**
-	 * Creates a new FTP connection (if needed)
+	 * Contains a suffix used for adapter class names
+	 * @var			string
+	 */
+	const FILESYSTEM_ADAPTER_CLASS_SUFFIX = 'FilesystemAdapter';
+	
+	/**
+	 * Contains all available connection handles
+	 * @var			array<ikarus\system\io\adapter\IFilesystemAdapter>
+	 */
+	protected $connections = array();
+	
+	/**
+	 * Contains the current default adapter
+	 * @var			ikarus\ystem\io\adapter\IFilesystemAdapter
+	 */
+	protected $defaultAdapter = null;
+	
+	/**
+	 * Contains a list of loaded adapters
+	 * @var			array<string>
+	 */
+	protected $loadedAdapters = array();
+	
+	/**
+	 * Creates a new filesystem connection
+	 * @param			string			$adapterName
+	 * @param			array			$adapterParameters
+	 * @param			string			$linkID
+	 * @throws			SystemException
+	 * @return			ikarus\system\io\adapter\IFilesystemAdapter
+	 */
+	public function createConnection($adapterName, $adapterParameters = array(), $linkID = null) {
+		// validate adapter name
+		if (!$this->adapterIsLoaded($adapterName)) throw new SystemException("Cannot create a new connection with filesystem adapter '%s': The adapter was not loaded");
+		
+		// get class name
+		$className = static::FILESYSTEM_ADAPTER_CLASS_PREFIX.ucfirst($adapterName).static::FILESYSTEM_ADAPTER_CLASS_SUFFIX;
+		
+		// check for php side support
+		if (!call_user_func(array($className, 'isSupported'))) throw new SystemException("Cannot create a new connection with filesystem adapter '%s': The adapter is not supported by php");
+		
+		// create instance
+		$adapter = new $className($adapterParameters);
+		
+		// save
+		if ($linkID !== null) $this->connections[$linkID] = $adapter;
+		return $this->connections[] = $adapter;
+	}
+	
+	/**
+	 * Returns the connection with the given linkID
+	 * @param			string			$linkID
+	 * @return			ikarus\system\io\adapter\IFilesystemAdapter
+	 */
+	public function getConnection($linkID) {
+		if (isset($this->connections[$linkID])) return $this->connections[$linkID];
+		return null;
+	}
+	
+	/**
+	 * Returns the current active default adapter
+	 * @return			ikarus\system\io\adapter\IFilesystemAdapter
+	 */
+	public function getDefaultAdapter() {
+		return $this->defaultAdapter;
+	}
+	
+	/**
+	 * Sets the default adapter
+	 * @param			ikarus\system\io\adapter\IFilesystemAdapter		$handle
 	 * @return			void
 	 */
-	public function createConnection() {
-		// create FTP connection if needed
-		if (Ikarus::getConfiguration()->get('filesystem.general.useFtp') and $this->ftpConnection === null) {
-			$this->ftpConnection = new FTP(Ikarus::getConfiguration()->get('filesystem.general.ftpHostname'), Ikarus::getConfiguration()->get('filesystem.general.ftpPort'));
-			$this->ftpConnection->login(Ikarus::getConfiguration()->get('filesystem.general.ftpUsername'), Ikarus::getConfiguration()->get('filsystem.general.ftpPassword'));
-			$this->ftpConnection->chdir(Ikarus::getConfiguration()->get('filesystem.general.ftpDirectory'));
-		}
+	public function setDefaultAdapter(adapter\IFilesystemAdapter $handle) {
+		$this->defaultAdapter = $handle;
 	}
 	
 	/**
-	 * Creates a new FilesystemHandle
-	 * @param			string			$fileName
-	 * @return			ikarus\system\io\FilesystemHandle
-	 */
-	public function createFile($fileName) {
-		// validate path
-		if ($fileName{0} == '.') throw new SystemException("You really should not use relative paths!");
-		
-		// create file handle
-		return (new FilesystemHandle($fileName, true));
-	}
-	
-	/**
-	 * Deletes the given file (if existing)
-	 * @param			string			$fileName
-	 * @throws			SystemException
+	 * Starts the default adapter
 	 * @return			void
 	 */
-	public function deleteFile($fileName) {
-		// validate path
-		if ($fileName{0} == '.') throw new SystemException("You really should not use relative paths!");
+	public function startDefaultAdapter() {
+		// load adapter
+		$this->loadAdapter(Ikarus::getConfiguration()->get('filesystem.general.defaultAdapter'));
 		
-		// catch errors
-		if (!file_exists($fileName)) return;
+		// create new connection
+		$handle = $this->createConnection(Ikarus::getConfiguration()->get('filesystem.general.defaultAdapter'), Ikarus::getConfiguration()->get('filesystem.general.adapterParameters'));
 		
-		// ftp
-		if (Ikarus::getConfiguration()->get('filesystem.general.useFtp')) {
-			// calculate path
-			$filePath = $this->getFtpFilePath($fileName);
-			
-			// create FTP connection
-			$this->createConnection();
-			
-			// delete file
-			$this->ftpConnection->delete($filePath);
-		} else
-			unlink($fileName);
-	}
-	
-	/**
-	 * Returns the correct path on FTP to given file
-	 * @param			string			$path
-	 * @return			string
-	 */
-	protected function getFtpFilePath($path) {
-		return FileUtil::getRelativePath(IKARUS_DIR, dirname($path)).basename($path);
-	}
-	
-	/**
-	 * Reads a complete file from filesystem
-	 * @param			string			$fileName
-	 * @throws			SystemException
-	 * @return			string
-	 */
-	public function readFileContents($fileName) {
-		// validate path
-		if ($fileName{0} == '.') throw new SystemException("You really should not use relative paths!");
-		
-		// readable?
-		if (!is_readable($fileName) and !Ikarus::getConfiguration()->get('filesystem.general.useFtp')) throw new SystemException("Cannot read file '%s'");
-		
-		// default filesystem access
-		if (is_readable($fileName)) return file_get_contents($fileName);
-		
-		// ftp
-		$this->createConnection();
-		
-		// check connection
-		if ($this->ftpConnection === null) throw new SystemException("There is no way available to access file '%s'", $fileName); // This should really never happen ...
-		
-		// calculate path
-		$filePath = $this->getFtpFilePath($fileName);
-		
-		// create dummy file
-		$dummyFileName = FileUtil::getTemporaryFilename('filesystem_', '.dat');
-		$dummyFile = new File($dummyFileName);
-		
-		// read file from ftp
-		$this->ftpConnection->get($dummyFile->getResource(), $filePath, FTP_ASCII);
-		
-		// flush file contents
-		$dummyFile->flush();
-		
-		// get dummy file contents
-		$contents = file_get_contents($dummyFileName);
-		
-		// close file
-		$dummyFile->close();
-		
-		// delete file
-		@$dummyFile->unlink();
-	}
-	
-	/**
-	 * Writes given content to given file
-	 * @param			string			$fileName
-	 * @param			string			$content
-	 * @throws			SystemException
-	 * @return			void
-	 */
-	public function writeFile($fileName, $content) {
-		// validate path
-		if ($fileName{0} == '.') throw new SystemException("You really should not use relative paths!");
-		
-		// ftp
-		if (Ikarus::getConfiguration()->get('filesystem.general.useFtp')) {
-			// calculate path
-			$filePath = $this->getFtpFilePath($fileName);
-			
-			// create FTP connection
-			$this->createConnection();
-			
-			// create dummy file
-			$dummyFileName = FileUtil::getTemporaryFilename('filesystem_', '.dat');
-			$dummyFile = new File($dummyFileName);
-			
-			// write contents
-			$dummyFile->write($content);
-			$dummyFile->flush();
-			
-			// reset file pointer
-			rewind($dummyFile->getResource());
-			
-			// upload
-			$this->ftpConnection->fput($filePath, $dummyFile->getResource(), FTP_ASCII);
-			
-			// close dummy file
-			$dummyFile->close();
-			
-			// delete file
-			@$dummyFile->unlink();
-		} else {
-			$file = new File($fileName);
-			$file->write($content);
-			$file->flush();
-			$file->close();
-		}
+		// set as default
+		$this->setDefaultAdapter($handle);
 	}
 }
 ?>
