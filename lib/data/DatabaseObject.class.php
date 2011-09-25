@@ -35,6 +35,15 @@ abstract class DatabaseObject {
 	protected function handleData($data) {
 		$this->data = $data;
 	}
+	
+	/**
+	 * Checks whether the given variable exists in this database object
+	 * @param			string			$variable
+	 * @return			boolean
+	 */
+	public function __isset($variable) {
+		return array_key_exists($variable, $this->data);
+	}
 
 	/**
 	 * Magic method to handle properties from database row
