@@ -80,7 +80,7 @@ class Configuration {
 		$this->readOptionsFromDatabase();
 		
 		// delete old file
-		Ikarus::getFilesystemManager()->deleteFile($this->fileName);
+		if (Ikarus::getFilesystemManager()->getDefaultAdapter()->fileExists($this->fileName)) Ikarus::getFilesystemManager()->getDefaultAdapter()->deleteFile($this->fileName);
 		
 		// create file handle
 		$this->file = Ikarus::getFilesystemManager()->createFile($this->fileName);
