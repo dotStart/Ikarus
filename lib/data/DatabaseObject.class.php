@@ -1,5 +1,6 @@
 <?php
 namespace ikarus\data;
+use ikarus\system\exception\StrictStandardException;
 use ikarus\system\exception\SystemException;
 
 /**
@@ -52,8 +53,8 @@ abstract class DatabaseObject {
 	 * @throws SystemException
 	 */
 	public function __get($variable) {
-		// debugging
-		assert(array_key_exists($variable, $this->data));
+		// strict standard
+		if (!$this->__isset($variable)) throw new StrictStandardException("The variable '%s' is not defined in DatabaseObject %s", $variable, get_class($this));
 		
 		// handle variables in data array
 		if (array_key_exists($variable, $this->data)) return $this->data[$variable];
