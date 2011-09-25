@@ -1,6 +1,9 @@
 <?php
 namespace ikarus\system\io;
 use ikarus\system\Ikarus;
+use ikarus\system\exception\StrictStandardException;
+use ikarus\system\exception\SystemException;
+use ikarus\util\ClassUtil;
 use ikarus\util\FileUtil;
 
 /**
@@ -46,6 +49,15 @@ class FilesystemManager {
 	protected $loadedAdapters = array();
 	
 	/**
+	 * Checks whether the given adapter is loaded or not
+	 * @param			string			$adapterName
+	 * @return			boolean
+	 */
+	public function adapterIsLoaded($adapterName) {
+		return in_array($adapterName, $this->loadedAdapters);
+	}
+	
+	/**
 	 * Creates a new filesystem connection
 	 * @param			string			$adapterName
 	 * @param			array			$adapterParameters
@@ -59,10 +71,7 @@ class FilesystemManager {
 		
 		// get class name
 		$className = static::FILESYSTEM_ADAPTER_CLASS_PREFIX.ucfirst($adapterName).static::FILESYSTEM_ADAPTER_CLASS_SUFFIX;
-		
-		// check for php side support
-		if (!call_user_func(array($className, 'isSupported'))) throw new SystemException("Cannot create a new connection with filesystem adapter '%s': The adapter is not supported by php");
-		
+				
 		// create instance
 		$adapter = new $className($adapterParameters);
 		
@@ -87,6 +96,27 @@ class FilesystemManager {
 	 */
 	public function getDefaultAdapter() {
 		return $this->defaultAdapter;
+	}
+	
+	/**
+	 * Loads a filesystem adapter
+	 * @param			string			$adapterName
+	 * @throws			SystemException
+	 * @throws			StrictStandardException
+	 * @return			void
+	 */
+	public function loadAdapter($adapterName) {
+		// get class name
+		$className = static::FILESYSTEM_ADAPTER_CLASS_PREFIX.ucfirst($adapterName).static::FILESYSTEM_ADAPTER_CLASS_SUFFIX;
+		
+		// validate class
+		if (!class_exists($className)) throw new SystemException("Cannot load filesystem adapter '%s': The adapter class '%s' does not exist", $adapterName, $className);
+		if (!ClassUtil::isInstanceOf($className, 'ikarus\system\io\adapter\IFilesystemAdapter')) throw new StrictStandardException("Cannot load filesystem adapter '%s': The adapter class '%s' does not implement ikarus\\system\\io\\adapter\\IfilesystemAdapter");
+		
+		// check for php side support
+		if (!call_user_func(array($className, 'isSupported'))) throw new SystemException("Cannot create a new connection with filesystem adapter '%s': The adapter is not supported by php");
+		
+		$this->loadedAdapters[] = $adapterName;
 	}
 	
 	/**
