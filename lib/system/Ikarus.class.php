@@ -93,6 +93,8 @@ class Ikarus extends Singleton {
 	 * @return		void
 	 */
 	public static final function shutdown() {
+		if (static::getDatabaseManager() !== null) echo static::getDatabaseManager()->getDefaultAdapter()->getQueryCount(); // FIXME: Remove this
+		
 		// shut down components
 		if (static::getExtensionManager() !== null) static::getExtensionManager()->shutdown();
 		if (static::getApplicationManager() !== null) static::getApplicationManager()->shutdown();
@@ -249,6 +251,7 @@ class Ikarus extends Singleton {
 	 */
 	protected static final function initFilesystemManager() {;
 		static::$filesystemManagerObj = new FilesystemManager();
+		static::$filesystemManagerObj->startDefaultAdapter();
 	}
 	
 	/**

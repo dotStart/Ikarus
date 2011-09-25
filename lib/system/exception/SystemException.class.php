@@ -11,8 +11,8 @@ use ikarus\util\StringUtil;
  * This exception will thrown if an system error occours
  * Note: This is the red screen of death
  * @author		Johannes Donath, Some code taken from WoltLab Community Framework (developed by Marcel Werk)
- * @copyright		2010 DEVel Fusion
- * @package		com.develfusion.ikarus
+ * @copyright		2011 Evil-Co.de
+ * @package		de.ikarus-framework.core
  * @subpackage		system
  * @category		Ikarus Framework
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>

@@ -18,7 +18,7 @@ use ikarus\system\exception\SystemException;
  *
  * @author		Johannes Donath (Originally developed by Marcel Werk)
  * @copyright		2001-2009 WoltLab GmbH, 2011 Evil-Co.de
- * @package		com.develfusion.ikarus
+ * @package		de.ikarus-framework.core
  * @subpackage		system
  * @category		Ikarus Framework
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>

@@ -15,7 +15,7 @@ use ikarus\util\StringUtil;
  *
  * @author		Originally developed by Marcel Werk
  * @copyright		2001-2009 WoltLab GmbH
- * @package		com.develfusion.ikarus
+ * @package		de.ikarus-framework.core
  * @subpackage		system
  * @category		Ikarus Framework
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
