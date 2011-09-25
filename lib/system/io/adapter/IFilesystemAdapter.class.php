@@ -27,7 +27,7 @@ interface IFilesystemAdapter {
 	 * @throws			ikarus\system\exception\StrictStandardException
 	 * @return			void
 	 */
-	public function createDirecotry($directoryName);
+	public function createDirectory($directoryName);
 	
 	/**
 	 * Creates a new file with given content
