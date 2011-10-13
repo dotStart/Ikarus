@@ -252,7 +252,28 @@ class SystemException extends Exception implements IPrintableException {
 						<pre id="files" style="display: none;"><?php $includes = array_map(array($this, 'prepareFilePath'), get_included_files()); asort($includes); foreach($includes as $file) echo $file."\n"; ?></pre>
 
 						<h2><a href="javascript:void(0);" onclick="$('#definedConstants').toggle('blind'); $(this).text(($(this).text() == '+' ? '-' : '+'));">+</a>Constants</h2>
-						<pre id="definedConstants" style="display: none;"><?php $constants = get_defined_constants(true); $constants = array_keys($constants['user']); asort($constants); foreach($constants as $constant) echo $constant."\n"; ?></pre>
+						<pre id="definedConstants" style="display: none;"><?php $constants = get_defined_constants(true); $constants = array_keys($constants['user']); asort($constants); foreach($constants as $constant) {
+							$string = gettype($constant).'';
+							$constantValue = constant($constant);
+							switch(gettype($constant)) {
+								case 'boolean':
+									$string .= '('.($constantValue ? 'true' : 'false').')';
+									break;
+								case 'integer':
+								case 'float':
+								case 'double':
+									$string .= '('.$constantValue.')';
+									break;
+								case 'string':
+									$string .= '('.strlen($constantValue).')';
+									break;
+							}
+							
+							// create padding
+							$string = str_pad($string, (strlen(max($constants)) + 4), "\t", STR_PAD_LEFT);
+						
+							echo $constant.' '.$string."\n";
+						} ?></pre>
 					
 						<h2><a href="javascript:void(0);" onclick="$('#extensions').toggle('blind'); $(this).text(($(this).text() == '+' ? '-' : '+'));">+</a>Extensions</h2>
 						<pre id="extensions" style="display: none;"><?php $extensions = get_loaded_extensions(); asort($extensions); foreach($extensions as $extension) echo $extension."\n"; ?></pre>
