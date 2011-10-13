@@ -99,6 +99,7 @@ class Ikarus extends Singleton {
 		if (static::getExtensionManager() !== null) static::getExtensionManager()->shutdown();
 		if (static::getApplicationManager() !== null) static::getApplicationManager()->shutdown();
 		if (static::getCacheManagger() !== null) static::getCacheManagger()->shutdown();
+		if (static::$filesystemManagerObj !== null) static::getFilesystemManager()->shutdown();
 		if (static::getDatabaseManager() !== null) static::getDatabaseManager()->shutdown();
 		
 		// stop output buffer (if any)
