@@ -1,5 +1,5 @@
 <?php
-namespace ikarus\system\cache;
+namespace ikarus\system\cache\builder;
 
 /**
  * Defines needed methods for cache builders
@@ -11,7 +11,7 @@ namespace ikarus\system\cache;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-interface CacheBuilder {
+interface ICacheBuilder {
 	
 	/**
 	 * Returns datat that should be written to cache
