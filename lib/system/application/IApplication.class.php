@@ -30,6 +30,12 @@ interface IApplication {
 	public function addComponent($componentName, $instance);
 	
 	/**
+	 * Boots the application
+	 * @return			void
+	 */
+	public function boot();
+	
+	/**
 	 * Checks whether the specified component exists
 	 * @param			string			$componentName
 	 * @return			boolean
