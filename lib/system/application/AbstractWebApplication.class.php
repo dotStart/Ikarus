@@ -32,10 +32,10 @@ abstract class AbstractWebApplication extends AbstractApplication {
 	public function registerDefaultComponents() {
 		parent::registerDefaultComponents();
 		
-		$this->addComponent('session', new SessionManager($this));
-		$this->addComponent('language', new LanguageManager($this));
-		$this->addComponent('template', new Template($this));
-		$this->addComponent('style', new StyleManager($this));
+		$this->addComponent('SessionManager', new SessionManager($this));
+		$this->addComponent('LanguageManager', new LanguageManager($this));
+		$this->addComponent('Template', new Template($this));
+		$this->addComponent('StyleManager', new StyleManager($this));
 	}
 }
 ?>
