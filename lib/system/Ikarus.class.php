@@ -79,6 +79,7 @@ class Ikarus extends Singleton {
 	 * @return		void
 	 */
 	public static final function init() {
+		// start core components
 		static::fixMagicQuotes();
 		static::initDatabaseManager();
 		static::initConfiguration();
@@ -87,6 +88,7 @@ class Ikarus extends Singleton {
 		static::initApplicationManager();
 		static::initExtensionManager();
 		
+		// boot applications
 		static::$applicationManagerObj->boot();
 	}
 	
