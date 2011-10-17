@@ -1,6 +1,7 @@
 <?php
 namespace ikarus\system;
 use ikarus\pattern\Singleton;
+use ikarus\system\application\ApplicationManager;
 use ikarus\system\cache\CacheManager;
 use ikarus\system\configuration\Configuration;
 use ikarus\system\database\DatabaseManager;
