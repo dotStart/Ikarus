@@ -47,6 +47,16 @@ class ApplicationManager {
 	}
 	
 	/**
+	 * Boots all applications
+	 * @return			void
+	 */
+	public function boot() {
+		foreach($this->applications as $app) {
+			$app->boot();
+		}
+	}
+	
+	/**
 	 * Returns the application with given abbreviation
 	 * @param			string			$abbreviation
 	 * @throws			StrictStandardException
