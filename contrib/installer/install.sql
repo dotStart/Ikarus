@@ -14,6 +14,16 @@ CREATE TABLE ikarus1_cache_source (
 	isDisabled TINYINT (1) NOT NULL DEFAULT '0'
 );
 
+DROP TABLE IF EXISTS ikarus1_event_listener;
+CREATE TABLE ikarus1_event_listener (
+	listenerID INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+	className VARCHAR (400) NOT NULL,
+	eventName VARCHAR (255) NOT NULL,
+	listenerClass VARCHAR (400) NOT NULL,
+	inerhit TINYINT (1) NOT NULL DEFAULT '0',
+	packageID INT NOT NULL
+);
+
 DROP TABLE IF EXISTS ikarus1_option;
 CREATE TABLE ikarus1_option (
 	optionID INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
