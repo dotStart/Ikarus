@@ -11,6 +11,7 @@
 
 // defines
 define('RELATIVE_IKARUS_DIR', '../');
+define('IKARUS_ENVIRONMENT', 'administration');
 
 // include IKARUS
 require_once(RELATIVE_IKARUS_DIR.'global.php');
