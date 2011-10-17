@@ -51,6 +51,8 @@ class ApplicationManager {
 	 * @return			void
 	 */
 	public function boot() {
+		if (!count($this->applications)) throw new SystemException("What the fuck? There are no applications! What are you doing?!");
+		
 		foreach($this->applications as $app) {
 			$app->boot();
 		}
