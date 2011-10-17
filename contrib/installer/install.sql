@@ -1,3 +1,13 @@
+DROP TABLE IF EXISTS ikarus1_application;
+CREATE TABLE ikarus1_application (
+	applicationID INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+	applicationTitle VARCHAR (255) NOT NULL,
+	applicationAbbreviation VARCHAR (255) NOT NULL,
+	className VARCHAR (400) NOT NULL,
+	libaryPath TEXT NOT NULL,
+	packageID INT NOT NULL
+);
+
 DROP TABLE IF EXISTS ikarus1_cache_adapter;
 CREATE TABLE ikarus1_cache_adapter (
 	adapterID INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
