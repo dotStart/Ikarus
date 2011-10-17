@@ -154,6 +154,16 @@ class CacheManager {
 	}
 	
 	/**
+	 * Closes all cache connections
+	 * @return			void
+	 */
+	public function shutdown() {
+		foreach($this->connections as $connection) {
+			$connection->shutdown();
+		}
+	}
+	
+	/**
 	 * Starts all cache connections
 	 * @return			void
 	 */

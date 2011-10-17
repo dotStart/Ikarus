@@ -44,5 +44,11 @@ interface ICacheAdapter {
 	 * @return			boolean
 	 */
 	public static function isSupported();
+	
+	/**
+	 * Closes the cache adapter connection (if any)
+	 * @return			void
+	 */
+	public function shutdown();
 }
 ?>

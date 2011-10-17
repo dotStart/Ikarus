@@ -120,6 +120,11 @@ class DiskCacheAdapter implements ICacheAdapter {
 	}
 	
 	/**
+	 * @see ikarus\system\cache\adapter.ICacheAdapter::shutdown()
+	 */
+	public function shutdown() { }
+	
+	/**
 	 * Stores data in cache files
 	 * @param			string			$cacheFile
 	 * @param			mixed			$data
