@@ -124,7 +124,7 @@ abstract class AbstractApplication implements IApplication {
 	 */
 	public function __call($methodName, $methodArguments) {
 		if (substr($methodName, 0, 3) == 'get') return $this->getComponent(substr($methodName, 3));
-		throw new StrictStandardException("The method '%s' does not exist in class %s", get_class($this));
+		throw new StrictStandardException("The method '%s' does not exist in class %s", $methodName, get_class($this));
 	}
 }
 ?>
