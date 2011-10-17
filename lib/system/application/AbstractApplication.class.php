@@ -1,5 +1,7 @@
 <?php
 namespace ikarus\system\application;
+use ikarus\system\exception\StrictStandardException;
+
 use ikarus\system\Ikarus;
 
 /**
@@ -115,6 +117,14 @@ abstract class AbstractApplication implements IApplication {
 	 */
 	public function shutdown() {
 		Ikarus::getEventManager()->fire($this, 'shutdown');
+	}
+	
+	/**
+	 * @see ikarus\system\application.IApplication::__call()
+	 */
+	public function __call($methodName, $methodArguments) {
+		if (substr($methodName, 0, 3) == 'get') return $this->getComponent(substr($methodName, 3));
+		throw new StrictStandardException("The method '%s' does not exist in class %s", get_class($this));
 	}
 }
 ?>
