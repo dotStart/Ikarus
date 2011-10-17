@@ -1,6 +1,5 @@
 <?php
 namespace ikarus\system\cache\builder;
-use ikarus\system\cache\CacheBuilder;
 use ikarus\system\database\QueryEditor;
 use ikarus\util\DependencyUtil;
 
@@ -14,7 +13,7 @@ use ikarus\util\DependencyUtil;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-class CacheBuilderEventListener implements CacheBuilder {
+class CacheBuilderEventListener implements ICacheBuilder {
 	
 	/**
 	 * @see ikarus\system\cache.CacheBuilder::getData()
