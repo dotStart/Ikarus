@@ -2,6 +2,7 @@
 namespace ikarus\system\application;
 use ikarus\system\request\RequestDispatcher;
 use ikarus\system\session\SessionManager;
+use ikarus\system\style\StyleManager;
 use ikarus\system\template\Template;
 
 /**
@@ -34,6 +35,7 @@ abstract class AbstractWebApplication extends AbstractApplication {
 		$this->addComponent('session', new SessionManager($this));
 		$this->addComponent('language', new LanguageManager($this));
 		$this->addComponent('template', new Template($this));
+		$this->addComponent('style', new StyleManager($this));
 	}
 }
 ?>
