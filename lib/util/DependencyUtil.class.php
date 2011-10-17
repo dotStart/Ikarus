@@ -26,6 +26,7 @@ class DependencyUtil {
 		$query->where('dependency.packageID = '.$packageID);
 		$query->where('dependency.dependencyID = '.$packageID, QueryEditor::TYPE_OR);
 		$query->where($table.'.packageID = '.$packageID, QueryEditor::TYPE_OR);
+		$query->order('dependency.dependencyLevel ASC');
 	}
 }
 ?>
