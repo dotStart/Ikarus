@@ -134,6 +134,13 @@ class DiskFilesystemAdapter implements IFilesystemAdapter {
 	}
 	
 	/**
+	 * @see ikarus\system\io\adapter.IFilesystemAdapter::isSupported()
+	 */
+	public static function isSupported() {
+		return true;
+	}
+	
+	/**
 	 * @see ikarus\system\io\adapter.IFilesystemAdapter::modifyFile()
 	 */
 	public function modifyFile($fileName, $fileContent) {
@@ -150,10 +157,8 @@ class DiskFilesystemAdapter implements IFilesystemAdapter {
 	}
 	
 	/**
-	 * @see ikarus\system\io\adapter.IFilesystemAdapter::isSupported()
+	 * @see ikarus\system\io\adapter.IFilesystemAdapter::shutdown()
 	 */
-	public static function isSupported() {
-		return true;
-	}
+	public function shutdown() { }
 }
 ?>

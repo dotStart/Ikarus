@@ -138,6 +138,16 @@ class FilesystemManager {
 	}
 	
 	/**
+	 * Closes all filesystem connections
+	 * @return			void
+	 */
+	public function shutdown() {
+		foreach($this->connections as $connection) {
+			$connection->shutdown();
+		}
+	}
+	
+	/**
 	 * Starts the default adapter
 	 * @return			void
 	 */

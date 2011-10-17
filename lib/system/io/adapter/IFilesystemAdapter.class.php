@@ -141,6 +141,12 @@ interface IFilesystemAdapter {
 	public function isFile($targetPath);
 	
 	/**
+	 * Returns true if needed php side components are available
+	 * @return			boolean
+	 */
+	public static function isSupported();
+	
+	/**
 	 * Modifies an existing file
 	 * @param			string			$fileName
 	 * @param			string			$fileContent
@@ -162,9 +168,9 @@ interface IFilesystemAdapter {
 	public function readFileContents($fileName);
 	
 	/**
-	 * Returns true if needed php side components are available
-	 * @return			boolean
+	 * Closes all filesystem adapter connections (if any)
+	 * @return			void
 	 */
-	public static function isSupported();
+	public function shutdown();
 }
 ?>
