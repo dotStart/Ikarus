@@ -29,6 +29,12 @@ abstract class AbstractApplication implements IApplication {
 	protected $components = array();
 	
 	/**
+	 * Contains the choosen environment
+	 * @var			string
+	 */
+	protected $environment = '';
+	
+	/**
 	 * Contains an absolute library path for this application
 	 * @var			string
 	 */
@@ -43,10 +49,11 @@ abstract class AbstractApplication implements IApplication {
 	/**
 	 * @see ikarus\system\application.IApplication::__construct()
 	 */
-	public function __construct($abbreviation, $libraryPath, $packageID) {
+	public function __construct($abbreviation, $libraryPath, $packageID, $environment) {
 		$this->abbreviation = $abbreviation;
 		$this->libraryPath = $libraryPath;
 		$this->packageID = $packageID;
+		$this->environment = $environment;
 		
 		Ikarus::getEventManager()->fire($this, 'init');
 		
@@ -84,6 +91,13 @@ abstract class AbstractApplication implements IApplication {
 	public function getComponent($componentName) {
 		if (!$this->componentExists($componentName)) throw new StrictStandardException("Cannot get non-existing component '%s'", $componentName);
 		return $this->components[$componentName];
+	}
+	
+	/**
+	 * @see ikarus\system\application.IApplication::getEnvironment()
+	 */
+	public function getEnvironment() {
+		return $this->environment;
 	}
 	
 	/**

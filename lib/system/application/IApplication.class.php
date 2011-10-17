@@ -18,8 +18,9 @@ interface IApplication {
 	 * @param			string			$abbreviation
 	 * @param			string			$libraryPath
 	 * @param			integer			$packageID
+	 * @param			string			$environment
 	 */
-	public function __construct($abbreviation, $libraryPath, $packageID);
+	public function __construct($abbreviation, $libraryPath, $packageID, $environment);
 	
 	/**
 	 * Adds a new component to application
@@ -48,6 +49,12 @@ interface IApplication {
 	 * @return			mixed
 	 */
 	public function getComponent($componentName);
+	
+	/**
+	 * Returns the choosen environment for this application instance
+	 * @return			string
+	 */
+	public function getEnvironment();
 	
 	/**
 	 * Returns the library path of this application
