@@ -1,6 +1,7 @@
 <?php
 namespace ikarus\system\application;
 use ikarus\system\Ikarus;
+use ikarus\system\exception\SystemException;
 use ikarus\util\ClassUtil;
 use ikarus\util\FileUtil;
 
