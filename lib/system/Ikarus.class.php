@@ -4,6 +4,7 @@ use ikarus\pattern\Singleton;
 use ikarus\system\cache\CacheManager;
 use ikarus\system\configuration\Configuration;
 use ikarus\system\database\DatabaseManager;
+use ikarus\system\event\EventManager;
 use ikarus\system\exception\SystemException;
 use ikarus\system\io\FilesystemManager;
 use ikarus\util\FileUtil;
