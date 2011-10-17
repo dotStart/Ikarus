@@ -153,7 +153,7 @@ class Ikarus extends Singleton {
 	 * Returns the current CacheManager instance
 	 * @return		ikarus\system\cache\CacheManager
 	 */
-	public static final function getCacheManagger() {
+	public static final function getCacheManager() {
 		return static::$cacheManagerObj;
 	}
 	
