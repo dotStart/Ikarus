@@ -73,6 +73,9 @@ class EventManager {
 							else
 								$instance = $this->listenerInstances[$listenerInformation->listenerClass];
 								
+							// strict standards
+							if (!ClassUtil::isInstanceOf($instance, 'ikarus\\system\\event\\IEventListener')) throw new StrictStandardException("Cannot use class '%s' as event listener", $listenerInformation->listenerClass);
+								
 							$instance->execute($class, $event, $listenerInformation);
 						}
 	}
