@@ -1,5 +1,6 @@
 <?php
 namespace ikarus\system\cache\adapter;
+use ikarus\system\exception\SystemException;
 use ikarus\system\Ikarus;
 
 /**
@@ -53,6 +54,9 @@ class DiskCacheAdapter implements ICacheAdapter {
 	 * @see ikarus\system\cache\adapter.ICacheAdapter::createResource()
 	 */
 	public function createResource($resourceName, $cacheFile, $cacheBuilderClass, $minimalLifetime = 0, $maximalLifetime = 0) {
+		// fix file path
+		$cacheFile = IKARUS_DIR.'cache/cache.'.$cacheFile.'.php';
+		
 		try {
 			$this->storeCacheResource($resourceName, $this->loadCacheFile($cacheFile, $cacheBuilderClass, $minimalLifetime, $maximalLifetime));
 		} Catch (SystemException $ex) {
@@ -79,6 +83,9 @@ class DiskCacheAdapter implements ICacheAdapter {
 	 * @return			mixed
 	 */
 	protected function getCacheData($cacheBuilderClass, $resourceName) {
+		// validate class
+		if (!class_exists($cacheBuilderClass, true)) throw new SystemException("Cannot use cache builder class '%s': The class does not exist!", $cacheBuilderClass);
+		
 		return call_user_func(array($cacheBuilderClass, 'getData'), $resourceName);
 	}
 	
