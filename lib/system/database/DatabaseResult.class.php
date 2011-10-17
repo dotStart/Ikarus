@@ -26,5 +26,12 @@ class DatabaseResult extends DatabaseObject {
 			$this->data[$key] = $value;
 		}
 	}
+	
+	/**
+	 * Converts instances to arrays
+	 */
+	public function __toArray() {
+		return $this->data;
+	}
 }
 ?>

@@ -22,5 +22,18 @@ class DatabaseResultList extends DatabaseObjectList {
 			$this->objectList[] = ($object instanceof DatabaseResult ? $object : new DatabaseResult($object));
 		}
 	}
+	
+	/**
+	 * @see ikarus\data.DatabaseObjectList::__toArray()
+	 */
+	public function __toArray() {
+		$array = array();
+		
+		foreach($this as $element) {
+			$array[] = $element->toArray();
+		}
+		
+		return $array;
+	}
 }
 ?>
