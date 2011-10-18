@@ -60,7 +60,8 @@ CREATE TABLE ikarus1_session (
 	ipAddress VARBINARY (16) NOT NULL,
 	userAgent VARCHAR (256) NOT NULL,
 	packageID INT NOT NULL,
-	environment VARCHAR (255) NOT NULL
+	environment VARCHAR (255) NOT NULL,
+	abbreviation VARCHAR (255) NOT NULL
 );
 
 -- rows
