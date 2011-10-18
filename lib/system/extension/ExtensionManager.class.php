@@ -15,6 +15,12 @@ use ikarus\system\Ikarus;
 class ExtensionManager {
 	
 	/**
+	 * Contains a list of callbacks that should be executed after autoloading a missing class
+	 * @var			array<callable>
+	 */
+	protected $autoloadHooks = array();
+	
+	/**
 	 * Contains a list of callbacks that should be executed before flushing output buffer
 	 * @var			array<callable>
 	 */
@@ -31,6 +37,20 @@ class ExtensionManager {
 	 */
 	public function __construct() {
 		ob_start(array($this, 'handleOutputBuffer'));
+	}
+	
+	/**
+	 * Registers a new autoload hook
+	 * @param			callable			$callback
+	 * @throws			StrictStandardException
+	 * @return			void
+	 */
+	public function addAutoloadHook($callback) {
+		// validate callback
+		if (!is_callable($callback)) throw new StrictStandardException('The given parameter is not a valid callback');
+		
+		// save callback
+		$this->autoloadHooks[] = $callback;
 	}
 	
 	/**
@@ -59,6 +79,17 @@ class ExtensionManager {
 		
 		// save callback
 		$this->shutdownHooks[] = $callback;
+	}
+	
+	/**
+	 * Executes all autoload hooks
+	 * @param			string			$className
+	 * @return			void
+	 */
+	public function autoload($className) {
+		foreach($this->autoloadHooks as $hook) {
+			call_user_func($hook, $className);
+		}
 	}
 	
 	/**
