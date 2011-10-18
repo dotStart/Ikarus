@@ -43,9 +43,11 @@ class EventManager {
 	 * @return			void
 	 */
 	public function fire($class, $event) {
+		$fireClassName = (is_string($class) ? $class : get_class($class));
+		
 		// normal listeners
-		if (isset($this->listenerList[$class][$event]))
-			foreach($this->listenerList[$class][$event] as $listenerInformation) {
+		if (isset($this->listenerList[$fireClassName][$event]))
+			foreach($this->listenerList[$fireClassName][$event] as $listenerInformation) {
 				$className = $listenerInformation->listenerClass;
 				
 				// get listener instance
