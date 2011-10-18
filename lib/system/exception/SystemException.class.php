@@ -155,7 +155,7 @@ class SystemException extends Exception implements IPrintableException {
 	 * Generates the error report
 	 * @return			string
 	 */
-	protected final function generateErrorReport() {
+	public final function generateErrorReport() {
 		// get serialized information
 		$report = serialize(array_merge($this->information, $this->hiddenInformation));
 		
