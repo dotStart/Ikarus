@@ -292,6 +292,8 @@ class Ikarus extends Singleton {
 				if (file_exists($classPath)) require_once($classPath);
 			}
 		}
+		
+		if (static::getExtensionManager() !== null) static::getExtensionManager()->autoload($className);
 	}
 	
 	/**
