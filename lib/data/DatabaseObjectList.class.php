@@ -1,5 +1,6 @@
 <?php
 namespace ikarus\data;
+use \Countable;
 use \Iterator;
 use ikarus\system\exception\SystemException;
 
@@ -14,7 +15,7 @@ use ikarus\system\exception\SystemException;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-class DatabaseObjectList implements Iterator {
+class DatabaseObjectList implements Iterator, Countable {
 
 	/**
 	 * Contains all iterateable database objects
@@ -61,6 +62,14 @@ class DatabaseObjectList implements Iterator {
 	}
 
 	/** ITERATOR METHODS **/
+	
+	/**
+	 * @see Countable::count()
+	 */
+	public function count() {
+		return count($this->objectList);
+	}
+	
 	/**
 	 * @see Iterator::rewind()
 	 */
