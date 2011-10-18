@@ -57,13 +57,5 @@ interface IApplication {
 	 * @return			void
 	 */
 	public function shutdown();
-	
-	/**
-	 * Handles calls to non-existing methods
-	 * @param			string			$methodName
-	 * @param			array			$methodArguments
-	 * @return			mixed
-	 */
-	public function __call($methodName, $methodArguments);
 }
 ?>
