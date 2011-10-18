@@ -51,6 +51,17 @@ CREATE TABLE ikarus1_package_dependency (
 	PRIMARY KEY (packageID, dependencyID)
 );
 
+DROP TABLE IF EXISTS ikarus1_session;
+CREATE TABLE ikarus1_session (
+	sessionID VARCHAR (255) NOT NULL PRIMARY KEY,
+	sessionData TEXT NOT NULL,
+	humanReadableUserIdentifier VARCHAR (255) NULL,
+	userID INT NULL,
+	ipAddress VARBINARY (16) NOT NULL,
+	userAgent VARCHAR (256) NOT NULL,
+	packageID INT NOT NULL,
+);
+
 -- rows
 INSERT INTO ikarus1_application (applicationAbbreviation, className, libraryPath, packageID) VALUES ('ikarus', 'ikarus\\system\\application\\IkarusApplication', './lib/', 1);
 
