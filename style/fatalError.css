@@ -99,3 +99,29 @@
 	overflow: auto;
 	text-overflow: clip;
 }
+
+.hiddenApplicationException {
+	padding: 0 15px;
+	margin: 8px;
+	border: 1px solid #cc0;
+	background-color: #ffd;
+	text-shadow: 0 1px 0 #fff;
+	line-height: 1.5;
+}
+
+.hiddenApplicationException h1, .hiddenApplicationException h2, .hiddenApplicationException p, .hiddenApplicationException a {
+	margin: 0;
+	padding: 0;
+	color: #990;
+	text-decoration: none;
+}
+
+.hiddenApplicationException pre {
+	background-color: #FFFFFF;
+	border: 1px solid #000000;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	margin: 10px 0 0;
+	padding: 5px;
+}
