@@ -4,7 +4,7 @@ CREATE TABLE ikarus1_application (
 	applicationTitle VARCHAR (255) NOT NULL,
 	applicationAbbreviation VARCHAR (255) NOT NULL,
 	className VARCHAR (400) NOT NULL,
-	libaryPath TEXT NOT NULL,
+	libraryPath TEXT NOT NULL,
 	packageID INT NOT NULL
 );
 
@@ -52,6 +52,8 @@ CREATE TABLE ikarus1_package_dependency (
 );
 
 -- rows
+INSERT INTO ikarus1_application (applicationAbbreviation, className, libraryPath, packageID) VALUES ('ikarus', 'IkarusApplication', './', 1);
+
 INSERT INTO ikarus1_cache_adapter (adapterClass) VALUES ('DiskCacheAdapter');
 INSERT INTO ikarus1_cache_source (adapterID, adapterParameters, isDefaultConnection, fallbackFor, isDisabled) VALUES (1, '', 1, 0, 0);
 
