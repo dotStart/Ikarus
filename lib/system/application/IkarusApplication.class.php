@@ -18,9 +18,9 @@ class IkarusApplication extends AbstractWebApplication {
 	 * @see ikarus\system\application.IApplication::__construct()
 	 * @throws ApplicationException
 	 */
-	public function __construct($abbreviation, $libraryPath, $packageID, $environment) {
+	public function __construct($abbreviation, $libraryPath, $packageID, $environment, $primaryApplication = false) {
 		if ($environment != 'administration') throw new ApplicationException("How did you reach this exception? WTF?!");
-		parent::__construct($abbreviation, $libraryPath, $packageID, $environment);
+		parent::__construct($abbreviation, $libraryPath, $packageID, $environment, $primaryApplication);
 	}
 }
 ?>
