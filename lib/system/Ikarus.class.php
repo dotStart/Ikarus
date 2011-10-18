@@ -40,16 +40,16 @@ class Ikarus extends Singleton {
 	protected static $applicationManagerObj = null;
 	
 	/**
-	 * Contains an instance of Configuration
-	 * @var		Configuration
-	 */
-	protected static $configurationObj = null;
-	
-	/**
 	 * Contains an instance of CacheManager
 	 * @var		CacheManager
 	 */
 	protected static $cacheManagerObj = null;
+	
+	/**
+	 * Contains an instance of Configuration
+	 * @var		Configuration
+	 */
+	protected static $configurationObj = null;
 	
 	/**
 	 * Contains an instance of DatabaseManager
@@ -147,19 +147,19 @@ class Ikarus extends Singleton {
 	}
 	
 	/**
-	 * Returns the current Configuration instance
-	 * @return		ikarus\system\configuration\Configuration
-	 */
-	public static final function getConfiguration() {
-		return static::$configurationObj;
-	}
-	
-	/**
 	 * Returns the current CacheManager instance
 	 * @return		ikarus\system\cache\CacheManager
 	 */
 	public static final function getCacheManager() {
 		return static::$cacheManagerObj;
+	}
+	
+	/**
+	 * Returns the current Configuration instance
+	 * @return		ikarus\system\configuration\Configuration
+	 */
+	public static final function getConfiguration() {
+		return static::$configurationObj;
 	}
 	
 	/**
