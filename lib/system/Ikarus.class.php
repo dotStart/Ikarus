@@ -46,6 +46,12 @@ class Ikarus extends Singleton {
 	protected static $cacheManagerObj = null;
 	
 	/**
+	 * Contains all requested appliation components
+	 * @var		array
+	 */
+	protected static $componentList = array();
+	
+	/**
 	 * Contains an instance of Configuration
 	 * @var		Configuration
 	 */
@@ -112,6 +118,32 @@ class Ikarus extends Singleton {
 	}
 	
 	/**
+	 * Checks wheater a component abbreviation exists
+	 * @param			string			$abbreviation
+	 * @return			boolean
+	 */
+	public static function componentAbbreviationExists($abbreviation) {
+		return array_key_exists($abbreviation, static::$componentList);
+	}
+	
+	/**
+	 * Checks wheater a component with the same abbreviation does already exist
+	 * @param			string			$componentName
+	 * @param			string			$abbreviation
+	 */
+	public static function componentLoaded($componentName, $abbreviation = null) {
+		// get abbreviation
+		if ($abbreviation === null) $abbreviation = $componentName;
+		
+		// check for abbreviation
+		if (!static::componentAbbreviationExists($abbreviation)) return false;
+		
+		// check for correct type
+		if (gettype(static::getComponent($abbreviation)) == $componentName) return true;
+		return false;
+	}
+	
+	/**
 	 * Fixes damage created by magic quotes
 	 * @return			void
 	 */
@@ -152,6 +184,17 @@ class Ikarus extends Singleton {
 	 */
 	public static final function getCacheManager() {
 		return static::$cacheManagerObj;
+	}
+	
+	/**
+	 * Returns an active component
+	 * @param			string			$abbreviation
+	 * @throws			StrictStandardException
+	 * @return			void
+	 */
+	public static final function getComponent($abbreviation) {
+		if (!static::componentAbbreviationExists($abbreviation)) throw new StrictStandardException("The component with the abbreviation '%s' does not exist", $abbreviation);
+		return static::$componentList[$abbreviation];
 	}
 	
 	/**
@@ -258,6 +301,29 @@ class Ikarus extends Singleton {
 	protected static final function initFilesystemManager() {;
 		static::$filesystemManagerObj = new FilesystemManager();
 		static::$filesystemManagerObj->startDefaultAdapter();
+	}
+	
+	/**
+	 * Loads a requested application component
+	 * @param			string			$componentName
+	 * @param			string			$abbreviation
+	 * @throws			StrictStandardException
+	 * @return			boolean
+	 */
+	public static function requestComponent($componentName, $abbreviation = null) {
+		// get abbreviation
+		if ($abbreviation === null) $abbreviation = $componentName;
+		
+		// check for already existing components
+		if (static::componentLoaded($componentName, $abbreviation)) return true;
+		if (static::componentAbbreviationExists($abbreviation)) throw new StrictStandardException("Cannot load requested component: '%s': The requested component abbreviation does already exist", $componentName);
+		
+		// load component
+		if (!class_exists($componentName, true)) throw new StrictStandardException("Cannot load requested component '%s': The requested component was not found", $componentName);
+		
+		// create component instance
+		static::$componentList[$abbreviation] = new $componentName();
+		return true;
 	}
 	
 	/**
