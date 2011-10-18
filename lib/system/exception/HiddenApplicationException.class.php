@@ -1,5 +1,6 @@
 <?php
 namespace ikarus\system\exception;
+use \Exception;
 
 /**
  * @author		Johannes Donath
@@ -12,10 +13,16 @@ namespace ikarus\system\exception;
  */
 class HiddenApplicationException extends SystemException {
 	
+	/**
+	 * @see Exception::__construct()
+	 */
 	public function __construct($message = "", $code = 0, SystemException $previous = null) {
 		Exception::__construct($message, $code, $previous);
 	}
 	
+	/**
+	 * @see ikarus\system\exception.SystemException::show()
+	 */
 	public function show() {
 		?>
 		<!DOCTYPE html>
@@ -37,7 +44,7 @@ class HiddenApplicationException extends SystemException {
 					if (preg_match('~ENCRYPTED REPORT~i', $errorReport)) {
 					?>
 					<h2><a href="javascript:void(0);" onclick="$('#errorReport').toggle('blind'); $(this).text(($(this).text() == '+' ? '-' : '+'));">+</a> Support Information</h2>
-					<div id="errorReport">
+					<div id="errorReport" style="display: none;">
 						<p>If you are the administrator of this page you can use the following information for supporting purposes:</p>
 						<pre><?php echo $errorReport; ?></pre>
 					</div>
