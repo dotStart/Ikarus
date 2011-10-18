@@ -23,32 +23,10 @@ interface IApplication {
 	public function __construct($abbreviation, $libraryPath, $packageID, $environment);
 	
 	/**
-	 * Adds a new component to application
-	 * @param			string			$componentName
-	 * @param			mixed			$instance
-	 * @return			void
-	 */
-	public function addComponent($componentName, $instance);
-	
-	/**
 	 * Boots the application
 	 * @return			void
 	 */
 	public function boot();
-	
-	/**
-	 * Checks whether the specified component exists
-	 * @param			string			$componentName
-	 * @return			boolean
-	 */
-	public function componentExists($componentName);
-	
-	/**
-	 * Returns the specified component
-	 * @param			string			$componentName
-	 * @return			mixed
-	 */
-	public function getComponent($componentName);
 	
 	/**
 	 * Returns the choosen environment for this application instance

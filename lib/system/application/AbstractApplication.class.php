@@ -55,20 +55,7 @@ abstract class AbstractApplication implements IApplication {
 		$this->packageID = $packageID;
 		$this->environment = $environment;
 		
-		Ikarus::getEventManager()->fire($this, 'init');
-		
-		$this->registerDefaultComponents();
-		$this->registerDefaultCacheResources();
-		
 		Ikarus::getEventManager()->fire($this, 'initFinished');
-	}
-	
-	/**
-	 * @see ikarus\system\application.IApplication::addComponent()
-	 */
-	public function addComponent($componentName, $instance) {
-		if ($this->componentExists($componentName)) throw new StrictStandardException("Cannot recreate application component '%s'", $componentName);
-		$this->components[$componentName] = $instance;
 	}
 	
 	/**
@@ -76,21 +63,8 @@ abstract class AbstractApplication implements IApplication {
 	 */
 	public function boot() {
 		Ikarus::getEventManager()->fire($this, 'boot');
-	}
-	
-	/**
-	 * @see ikarus\system\application.IApplication::componentExists()
-	 */
-	public function componentExists($componentName) {
-		return array_key_exists($componentName, $this->components);
-	}
-	
-	/**
-	 * @see ikarus\system\application.IApplication::getComponent()
-	 */
-	public function getComponent($componentName) {
-		if (!$this->componentExists($componentName)) throw new StrictStandardException("Cannot get non-existing component '%s'", $componentName);
-		return $this->components[$componentName];
+		$this->registerDefaultCacheResources();
+		$this->registerDefaultComponents();
 	}
 	
 	/**
@@ -131,14 +105,6 @@ abstract class AbstractApplication implements IApplication {
 	 */
 	public function shutdown() {
 		Ikarus::getEventManager()->fire($this, 'shutdown');
-	}
-	
-	/**
-	 * @see ikarus\system\application.IApplication::__call()
-	 */
-	public function __call($methodName, $methodArguments) {
-		if (substr($methodName, 0, 3) == 'get') return $this->getComponent(substr($methodName, 3));
-		throw new StrictStandardException("The method '%s' does not exist in class %s", $methodName, get_class($this));
 	}
 }
 ?>
