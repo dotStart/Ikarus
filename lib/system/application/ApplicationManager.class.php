@@ -126,7 +126,7 @@ class ApplicationManager {
 			if (!ClassUtil::isInstanceOf($className, 'ikarus\\system\\application\\IApplication')) throw new StrictStandardException("Cannot load application '%s' (%s): Class '%s' is not an instance of IApplication", $application->applicationTitle, $application->applicationAbbreviation, $className);
 			
 			// create application instance
-			$this->applications[$application->applicationAbbreviation] = new $className($application->applicationAbbreviation, $application->libraryPath, $application->packageID, (defined('IKARUS_ENVIRONMENT') ? IKARUS_ENVIRONMENT : 'frontend'));
+			$this->applications[$application->applicationAbbreviation] = new $className($application->applicationAbbreviation, $application->libraryPath, $application->packageID, (defined('IKARUS_ENVIRONMENT') ? IKARUS_ENVIRONMENT : 'frontend'), ($packageID == $application->packageID ? true : false));
 		}
 	}
 	
