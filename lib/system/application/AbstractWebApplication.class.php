@@ -1,5 +1,6 @@
 <?php
 namespace ikarus\system\application;
+use ikarus\system\Ikarus;
 use ikarus\system\request\RequestDispatcher;
 use ikarus\system\session\SessionManager;
 use ikarus\system\style\StyleManager;
@@ -32,10 +33,16 @@ abstract class AbstractWebApplication extends AbstractApplication {
 	public function registerDefaultComponents() {
 		parent::registerDefaultComponents();
 		
-		$this->addComponent('SessionManager', new SessionManager($this, $this->environment));
-		$this->addComponent('LanguageManager', new LanguageManager($this));
-		$this->addComponent('Template', new Template($this, $this->environment));
-		$this->addComponent('StyleManager', new StyleManager($this, $this->environment));
+		// request components
+		Ikarus::requestComponent('ikarus\system\session\SessionManager', 'SessionManager');
+		
+		// configure components
+		if ($this->isPrimaryApplication()) {
+			Ikarus::getSessionManager()->configure($this);
+		}
+		
+		// boot components
+		Ikarus::getSessionManager()->boot();
 	}
 }
 ?>
