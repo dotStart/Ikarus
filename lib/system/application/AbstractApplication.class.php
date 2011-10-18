@@ -76,6 +76,13 @@ abstract class AbstractApplication implements IApplication {
 	}
 	
 	/**
+	 * @see ikarus\system\application.IApplication::getAbbreviation()
+	 */
+	public function getAbbreviation() {
+		return $this->abbreviation;
+	}
+	
+	/**
 	 * @see ikarus\system\application.IApplication::getEnvironment()
 	 */
 	public function getEnvironment() {

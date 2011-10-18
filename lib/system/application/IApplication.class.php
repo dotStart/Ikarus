@@ -29,6 +29,12 @@ interface IApplication {
 	public function boot();
 	
 	/**
+	 * Returns the application abbreviation
+	 * @return			string
+	 */
+	public function getAbbreviation();
+	
+	/**
 	 * Returns the choosen environment for this application instance
 	 * @return			string
 	 */
