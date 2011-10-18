@@ -92,16 +92,13 @@ class PreparedStatement implements IPreparedStatement {
 	 */
 	public function bind($value, $position = null) {
 		// get current position if needed
-		if ($position === null) $position = $this->variablePosition;
+		if ($position === null) $position = $this->variablePosition++; // increase count after assignment
 		
 		// validate position
 		if ($position >= $this->variableCount) throw new SystemException("Invalid variable position %u: The position is higher than the available amount of variables", $position);
 		
 		// save information
 		$this->boundVariables[$position] = $value;
-		
-		// increase the variable position
-		$this->variablePosition++;
 	}
 	
 	/**
