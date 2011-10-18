@@ -99,6 +99,9 @@ class PreparedStatement implements IPreparedStatement {
 		
 		// save information
 		$this->boundVariables[$position] = $value;
+		
+		// increase the variable position
+		$this->variablePosition++;
 	}
 	
 	/**
