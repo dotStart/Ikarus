@@ -68,6 +68,7 @@ class ApplicationManager {
 	 */
 	public function displayErrorMessage(SystemException $ex) {
 		$exception = new HiddenApplicationException($ex->getMessage(), $ex->getCode(), $ex);
+		$exception->show();
 	}
 	
 	/**
