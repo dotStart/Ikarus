@@ -1,6 +1,8 @@
 <?php
 namespace ikarus\system\application;
 use ikarus\system\Ikarus;
+use ikarus\system\exception\ApplicationException;
+use ikarus\system\exception\HiddenApplicationException;
 use ikarus\system\exception\SystemException;
 use ikarus\util\ClassUtil;
 use ikarus\util\FileUtil;
@@ -60,6 +62,15 @@ class ApplicationManager {
 	}
 	
 	/**
+	 * Displays the given exception
+	 * @param			SystemException			$ex
+	 * @return			void
+	 */
+	public function displayErrorMessage(SystemException $ex) {
+		$exception = new HiddenApplicationException($ex->getMessage(), $ex->getCode(), $ex);
+	}
+	
+	/**
 	 * Returns the application with given abbreviation
 	 * @param			string			$abbreviation
 	 * @throws			StrictStandardException
@@ -71,6 +82,18 @@ class ApplicationManager {
 		
 		return $this->applications[$abbreviation];
 	}
+	
+	/**
+	 * Handles application errors
+	 * @param			PrintableException			$ex
+	 * @return			void
+	 */
+	public function handleApplicationError(\Exception $ex) {
+		if (get_class($ex) == 'ikarus\\system\\exception\\SystemException') return $ex->showMinimal();
+		if (Ikarus::getConfiguration()->get('global.advanced.debug') or Ikarus::getConfiguration()->get('global.advanced.showErrors')) return $ex->showMinimal();
+		
+		$this->displayErrorMessage($ex);
+	} 
 	
 	/**
 	 * Loads the application cache
@@ -94,6 +117,7 @@ class ApplicationManager {
 			
 			// !!!DIRTY FIX!!! We have to load the application core via require_once! This is not the correct way but the library path is not recognized!
 			$includePath = $application->libraryPath.str_replace('\\', '/', substr($application->className, (stripos($application->className, '\\') + 1))).'.class.php';
+			if (!file_exists($includePath)) throw new ApplicationException("Cannot read application core file '%s': No such file or directory", $includePath);
 			require_once($includePath);
 			
 			// check parameters
