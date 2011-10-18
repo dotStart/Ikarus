@@ -47,13 +47,20 @@ abstract class AbstractApplication implements IApplication {
 	protected $packageID = 0;
 	
 	/**
+	 * Contains true if this application is the primary application of this framework instance
+	 * @var			boolean
+	 */
+	protected $primaryApplication = false;
+	
+	/**
 	 * @see ikarus\system\application.IApplication::__construct()
 	 */
-	public function __construct($abbreviation, $libraryPath, $packageID, $environment) {
+	public function __construct($abbreviation, $libraryPath, $packageID, $environment, $primaryApplication = false) {
 		$this->abbreviation = $abbreviation;
 		$this->libraryPath = $libraryPath;
 		$this->packageID = $packageID;
 		$this->environment = $environment;
+		$this->primaryApplication = $primaryApplication;
 		
 		Ikarus::getEventManager()->fire($this, 'initFinished');
 	}
@@ -63,6 +70,7 @@ abstract class AbstractApplication implements IApplication {
 	 */
 	public function boot() {
 		Ikarus::getEventManager()->fire($this, 'boot');
+		
 		$this->registerDefaultCacheResources();
 		$this->registerDefaultComponents();
 	}
@@ -86,6 +94,13 @@ abstract class AbstractApplication implements IApplication {
 	 */
 	public function getPackageID() {
 		return $this->packageID;
+	}
+	
+	/**
+	 * @see ikarus\system\application.IApplication::isPrimaryApplication()
+	 */
+	public function isPrimaryApplication() {
+		return $this->primaryApplication;
 	}
 	
 	/**

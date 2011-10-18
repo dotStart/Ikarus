@@ -20,7 +20,7 @@ interface IApplication {
 	 * @param			integer			$packageID
 	 * @param			string			$environment
 	 */
-	public function __construct($abbreviation, $libraryPath, $packageID, $environment);
+	public function __construct($abbreviation, $libraryPath, $packageID, $environment, $primaryApplication = false);
 	
 	/**
 	 * Boots the application
@@ -45,6 +45,12 @@ interface IApplication {
 	 * @return			integer
 	 */
 	public function getPackageID();
+	
+	/**
+	 * Returns true if this application is the main application of this framework instance
+	 * @return			boolean
+	 */
+	public function isPrimaryApplication();
 	
 	/**
 	 * Closes all application components
