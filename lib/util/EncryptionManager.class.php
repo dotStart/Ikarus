@@ -26,6 +26,12 @@ class EncryptionManager {
 	const CRYPT_MODE = 'ctr';
 	
 	/**
+	 * Contains the name of the algorithm used for hashes
+	 * @var				string
+	 */
+	const HASH_ALGORITHM = 'sha256';
+	
+	/**
 	 * Creates an initialization vector
 	 * @return			string
 	 */
@@ -111,6 +117,15 @@ class EncryptionManager {
 		if (!$crypt) throw new SystemException("Cannot encrypt: An error occoured while opening mcrypt handle");
 		
 		return $crypt;
+	}
+	
+	/**
+	 * Hashes data with sha256
+	 * @param			string			$data
+	 * @return			string
+	 */
+	public static function hash($data) {
+		return hash(static::HASH_ALGORITHM, $data);
 	}
 }
 ?>
