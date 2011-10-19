@@ -1,6 +1,6 @@
 <?php
 namespace ikarus\util;
-use ReflectionClass;
+use \ReflectionClass;
 
 /**
  * Provides methods for analysing classes
