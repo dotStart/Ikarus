@@ -1,3 +1,7 @@
+Requirements
+============
+This framework will basically run with the default configuration of PHP but there are some modules and settings that COULD break your installation or disable features.
+
 Required server configuration
 -----------------------------
 lighttpd, apache or nginx (I haven't tested other servers)
