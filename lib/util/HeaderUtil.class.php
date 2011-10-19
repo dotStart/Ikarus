@@ -1,102 +1,78 @@
 <?php
 namespace ikarus\util;
-use ikarus\system\IKARUS;
+use ikarus\system\Ikarus;
 
 /**
- * Contains header-related functions.
- *
- * @author 		Marcel Werk
- * @copyright		2001-2009 WoltLab GmbH
+ * Provides methods for sending and modifying headers
+ * @author		Johannes Donath
+ * @copyright		2011 Evil-Co.de
  * @package		de.ikarus-framework.core
  * @subpackage		system
  * @category		Ikarus Framework
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
- * @version		1.0.0-0001
+ * @version		2.0.0-0001
  */
 class HeaderUtil {
+	
+	/**
+	 * Returns true if cookies are supported
+	 * Note: This will return the correct value only after the second execution
+	 * @return			boolean
+	 */
+	public static function cookiesSupported() {
+		// check for CLI
+		if (php_sapi_name() == 'cli') return false;
+		
+		// set cookie
+		static::setCookie('test', 1);
+		
+		// check for existing cookies
+		if (static::getCookie('test') === null) return false;
+		return true;
+	}
+	
+	/**
+	 * Returns cookie content
+	 * @param			string			$cookieName
+	 * @return			string
+	 */
+	public static function getCookie($cookieName) {
+		if (isset($_COOKIE[Ikarus::getConfiguration()->get('global.http.cookiePrefix').$cookieName])) return $_COOKIE[Ikarus::getConfiguration()->get('global.http.cookiePrefix').$cookieName];
+		return null;
+	}
+	
+	/**
+	 * Redirects the user agent.
+	 * @param			string			$location
+	 * @param			boolean			$prependDir
+	 * @param			boolean			$sendStatusCode
+	 */
+	public static function redirect($location, $prependDir = true, $sendStatusCode = false) {
+		if ($prependDir and Ikarus::componentAbbreviationExists('SessionManager')) $location = FileUtil::addTrailingSlash(FileUtil::unifyDirSeperator(dirname(Ikarus::getSessionManager()->getSession('ikarus')->requestURI))) . $location;
+		if ($sendStatusCode) @header('HTTP/1.0 301 Moved Permanently');
+		header('Location: '.$location);
+	}
 
 	/**
-	 * alias to php setcookie() function
+	 * Saves a cookie at client
+	 * @param			string			$name
+	 * @param			string			$value
+	 * @param			integer			$expire
+	 * @return			void
 	 */
 	public static function setCookie($name, $value = '', $expire = 0) {
-		@header('Set-Cookie: '.rawurlencode(COOKIE_PREFIX.$name).'='.rawurlencode($value).($expire ? '; expires='.gmdate('D, d-M-Y H:i:s', $expire).' GMT' : '').(COOKIE_PATH ? '; path='.COOKIE_PATH : '').(COOKIE_DOMAIN ? '; domain='.COOKIE_DOMAIN : '').((isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443') ? '; secure' : '').'; HttpOnly', false);
+		@header('Set-Cookie: '.rawurlencode(Ikarus::getConfiguration()->get('global.http.cookiePrefix').$name).'='.rawurlencode($value).($expire ? '; expires='.gmdate('D, d-M-Y H:i:s', $expire).' GMT' : '').(Ikarus::getConfiguration()->get('global.http.cookiePath') ? '; path='.Ikarus::getConfiguration()->get('global.http.cookiePath') : '').(Ikarus::getConfiguration()->get('global.http.cookieDomain') ? '; domain='.Ikarus::getConfiguration()->get('global.http.cookieDomain') : '').((isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443') ? '; secure' : '').'; HttpOnly', false);
 	}
 
 	/**
-	 * Sends the headers of a page.
-	 */
-	public static function sendHeaders() {
-		// send content type
-		if (HTTP_CONTENT_TYPE_XHTML && isset($_SERVER['HTTP_ACCEPT']) && strstr($_SERVER['HTTP_ACCEPT'], 'application/xhtml+xml')) {
-			@header('Content-Type: application/xhtml+xml; charset='.CHARSET);
-		}
-		else {
-			@header('Content-Type: text/html; charset='.CHARSET);
-		}
-
-		// send no cache headers
-		if (HTTP_ENABLE_NO_CACHE_HEADERS && !IKARUS::getSession()->spiderID) {
-			self::sendNoCacheHeaders();
-		}
-
-		// enable gzip compression
-		if (HTTP_ENABLE_GZIP && HTTP_GZIP_LEVEL > 0 && HTTP_GZIP_LEVEL < 10 && !defined('HTTP_DISABLE_GZIP')) {
-			self::compressOutput();
-		}
-	}
-
-	/**
-	 * Sends no cache headers.
+	 * Sends no cache headers
+	 * @return			void
 	 */
 	public static function sendNoCacheHeaders() {
 		@header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 		@header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
 		@header('Cache-Control: no-cache, must-revalidate');
 		@header('Pragma: no-cache');
-	}
-
-	/**
-	 * Enables the gzip compression of the page output.
-	 */
-	public static function compressOutput() {
-		if (function_exists('gzcompress') && !@ini_get('zlib.output_compression') && !@ini_get('output_handler') && isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strstr($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) {
-			if (strstr($_SERVER['HTTP_ACCEPT_ENCODING'], 'x-gzip')) {
-				@header('Content-Encoding: x-gzip');
-			}
-			else {
-				@header('Content-Encoding: gzip');
-			}
-			ob_start(array('HeaderUtil', 'getCompressedOutput'));
-		}
-	}
-
-	/**
-	 * Outputs the compressed page content.
-	 */
-	public static function getCompressedOutput($output) {
-		$size = strlen($output);
-		$crc = crc32($output);
-
-		$newOutput = "\x1f\x8b\x08\x00\x00\x00\x00\x00\x00\xff";
-		$newOutput .= substr(gzcompress($output, HTTP_GZIP_LEVEL), 2, -4);
-		unset($output);
-		$newOutput .= pack('V', $crc);
-		$newOutput .= pack('V', $size);
-
-		return $newOutput;
-	}
-
-	/**
-	 * Redirects the user agent.
-	 *
-	 * @param	string		$location
-	 * @param 	boolean		$prependDir
-	 * @param	boolean		$sendStatusCode
-	 */
-	public static function redirect($location, $prependDir = true, $sendStatusCode = false) {
-		if ($prependDir) $location = FileUtil::addTrailingSlash(FileUtil::unifyDirSeperator(dirname(WCF::getSession()->requestURI))) . $location;
-		if ($sendStatusCode) @header('HTTP/1.0 301 Moved Permanently');
-		header('Location: '.$location);
 	}
 }
 ?>
