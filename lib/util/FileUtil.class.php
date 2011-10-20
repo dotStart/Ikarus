@@ -1,110 +1,99 @@
 <?php
 namespace ikarus\util;
+use ikarus\system\Ikarus;
 use ikarus\system\io\File;
 use ikarus\system\io\ZipFile;
 use ikarus\system\io\FTP;
 
 /**
- * Contains file-related functions.
- * @author 		Marcel Werk
- * @copyright		2001-2009 WoltLab GmbH
+ * Provides methods for working with files
+ * @author		Johannes Donath
+ * @copyright		2011 Evil-Co.de
  * @package		de.ikarus-framework.core
  * @subpackage		system
  * @category		Ikarus Framework
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
- * @version		1.0.0-0001
+ * @version		2.0.0-0001
  */
 class FileUtil {
+	
 	/**
-	 * Generates a new temporary filename in TMP_DIR.
-	 *
+	 * Returns the filepath for a temporary file
 	 * @param 	string 		$prefix
 	 * @param 	string 		$extension
 	 * @param 	string		$dir
 	 * @return 	string 				temporary filename
 	 */
-	public static function getTemporaryFilename($prefix = 'tmpFile_', $extension = '', $dir = TMP_DIR) {
+	public static function getTemporaryFilename($prefix = 'tmpFile_', $extension = '', $dir = null) {
+		// get dir if needed
+		if ($dir === null) $dir = static::getTemporaryDirname();
+		
+		// add trailing slash to dir
 		$dir = self::addTrailingSlash($dir);
+		
 		do {
 			$tmpFile = $dir.$prefix.StringUtil::getRandomID().$extension;
-		}
-		while (file_exists($tmpFile));
+		} while (file_exists($tmpFile));
 
 		return $tmpFile;
 	}
 
 
 	/**
-	 * Removes a leading slash.
-	 *
-	 * @param 	string 		$path
-	 * @return 	string 		$path
+	 * Removes a leading slash
+	 * @param			string			$path
+	 * @return			string
 	 */
 	public static function removeLeadingSlash($path) {
-		if (substr($path, 0, 1) == '/') {
-			return substr($path, 1);
-		}
-		else {
-			return $path;
-		}
+		if ($path{0} == '/') return substr($path, 1);
+		return $path;
 	}
 
 
 	/**
-	 * Removes a trailing slash.
-	 *
-	 * @param 	string 		$path
-	 * @return 	string 		$path
+	 * Removes a trailing slash
+	 * @param			string			$path
+	 * @return			string
 	 */
 	public static function removeTrailingSlash($path) {
-		if (substr($path, -1) == '/') {
-			return substr($path, 0, -1);
-		}
-		else {
-			return $path;
-		}
+		if (substr($path, -1) == '/') return substr($path, 0, -1);
+		return $path;
 	}
 
 
 	/**
-	 * Adds a trailing slash.
-	 *
-	 * @param 	string 		$path
-	 * @return 	string 		$path
+	 * Adds a trailing slash
+	 * @param			string			$path
+	 * @return			string
 	 */
 	public static function addTrailingSlash($path) {
-		if (substr($path, -1) != '/') {
-			return $path.'/';
-		}
-		else {
-			return $path;
-		}
+		if (substr($path, -1) != '/') return $path.'/';
+		return $path;
 	}
 
 
 	/**
-	 * Builds a relative path from two absolute paths.
-	 *
-	 * @param 	string 		$currentDir
-	 * @param 	string 		$targetDir
-	 * @return 	string 				relative Path
+	 * Builds a relative path from two absolute paths
+	 * @param			string			$currentDir
+	 * @param			string			$targetDir
+	 * @return			string
 	 */
 	public static function getRelativePath($currentDir, $targetDir) {
 		// remove trailing slashes
-		$currentDir = self::removeTrailingSlash(self::unifyDirSeperator($currentDir));
-		$targetDir = self::removeTrailingSlash(self::unifyDirSeperator($targetDir));
+		$currentDir = static::removeTrailingSlash(static::unifyDirSeperator($currentDir));
+		$targetDir = static::removeTrailingSlash(static::unifyDirSeperator($targetDir));
 
-		if ($currentDir == $targetDir) {
-			return './';
-		}
+		// same dir?
+		if ($currentDir == $targetDir) return './';
 
+		// convert path to array
 		$current = explode('/', $currentDir);
 		$target = explode('/', $targetDir);
 
-		$relPath = '';
-		//for ($i = max(count($current), count($target)) - 1; $i >= 0; $i--) {
-		for ($i = 0, $max = max(count($current), count($target)); $i < $max; $i++) {
-			if (isset($current[$i]) && isset($target[$i])) {
+		// main action
+		$relativePath = '';
+		for ($i = 0, $max = max(count($current), count($target)); $i < $max; $i++)
+			if (isset($current[$i]) and isset($target[$i]))
 				if ($current[$i] != $target[$i]) {
 					for ($j = 0; $j < $i; $j++) {
 						unset($target[$j]);
@@ -115,389 +104,226 @@ class FileUtil {
 					}
 					break;
 				}
-			}
-			// go up one level
-			else if (isset($current[$i]) && !isset($target[$i])) {
-				$relPath .= '../';
-			}
-			else if (!isset($current[$i]) && isset($target[$i])) {
-				$relPath .= $target[$i].'/';
-			}
-		}
+			elseif (isset($current[$i]) && !isset($target[$i]))
+				$relativePath .= '../';
+			elseif (!isset($current[$i]) && isset($target[$i]))
+				$relativePath .= $target[$i].'/';
 
-		return $relPath;
-	}
-
-
-	/**
-	 * Creates a path on the local filesystem.
-	 * Parent directories do not need to exists as
-	 * they will be created if necessary.
-	 * Return true on success, otherwise false.
-	 *
-	 * @param 	string 		$path
-	 * @param 	integer 	$chmod
-	 * @return 	boolean 			success
-	 */
-	public static function makePath($path, $chmod = 0777) {
-		// directory already exists, abort
-		if (file_exists($path)) {
-			return false;
-		}
-
-		// check if parent directory exists
-		$parent = dirname($path);
-		if ($parent != $path) {
-			// parent directory does not exist either
-			// we have to create the parent directory first
-			$parent = self::addTrailingSlash($parent);
-			if (!@file_exists($parent)) {
-				// could not create parent directory either => abort
-				if (!self::makePath($parent, $chmod)) {
-					return false;
-				}
-			}
-				
-			// well, the parent directory exists or has been created
-			// lets create this path
-			$oldumask = @umask(0);
-			if (!@mkdir($path, $chmod)) {
-				return false;
-			}
-			@umask($oldumask);
-			/*if (!@chmod($path, $chmod)) {
-				return false;
-				}*/
-			if (IS_APACHE_MODULE || !@is_writable($path)) {
-				@chmod($path, 0777);
-			}
-				
-			return true;
-		}
-
-		return false;
+		return $relativePath;
 	}
 
 	/**
-	 * Unifies windows and unix directory seperators.
-	 *
-	 * @param 	string 		$path
-	 * @return 	string 		$path
+	 * Unifies windows and unix directory seperators
+	 * @param			string			$path
+	 * @return			string
 	 */
 	public static function unifyDirSeperator($path) {
 		$path = str_replace('\\\\', '/', $path);
-		$path = str_replace('\\', '/', $path);
-		return $path;
+		return str_replace('\\', '/', $path);
 	}
 
 	/**
-	 * Scans a folder (and subfolder) for a specific file.
-	 * Returns the filename if found, otherwise false.
-	 *
-	 * @param 	string 		$folder
-	 * @param 	string 		$searchfile
-	 * @param 	boolean 	$recursive
-	 * @return 	mixed 		$found
-	 */
-	public static function scanFolder($folder, $searchfile, $recursive = true) {
-		if (!@is_dir($folder)) {
-			return false;
-		}
-		if (!$searchfile) {
-			return false;
-		}
-
-		$folder = self::addTrailingSlash($folder);
-		$dirh = @opendir($folder);
-		while ($filename = @readdir($dirh)) {
-			if ($filename == '.' || $filename == '..') {
-				continue;
-			}
-			if ($filename == $searchfile) {
-				@closedir($dirh);
-				return $folder.$filename;
-			}
-
-			if ($recursive == true && @is_dir($folder.$filename)) {
-				if ($found = self::scanFolder($folder.$filename, $searchfile, $recursive)) {
-					@closedir($dirh);
-					return $found;
-				}
-			}
-		}
-		@closedir($dirh);
-	}
-
-	/**
-	 * Return true, if the given filename is an url (http or ftp).
-	 *
-	 * @param 	string		$filename
-	 * @return	boolean
-	 */
-	public static function isURL($filename) {
-		return preg_match('!^(https?|ftp)://!', $filename);
-	}
-
-	/**
-	 * Returns canonicalized absolute pathname.
-	 *
-	 * @param	string		$path
-	 * @return	string		path
+	 * Returns canonicalized absolute pathname
+	 * @param			string			$path
+	 * @return			string
 	 */
 	public static function getRealPath($path) {
+		// unify dir seperators
 		$path = self::unifyDirSeperator($path);
 
+		// create needed arrays
 		$result = array();
+		
+		// split path to array
 		$pathA = explode('/', $path);
-		if ($pathA[0] === '') {
-			$result[] = '';
-		}
+		
+		// support for linux' /
+		if ($pathA[0] === '') $result[] = '';
 
-		foreach ($pathA as $key => $dir) {
+		foreach ($pathA as $key => $dir)
 			if ($dir == '..') {
-				if (end($result) == '..') {
+				if (end($result) == '..')
 					$result[] = '..';
-				}
 				else {
 					$lastValue = array_pop($result);
-					if ($lastValue === '' || $lastValue === null) {
-						$result[] = '..';
-					}
+					if ($lastValue === '' || $lastValue === null) $result[] = '..';
 				}
-			}
-			else if ($dir !== '' && $dir != '.') {
+			} elseif ($dir !== '' && $dir != '.')
 				$result[] = $dir;
-			}
-		}
 
 		$lastValue = end($pathA);
-		if ($lastValue === '' || $lastValue === false) {
-			$result[] = '';
-		}
+		if ($lastValue === '' || $lastValue === false) $result[] = '';
 
 		return implode('/', $result);
 	}
 
 	/**
-	 * formats a filesize
-	 *
-	 * @param 	integer 	$byte
-	 * @param 	integer		$precision
-	 * @return 	string 		filesize
+	 * Formats a filesize
+	 * @param			integer			$byte
+	 * @param			integer			$precision
+	 * @return			string
 	 */
 	public static function formatFilesize($byte, $precision = 2) {
+		// start symbol
 		$symbol = 'Byte';
+		
+		// kB
 		if ($byte >= 1000) {
 			$byte /= 1000;
 			$symbol = 'kB';
 		}
+		
+		// MB
 		if ($byte >= 1000) {
 			$byte /= 1000;
 			$symbol = 'MB';
 		}
+		
+		// GB
 		if ($byte >= 1000) {
 			$byte /= 1000;
 			$symbol = 'GB';
 		}
+		
+		// TB
 		if ($byte >= 1000) {
 			$byte /= 1000;
 			$symbol = 'TB';
 		}
 
+		// format numeric
 		return StringUtil::formatNumeric(round($byte, $precision)).' '.$symbol;
 	}
 
 	/**
-	 * formats a filesize (binary prefix)
-	 *
-	 * For more informations: <http://en.wikipedia.org/wiki/Binary_prefix>
-	 *
-	 * @param 	integer 	$byte
-	 * @param 	integer		$precision
-	 * @return 	string 		filesize
+	 * Formats a filesize (binary prefix)
+	 * For more information: <http://en.wikipedia.org/wiki/Binary_prefix>
+	 * @param			integer			$byte
+	 * @param			integer			$precision
+	 * @return			string
 	 */
 	public static function formatFilesizeBinary($byte, $precision = 2) {
+		// start symbol
 		$symbol = 'Byte';
+		
+		// KiB
 		if ($byte >= 1024) {
 			$byte /= 1024;
 			$symbol = 'KiB';
 		}
+		
+		// MiB
 		if ($byte >= 1024) {
 			$byte /= 1024;
 			$symbol = 'MiB';
 		}
+		
+		// GiB
 		if ($byte >= 1024) {
 			$byte /= 1024;
 			$symbol = 'GiB';
 		}
+		
+		// TiB
 		if ($byte >= 1024) {
 			$byte /= 1024;
 			$symbol = 'TiB';
 		}
 
+		// format numeric
 		return StringUtil::formatNumeric(round($byte, $precision)).' '.$symbol;
 	}
 
 	/**
-	 * Downloads a package archive from an http URL.
-	 *
+	 * Downloads a package archive from an http URL
 	 * @param	string		$httpUrl
 	 * @param	string		$prefix
 	 * @return	string		path to the dowloaded file
 	 */
 	public static function downloadFileFromHttp($httpUrl, $prefix = 'package') {
-		$extension = strrchr($httpUrl, '.');
-		//$newFileName = self::getTemporaryFilename($prefix.'_', $extension);
+		// get filename
 		$newFileName = self::getTemporaryFilename($prefix.'_');
-		$localFile = new File($newFileName); // the file to write.
+		
+		// open file handle
+		$localFile = Ikarus::getFilesystemManager()->createFile($newFileName);
 
 		// get proxy
 		$options = array();
-		if (PROXY_SERVER_HTTP) $options['http']['proxy'] = PROXY_SERVER_HTTP;
+		if (Ikarus::getConfiguration()->get('global.advanced.httpProxy')) $options['http']['proxy'] = Ikarus::getConfiguration()->get('global.advanced.httpProxy');
 
-		// first look if php's built-in fopen() is available, and if so, use it.
-		if (function_exists('fopen') && ini_get('allow_url_fopen')) {
-			$remoteFile = new File($httpUrl, 'rb', $options); // the file to read.
+		// first check for fopen() support
+		if (function_exists('fopen') and ini_get('allow_url_fopen')) {
+			// open file socket
+			$remoteFile = new File($httpUrl, 'rb', $options);
+			
 			// get the content of the remote file and write it to a local file.
 			while (!$remoteFile->eof()) {
 				$buffer = $remoteFile->gets(4096);
-				$localFile->write($buffer);
+				$localFile->append($buffer);
 			}
-		}
-		// if allow_url_fopen isn't active, we attempt to use our own http download functionality.
-		else {
+		} else { // use own system
 			$port = 80;
 			$parsedUrl = parse_url($httpUrl);
 			$host = $parsedUrl['host'];
 			$path = $parsedUrl['path'];
-				
-			require_once(WCF_DIR . 'lib/system/io/RemoteFile.class.php');
+			
 			$remoteFile = new RemoteFile($host, $port, 30, $options); // the file to read.
-			if (!isset($remoteFile)) {
-				$localFile->close();
-				unlink($newFileName);
-				throw new SystemException("cannot connect to http host '".$host."'", 14000);
-			}
+			if (!isset($remoteFile)) throw new SystemException("cannot connect to http host '%s'", $host);
+			
 			// build and send the http request.
 			$request = "GET ".$path.(!empty($parsedUrl['query']) ? '?'.$parsedUrl['query'] : '')." HTTP/1.0\r\n";
-			$request .= "User-Agent: HTTP.PHP (FileUtil.class.php; Ikarus/".IKARUS_VERSION."; ".WCF::getLanguage()->getLanguageCode().")\r\n";
+			$request .= "User-Agent: HTTP.PHP (FileUtil.class.php; Ikarus/".IKARUS_VERSION.";".(Ikarus::componentAbbreviationExists('LanguageManager') ? ' '.Ikarus::getLanguageManager()->getActiveLanguage()->getLanguageCode() : '').")\r\n";
 			$request .= "Accept: */*\r\n";
-			$request .= "Accept-Language: ".WCF::getLanguage()->getLanguageCode()."\r\n";
+			$request .= "Accept-Language: ".(Ikarus::componentAbbreviationExists('LanguageManager') ? Ikarus::getLanguageManager()->getActiveLanguage()->getLanguageCode() : 'en-US')."\r\n";
 			$request .= "Host: ".$host."\r\n";
 			$request .= "Connection: Close\r\n\r\n";
 			$remoteFile->puts($request);
 			$waiting = true;
 			$readResponse = array();
+			
 			// read http response.
 			while (!$remoteFile->eof()) {
 				$readResponse[] = $remoteFile->gets();
+				
 				// look if we are done with transferring the requested file.
-				if ($waiting) {
-					if (rtrim($readResponse[count($readResponse) - 1]) == '') {
-						$waiting = false;
-					}
-				}
+				if ($waiting)
+					if (rtrim($readResponse[count($readResponse) - 1]) == '') $waiting = false;
 				else {
 					// look if the webserver sent an error http statuscode
 					// This has still to be checked if really sufficient!
 					$arrayHeader = array('201', '301', '302', '303', '307', '404');
+					
 					foreach ($arrayHeader as $code) {
 						$error = strpos($readResponse[0], $code);
 					}
-					if ($error !== false) {
-						$localFile->close();
-						unlink($newFileName);
-						throw new SystemException("file ".$path." not found at host '".$host."'", 14001);
-					}
+					
+					if ($error !== false) throw new SystemException("An error occoured while reading file %s at host %s", $path, $host);
+					
 					// write to the target system.
-					$localFile->write($readResponse[count($readResponse) - 1]);
+					$localFile->append($readResponse[count($readResponse) - 1]);
 				}
 			}
 		}
 
+		// close remote file
 		$remoteFile->close();
-		$localFile->close();
+		
+		// write local file contents
+		$localFile->write();
+		
+		// return filename
 		return $newFileName;
-	}
-
-	/**
-	 * Strips supernumerous BOMs from a given bytestream.
-	 *
-	 * If we are dealing with bytestreams being pushed from one program or script to another in a UTF-8
-	 * environment, we might encounter problems with BOMs (Byte Order Marks). E.g., if there's a script
-	 * that reads a .tar file via readfile(), and this script is encoded in UTF-8, and being called from another
-	 * script which wants to handle the bytestream that results from readfile(). But apparently because of the
-	 * UTF-8 encoding of the called script -- at least in some PHP versions -- readfile() adds a UTF-8 BOM
-	 * at the beginning of the bytestream. If we do write this bytestream to disk and then try to open the
-	 * resulting file, we will get an error because it is no more a valid .tar archive. The same thing happens
-	 * if we handle an .xml file and then try to parse it.
-	 * So, if bytestreams are being handled in a UTF-8 environment, be sure always to use this function
-	 * before writing the bytestream to disk or trying to parse it with an xml parser.
-	 * This works regardless of multibyte string support (mb_strpos and friends) being enabled or not.
-	 *
-	 * Btw, if you try to apply the following to a bytestream read from a .tar file,
-	 * you will end up with a file sized zero bytes:
-	 * while (($byte = fgetc($fileHandle)) !== false) {
-	 *	fwrite($fileHandle, $byte);
-	 * }
-	 *
-	 * @param 	string 		$sourceContent
-	 * @param 	string 		$characterEncoding
-	 * @return 	string 		destinationContent
-	 */
-	public static function stripBoms($sourceContent = '', $characterEncoding = 'UTF-8') {
-		try {
-			// TODO: implement recognition of other BOMs (UTF-7, UTF-16 big endian, UTF-16 little endian etc.)
-			if ($characterEncoding == 'UTF-8') {
-				// get the ASCII codes for the three bytes the UTF-8 BOM is consisting of.
-				$firstByte = intval(0xEF);
-				$secondByte = intval(0xBB);
-				$thirdByte = intval(0xBF);
-			}
-			else {
-				return $sourceContent;
-			}
-				
-			// put the bytestream's first three bytes to an array.
-			$workArray = array();
-			$workArray = unpack('C3', $sourceContent);
-			if (!is_array($workArray)) {
-				throw new SystemException("Unable to process bytestream.");
-			}
-				
-			// detect the UTF-8 BOM.
-			$destinationContent = '';
-			if (($workArray['1'] == $firstByte) && ($workArray['2'] == $secondByte) && ($workArray['3'] == $thirdByte)) {
-				$tmpname = FileUtil::getTemporaryFilename('stripBoms_');
-				$tmpStream = fopen($tmpname, 'w+');
-				fwrite($tmpStream, $sourceContent);
-				rewind($tmpStream);
-
-				// cut off the BOM.
-				fseek($tmpStream, 3); // compatibility for PHP < 5.1.0
-				$destinationContent = stream_get_contents($tmpStream);
-				fclose($tmpStream);
-				@unlink($tmpname);
-
-				return $destinationContent;
-			}
-			else {
-				return $sourceContent;
-			}
-		}
-		catch (SystemException $e) {
-			throw $e;
-		}
 	}
 
 	/**
 	 * Determines whether a file is text or binary by checking the first few bytes in the file.
 	 * The exact number of bytes is system dependent, but it is typically several thousand.
 	 * If every byte in that part of the file is non-null, considers the file to be text;
-	 * otherwise it considers the file to be binary.
-	 *
-	 * @param	string		$file
-	 * @return 	boolean
+	 * otherwise it considers the file to be binary
+	 * @todo Add support for filesystem wrapper
+	 * @param			string			$file
+	 * @return			boolean
+	 * @deprecated
 	 */
 	public static function isBinary($file) {
 		// open file
@@ -516,45 +342,16 @@ class FileUtil {
 	}
 
 	/**
-	 * Uncompresses a gzipped file
-	 *
-	 * @param 	string 		$gzipped
-	 * @param 	string 		$destination
-	 * @return 	boolean 	result
-	 */
-	public static function uncompressFile($gzipped, $destination) {
-		if (!@is_file($gzipped)) {
-			return false;
-		}
-
-		$sourceFile = new ZipFile($gzipped, 'rb');
-		$filesize = $sourceFile->getFileSize();
-		$targetFile = new File($destination);
-		while (!$sourceFile->eof()) {
-			$targetFile->write($sourceFile->read(512), 512);
-		}
-		$targetFile->close();
-		$sourceFile->close();
-		@$targetFile->chmod(0777);
-
-		if ($filesize != filesize($destination)) {
-			@unlink($destination);
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
-	 * Returns the value of the 'safe_mode' configuration option.
-	 *
-	 * @return 	boolean
+	 * Returns the value of the 'safe_mode' configuration option
+	 * @return			boolean
 	 */
 	public static function getSafeMode() {
+		// safe_mode was removed in php 5.4
+		if (version_compare(PHP_VERSION, '5.4', '>=')) return false;
+		
+		// get from ini
 		$configArray = @ini_get_all();
-		if (is_array($configArray) && isset($configArray['safe_mode']['local_value'])) {
-			return intval($configArray['safe_mode']['local_value']);
-		}
+		if (is_array($configArray) && isset($configArray['safe_mode']['local_value'])) return intval($configArray['safe_mode']['local_value']);
 		return intval(@ini_get('safe_mode'));
 	}
 }
