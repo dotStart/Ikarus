@@ -423,10 +423,26 @@ class Ikarus extends Singleton {
 	 * @param		string			$methodName
 	 * @param		array			$arguments
 	 * @throws		SystemException
+	 * @return		mixed
 	 */
 	public function __call($methodName, $arguments) {
 		// call static method if exists
-		if (method_exists(__CLASS__, $methodName)) call_user_func_array(array(__CLASS__, $methodName), $arguments);
+		if (method_exists(__CLASS__, $methodName)) return call_user_func_array(array(__CLASS__, $methodName), $arguments);
+		
+		// use __callStatic to support components
+		return static::__callStatic($methodName, $arguments);
+	}
+	
+	/**
+	 * Forwardes normal method calls to component system
+	 * @param			string			$methodName
+	 * @param			array			$arguments
+	 * @throws			SystemException
+	 * @return			mixed
+	 */
+	public static function __callStatic($methodName, $arguments) {
+		// support for components
+		if (substr($methodName, 0, 3) == 'get') return static::getComponent(substr($methodName, 3));
 		
 		// failed
 		throw new SystemException("Method %s does not exist in class %s", $methodName, __CLASS__);
