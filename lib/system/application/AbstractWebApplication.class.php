@@ -40,9 +40,6 @@ abstract class AbstractWebApplication extends AbstractApplication {
 		if ($this->isPrimaryApplication()) {
 			Ikarus::getSessionManager()->configure($this);
 		}
-		
-		// boot components
-		Ikarus::getSessionManager()->boot();
 	}
 }
 ?>
