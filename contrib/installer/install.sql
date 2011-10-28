@@ -53,7 +53,7 @@ CREATE TABLE ikarus1_package_dependency (
 
 DROP TABLE IF EXISTS ikarus1_session;
 CREATE TABLE ikarus1_session (
-	sessionID VARCHAR (255) NOT NULL PRIMARY KEY,
+	sessionID VARCHAR (255) NOT NULL,
 	sessionData TEXT NOT NULL,
 	humanReadableUserIdentifier VARCHAR (255) NULL,
 	userID INT NULL,
@@ -61,7 +61,8 @@ CREATE TABLE ikarus1_session (
 	userAgent VARCHAR (256) NOT NULL,
 	packageID INT NOT NULL,
 	environment VARCHAR (255) NOT NULL,
-	abbreviation VARCHAR (255) NOT NULL
+	abbreviation VARCHAR (255) NOT NULL,
+	PRIMARY KEY (sessionID, packageID, environment)
 );
 
 -- rows
