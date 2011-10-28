@@ -93,7 +93,7 @@ class FileUtil {
 		// main action
 		$relativePath = '';
 		for ($i = 0, $max = max(count($current), count($target)); $i < $max; $i++)
-			if (isset($current[$i]) and isset($target[$i]))
+			if (isset($current[$i]) and isset($target[$i])) {
 				if ($current[$i] != $target[$i]) {
 					for ($j = 0; $j < $i; $j++) {
 						unset($target[$j]);
@@ -104,7 +104,7 @@ class FileUtil {
 					}
 					break;
 				}
-			elseif (isset($current[$i]) && !isset($target[$i]))
+			} elseif (isset($current[$i]) && !isset($target[$i]))
 				$relativePath .= '../';
 			elseif (!isset($current[$i]) && isset($target[$i]))
 				$relativePath .= $target[$i].'/';
