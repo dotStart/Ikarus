@@ -149,7 +149,7 @@ class Ikarus extends Singleton {
 	 */
 	protected static final function fixMagicQuotes() {
 		// check for php 5.4+ (magic quotes are deprecated since php 5.4)
-		if (version_compare(PHP_VERSION, '5.4') >= 0) return;
+		if (version_compare(PHP_VERSION, '5.3') >= 0) return;
 		
 		// fix damage
 		if (function_exists('get_magic_quotes_gpc')) {
