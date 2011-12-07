@@ -7,7 +7,7 @@ use ikarus\system\io\FTP;
 
 /**
  * Provides methods for working with files
- * @author		Johannes Donath
+ * @author		Johannes Donath (originally written by Marcel Werk, WoltLab)
  * @copyright		2011 Evil-Co.de
  * @package		de.ikarus-framework.core
  * @subpackage		system

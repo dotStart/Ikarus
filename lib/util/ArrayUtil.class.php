@@ -3,7 +3,7 @@ namespace ikarus\util;
 
 /**
  * Provides util methods for arrays
- * @author		Johannes Donath
+ * @author		Johannes Donath (originally written by Marcel Werk, WoltLab)
  * @copyright		2011 Evil-Co.de
  * @package		de.ikarus-framework.core
  * @subpackage		system
