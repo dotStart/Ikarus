@@ -178,7 +178,10 @@ class SessionManager {
 		// for performance ;-)
 		if ($checkAddress == $currentAddress) return true;
 		
-		if (stripos($checkAddress, ':') and !preg_match('~^::ffff:~i', $checkAddress)) { // IPv6
+		// valid IP?
+		if (filter_var($currentAddress, FILTER_VALIDATE_IP) === false) return false;
+		
+		if (filter_var($currentAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) !== false) { // IPv6
 			// split addresses
 			$checkAddress = explode(':', $checkAddress);
 			$currentAddress = explode(':', $currentAddress);
@@ -197,9 +200,6 @@ class SessionManager {
 			
 			return true;
 		} else { // IPv4
-			// support for IPv6 notations with IPv4 inside
-			if (preg_match('~^::ffff:~i', $checkAddress)) $checkAddress = substr($checkAddress, 7);
-			
 			// split addresses
 			$checkAddress = explode('.', $checkAddress);
 			$currentAddress = explode('.', $currentAddress);
