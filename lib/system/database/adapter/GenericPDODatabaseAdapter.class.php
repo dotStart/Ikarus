@@ -52,7 +52,7 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 			$this->lastQuery = $query;
 			
 			// get results
-			$this->connection->exec($query);
+			$this->connection->query($query);
 			
 			// update query count
 			$this->queryCount++;
