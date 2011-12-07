@@ -132,6 +132,13 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	}
 	
 	/**
+	 * @see ikarus\system\database\adapter.IDatabaseAdapter::execute()
+	 */
+	public function execute($query) {
+		throw new SystemException("The adapter %s is not completely implemented and does not support method %s", get_class($this), __FUNCTION__);
+	}
+	
+	/**
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::getClientVersion()
 	 */
 	public function getClientVersion() {
@@ -291,7 +298,7 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	/**
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::sendQuery()
 	 */
-	public function sendQuery($sql, $forceList = false) {
+	public function sendQuery($query, $forceList = false) {
 		throw new SystemException("The adapter %s is not completely implemented and does not support method %s", get_class($this), __FUNCTION__);
 	}
 	

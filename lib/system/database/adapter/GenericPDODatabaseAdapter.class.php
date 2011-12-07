@@ -44,6 +44,26 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 	}
 	
 	/**
+	 * @see ikarus\system\database\adapter.AbstractDatabaseAdapter::execute()
+	 */
+	public function execute($query) {
+		try {
+			// save query
+			$this->lastQuery = $query;
+			
+			// get results
+			$this->connection->exec($query);
+			
+			// update query count
+			$this->queryCount++;
+		} catch (PDOException $ex) {
+			$e = new DatabaseException($this, 'An error occoured while executing a database query');
+			$e->setErrorQuery($query);
+			throw $e;
+		}
+	}
+	
+	/**
 	 * @see ikarus\system\database\adapter.AbstractDatabaseAdapter::getClientVersion()
 	 */
 	public function getClientVersion() {
@@ -136,13 +156,13 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 	/**
 	 * @see ikarus\system\database\adapter.AbstractDatabaseAdapter::sendQuery()
 	 */
-	public function sendQuery($sql, $forceList = false) {
+	public function sendQuery($query, $forceList = false) {
 		try {
 			// save query
-			$this->lastQuery = $sql;
+			$this->lastQuery = $query;
 			
 			// get results
-			$result = $this->connection->query($sql);
+			$result = $this->connection->query($query);
 			
 			// update query count
 			$this->queryCount++;
@@ -151,7 +171,7 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 			return $this->lastResult = $this->getResultObject($result, $forceList);
 		} catch (PDOException $ex) {
 			$e = new DatabaseException($this, 'An error occoured while executing a database query');
-			$e->setErrorQuery($sql);
+			$e->setErrorQuery($query);
 			throw $e;
 		}
 	}

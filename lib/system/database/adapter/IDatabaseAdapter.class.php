@@ -31,6 +31,13 @@ interface IDatabaseAdapter {
 	public function escapeString($string);
 	
 	/**
+	 * Executes a query
+	 * @param			string			$query
+	 * @return			void
+	 */
+	public function execute($query);
+	
+	/**
 	 * Returns the client library version (if available)
 	 * @return			string
 	 */
@@ -158,11 +165,11 @@ interface IDatabaseAdapter {
 	
 	/**
 	 * Sends a query to database
-	 * @param			string			$sql
+	 * @param			string			$query
 	 * @param			boolean			$forceList
 	 * @return			mixed
 	 */
-	public function sendQuery($sql, $forceList = false);
+	public function sendQuery($query, $forceList = false);
 	
 	/**
 	 * Sets the charset for current connection
