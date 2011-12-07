@@ -121,8 +121,8 @@ class CacheManager {
 				*
 			FROM
 				ikarus".IKARUS_N."_cache_adapter";
-		$stmt = Ikarus::getDatabaseManager()->getDefaultAdapter()->prepareStatement($sql, 0, 0, true);
-		$resultList = $stmt->execute();
+		$stmt = Ikarus::getDatabaseManager()->getDefaultAdapter()->prepareStatement($sql);
+		$resultList = $stmt->fetchList();
 		
 		foreach($resultList as $result) {
 			$this->loadAdapter($result->adapterClass);
@@ -177,8 +177,8 @@ class CacheManager {
 				ikarus".IKARUS_N."_cache_adapter adapter
 			ON
 				(source.adapterID = adapter.adapterID)";
-		$stmt = Ikarus::getDatabaseManager()->getDefaultAdapter()->prepareStatement($sql, 0, 0, true);
-		$resultList = $stmt->execute();
+		$stmt = Ikarus::getDatabaseManager()->getDefaultAdapter()->prepareStatement($sql);
+		$resultList = $stmt->fetchList();
 		
 		foreach($resultList as $result) {
 			$adapter = $this->createConnection($result->adapterClass, $result->adapterParameters, $result->connectionID);
