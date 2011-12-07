@@ -363,12 +363,12 @@ class QueryEditor {
 	 * Creates a prepared statement for this query
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::prepareStatement()
 	 */
-	public function prepare($adapter = null, $forceList = false) {
+	public function prepare($adapter = null) {
 		// get adapter if needed
 		if ($adapter === null) $adapter = Ikarus::getDatabaseManager()->getDefaultAdapter();
 		
 		// create statement
-		return $adapter->prepareStatement($this->__toString(), 0, 0, $forceList);
+		return $adapter->prepareStatement($this->__toString());
 	}
 
 	/**
