@@ -77,11 +77,10 @@ class PreparedStatement implements IPreparedStatement {
 	/**
 	 * @see ikarus\system\database.IPreparedStatement::__construct()
 	 */
-	public function __construct(adapter\IDatabaseAdapter $adapter, $statement, $forceList = false) {
+	public function __construct(adapter\IDatabaseAdapter $adapter, $statement) {
 		// save arguments
 		$this->adapter = $adapter;
 		$this->statement = $statement;
-		$this->forceList = $forceList;
 		
 		// process statement
 		$this->processStatement();
@@ -150,21 +149,22 @@ class PreparedStatement implements IPreparedStatement {
 	 * @see ikarus\system\database.IPreparedStatement::execute()
 	 */
 	public function execute() {
-		// validate bound variables
-		if (count($this->boundVariables) < count($this->variables)) throw new SystemException("Cannot execute statement: The amount of bound variables does not match the amount of declared variables");
-		
-		// recreate sql query
-		$sql = "";
-		$currentVariablePosition = 0;
-		
-		foreach($this->statementSplit as $element) {
-			if (preg_match(static::STATEMENT_VARIABLE_PATTERN, $element))
-				$sql .= $this->escapeVariable($this->boundVariables[$currentVariablePosition++]);
-			else
-				$sql .= $element;
-		}
-		
-		return $this->adapter->sendQuery($sql, $this->forceList);
+		$this->adapter->execute($this->__toString());
+	}
+	
+	/**
+	 * @see ikarus\system\database.IPreparedStatement::fetch()
+	 */
+	public function fetch() {
+		return $this->adapter->sendQuery($this->__toString(), false);
+	}
+	
+	/**
+	 * @see ikarus\system\database.IPreparedStatement::fetchList()
+	 */
+	public function fetchList() {
+		// send query
+		return $this->adapter->sendQuery($this->__toString(), true);
 	}
 	
 	/**
@@ -216,6 +216,28 @@ class PreparedStatement implements IPreparedStatement {
 		
 		// remove first character if needed
 		if (in_array($this->statementSplit[$position]{(strlen($this->statementSplit[$position]) - 1)}, $quotes)) $this->statementSplit[$position] = substr($this->statementSplit[$position], 0, (strlen($this->statementSplit[$position]) - 1));
+	}
+	
+	/**
+	 * Returns the complete sql query as string
+	 * @throws			SystemException
+	 * @return			string
+	 */
+	public function __toString() {
+		// validate bound variables
+		if (count($this->boundVariables) < count($this->variables)) throw new SystemException("Cannot create statement: The amount of bound variables does not match the amount of declared variables");
+		
+		$sql = "";
+		$currentVariablePosition = 0;
+		
+		foreach($this->statementSplit as $element) {
+			if (preg_match(static::STATEMENT_VARIABLE_PATTERN, $element))
+				$sql .= $this->escapeVariable($this->boundVariables[$currentVariablePosition++]);
+			else
+				$sql .= $element;
+		}
+		
+		return $sql;
 	}
 }
 ?>

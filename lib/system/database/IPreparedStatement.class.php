@@ -17,9 +17,8 @@ interface IPreparedStatement {
 	 * Creates a new instance of type IPreparedStatement
 	 * @param			ikarus\system\database\adapter\IDatabaseAdapter		$adapter
 	 * @param			string							$statement
-	 * @param			boolean							$forceList
 	 */
-	public function __construct(adapter\IDatabaseAdapter $adapter, $statement, $forceList = false);
+	public function __construct(adapter\IDatabaseAdapter $adapter, $statement);
 	
 	/**
 	 * Binds a parameter
@@ -39,8 +38,20 @@ interface IPreparedStatement {
 	
 	/**
 	 * Executes the statement
-	 * @return			mixed
+	 * @return			void
 	 */
 	public function execute();
+	
+	/**
+	 * Fetches one or more items from database
+	 * @return			mixed
+	 */
+	public function fetch();
+	
+	/**
+	 * Fetches a list of items from database
+	 * @return			ikarus\system\database\DatabaseResultList
+	 */
+	public function fetchList();
 }
 ?>
