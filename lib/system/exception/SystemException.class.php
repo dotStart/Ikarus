@@ -267,9 +267,7 @@ class SystemException extends Exception implements IPrintableException {
 							}
 							
 							// create padding
-							$string = str_pad($string, (strlen(max($constants)) + 4), "\t", STR_PAD_LEFT);
-						
-							echo $constant.' '.$string."\n";
+							echo str_pad($constant, (max(array_map('strlen', $constants)) + 4), " ", STR_PAD_RIGHT).$string."\n";
 						} ?></pre>
 					
 						<h2><a href="javascript:void(0);" onclick="$('#extensions').toggle('blind'); $(this).text(($(this).text() == '+' ? '-' : '+'));">+</a>Extensions</h2>
