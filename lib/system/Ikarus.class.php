@@ -6,6 +6,7 @@ use ikarus\system\cache\CacheManager;
 use ikarus\system\configuration\Configuration;
 use ikarus\system\database\DatabaseManager;
 use ikarus\system\event\EventManager;
+use ikarus\system\exception\StrictStandardException;
 use ikarus\system\exception\SystemException;
 use ikarus\system\extension\ExtensionManager;
 use ikarus\system\io\FilesystemManager;
