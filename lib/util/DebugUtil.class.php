@@ -35,7 +35,7 @@ class DebugUtil {
 				<tbody>";
 		
 		// add elements
-		foreach($trace as $index => $element) {
+		foreach(array_reverse($trace) as $index => $element) {
 			$string .= "<tr>";
 			$string .= "<td>".$index."</td>";
 			$string .= "<td>".(isset($element['file']) ? $element['file'] : 'unknown')." (".(isset($element['line']) ? $element['line'] : 0).")</td>";
