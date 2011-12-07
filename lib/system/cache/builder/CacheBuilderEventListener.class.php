@@ -24,8 +24,8 @@ class CacheBuilderEventListener implements ICacheBuilder {
 		$editor = new QueryEditor();
 		$editor->from(array('ikarus'.IKARUS_N.'_event_listener' => 'listener'));
 		DependencyUtil::generateDependencyQuery($packageID, $editor, 'listener');
-		$stmt = $editor->prepare(null, true);
-		$resultList = $stmt->execute();
+		$stmt = $editor->prepare();
+		$resultList = $stmt->fetchList();
 		
 		$listenerList = array();
 		

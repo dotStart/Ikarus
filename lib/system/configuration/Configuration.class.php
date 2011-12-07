@@ -188,8 +188,8 @@ class Configuration {
 		// add dependency clauses
 		DependencyUtil::generateDependencyQuery($this->packageID, $query, 'ioption');
 		
-		$stmt = $query->prepare(null, true);
-		$resultList = $stmt->execute();
+		$stmt = $query->prepare();
+		$resultList = $stmt->fetchList();
 		
 		foreach($resultList as $result) {
 			$this->options[$result->optionName] = $this->getRealOptionValue($result->optionType, $result->optionValue);

@@ -24,8 +24,8 @@ class CacheBuilderApplications implements ICacheBuilder {
 		$editor = new QueryEditor();
 		$editor->from(array('ikarus'.IKARUS_N.'_application' => 'app'));
 		DependencyUtil::generateDependencyQuery($packageID, $editor, 'app');
-		$stmt = $editor->prepare(null, true);
-		return $stmt->execute();
+		$stmt = $editor->prepare();
+		return $stmt->fetchList();
 	}
 }
 ?>
