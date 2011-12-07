@@ -202,9 +202,6 @@ class SystemException extends Exception implements IPrintableException {
 	 * @see ikarus\system\exception.IPrintableException::show()
 	 */
 	public function show() {
-		// modify information
-		$this->modifyInformation();
-		
 		// send status code
 		@header('HTTP/1.1 503 Service Unavailable');
 

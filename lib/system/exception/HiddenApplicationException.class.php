@@ -24,6 +24,9 @@ class HiddenApplicationException extends SystemException {
 	 * @see ikarus\system\exception.SystemException::show()
 	 */
 	public function show() {
+		// modify information
+		$this->getPrevious()->modifyInformation();
+		
 		?>
 		<!DOCTYPE html>
 		<html>
