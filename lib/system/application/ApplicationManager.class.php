@@ -90,9 +90,7 @@ class ApplicationManager {
 	 * @return			void
 	 */
 	public function handleApplicationError(\Exception $ex) {
-		if (get_class($ex) == 'ikarus\\system\\exception\\SystemException') return $ex->showMinimal();
-		if (Ikarus::getConfiguration()->get('global.advanced.debug') or Ikarus::getConfiguration()->get('global.advanced.showErrors')) return $ex->showMinimal();
-		
+		if (get_class($ex) == 'ikarus\\system\\exception\\SystemException' or Ikarus::getConfiguration()->get('global.advanced.debug') or Ikarus::getConfiguration()->get('global.advanced.showErrors')) return $ex->showMinimal();
 		$this->displayErrorMessage($ex);
 	} 
 	
