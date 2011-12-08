@@ -59,6 +59,17 @@ CREATE TABLE ikarus1_request_controller_type (
 	packageID INT NOT NULL
 );
 
+DROP TABLE IF EXISTS ikarus1_request_route;
+CREATE TABLE ikarus1_request_route (
+	routeID INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+	parameterName VARCHAR (255) NOT NULL,
+	routeName VARCHAR (255) NOT NULL,
+	controllerName VARCHAR (255) NOT NULL,
+	controllerDirectory VARCHAR (255) NOT NULL,
+	packageID INT NOT NULL,
+	UNIQUE KEY (parameterName, routeName)
+);
+
 DROP TABLE IF EXISTS ikarus1_session;
 CREATE TABLE ikarus1_session (
 	sessionID VARCHAR (255) NOT NULL,
