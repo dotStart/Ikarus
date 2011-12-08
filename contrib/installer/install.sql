@@ -51,6 +51,14 @@ CREATE TABLE ikarus1_package_dependency (
 	PRIMARY KEY (packageID, dependencyID)
 );
 
+DROP TABLE IF EXISTS ikarus1_request_controller_type;
+CREATE TABLE ikarus1_request_controller_type (
+	controllerTypeID INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+	parameterName VARCHAR (255) NOT NULL,
+	controllerDirectory VARCHAR (255) NOT NULL,
+	packageID INT NOT NULL
+);
+
 DROP TABLE IF EXISTS ikarus1_session;
 CREATE TABLE ikarus1_session (
 	sessionID VARCHAR (255) NOT NULL,
@@ -75,3 +83,8 @@ INSERT INTO ikarus1_option (optionID, optionName, optionValue, optionType, packa
 	(NULL,	'global.advanced.debug',				'1',	'boolean',	1),
 	(NULL,	'filesystem.general.defaultAdapter',	'0',	'boolean',	1),
 	(NULL,	'filesystem.general.adapterParameters',	NULL,	'serialized', 1);
+
+INSERT INTO ikarus1_request_controller_type (controllerTypeID, parameterName, controllerDirectory, packageID) VALUES
+	(NULL, 'action', 'action/', 1),
+	(NULL, 'form', 'form/', 1),
+	(NULL, 'page', 'page/', 1);
