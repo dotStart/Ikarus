@@ -140,6 +140,13 @@ interface IDatabaseAdapter {
 	public static function isSupported();
 	
 	/**
+	 * Parses a query and replaces application abbreviations
+	 * @param			string			$query
+	 * @return			string
+	 */
+	public function parseQuery($query);
+	
+	/**
 	 * Creates a prepared statement
 	 * @param			string			$statement
 	 * @param			integer			$limit

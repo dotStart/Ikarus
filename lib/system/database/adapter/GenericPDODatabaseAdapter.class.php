@@ -48,6 +48,9 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 	 */
 	public function execute($query) {
 		try {
+			// parse query
+			$this->parseQuery($query);
+			
 			// save query
 			$this->lastQuery = $query;
 			
@@ -158,6 +161,9 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 	 */
 	public function sendQuery($query, $forceList = false) {
 		try {
+			// parse query
+			$this->parseQuery($query);
+			
 			// save query
 			$this->lastQuery = $query;
 			

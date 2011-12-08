@@ -4,6 +4,8 @@ use ikarus\system\database\DatabaseResult;
 use ikarus\system\database\DatabaseResultList;
 use ikarus\system\exception\DatabaseException;
 use ikarus\system\exception\SystemException;
+use ikarus\system\Ikarus;
+use ikarus\util\StringUtil;
 
 /**
  * Implements default methods for database adapters
@@ -266,6 +268,20 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	 */
 	public static function isSupported() {
 		return true;
+	}
+	
+	/**
+	 * @see ikarus\system\database\adapter.IDatabaseAdapter::parseQuery()
+	 */
+	public function parseQuery($query) {
+		// replace application abbreviation
+		if (Ikarus::getApplicationManager() !== null) {
+			foreach(Ikarus::getApplicationManager()->getApplicationList() as $abbreviation => $application) {
+				$query = StringUtil::replace($abbreviation.'1_', $abbreviation.$application->getPackageID().'_', $query);
+			}
+		}
+		
+		return $query;
 	}
 	
 	/**
