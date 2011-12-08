@@ -85,6 +85,14 @@ class ApplicationManager {
 	}
 	
 	/**
+	 * Returns a list of all loaded applications
+	 * @return			array<ikarus\system\application\IApplication>
+	 */
+	public function getApplicationList() {
+		return $this->applications;
+	}
+	
+	/**
 	 * Handles application errors
 	 * @param			PrintableException			$ex
 	 * @return			void
