@@ -15,6 +15,28 @@ use \ReflectionClass;
 class ClassUtil {
 	
 	/**
+	 * @see class_alias()
+	 */
+	public static function createAlias($originalClass, $aliasClass) {
+		return class_alias($originalClass, $aliasClass);
+	}
+	
+	/**
+	 * @see ReflectionClass::getConstants()
+	 */
+	public static function getConstantList($className) {
+		$class = new ReflectionClass($className);
+		return $class->getConstants();
+	}
+	
+	/**
+	 * @see get_object_vars()
+	 */
+	public static function getPublicProperties($class) {
+		return get_object_vars($class);
+	}
+	
+	/**
 	 * Returns true if the given class inherits from given target class
 	 * @param			mixed			$className
 	 * @param			mixed			$targetClass
@@ -34,6 +56,13 @@ class ClassUtil {
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * @see method_exists()
+	 */
+	public static function methodExists($targetClass, $methodName) {
+		return method_exists($targetClass, $methodName);
 	}
 }
 ?>
