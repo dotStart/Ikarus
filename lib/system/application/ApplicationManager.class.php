@@ -98,7 +98,7 @@ class ApplicationManager {
 	 * @return			void
 	 */
 	public function handleApplicationError(\Exception $ex) {
-		if (ClassUtil::isInstanceOf('ikarus\\system\\exception\\NamedUserException', $ex)) return $ex->show();
+		if (ClassUtil::isInstanceOf($ex, 'ikarus\\system\\exception\\NamedUserException')) return $ex->show();
 		if (get_class($ex) == 'ikarus\\system\\exception\\SystemException' or Ikarus::getConfiguration()->get('global.advanced.debug') or Ikarus::getConfiguration()->get('global.advanced.showErrors')) return $ex->showMinimal();
 		$this->displayErrorMessage($ex);
 	} 
