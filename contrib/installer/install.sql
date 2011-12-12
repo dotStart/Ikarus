@@ -1,46 +1,51 @@
 DROP TABLE IF EXISTS ikarus1_application;
 CREATE TABLE ikarus1_application (
-	applicationID INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+	applicationID INT UNSIGNED AUTO_INCREMENT NOT NULL,
 	applicationTitle VARCHAR (255) NOT NULL,
 	applicationAbbreviation VARCHAR (255) NOT NULL,
 	className VARCHAR (400) NOT NULL,
 	libraryPath TEXT NOT NULL,
-	packageID INT NOT NULL
+	packageID INT NOT NULL,
+	PRIMARY KEY (applicationID)
 );
 
 DROP TABLE IF EXISTS ikarus1_cache_adapter;
 CREATE TABLE ikarus1_cache_adapter (
-	adapterID INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
-	adapterClass VARCHAR (255) NOT NULL
+	adapterID INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	adapterClass VARCHAR (255) NOT NULL,
+	PRIMARY KEY (adapterID)
 );
 
 DROP TABLE IF EXISTS ikarus1_cache_source;
 CREATE TABLE ikarus1_cache_source (
-	connectionID INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+	connectionID INT UNSIGNED AUTO_INCREMENT NOT NULL,
 	adapterID INT NOT NULL,
 	adapterParameters TEXT NOT NULL,
 	isDefaultConnection TINYINT (1) NOT NULL DEFAULT '0',
 	fallbackFor INT NOT NULL,
-	isDisabled TINYINT (1) NOT NULL DEFAULT '0'
+	isDisabled TINYINT (1) NOT NULL DEFAULT '0',
+	PRIMARY KEY (connectionID)
 );
 
 DROP TABLE IF EXISTS ikarus1_event_listener;
 CREATE TABLE ikarus1_event_listener (
-	listenerID INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+	listenerID INT UNSIGNED AUTO_INCREMENT NOT NULL
 	className VARCHAR (400) NOT NULL,
 	eventName VARCHAR (255) NOT NULL,
 	listenerClass VARCHAR (400) NOT NULL,
 	inerhit TINYINT (1) NOT NULL DEFAULT '0',
-	packageID INT NOT NULL
+	packageID INT NOT NULL,
+	PRIMARY KEY (listenerID)
 );
 
 DROP TABLE IF EXISTS ikarus1_option;
 CREATE TABLE ikarus1_option (
-	optionID INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+	optionID INT UNSIGNED AUTO_INCREMENT NOT NULL,
 	optionName VARCHAR (255) NOT NULL,
 	optionValue TEXT NULL,
 	optionType VARCHAR (255) NOT NULL,
-	packageID INT NOT NULL
+	packageID INT NOT NULL,
+	PRIMARY KEY (optionID)
 );
 
 DROP TABLE IF EXISTS ikarus1_package_dependency;
@@ -53,20 +58,22 @@ CREATE TABLE ikarus1_package_dependency (
 
 DROP TABLE IF EXISTS ikarus1_request_controller_type;
 CREATE TABLE ikarus1_request_controller_type (
-	controllerTypeID INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+	controllerTypeID INT UNSIGNED AUTO_INCREMENT NOT NULL,
 	parameterName VARCHAR (255) NOT NULL,
 	controllerDirectory VARCHAR (255) NOT NULL,
-	packageID INT NOT NULL
+	packageID INT NOT NULL,
+	PRIMARY KEY (controllerTypeID)
 );
 
 DROP TABLE IF EXISTS ikarus1_request_route;
 CREATE TABLE ikarus1_request_route (
-	routeID INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+	routeID INT UNSIGNED AUTO_INCREMENT NOT NULL,
 	parameterName VARCHAR (255) NOT NULL,
 	routeName VARCHAR (255) NOT NULL,
 	controllerName VARCHAR (255) NOT NULL,
 	controllerDirectory VARCHAR (255) NOT NULL,
 	packageID INT NOT NULL,
+	PRIMARY KEY (routeID),
 	UNIQUE KEY (parameterName, routeName)
 );
 
@@ -84,6 +91,37 @@ CREATE TABLE ikarus1_session (
 	PRIMARY KEY (sessionID, packageID, environment)
 );
 
+DROP TABLE IF EXISTS ikarus1_style;
+CREATE TABLE ikarus1_style (
+	styleID INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	styleTitle VARCHAR (255) NOT NULL,
+	authorName VARCHAR (255) NOT NULL,
+	authorAlias VARCHAR (255) NULL,
+	authorUrl TEXT NULL,
+	styleVersion VARCHAR (255) NOT NULL,
+	styleUrl TEXT NOT NULL,
+	styleUrlAlias VARCHAR (255) NULL,
+	licenseName VARCHAR (255) NOT NULL,
+	licenseUrl VARCHAR (255) NOT NULL,
+	environment VARCHAR (255) NOT NULL,
+	isDefault TINYINT (1) NOT NULL DEFAULT '0',
+	isEnabled TINYINT (1) NOT NULL DEFAULT '1',
+	packageID INT NOT NULL,
+	PRIMARY KEY(styleID)
+);
+
+DROP TABLE IF EXISTS ikarus1_style_css;
+CREATE TABLE ikarus1_style_css (
+	definitionID INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	cssSelector VARCHAR (255) NOT NULL,
+	definitionComment VARCHAR (255) NOT NULL,
+	cssCode TEXT NOT NULL,
+	cssMediaQuery VARCHAR (255) NOT NULL,
+	styleID INT NOT NULL,
+	isEnabled TINYINT (1) NOT NULL DEFAULT '1',
+	PRIMARY KEY (definitionID)
+);
+
 -- rows
 INSERT INTO ikarus1_application (applicationAbbreviation, className, libraryPath, packageID) VALUES ('ikarus', 'ikarus\\system\\application\\IkarusApplication', './lib/', 1);
 
@@ -99,3 +137,5 @@ INSERT INTO ikarus1_request_controller_type (controllerTypeID, parameterName, co
 	(NULL, 'action', 'action/', 1),
 	(NULL, 'form', 'form/', 1),
 	(NULL, 'page', 'page/', 1);
+	
+INSERT INTO ikarus1_style (styleTitle, authorName, authorAlias, authorUrl, styleVersion, styleUrl, styleUrlAlias, licenseName, licenseUrl, environment, isDefault, isEnabled, packageID) VALUES ('Ikarus Default Administration', 'Johannes Donath', 'Akkarin', 'http://www.akkarin.de', '1.0.0 Alpha 1', 'http://www.ikarus-framework.de', 'Ikarus Framework', 'GNU Lesser Public License', 'http://www.gnu.org/licenses/lgpl.txt', 'administration', 1, 1, 1);
