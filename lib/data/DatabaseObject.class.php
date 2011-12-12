@@ -1,5 +1,6 @@
 <?php
 namespace ikarus\data;
+use ikarus\system\database\QueryEditor;
 use ikarus\system\exception\StrictStandardException;
 use ikarus\system\exception\SystemException;
 
@@ -14,12 +15,24 @@ use ikarus\system\exception\SystemException;
  * @version		2.0.0-0001
  */
 abstract class DatabaseObject {
-
+	
 	/**
 	 * Contains all variables from database
 	 * @var array
 	 */
 	protected $data = null;
+	
+	/**
+	 * Contains the field name for row identifier (or primary key)
+	 * @var			string
+	 */
+	protected $identifierField = null;
+	
+	/**
+	 * Contains the name of the table where all data of this database object is stored
+	 * @var			string
+	 */
+	protected $tableName = null;
 
 	/**
 	 * Creates a new DatabaseObject instance
@@ -27,6 +40,31 @@ abstract class DatabaseObject {
 	 */
 	public function __construct($row) {
 		$this->handleData($row);
+	}
+	
+	/**
+	 * Returns an object by identifier (if configured)
+	 * @param			mixed			$identifier
+	 * @throws			SystemException
+	 * @returns			ikarus\data\DatabaseObject
+	 */
+	public static function getByIdentifier($identifier) {
+		// check for configuration
+		if (!static::$tableName or static::$identifierField) throw new SystemException('The database object %s is not configured for method %s', __CLASS__, __METHOD__);
+		
+		// get data via editor
+		$editor = new QueryEditor();
+		$editor->from(array(static::$tableName => 'databaseObjectTable'));
+		$editor->where(static::$identifierField.' = ?');
+		$stmt = $editor->prepare();
+		$stmt->bind($identifier);
+		$result = $stmt->fetch();
+		
+		// no rows found?
+		if (!$result) return null;
+		
+		// create object
+		return (new static($result->__toArray()));
 	}
 
 	/**
