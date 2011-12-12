@@ -23,9 +23,7 @@ class DependencyUtil {
 	 */
 	public static function generateDependencyQuery($packageID, QueryEditor $query, $table) {
 		$query->join(QueryEditor::LEFT_JOIN, array('ikarus'.IKARUS_N.'_package_dependency' => 'dependency'), $table.'.packageID = dependency.packageID', '');
-		$query->where('dependency.packageID = '.$packageID);
-		$query->where('dependency.dependencyID = '.$packageID, QueryEditor::TYPE_OR);
-		$query->where($table.'.packageID = '.$packageID, QueryEditor::TYPE_OR);
+		$query->where('dependency.packageID = '.$packageID.' OR dependency.dependencyID = '.$packageID.' OR '.$table.'.packageID = '.$packageID);
 		$query->order('dependency.dependencyLevel ASC');
 	}
 }
