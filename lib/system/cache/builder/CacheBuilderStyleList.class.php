@@ -25,6 +25,7 @@ class CacheBuilderStyleList implements ICacheBuilder {
 		$editor = new QueryEditor();
 		$editor->from(array('ikarus'.IKARUS_N.'_style' => 'style'));
 		$editor->where('environment = ?');
+		$editor->where('isEnabled = 1');
 		DependencyUtil::generateDependencyQuery($packageID, $editor, 'style');
 		$stmt = $editor->prepare();
 		$stmt->bind($environment);
