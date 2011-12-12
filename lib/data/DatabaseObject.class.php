@@ -26,13 +26,13 @@ abstract class DatabaseObject {
 	 * Contains the field name for row identifier (or primary key)
 	 * @var			string
 	 */
-	protected $identifierField = null;
+	protected static $identifierField = null;
 	
 	/**
 	 * Contains the name of the table where all data of this database object is stored
 	 * @var			string
 	 */
-	protected $tableName = null;
+	protected static $tableName = null;
 
 	/**
 	 * Creates a new DatabaseObject instance
