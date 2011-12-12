@@ -1,5 +1,6 @@
 <?php
 namespace ikarus\system\cache\adapter;
+use ikarus\system\exception\StrictStandardException;
 use ikarus\system\exception\SystemException;
 use ikarus\system\Ikarus;
 
