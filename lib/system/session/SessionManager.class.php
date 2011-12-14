@@ -153,7 +153,7 @@ class SessionManager {
 		HeaderUtil::setCookie('sessionID', $sessionID);
 		
 		// save query parameter information if needed
-		if (!HeaderUtil::cookiesSupported()) $this->sessionQueryParameter('s='.urlencode($sessionID));
+		if (!HeaderUtil::cookiesSupported()) static::$sessionQueryParameter = 's='.urlencode($sessionID);
 	}
 	
 	/**
