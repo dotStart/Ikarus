@@ -26,12 +26,12 @@ class Style extends DatabaseObject {
 	/**
 	 * @see ikarus\data\DatabaseObject::$identifierField
 	 */
-	protected $identifierField = 'styleID';
+	protected static $identifierField = 'styleID';
 	
 	/**
 	 * @see ikarus\data\DatabaseObject::$tableName
 	 */
-	protected $tableName = 'ikarus1_style';
+	protected static $tableName = 'ikarus1_style';
 	
 	/**
 	 * Builds a minified version of style's css code
