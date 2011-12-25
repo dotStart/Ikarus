@@ -32,6 +32,12 @@ class SessionManager {
 	protected $sessions = array();
 	
 	/**
+	 * Contains the session query parameter used if cookies aren't available
+	 * @var			string
+	 */
+	protected static $sessionQueryParameter = '';
+	
+	/**
 	 * Boots the session
 	 * @param			ikarus\system\application\IApplication			$application
 	 * @return			void
