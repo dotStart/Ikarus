@@ -91,6 +91,14 @@ class SessionManager {
 	}
 	
 	/**
+	 * Returns the current session query parameter
+	 * @return			string
+	 */
+	public static function getSessionQueryParameter() {
+		return static::$sessionQueryParameter;
+	}
+	
+	/**
 	 * Loads needed sessions to memory
 	 * @param			integer			$packageID
 	 * @throws			ApplicationException
