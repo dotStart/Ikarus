@@ -38,6 +38,31 @@ CREATE TABLE ikarus1_event_listener (
 	PRIMARY KEY (listenerID)
 );
 
+DROP TABLE IF EXISTS ikarus1_language;
+CREATE TABLE ikarus1_language (
+	languageID INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	languageName VARCHAR (255) NOT NULL,
+	translatedName VARCHAR (255) NOT NULL,
+	languageCode VARCHAR (20) NOT NULL,
+	isEnabled TINYINT (1) NOT NULL DEFAULT '1',
+	hasContent TINYINT (1) NOT NULL DEFAULT '0',
+	isDefault TINYINT (1) NOT NULL DEFAULT '0',
+	packageID INT NOT NULL,
+	PRIMARY KEY (languageID)
+);
+
+DROP TABLE IF EXISTS ikarus1_language_variables;
+CREATE TABLE ikarus1_language_variables (
+	variableID INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	variableName VARCHAR (255) NOT NULL,
+	variableContent VARCHAR (255) NOT NULL,
+	isDynamicVariable TINYINT (1) NOT NULL DEFAULT '0',
+	languageID INT NOT NULL,
+	packageID INT NOT NULL,
+	PRIMARY KEY(variableID),
+	UNIQUE KEY(variableName, languageID)
+);
+
 DROP TABLE IF EXISTS ikarus1_option;
 CREATE TABLE ikarus1_option (
 	optionID INT UNSIGNED AUTO_INCREMENT NOT NULL,
@@ -126,6 +151,8 @@ INSERT INTO ikarus1_application (applicationAbbreviation, className, libraryPath
 
 INSERT INTO ikarus1_cache_adapter (adapterClass) VALUES ('DiskCacheAdapter');
 INSERT INTO ikarus1_cache_source (adapterID, adapterParameters, isDefaultConnection, fallbackFor, isDisabled) VALUES (1, '', 1, 0, 0);
+
+INSERT INTO ikarus1_language (languageName, translatedName, languageCode, isEnabled, hasContent, isDefault, packageID) VALUES ('English', 'English', 'en', 1, 1, 1, 1);
 
 INSERT INTO ikarus1_option (optionID, optionName, optionValue, optionType, packageID) VALUES
 	(NULL,	'global.advanced.debug',				'1',	'boolean',	1),
