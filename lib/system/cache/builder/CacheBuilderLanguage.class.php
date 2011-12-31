@@ -30,7 +30,7 @@ class CacheBuilderLanguage implements ICacheBuilder {
 		$languageVariables = array();
 		
 		foreach($resultList as $languageVariable) {
-			$languageVariables[] = $languageVariable;
+			$languageVariables[$languageVariable->variableName] = $languageVariable;
 		}
 		
 		return $languageVariables;
