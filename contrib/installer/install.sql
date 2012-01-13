@@ -29,7 +29,7 @@ CREATE TABLE ikarus1_cache_source (
 
 DROP TABLE IF EXISTS ikarus1_event_listener;
 CREATE TABLE ikarus1_event_listener (
-	listenerID INT UNSIGNED AUTO_INCREMENT NOT NULL
+	listenerID INT UNSIGNED AUTO_INCREMENT NOT NULL,
 	className VARCHAR (400) NOT NULL,
 	eventName VARCHAR (255) NOT NULL,
 	listenerClass VARCHAR (400) NOT NULL,
@@ -68,13 +68,12 @@ CREATE TABLE ikarus1_request_controller_type (
 DROP TABLE IF EXISTS ikarus1_request_route;
 CREATE TABLE ikarus1_request_route (
 	routeID INT UNSIGNED AUTO_INCREMENT NOT NULL,
-	parameterName VARCHAR (255) NOT NULL,
+	parameterName VARCHAR (250) NOT NULL,
 	routeName VARCHAR (255) NOT NULL,
 	controllerName VARCHAR (255) NOT NULL,
 	controllerDirectory VARCHAR (255) NOT NULL,
 	packageID INT NOT NULL,
-	PRIMARY KEY (routeID),
-	UNIQUE KEY (parameterName, routeName)
+	PRIMARY KEY (routeID)
 );
 
 DROP TABLE IF EXISTS ikarus1_session;
@@ -88,7 +87,7 @@ CREATE TABLE ikarus1_session (
 	packageID INT NOT NULL,
 	environment VARCHAR (255) NOT NULL,
 	abbreviation VARCHAR (255) NOT NULL,
-	PRIMARY KEY (sessionID, packageID, environment)
+	PRIMARY KEY (sessionID, packageID)
 );
 
 DROP TABLE IF EXISTS ikarus1_style;
