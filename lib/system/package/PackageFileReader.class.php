@@ -1,8 +1,7 @@
 <?php
 namespace ikarus\system\package;
 use ikarus\system\exception\SystemException;
-
-use ikarus\system\io\File;
+use ikarus\system\Ikarus;
 use ikarus\util\StringUtil;
 
 /**
@@ -218,8 +217,7 @@ class PackageFileReader {
 	 */
 	public function __construct($fileName) {
 		// get file
-		$this->file = new File($fileName, 'r');
-		$this->readFile();
+		$this->readFile($fileName);
 		
 		// get information from file header
 		$this->readFileInformation();
@@ -268,8 +266,7 @@ class PackageFileReader {
 	 */
 	protected function readFile() {
 		// read file content
-		while(!$this->file->eof())
-			$this->fileContent .= $file->gets(1024);
+		$this->fileContent = Ikarus::getFilesystemManager()->getDefaultAdapter()->readFileContents($fileName);
 		
 		// split content
 		$this->fileContentSplit = explode(chr(0), $this->fileContent, 3);
