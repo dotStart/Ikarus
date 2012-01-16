@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.ikarus-framework.de" xmlns="http://www.ikarus-framework.de" elementFormDefault="qualified">
+	<!--
+	Ikarus Framework Keyserver Specification
+	author:		Johannes Donath
+	updated:	16.01.2012
+	version:	1.0.0
+	-->
+
+	<!-- Include basic ikarus types -->
+	<xs:include schemaLocation="types.xsd" />
+	
+	<!-- Define root element -->
+	<xs:element name="keyserver">
+		<xs:complexType>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="key" type="maintainerKey" minOccurs="1" maxOccurs="unbounded" />
+			</xs:choice>
+			
+			<!-- Define lastupdate element -->
+			<xs:attribute name="lastupdate" type="xs:integer" /> <!-- Contains timestamp of last update. This allows us to improve performance of ikarus -->
+		</xs:complexType>
+	</xs:element>
+	
+	<!-- Define key element -->
+	<xs:complexType name="maintainerKey">
+		<xs:sequence>
+			<xs:element name="shachecksum" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="publickey" type="xs:string" minOccurs="1" maxOccurs="1" />
+			
+			<xs:element name="maintainername" type="ikarus_varchar" minOccurs="1" maxOccurs="1" />
+			<xs:element name="description" type="xs:string" minOccurs="1" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
