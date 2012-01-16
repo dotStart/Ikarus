@@ -258,7 +258,7 @@ class PackageFileReader {
 	 */
 	public function isEncrypted() {
 		if (!isset($this->filePackageArray['crypt']['enabled'], $this->filePackageArray['crypt']['iv'])) return false;
-		if (!$this->filePackageArray['crypt']['iv']['enabled']) return false;
+		if (!$this->filePackageArray['crypt']['enabled']) return false;
 		return true;
 	}
 	
