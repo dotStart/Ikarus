@@ -39,6 +39,15 @@ abstract class Singleton {
 	protected function __clone() { }
 	
 	/**
+	 * Disallows serialize()
+	 * @throws			StrictStandardException
+	 * @return			void
+	 */
+	public function __sleep() {
+		throw new StrictStandardException("It's not allowed to serialize singletons");
+	}
+	
+	/**
 	 * Returnes an instance of Singelton
 	 * @return		Singelton
 	 */
