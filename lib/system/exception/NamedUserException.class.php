@@ -14,6 +14,11 @@ use ikarus\system\Ikarus;
 class NamedUserException extends SystemException {
 	
 	/**
+	 * @see ikarus\system\exception.SystemException::EXCEPTION_TITLE
+	 */
+	const EXCEPTION_TITLE = 'Illegal link';
+	
+	/**
 	 * Contains a HTTP header that should be used
 	 * @var			string
 	 */
@@ -44,7 +49,7 @@ class NamedUserException extends SystemException {
 		}
 		
 		// no template system
-		parent::show();
+		parent::showMinimal();
 	}
 }
 ?>
