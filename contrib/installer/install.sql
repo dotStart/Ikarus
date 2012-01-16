@@ -5,6 +5,7 @@ CREATE TABLE ikarus1_application (
 	applicationAbbreviation VARCHAR (255) NOT NULL,
 	className VARCHAR (400) NOT NULL,
 	libraryPath TEXT NOT NULL,
+	templatePath TEXT NOT NULL,
 	packageID INT NOT NULL,
 	PRIMARY KEY (applicationID)
 );
@@ -147,7 +148,7 @@ CREATE TABLE ikarus1_style_css (
 );
 
 -- rows
-INSERT INTO ikarus1_application (applicationAbbreviation, className, libraryPath, packageID) VALUES ('ikarus', 'ikarus\\system\\application\\IkarusApplication', './lib/', 1);
+INSERT INTO ikarus1_application (applicationAbbreviation, className, libraryPath, templatePath, packageID) VALUES ('ikarus', 'ikarus\\system\\application\\IkarusApplication', './lib/', './template/', 1);
 
 INSERT INTO ikarus1_cache_adapter (adapterClass) VALUES ('DiskCacheAdapter');
 INSERT INTO ikarus1_cache_source (adapterID, adapterParameters, isDefaultConnection, fallbackFor, isDisabled) VALUES (1, '', 1, 0, 0);
