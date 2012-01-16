@@ -1,6 +1,6 @@
 <?php
 namespace ikarus\system;
-use ikarus\pattern\Singleton;
+use ikarus\pattern\NonInstantiableClass;
 use ikarus\system\application\ApplicationManager;
 use ikarus\system\cache\CacheManager;
 use ikarus\system\configuration\Configuration;
@@ -14,7 +14,7 @@ use ikarus\util\FileUtil;
 
 // includes
 require_once(IKARUS_DIR.'lib/core.defines.php');
-require_once(IKARUS_DIR.'lib/pattern/Singleton.class.php');
+require_once(IKARUS_DIR.'lib/pattern/NonInstantiableClass.class.php');
 
 /**
  * Manages all core instances
@@ -26,7 +26,7 @@ require_once(IKARUS_DIR.'lib/pattern/Singleton.class.php');
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-class Ikarus extends Singleton {
+class Ikarus extends NonInstantiableClass {
 	
 	/**
 	 * Contains the name of the file wich contains the core configuration
