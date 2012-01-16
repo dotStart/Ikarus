@@ -58,7 +58,7 @@ class RequestDispatcher extends Singleton {
 				foreach($routes as $routeName => $executionInformation)
 					if ($routeName == $requestParameters[$routeParameter] and $this->loadController($executionInformation['controllerName'], $executionInformation['controllerDirectory'], $application)) return $this->executeController($executionInformation['controllerName'], $executionInformation['controllerDirectory'], $application);
 		
-		throw new IllegalLinkException;
+		throw new IllegalLinkException('There are no routes and no controllers available');
 	}
 	
 	/**
