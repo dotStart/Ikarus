@@ -15,14 +15,23 @@ abstract class Singleton {
 	
 	/**
 	 * Contains an instance of type Singelton
-	 * @var		Singelton
+	 * @var			array<Singelton>
 	 */
-	protected static $instance = null;
+	protected static $instances = array();
 	
 	/**
 	 * A protected construct method
 	 */
-	protected function __construct() { }
+	protected function __construct() {
+		$this->init();
+	}
+	
+	/**
+	 * Replaces the __construct() method
+	 * Note: You have to use this method to init own components
+	 * @return			void
+	 */
+	public function init() { }
 	
 	/**
 	 * A protected clone method
@@ -34,10 +43,14 @@ abstract class Singleton {
 	 * @return		Singelton
 	 */
 	public static function getInstance() {
-		// create instance if needed
-		if(static::$instance === null) static::$instance = new static();
+		// get class
+		$className = get_called_class();
 		
-		return static::$instance;
+		// create instance if needed
+		if(array_key_exists(static::$instances[$className])) static::$instances[$className] = new $className();
+		
+		// return instance
+		return static::$instances[$class];
 	}
 }
 ?>
