@@ -63,5 +63,11 @@ interface IApplication {
 	 * @return			void
 	 */
 	public function shutdown();
+	
+	/**
+	 * Shuts down all default components
+	 * @return			void
+	 */
+	public function shutdownDefaultComponents();
 }
 ?>
