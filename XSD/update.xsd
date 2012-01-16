@@ -8,7 +8,7 @@
 	-->
 
 	<!-- Include basic ikarus types -->
-	<xs:include schemaLocation="http://www.ikarus-framework.de/XSD/types.xsd" />
+	<xs:include schemaLocation="types.xsd" />
 
 	<!-- Definition of root element -->
 	<xs:element name="server">
@@ -31,8 +31,7 @@
 	<!-- Definition of package element -->
 	<xs:complexType name="package">
 		<xs:sequence>
-			<xs:element name="packagename" maxOccurs="unbounded"
-				minOccurs="1">
+			<xs:element name="packagename" maxOccurs="unbounded" minOccurs="1">
 				<xs:complexType>
 					<xs:simpleContent>
 						<xs:extension base="xs:string">
@@ -41,8 +40,7 @@
 					</xs:simpleContent>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="packagedescription" maxOccurs="unbounded"
-				minOccurs="1">
+			<xs:element name="packagedescription" maxOccurs="unbounded" minOccurs="1">
 				<xs:complexType>
 					<xs:simpleContent>
 						<xs:extension base="xs:string">
