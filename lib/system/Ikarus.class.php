@@ -320,7 +320,7 @@ class Ikarus extends Singleton {
 		if (static::componentAbbreviationExists($abbreviation)) throw new StrictStandardException("Cannot load requested component: '%s': The requested component abbreviation does already exist", $componentName);
 		
 		// load component
-		if (!class_exists($componentName, true)) throw new StrictStandardException("Cannot load requested component '%s': The requested component was not found", $componentName);
+		if (!class_exists($componentName, true)) throw new SystemException("Cannot load requested component '%s': The requested component was not found", $componentName);
 		
 		// create component instance
 		static::$componentList[$abbreviation] = new $componentName();
