@@ -1,5 +1,6 @@
 <?php
 namespace ikarus\pattern;
+use ikarus\system\exception\StrictStandardException;
 
 /**
  * Non instantiable class pattern (Classes who inerhit from this will never have an instance)
