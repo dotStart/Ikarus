@@ -57,10 +57,10 @@ abstract class Singleton {
 		$className = get_called_class();
 		
 		// create instance if needed
-		if(array_key_exists(static::$instances[$className])) static::$instances[$className] = new $className();
+		if(!array_key_exists($className, static::$instances)) static::$instances[$className] = new $className();
 		
 		// return instance
-		return static::$instances[$class];
+		return static::$instances[$className];
 	}
 }
 ?>
