@@ -127,6 +127,13 @@ abstract class AbstractApplication implements IApplication {
 	 */
 	public function shutdown() {
 		Ikarus::getEventManager()->fire($this, 'shutdown');
+		
+		$this->shutdownDefaultComponents();
 	}
+	
+	/**
+	 * @see ikarus\system\application.IApplication::shutdownDefaultComponents()
+	 */
+	public function shutdownDefaultComponents() { }
 }
 ?>
