@@ -134,14 +134,16 @@ class Ikarus extends Singleton {
 	 */
 	public static function componentLoaded($componentName, $abbreviation = null) {
 		// get abbreviation
-		if ($abbreviation === null) $abbreviation = $componentName;
+		if ($abbreviation === null) $abbreviation = basename($componentName);
 		
 		// check for abbreviation
 		if (!static::componentAbbreviationExists($abbreviation)) return false;
 		
 		// check for correct type
-		if (gettype(static::getComponent($abbreviation)) == $componentName) return true;
-		return false;
+		// FIXME: This check will not work correctly. gettype() will return the class name _WITH_ the namespace prefix. The abbreviation will not contain the complete path
+		// if (gettype(static::getComponent($abbreviation)) == $componentName) return true;
+		// return false;
+		return true;
 	}
 	
 	/**
@@ -313,7 +315,7 @@ class Ikarus extends Singleton {
 	 */
 	public static function requestComponent($componentName, $abbreviation = null) {
 		// get abbreviation
-		if ($abbreviation === null) $abbreviation = $componentName;
+		if ($abbreviation === null) $abbreviation = basename($componentName);
 		
 		// check for already existing components
 		if (static::componentLoaded($componentName, $abbreviation)) return true;
