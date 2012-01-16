@@ -1,5 +1,6 @@
 <?php
 namespace ikarus\pattern;
+use ikarus\system\exception\StrictStandardException;
 
 /**
  * For lazy programmers: Singleton
