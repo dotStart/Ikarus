@@ -44,7 +44,7 @@ class NamedUserException extends SystemException {
 	public function show() {
 		// template system
 		if (Ikarus::componentLoaded('ikarus\system\template\Template') and !empty($this->template)) {
-			Ikarus::getTemplate()->assign('message', $this->message);
+			Ikarus::getTemplate()->assignVariables('message', $this->message);
 			Ikarus::getTemplate()->display($this->template);
 			return;
 		}
