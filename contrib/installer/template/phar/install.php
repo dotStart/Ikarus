@@ -13,7 +13,7 @@
  */
 
 // phar extractor
-if (file_exists(dirname(__FILE__).'/setup.phar')) {
+if (!file_exists(dirname(__FILE__).'/setup.phar')) {
 	// read this file
 	$fp = fopen(__FILE__, 'r');
 	
