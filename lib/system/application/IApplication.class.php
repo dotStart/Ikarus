@@ -17,11 +17,10 @@ interface IApplication {
 	 * Creates a new instance of type IApplication
 	 * @param			string			$abbreviation
 	 * @param			string			$libraryPath
-	 * @param			string			$templatePath
 	 * @param			integer			$packageID
 	 * @param			string			$environment
 	 */
-	public function __construct($abbreviation, $libraryPath, $templatePath, $packageID, $environment, $primaryApplication = false);
+	public function __construct($abbreviation, $libraryPath, $packageID, $environment, $primaryApplication = false);
 	
 	/**
 	 * Boots the application
@@ -52,12 +51,6 @@ interface IApplication {
 	 * @return			integer
 	 */
 	public function getPackageID();
-	
-	/**
-	 * Returns the template path of this application
-	 * @return			string
-	 */
-	public function getTemplatePath();
 	
 	/**
 	 * Returns true if this application is the main application of this framework instance

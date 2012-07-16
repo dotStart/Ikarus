@@ -53,18 +53,11 @@ abstract class AbstractApplication implements IApplication {
 	protected $primaryApplication = false;
 	
 	/**
-	 * Contains an absolute template path for this application
-	 * @var			string
-	 */
-	protected $templatePath = '';
-	
-	/**
 	 * @see ikarus\system\application.IApplication::__construct()
 	 */
-	public function __construct($abbreviation, $libraryPath, $templatePath, $packageID, $environment, $primaryApplication = false) {
+	public function __construct($abbreviation, $libraryPath, $packageID, $environment, $primaryApplication = false) {
 		$this->abbreviation = $abbreviation;
 		$this->libraryPath = $libraryPath;
-		$this->templatePath = $templatePath;
 		$this->packageID = $packageID;
 		$this->environment = $environment;
 		$this->primaryApplication = $primaryApplication;
@@ -108,13 +101,6 @@ abstract class AbstractApplication implements IApplication {
 	 */
 	public function getPackageID() {
 		return $this->packageID;
-	}
-	
-	/**
-	 * @see ikarus\system\application.IApplication::getTemplatePath()
-	 */
-	public function getTemplatePath() {
-		return $this->templatePath;
 	}
 	
 	/**
