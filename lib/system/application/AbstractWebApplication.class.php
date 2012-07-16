@@ -45,14 +45,5 @@ abstract class AbstractWebApplication extends AbstractApplication {
 			Ikarus::getLanguageManager()->configure($this);
 		}
 	}
-	
-	/**
-	 * @see ikarus\system\application.AbstractApplication::shutdownDefaultComponents()
-	 */
-	public function shutdownDefaultComponents() {
-		parent::shutdownDefaultComponents();
-		
-		Ikarus::getTemplate()->shutdown();
-	}
 }
 ?>
