@@ -50,6 +50,7 @@ class RequestDispatcher extends Singleton {
 		if (!ArrayUtil::in_array(array_keys($requestParameters), $this->availableControllerTypes)) $requestParameters['page'] = 'Index';
 		
 		// search for routes
+		// Note: This allows shadowing existing static routes (Defined by files)
 		foreach($this->availableRoutes as $routeParameter => $routes)
 			if (isset($requestParameters[$routeParameter]))
 				foreach($routes as $routeName => $executionInformation)
