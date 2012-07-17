@@ -49,15 +49,15 @@ class RequestDispatcher extends Singleton {
 		// FIXME: This should not be hardcoded
 		if (!ArrayUtil::in_array(array_keys($requestParameters), $this->availableControllerTypes)) $requestParameters['page'] = 'Index';
 		
-		// find controller types
-		foreach($this->availableControllerTypes as $name => $controllerDirectory)
-			if (isset($requestParameters[$name]) and $this->loadController($requestParameters['name'], $controllerDirectory, $application)) return $this->executeController($requestParameters['name'], $controllerDirectory, $application);
-		
 		// search for routes
 		foreach($this->availableRoutes as $routeParameter => $routes)
 			if (isset($requestParameters[$routeParameter]))
 				foreach($routes as $routeName => $executionInformation)
 					if ($routeName == $requestParameters[$routeParameter] and $this->loadController($executionInformation['controllerName'], $executionInformation['controllerDirectory'], $application)) return $this->executeController($executionInformation['controllerName'], $executionInformation['controllerDirectory'], $application);
+		
+		// find controller types
+		foreach($this->availableControllerTypes as $name => $controllerDirectory)
+			if (isset($requestParameters[$name]) and $this->loadController($requestParameters['name'], $controllerDirectory, $application)) return $this->executeController($requestParameters['name'], $controllerDirectory, $application);
 		
 		throw new IllegalLinkException('There are no routes and no controllers available');
 	}
