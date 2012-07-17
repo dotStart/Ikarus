@@ -3,6 +3,7 @@ namespace ikarus\system\request;
 use ikarus\pattern\Singleton;
 use ikarus\system\exception\IllegalLinkException;
 use ikarus\system\Ikarus;
+use ikarus\util\ArrayUtil;
 
 /**
  * Manages routes and dispatches them to correct controller
@@ -46,7 +47,7 @@ class RequestDispatcher extends Singleton {
 	public function dispatch($application, $requestParameters) {
 		// set defaults
 		// FIXME: This should not be hardcoded
-		if (!count(array_diff(array_keys($this->availableControllerTypes), array_keys($requestParameters)))) $requestParameters['page'] = 'Index';
+		if (!ArrayUtil::in_array(array_keys($requestParameters), $this->availableControllerTypes)) $requestParameters['page'] = 'Index';
 		
 		// find controller types
 		foreach($this->availableControllerTypes as $name => $controllerDirectory)
