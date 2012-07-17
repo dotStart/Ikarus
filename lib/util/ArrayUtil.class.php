@@ -14,6 +14,20 @@ namespace ikarus\util;
 class ArrayUtil {
 	
 	/**
+	 * Searches for a part of $search in $array
+	 * @param			array			$array
+	 * @param			array			$search
+	 * @return			boolean
+	 * @todo Check for a better way to do this.
+	 */
+	public static function in_array($array, $search) {
+		foreach($array as $val) {
+			if (in_array($val, $search)) return true;
+		}
+		return false;
+	}
+	
+	/**
 	 * Applies StringUtil::trim() to all elements of an array.
 	 * Note: This method is recursive
 	 * @param			array			$array
