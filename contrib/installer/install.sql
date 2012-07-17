@@ -86,7 +86,7 @@ DROP TABLE IF EXISTS ikarus1_request_controller_type;
 CREATE TABLE ikarus1_request_controller_type (
 	controllerTypeID INT UNSIGNED AUTO_INCREMENT NOT NULL,
 	parameterName VARCHAR (255) NOT NULL,
-	controllerDirectory VARCHAR (255) NOT NULL,
+	controllerNamespace VARCHAR (255) NOT NULL,
 	packageID INT NOT NULL,
 	PRIMARY KEY (controllerTypeID)
 );
@@ -97,7 +97,7 @@ CREATE TABLE ikarus1_request_route (
 	parameterName VARCHAR (250) NOT NULL,
 	routeName VARCHAR (255) NOT NULL,
 	controllerName VARCHAR (255) NOT NULL,
-	controllerDirectory VARCHAR (255) NOT NULL,
+	controllerNamespace VARCHAR (255) NOT NULL,
 	packageID INT NOT NULL,
 	PRIMARY KEY (routeID)
 );
