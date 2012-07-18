@@ -36,7 +36,7 @@ class ClassUtil {
 	 */
 	public static function getNamespace($className) {
 		if (!is_string($className)) $className = get_class($className);
-		$reflectionClass = new ReflectionClass($calssName);
+		$reflectionClass = new ReflectionClass($className);
 		return $reflectionClass->getNamespaceName();
 	}
 	
