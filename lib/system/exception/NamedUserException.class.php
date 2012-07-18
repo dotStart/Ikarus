@@ -25,13 +25,6 @@ class NamedUserException extends SystemException {
 	protected $header = 'HTTP/1.1 400 Bad Request';
 	
 	/**
-	 * Contains the name of a template that should appear
-	 * @var			string
-	 * @deprecated
-	 */
-	protected $template = null;
-	
-	/**
 	 * Creates a new instance of type SystemException
 	 * @param			string			$message
 	 */
