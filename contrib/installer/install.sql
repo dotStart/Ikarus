@@ -148,7 +148,7 @@ CREATE TABLE ikarus1_style_css (
 );
 
 -- rows
-INSERT INTO ikarus1_application (applicationAbbreviation, className, libraryPath, templatePath, packageID) VALUES ('ikarus', 'ikarus\\system\\application\\IkarusApplication', './lib/', './template/', 1);
+INSERT INTO ikarus1_application (applicationAbbreviation, className, libraryNamespace, templatePath, packageID) VALUES ('ikarus', 'ikarus\\system\\application\\IkarusApplication', 'admin', './template/', 1);
 
 INSERT INTO ikarus1_cache_adapter (adapterClass) VALUES ('DiskCacheAdapter');
 INSERT INTO ikarus1_cache_source (adapterID, adapterParameters, isDefaultConnection, fallbackFor, isDisabled) VALUES (1, '', 1, 0, 0);
@@ -160,9 +160,9 @@ INSERT INTO ikarus1_option (optionID, optionName, optionValue, optionType, packa
 	(NULL,	'filesystem.general.defaultAdapter',	'Disk',	'text',		1),
 	(NULL,	'filesystem.general.adapterParameters',	NULL,	'serialized',	1);
 
-INSERT INTO ikarus1_request_controller_type (controllerTypeID, parameterName, controllerDirectory, packageID) VALUES
-	(NULL, 'action', 'action/', 1),
-	(NULL, 'form', 'form/', 1),
-	(NULL, 'page', 'page/', 1);
+INSERT INTO ikarus1_request_controller_type (controllerTypeID, parameterName, controllerNamespace, packageID) VALUES
+	(NULL, 'action', 'action', 1),
+	(NULL, 'form', 'form', 1),
+	(NULL, 'page', 'page', 1);
 
 INSERT INTO ikarus1_style (styleTitle, authorName, authorAlias, authorUrl, styleVersion, styleUrl, styleUrlAlias, licenseName, licenseUrl, environment, isDefault, isEnabled, packageID) VALUES ('Ikarus Default Administration', 'Johannes Donath', 'Akkarin', 'http://www.akkarin.de', '1.0.0 Alpha 1', 'http://www.ikarus-framework.de', 'Ikarus Framework', 'GNU Lesser Public License', 'http://www.gnu.org/licenses/lgpl.txt', 'administration', 1, 1, 1);
