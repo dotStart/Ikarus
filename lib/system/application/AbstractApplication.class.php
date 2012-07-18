@@ -35,10 +35,10 @@ abstract class AbstractApplication implements IApplication {
 	protected $environment = '';
 	
 	/**
-	 * Contains an absolute library path for this application
+	 * Contains an library namespace for this application
 	 * @var			string
 	 */
-	protected $libraryPath = '';
+	protected $libraryNamespace = '';
 	
 	/**
 	 * Contains the packageID of this application
@@ -55,9 +55,9 @@ abstract class AbstractApplication implements IApplication {
 	/**
 	 * @see ikarus\system\application.IApplication::__construct()
 	 */
-	public function __construct($abbreviation, $libraryPath, $packageID, $environment, $primaryApplication = false) {
+	public function __construct($abbreviation, $libraryNamespace, $packageID, $environment, $primaryApplication = false) {
 		$this->abbreviation = $abbreviation;
-		$this->libraryPath = $libraryPath;
+		$this->libraryNamespace = $abbreviation.'\\'.$libraryNamespace;
 		$this->packageID = $packageID;
 		$this->environment = $environment;
 		$this->primaryApplication = $primaryApplication;
@@ -90,10 +90,10 @@ abstract class AbstractApplication implements IApplication {
 	}
 	
 	/**
-	 * @see ikarus\system\application.IApplication::getLibraryPath()
+	 * @see ikarus\system\application.IApplication::getLibraryNamespace()
 	 */
-	public function getLibraryPath() {
-		return $this->libraryPath;
+	public function getLibraryNamespace() {
+		return $this->libraryNamespace;
 	}
 	
 	/**
