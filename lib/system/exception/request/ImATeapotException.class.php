@@ -1,5 +1,6 @@
 <?php
-namespace ikarus\system\exception;
+namespace ikarus\system\exception\request;
+use ikarus\system\exception\NamedUserException;
 
 /**
  * This exception will be thrown if someone tries to fill coffee in this teapot.

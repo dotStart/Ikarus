@@ -1,5 +1,6 @@
 <?php
-namespace ikarus\system\exception;
+namespace ikarus\system\exception\request;
+use ikarus\system\exception\NamedUserException;
 
 /**
  * @author		Johannes Donath
