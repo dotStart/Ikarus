@@ -151,17 +151,20 @@ class Ikarus extends NonInstantiableClass {
 	 * @param			string			$abbreviation
 	 */
 	public static function componentLoaded($componentName, $abbreviation = null) {
-		// get abbreviation
-		if ($abbreviation === null) $abbreviation = basename($componentName);
+		// check abbreviation
+		if ($abbreviation != null) {
+			if (static::componentAbbreviationExists($abbreviation) and ($componentName == null or ($componentName != null and get_class(static::getComponent($abbreviation)) == $componentName))) return true;
 		
-		// check for abbreviation
-		if (!static::componentAbbreviationExists($abbreviation)) return false;
+			return false;
+		}
 		
-		// check for correct type
-		// FIXME: This check will not work correctly. gettype() will return the class name _WITH_ the namespace prefix. The abbreviation will not contain the complete path
-		// if (gettype(static::getComponent($abbreviation)) == $componentName) return true;
-		// return false;
-		return true;
+		// fallback check
+		foreach(static::$componentList as $component) {
+			if (get_class($component) == $componentName) return true;
+		}
+		
+		// nothing found
+		return false;
 	}
 	
 	/**
