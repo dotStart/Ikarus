@@ -1,6 +1,5 @@
 <?php
 namespace ikarus\system\exception\encryption;
-use ikarus\system\exception\SystemException;
 
 /**
  * This exception will be thrown if an encryption key problem occurs.
@@ -12,5 +11,5 @@ use ikarus\system\exception\SystemException;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-class KeyException extends SystemException { }
+class KeyException extends EncryptionException { }
 ?>
