@@ -1,9 +1,27 @@
 <?php
+/**
+ * This file is part of the Ikarus Framework.
+ *
+ * The Ikarus Framework is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * The Ikarus Framework is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
+ */
 namespace ikarus\system\request;
 use ikarus\pattern\Singleton;
-use ikarus\system\exception\IllegalLinkException;
+use ikarus\system\exception\request\IllegalLinkException;
 use ikarus\system\Ikarus;
 use ikarus\util\ArrayUtil;
+use ikarus\util\ClassUtil;
+use ikarus\util\FileUtil;
 
 /**
  * Manages routes and dispatches them to correct controller
@@ -40,7 +58,7 @@ class RequestDispatcher extends Singleton {
 	
 	/**
 	 * Dispatches a request to correct controller
-	 * @param			string			$application
+	 * @param			IApplication		$application
 	 * @param			string			$requestParameters
 	 * @throws IllegalLinkException
 	 */
@@ -54,13 +72,44 @@ class RequestDispatcher extends Singleton {
 		foreach($this->availableRoutes as $routeParameter => $routes)
 			if (isset($requestParameters[$routeParameter]))
 				foreach($routes as $routeName => $executionInformation)
-					if ($routeName == $requestParameters[$routeParameter] and $this->loadController($executionInformation['controllerName'], $executionInformation['controllerDirectory'], $application)) return $this->executeController($executionInformation['controllerName'], $executionInformation['controllerDirectory'], $application);
+					if ($routeName == $requestParameters[$routeParameter] and $this->loadController($executionInformation['controllerName'], $executionInformation['controllerNamespace'], $application)) return $this->executeController($executionInformation['controllerName'], $executionInformation['controllerNamespace'], $application);
 		
 		// find controller types
-		foreach($this->availableControllerTypes as $name => $controllerDirectory)
-			if (isset($requestParameters[$name]) and $this->loadController($requestParameters['name'], $controllerDirectory, $application)) return $this->executeController($requestParameters['name'], $controllerDirectory, $application);
+		foreach($this->availableControllerTypes as $name => $controllerNamespace)
+			if (isset($requestParameters[$name]) and $this->loadController($requestParameters[$name].ucfirst($name), $controllerNamespace, $application)) return $this->executeController($requestParameters['name'], $controllerNamespace, $application);
 		
-		throw new IllegalLinkException('There are no routes and no controllers available');
+		throw new IllegalLinkException('There are no routes and no controllers available for this request.');
+	}
+	
+	/**
+	 * Executes a controller.
+	 * @param			string			$controllerName
+	 * @param			string			$controllerNamespace
+	 * @param			IApplication		$application
+	 */
+	public function executeController($controllerName, $controllerNamespace, $application) {
+		// build classPath
+		$classPath = ClassUtil::buildPath($application->getLibraryNamespace(), $controllerNamespace, $controllerName);
+		
+		// create controller instance
+		$controller = new $classPath();
+		
+		// execute controller
+		$controller->init();
+	}
+	
+	/**
+	 * Loads a controller.
+	 * @param		string			$controllerName
+	 * @param		string			$controllerNamespace
+	 * @param		IApplication		$application
+	 */
+	public function loadController($controllerName, $controllerNamespace, $application) {
+		// build classPath
+		$classPath = ClassUtil::buildPath($application->getLibraryNamespace(), $controllerNamespace, $controllerName);
+		
+		// try to load controller
+		return class_exists($classPath, true);
 	}
 	
 	/**
