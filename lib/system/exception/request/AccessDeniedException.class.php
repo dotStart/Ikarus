@@ -15,6 +15,7 @@ class AccessDeniedException extends RequestException {
 	
 	/**
 	 * @see ikarus\system\exception.NamedUserException::$header
+	 * @todo Check for a better header.
 	 */
 	protected $header = 'HTTP/1.1 423 Locked';
 }
