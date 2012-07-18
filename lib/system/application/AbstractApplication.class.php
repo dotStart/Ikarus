@@ -1,8 +1,8 @@
 <?php
 namespace ikarus\system\application;
 use ikarus\system\exception\StrictStandardException;
-
 use ikarus\system\Ikarus;
+use ikarus\util\ClassUtil;
 
 /**
  * Implements needed default methods for application cores
@@ -57,7 +57,7 @@ abstract class AbstractApplication implements IApplication {
 	 */
 	public function __construct($abbreviation, $libraryNamespace, $packageID, $environment, $primaryApplication = false) {
 		$this->abbreviation = $abbreviation;
-		$this->libraryNamespace = $abbreviation.'\\'.$libraryNamespace;
+		$this->libraryNamespace = ClassUtil::buildPath($abbreviation, $libraryNamespace);
 		$this->packageID = $packageID;
 		$this->environment = $environment;
 		$this->primaryApplication = $primaryApplication;
