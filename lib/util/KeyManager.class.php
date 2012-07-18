@@ -1,6 +1,6 @@
 <?php
 namespace ikarus\util;
-use ikarus\system\exception\KeyException;
+use ikarus\system\exception\encryption\KeyException;
 
 /**
  * Manages all openssl keys used by ikarus
