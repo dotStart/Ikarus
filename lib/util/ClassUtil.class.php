@@ -1,5 +1,7 @@
 <?php
 namespace ikarus\util;
+use ikarus\system\exception\StrictStandardException;
+
 use \ReflectionClass;
 
 /**
@@ -13,6 +15,35 @@ use \ReflectionClass;
  * @version		2.0.0-0001
  */
 class ClassUtil {
+	
+	/**
+	 * Builds a new class path.
+	 * @param			string			$part1
+	 * @param			string			$part2
+	 * @param			string			...
+	 * @throws StrictStandardException
+	 */
+	public static function buildPath() {
+		// Dumb developer
+		if (count(func_get_args()) <= 0) throw new StrictStandardException("You can't build an empty class path.");
+		
+		// build path
+		$path = "";
+		
+		foreach(func_get_args() as $element) {
+			// kill \ on index 0 (if any)
+			if ($element{0} == '\\') $element = substr($element, 1);
+			
+			// append part
+			$path .= $element;
+			
+			// add a new \ at the end
+			if (substr($element, -1) != '\\') $path .= '\\';
+		}
+		
+		// remove last \
+		return substr($path, 0, (strlen($path) - 1));
+	}
 	
 	/**
 	 * @see class_alias()
