@@ -15,7 +15,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
-namespace ikarus\system\exception;
+namespace ikarus\system\exception\io;
+use ikarus\system\exception\SystemException;
 
 /**
  * This exception will be thrown if an IO problem occurs.
