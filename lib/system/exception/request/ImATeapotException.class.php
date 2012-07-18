@@ -1,6 +1,5 @@
 <?php
 namespace ikarus\system\exception\request;
-use ikarus\system\exception\NamedUserException;
 
 /**
  * This exception will be thrown if someone tries to fill coffee in this teapot.
@@ -12,7 +11,7 @@ use ikarus\system\exception\NamedUserException;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-class IAmATeapotException extends NamedUserException {
+class IAmATeapotException extends RequestException {
 	
 	/**
 	 * @see ikarus\system\exception.NamedUserException::$header

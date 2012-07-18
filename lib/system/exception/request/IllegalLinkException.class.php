@@ -1,6 +1,5 @@
 <?php
 namespace ikarus\system\exception\request;
-use ikarus\system\exception\NamedUserException;
 
 /**
  * @author		Johannes Donath
@@ -11,7 +10,7 @@ use ikarus\system\exception\NamedUserException;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-class IllegalLinkException extends NamedUserException {
+class IllegalLinkException extends RequestException {
 	
 	/**
 	 * @see ikarus\system\exception.NamedUserException::$header
