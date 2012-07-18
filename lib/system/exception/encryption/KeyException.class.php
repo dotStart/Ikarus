@@ -1,5 +1,6 @@
 <?php
-namespace ikarus\system\exception;
+namespace ikarus\system\exception\encryption;
+use ikarus\system\exception\SystemException;
 
 /**
  * This exception will be thrown if an encryption key problem occurs.
