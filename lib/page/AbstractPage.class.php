@@ -179,8 +179,8 @@ abstract class AbstractPage implements IPage {
 		Ikarus::getEventManager()->fire($this, 'registerDependencies');
 		
 		// group manager
-		$this->requirements[] = 'ikarus\\system\\group\\GroupManager';
-		$this->requirements[] = 'ikarus\\system\\io\\WebOutputManager';
+		$this->requirements['GroupManager'] = 'ikarus\\system\\group\\GroupManager';
+		$this->requirements['WebOutputManager'] = 'ikarus\\system\\io\\WebOutputManager';
 	}
 	
 	/**
