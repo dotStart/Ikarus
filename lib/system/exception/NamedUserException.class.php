@@ -16,7 +16,7 @@ class NamedUserException extends SystemException {
 	/**
 	 * @see ikarus\system\exception.SystemException::EXCEPTION_TITLE
 	 */
-	const EXCEPTION_TITLE = 'Illegal link';
+	const EXCEPTION_TITLE = 'Unknown problem';
 	
 	/**
 	 * Contains a HTTP header that should be used
