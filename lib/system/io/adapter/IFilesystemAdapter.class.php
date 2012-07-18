@@ -39,7 +39,7 @@ interface IFilesystemAdapter {
 	/**
 	 * Creates a new directory
 	 * @param			string			$directoryName
-	 * @throws			ikarus\system\exception\IOException
+	 * @throws			ikarus\system\exception\io\IOException
 	 * @throws			ikarus\system\exception\StrictStandardException
 	 * @return			void
 	 */
@@ -49,7 +49,7 @@ interface IFilesystemAdapter {
 	 * Creates a new file with given content
 	 * @param			string			$fileName
 	 * @param			string			$fileContent
-	 * @throws			ikarus\system\exception\IOException
+	 * @throws			ikarus\system\exception\io\IOException
 	 * @throws			ikarus\system\exception\StrictStandardException
 	 * @throws			ikarus\system\exception\SystemException
 	 * @return			void
@@ -59,7 +59,7 @@ interface IFilesystemAdapter {
 	/**
 	 * Deletes a directory
 	 * @param			string			$directoryName
-	 * @throws			ikarus\system\exception\IOException
+	 * @throws			ikarus\system\exception\io\IOException
 	 * @throws			ikarus\system\exception\StrictStandardException
 	 * @return			void
 	 */
@@ -68,7 +68,7 @@ interface IFilesystemAdapter {
 	/**
 	 * Deletes a file
 	 * @param			string			$fileName
-	 * @throws			ikarus\system\exception\IOException
+	 * @throws			ikarus\system\exception\io\IOException
 	 * @throws			ikarus\system\exception\StrictStandardException
 	 * @throws			ikarus\system\exception\SystemException
 	 * @return			void
@@ -78,7 +78,7 @@ interface IFilesystemAdapter {
 	/**
 	 * Checks whether a file exists
 	 * @param			string			$fileName
-	 * @throws			ikarus\system\exception\IOException
+	 * @throws			ikarus\system\exception\io\IOException
 	 * @throws			ikarus\system\exception\StrictStandardException
 	 * @return			boolean
 	 */
@@ -87,7 +87,7 @@ interface IFilesystemAdapter {
 	/**
 	 * Checks whether a file is readable
 	 * @param			string			$fileName
-	 * @throws			ikarus\system\exception\IOException
+	 * @throws			ikarus\system\exception\io\IOException
 	 * @throws			ikarus\system\exception\StrictStandardException
 	 * @return			boolean
 	 */
@@ -96,7 +96,7 @@ interface IFilesystemAdapter {
 	/**
 	 * Checks whether a file is writeable
 	 * @param			string			$fileName
-	 * @throws			ikarus\system\exception\IOException
+	 * @throws			ikarus\system\exception\io\IOException
 	 * @throws			ikarus\system\exception\StrictStandardException
 	 * @return			boolean
 	 */
@@ -105,7 +105,7 @@ interface IFilesystemAdapter {
 	/**
 	 * Returns the creation time of a file as unix timestamp
 	 * @param			string			$targetPath
-	 * @throws			ikarus\system\exception\IOException
+	 * @throws			ikarus\system\exception\io\IOException
 	 * @throws			ikarus\system\exception\StrictStandardException
 	 * @return			integer
 	 */
@@ -114,7 +114,7 @@ interface IFilesystemAdapter {
 	/**
 	 * Returns an iterator with all directory contents
 	 * @param			string			$directoryName
-	 * @throws			ikarus\system\exception\IOException
+	 * @throws			ikarus\system\exception\io\IOException
 	 * @throws			ikarus\system\exception\StrictStandardException
 	 * @return			ikarus\system\io\FilesystemIterator
 	 */
@@ -123,7 +123,7 @@ interface IFilesystemAdapter {
 	/**
 	 * Returns the size of a file
 	 * @param			string			$fileName
-	 * @throws			ikarus\system\exception\IOException
+	 * @throws			ikarus\system\exception\io\IOException
 	 * @throws			ikarus\system\exception\StrictStandardException
 	 * @return			integer
 	 */
@@ -132,7 +132,7 @@ interface IFilesystemAdapter {
 	/**
 	 * Returns the modification time of a file as unix timestamp
 	 * @param			string			$fileName
-	 * @throws			ikarus\system\exception\IOException
+	 * @throws			ikarus\system\exception\io\IOException
 	 * @throws			ikarus\system\exception\StrictStandardException
 	 * @return			integer
 	 */
@@ -141,7 +141,7 @@ interface IFilesystemAdapter {
 	/**
 	 * Checks whether the target is a directory
 	 * @param			string			$targetPath
-	 * @throws			ikarus\system\exception\IOException
+	 * @throws			ikarus\system\exception\io\IOException
 	 * @throws			ikarus\system\exception\StrictStandardException
 	 * @return			boolean
 	 */
@@ -150,7 +150,7 @@ interface IFilesystemAdapter {
 	/**
 	 * Checks whether the target is a file
 	 * @param			string			$targetPath
-	 * @throws			ikarus\system\exception\IOException
+	 * @throws			ikarus\system\exception\io\IOException
 	 * @throws			ikarus\system\exception\StrictStandardException
 	 * @return			boolean
 	 */
@@ -166,7 +166,7 @@ interface IFilesystemAdapter {
 	 * Modifies an existing file
 	 * @param			string			$fileName
 	 * @param			string			$fileContent
-	 * @throws			ikarus\system\exception\IOException
+	 * @throws			ikarus\system\exception\io\IOException
 	 * @throws			ikarus\system\exception\StrictStandardException
 	 * @throws			ikarus\system\exception\SystemException
 	 * @return			void
@@ -176,7 +176,7 @@ interface IFilesystemAdapter {
 	/**
 	 * Reads the whole file content
 	 * @param			string			$fileName
-	 * @throws			ikarus\system\exception\IOException
+	 * @throws			ikarus\system\exception\io\IOException
 	 * @throws			ikarus\system\exception\StrictStandardException
 	 * @throws			ikarus\system\exception\SystemException
 	 * @return			string
