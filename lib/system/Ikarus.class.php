@@ -26,11 +26,13 @@ use ikarus\system\exception\StrictStandardException;
 use ikarus\system\exception\SystemException;
 use ikarus\system\extension\ExtensionManager;
 use ikarus\system\io\FilesystemManager;
+use ikarus\util\ClassUtil;
 use ikarus\util\FileUtil;
 
 // includes
 require_once(IKARUS_DIR.'lib/core.defines.php');
 require_once(IKARUS_DIR.'lib/pattern/NonInstantiableClass.class.php');
+require_once(IKARUS_DIR.'lib/util/ClassUtil.class.php');
 
 /**
  * Manages all core instances
@@ -367,6 +369,11 @@ class Ikarus extends NonInstantiableClass {
 				// include needed file
 				if (file_exists($classPath)) {
 					require_once($classPath);
+					
+					// check for NotImplemented patern
+					if (ClassUtil::isInstanceOf($className, 'ikarus\\pattern\\NotImplemented')) throw new SystemException("Cannot load class '%s': %s", $className, 'The class isn\'t implemented');
+					
+					// stop here
 					return;
 				}
 			} elseif (static::$applicationManagerObj->applicationPrefixExists($applicationPrefix)) {
@@ -374,7 +381,15 @@ class Ikarus extends NonInstantiableClass {
 				$classPath = static::$applicationManagerObj->getApplication($applicationPrefix)->getLibraryPath().implode('/', $namespaces) . '.class.php';
 				
 				// include needed file
-				if (file_exists($classPath)) require_once($classPath);
+				if (file_exists($classPath)) {
+					require_once($classPath);
+					
+					// check for NotImplemented patern
+					if (ClassUtil::isInstanceOf($className, 'ikarus\\pattern\\NotImplemented')) throw new SystemException("Cannot load class '%s': %s", $className, 'The class isn\'t implemented');
+					
+					// stop here
+					return;
+				}
 			}
 		}
 		
