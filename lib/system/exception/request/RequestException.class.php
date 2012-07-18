@@ -28,5 +28,11 @@ use ikarus\system\exception\NamedUserException;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-abstract class RequestException extends NamedUserException { }
+abstract class RequestException extends NamedUserException {
+	
+	/**
+	 * @see ikarus\system\exception.SystemException::EXCEPTION_TITLE
+	 */
+	const EXCEPTION_TITLE = 'Request error';
+}
 ?>
