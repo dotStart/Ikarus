@@ -131,8 +131,8 @@ abstract class AbstractPage implements IPage {
 		Ikarus::getEventManager()->fire($this, 'checkDependencies');
 		
 		// check each dependency
-		foreach($this->requirements as $dependency) {
-			if (!Ikarus::componentAbbreviationExists($dependency)) throw new MissingDependencyException("Cannot find dependency '%s'", $dependency);
+		foreach($this->requirements as $abbreviation => $dependency) {
+			if ((is_integer($abbreviation) and !Ikarus::componentLoaded($dependency)) or (is_string($abbreviation)) and !Ikraus::componentLoaded($dependency, $abbreviation)) throw new MissingDependencyException("Cannot find dependency '%s'", $dependency);
 		}
 	}
 	
