@@ -371,7 +371,7 @@ class Ikarus extends NonInstantiableClass {
 					require_once($classPath);
 					
 					// check for NotImplemented patern
-					if (ClassUtil::isInstanceOf($className, 'ikarus\\pattern\\NotImplemented')) throw new SystemException("Cannot load class '%s': %s", $className, 'The class isn\'t implemented');
+					if ($className != 'ikarus\\pattern\\NotImplemented' and ClassUtil::isInstanceOf($className, 'ikarus\\pattern\\NotImplemented')) throw new SystemException("Cannot load class '%s': %s", $className, 'The class isn\'t implemented');
 					
 					// stop here
 					return;
@@ -385,7 +385,7 @@ class Ikarus extends NonInstantiableClass {
 					require_once($classPath);
 					
 					// check for NotImplemented patern
-					if (ClassUtil::isInstanceOf($className, 'ikarus\\pattern\\NotImplemented')) throw new SystemException("Cannot load class '%s': %s", $className, 'The class isn\'t implemented');
+					if ($className != 'ikarus\\pattern\\NotImplemented' and ClassUtil::isInstanceOf($className, 'ikarus\\pattern\\NotImplemented')) throw new SystemException("Cannot load class '%s': %s", $className, 'The class isn\'t implemented');
 					
 					// stop here
 					return;
