@@ -27,8 +27,9 @@ class NamedUserException extends SystemException {
 	/**
 	 * Contains the name of a template that should appear
 	 * @var			string
+	 * @deprecated
 	 */
-	protected $template = 'namedUserException';
+	protected $template = null;
 	
 	/**
 	 * Creates a new instance of type SystemException
