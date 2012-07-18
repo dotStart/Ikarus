@@ -22,7 +22,7 @@ class NamedUserException extends SystemException {
 	 * Contains a HTTP header that should be used
 	 * @var			string
 	 */
-	protected $header = 'HTTP/1.1 200 Ok';
+	protected $header = 'HTTP/1.1 400 Bad Request';
 	
 	/**
 	 * Contains the name of a template that should appear
