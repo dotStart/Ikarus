@@ -16,7 +16,7 @@
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
 namespace ikarus\system\exception\request;
-use ikarus\system\exception\ApplicationException;
+use ikarus\system\exception\NamedUserException;
 
 /**
  * The base class for all request related problems.
