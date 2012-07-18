@@ -10,8 +10,4 @@
  */
 
 require_once('./global.php');
-
-// dispatch request
-$request = new ikarus\system\request\RequestDispatcher();
-$request->dispatch('ikarus\admin', $_REQUEST);
 ?>
