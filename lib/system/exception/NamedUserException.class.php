@@ -3,6 +3,7 @@ namespace ikarus\system\exception;
 use ikarus\system\Ikarus;
 
 /**
+ * The base class for all user specific problems.
  * @author		Johannes Donath
  * @copyright		2011 Evil-Co.de
  * @package		de.ikarus-framework.core

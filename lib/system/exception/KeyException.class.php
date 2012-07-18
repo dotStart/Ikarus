@@ -2,6 +2,7 @@
 namespace ikarus\system\exception;
 
 /**
+ * This exception will be thrown if an encryption key problem occurs.
  * @author		Johannes Donath
  * @copyright		2011 Evil-Co.de
  * @package		de.ikarus-framework.core

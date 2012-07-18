@@ -2,6 +2,7 @@
 namespace ikarus\system\exception;
 
 /**
+ * The base class for all printable exceptions.
  * @author		Johannes Donath
  * @copyright		2011 Evil-Co.de
  * @package		de.ikarus-framework.core

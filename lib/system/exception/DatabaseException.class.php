@@ -3,7 +3,7 @@ namespace ikarus\system\exception;
 use ikarus\util\StringUtil;
 
 /**
- * This exception will thrown if a database problem occoures
+ * This exception will be thrown if a database problem occoures.
  * @author		Johannes Donath
  * @copyright		2011 Evil-Co.de
  * @package		de.ikarus-framework.core

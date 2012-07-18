@@ -3,6 +3,7 @@ namespace ikarus\system\exception;
 use \Exception;
 
 /**
+ * This exception will be thrown if an exception should be hidden (productive mode).
  * @author		Johannes Donath
  * @copyright		2011 Evil-Co.de
  * @package		de.ikarus-framework.core
