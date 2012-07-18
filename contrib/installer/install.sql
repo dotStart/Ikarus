@@ -4,7 +4,7 @@ CREATE TABLE ikarus1_application (
 	applicationTitle VARCHAR (255) NOT NULL,
 	applicationAbbreviation VARCHAR (255) NOT NULL,
 	className VARCHAR (400) NOT NULL,
-	libraryPath TEXT NOT NULL,
+	libraryNamespace TEXT NOT NULL,
 	templatePath TEXT NOT NULL,
 	packageID INT NOT NULL,
 	PRIMARY KEY (applicationID)
