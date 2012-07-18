@@ -156,9 +156,10 @@ INSERT INTO ikarus1_cache_source (adapterID, adapterParameters, isDefaultConnect
 INSERT INTO ikarus1_language (languageName, translatedName, languageCode, isEnabled, hasContent, isDefault, packageID) VALUES ('English', 'English', 'en', 1, 1, 1, 1);
 
 INSERT INTO ikarus1_option (optionID, optionName, optionValue, optionType, packageID) VALUES
-	(NULL,	'global.advanced.debug',					'1',		'boolean',	1),
-	(NULL,	'filesystem.general.defaultAdapter',		'Disk',		'text',		1),
-	(NULL,	'filesystem.general.adapterParameters',		NULL,		'serialized',	1);
+	(NULL,	'global.advanced.debug',					'1',		'boolean',		1),
+	(NULL,	'filesystem.general.defaultAdapter',		'Disk',		'text',			1),
+	(NULL,	'filesystem.general.adapterParameters',		NULL,		'serialized',	1),
+	(NULL,	'output.general.type',						'xml',		'text',			1);
 
 INSERT INTO ikarus1_request_controller_type (controllerTypeID, parameterName, controllerNamespace, packageID) VALUES
 	(NULL, 'action', 'action', 1),
