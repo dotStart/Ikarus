@@ -13,11 +13,6 @@ namespace ikarus\system\exception;
 class IllegalLinkException extends NamedUserException {
 	
 	/**
-	 * @see ikarus\system\exception.NamedUserException::$template
-	 */
-	protected $template = 'illegalLinkException';
-	
-	/**
 	 * @see ikarus\system\exception.NamedUserException::$header
 	 */
 	protected $header = 'HTTP/1.1 404 Not Found';
