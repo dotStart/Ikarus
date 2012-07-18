@@ -28,5 +28,11 @@ use ikarus\system\exception\SystemException;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-class IOException extends SystemException { }
+class IOException extends SystemException {
+	
+	/**
+	 * @see ikarus\system\exception.SystemException::EXCEPTION_TITLE
+	 */
+	const EXCEPTION_TITLE = 'IO error';
+}
 ?>
