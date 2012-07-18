@@ -30,6 +30,17 @@ class ClassUtil {
 	}
 	
 	/**
+	 * Returns the namespace of the given class.
+	 * @param			mixed			$className
+	 * @return			string
+	 */
+	public static function getNamespace($className) {
+		if (!is_string($className)) $className = get_class($className);
+		$reflectionClass = new ReflectionClass($calssName);
+		return $reflectionClass->getNamespaceName();
+	}
+	
+	/**
 	 * @see get_object_vars()
 	 */
 	public static function getPublicProperties($class) {
