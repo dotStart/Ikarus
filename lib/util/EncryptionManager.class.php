@@ -1,6 +1,7 @@
 <?php
 namespace ikarus\util;
-use ikarus\system\exception\SystemException;
+use ikarus\system\exception\encryption\EncryptionException;
+use ikarus\system\exception\encryption\EncryptionFailedException;
 
 /**
  * Manages encryptions
@@ -49,13 +50,13 @@ class EncryptionManager {
 	 * @return			string
 	 */
 	public static function decrypt($key, $data, $iv) {
-		if (!static::encryptionAvailable()) throw new SystemException("Encryption is not supported by php installation");
+		if (!static::encryptionAvailable()) throw new EncryptionException("Encryption is not supported by php installation");
 		
 		// open handle
 		$handle = static::getEncryptionHandle();
 		
 		// init mcrypt
-		if (mcrypt_generic_init($handle, $key, $iv) !== 0) throw new SystemException("Initialization of mcrypt failed");
+		if (mcrypt_generic_init($handle, $key, $iv) !== 0) throw new EncryptionException("Initialization of mcrypt failed");
 		
 		return mdecrypt_generic($handle, $data);
 	}
@@ -69,13 +70,13 @@ class EncryptionManager {
 	 * @return			string
 	 */
 	public static function encrypt($key, $data, $iv) {
-		if (!static::encryptionAvailable()) throw new SystemException("Encryption is not supported by php installation");
+		if (!static::encryptionAvailable()) throw new EncryptionException("Encryption is not supported by php installation");
 		
 		// open handle
 		$handle = static::getEncryptionHandle();
 		
 		// init mcrypt
-		if (mcrypt_generic_init($handle, $key, $iv) !== 0) throw new SystemException("Initialization of mcrypt failed");
+		if (mcrypt_generic_init($handle, $key, $iv) !== 0) throw new EncryptionException("Initialization of mcrypt failed");
 		
 		// encrypt
 		return mcrypt_generic($handle, $data);
@@ -89,7 +90,7 @@ class EncryptionManager {
 	 */
 	public static function encryptForMaintainer($data) {
 		// check for openssl
-		if (!extension_loaded('openssl')) throw new SystemException("Cannot encrypt data for maintainer: OpenSSL extension does not exist");
+		if (!extension_loaded('openssl')) throw new EncryptionException("Cannot encrypt data for maintainer: OpenSSL extension does not exist");
 		
 		// encrypt
 		openssl_public_encrypt($data, $data, KeyManager::getMaintainerKey());
@@ -115,7 +116,7 @@ class EncryptionManager {
 		$crypt = mcrypt_module_open(static::CRYPT_ALGORITHM, '', static::CRYPT_MODE, '');
 		
 		// validate handle
-		if (!$crypt) throw new SystemException("Cannot encrypt: An error occoured while opening mcrypt handle");
+		if (!$crypt) throw new EncryptionFailedException("Cannot encrypt: An error occoured while opening mcrypt handle");
 		
 		return $crypt;
 	}
