@@ -90,6 +90,6 @@ You should have received a copy of the [GNU Lesser General Public License]
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 [Code Guidelines]: Project-Ikarus/wiki/Code-guidelines
-[Getting Started]: Project-Ikarus/wiki/Get-started
+[Getting Started]: Project-Ikarus/wiki/Getting-started
 [Get involved]: Project-Ikarus/wiki/Get-involved
 [GNU Lesser General Public License]: http://www.gnu.org/licenses/lgpl.txt
