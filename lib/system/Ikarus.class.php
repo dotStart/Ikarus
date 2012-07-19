@@ -31,7 +31,12 @@ use ikarus\util\FileUtil;
 
 // includes
 require_once(IKARUS_DIR.'lib/core.defines.php');
+require_once(IKARUS_DIR.'lib/pattern/NotImplemented.class.php');
 require_once(IKARUS_DIR.'lib/pattern/NonInstantiableClass.class.php');
+require_once(IKARUS_DIR.'lib/system/exception/IPrintableException.class.php');
+require_once(IKARUS_DIR.'lib/system/exception/SystemException.class.php');
+require_once(IKARUS_DIR.'lib/system/exception/ApplicationException.class.php');
+require_once(IKARUS_DIR.'lib/system/exception/MissingDependencyException.class.php');
 require_once(IKARUS_DIR.'lib/util/ClassUtil.class.php');
 
 /**
