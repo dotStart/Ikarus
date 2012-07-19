@@ -56,7 +56,7 @@ First: All API methods **could** change in this stage of development. Please don
 ### Contribute
 There are two ways to contribute to Ikarus. You could either create pull requests to get your modifications merged or (if you want to contribute a lot of things) join our team.
 
-**Note:** We've some [[Code guidelines]] for our framework.
+**Note:** We've some [Code guidelines] for our framework.
 
 #### Pull requests
 1. Fork our repository
@@ -65,7 +65,7 @@ There are two ways to contribute to Ikarus. You could either create pull request
 4. Create a pull request
 
 #### Get involved
-Read the [[Get involved]] article to learn how to contribute to Ikarus!
+Read the [Get involved] article to learn how to contribute to Ikarus!
 
 ### Get the system rollin'
 **Note:** This is just a temporary way to install Ikarus. We'll release an installer soon (It will use PHAR which makes it very nifty).
@@ -89,6 +89,7 @@ GNU General Public License for more details.
 You should have received a copy of the [GNU Lesser General Public License]
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-[Code Guidelines]: Project-Ikarus/blob/200/CodeGuidelines.md
-[Getting Started]: Project-Ikarus/blob/200/GettingStarted.md
+[Code Guidelines]: Project-Ikarus/wiki/Code-guidelines
+[Getting Started]: Project-Ikarus/wiki/Get-started
+[Get involved]: Project-Ikarus/wiki/Get-involved
 [GNU Lesser General Public License]: http://www.gnu.org/licenses/lgpl.txt
