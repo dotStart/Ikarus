@@ -65,6 +65,13 @@ class ClassUtil {
 	 * @see class_alias()
 	 */
 	public static function createAlias($originalClass, $aliasClass) {
+		// convert object to string
+		if (!is_string($originalClass)) $originalClass = get_class($originalClass);
+		
+		// dependency check
+		if (!class_exists($originalClass, true)) throw new MissingDependencyException("Cannot find class '%s'", $originalClass);
+		
+		// create alias
 		return class_alias($originalClass, $aliasClass);
 	}
 	
@@ -72,6 +79,12 @@ class ClassUtil {
 	 * @see ReflectionClass::getConstants()
 	 */
 	public static function getConstantList($className) {
+		// convert object to string
+		if (!is_string($className)) $className = get_class($className);
+		
+		// dependency check
+		if (!class_exists($className, true)) throw new MissingDependencyException("Cannot find class '%s'", $className);
+		
 		$class = new ReflectionClass($className);
 		return $class->getConstants();
 	}
@@ -82,7 +95,13 @@ class ClassUtil {
 	 * @return			string
 	 */
 	public static function getNamespace($className) {
+		// convert object to string
 		if (!is_string($className)) $className = get_class($className);
+		
+		// dependency check
+		if (!class_exists($className, true)) throw new MissingDependencyException("Cannot find class '%s'", $className);
+		
+		// get information
 		$reflectionClass = new ReflectionClass($className);
 		return $reflectionClass->getNamespaceName();
 	}
@@ -90,8 +109,8 @@ class ClassUtil {
 	/**
 	 * @see get_object_vars()
 	 */
-	public static function getPublicProperties($class) {
-		return get_object_vars($class);
+	public static function getPublicProperties($instance) {
+		return get_object_vars($instance);
 	}
 	
 	/**
@@ -157,6 +176,10 @@ class ClassUtil {
 		if (!is_string($className)) $className = get_class($className);
 		if (!is_string($targetClass)) $targetClass = get_class($targetClass);
 		
+		// dependency check
+		if (!class_exists($className, true)) throw new MissingDependencyException("Cannot find class '%s'", $className);
+		if (!class_exists($targetClass, true)) throw new MissingDependencyException("Cannot find class '%s'", $targetClass);
+		
 		// normal classes
 		if (class_exists($targetClass)) return is_subclass_of($className, $targetClass);
 		
@@ -166,14 +189,22 @@ class ClassUtil {
 			return $reflectionClass->implementsInterface($targetClass);
 		}
 		
+		// fallback
 		return false;
 	}
 	
 	/**
 	 * @see method_exists()
 	 */
-	public static function methodExists($targetClass, $methodName) {
-		return method_exists($targetClass, $methodName);
+	public static function methodExists($className, $methodName) {
+		// convert object to string
+		if (!is_string($className)) $className = get_class($className);
+		
+		// dependency check
+		if (!class_exists($className, true)) throw new MissingDependencyException("Cannot find class '%s'", $className);
+		
+		// get information
+		return method_exists($className, $methodName);
 	}
 }
 ?>
