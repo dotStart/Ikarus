@@ -16,6 +16,7 @@
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
 namespace ikarus\system\style;
+use ikarus\system\application\IConfigurableComponent;
 use ikarus\system\application\IApplication;
 use ikarus\system\exception\SystemException;
 use ikarus\system\Ikarus;
@@ -30,7 +31,7 @@ use ikarus\system\Ikarus;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-class StyleManager {
+class StyleManager implements IConfigurableComponent {
 	
 	/**
 	 * Contains the current activated style
