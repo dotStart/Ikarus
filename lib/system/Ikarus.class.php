@@ -174,7 +174,7 @@ class Ikarus extends NonInstantiableClass {
 	 */
 	public static function configureComponents(application\IApplication $application) {
 		foreach(static::$componentList as $component) {
-			if (ClassUtil::isInstanceOf($component, 'ikarus\\system\\application\\IConfigureableComponent')) $component->configure($application);
+			if (ClassUtil::isInstanceOf($component, 'ikarus\\system\\application\\IConfigurableComponent')) $component->configure($application);
 		}
 	}
 	

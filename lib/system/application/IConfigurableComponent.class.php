@@ -27,7 +27,7 @@ namespace ikarus\system\application;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-interface IConfigureableComponent {
+interface IConfigurableComponent {
 	
 	/**
 	 * Configures this component instance.
