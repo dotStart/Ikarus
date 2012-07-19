@@ -56,7 +56,7 @@ First: All API methods **could** change in this stage of development. Please don
 ### Contribute
 There are two ways to contribute to Ikarus. You could either create pull requests to get your modifications merged or (if you want to contribute a lot of things) join our team.
 
-**Note:** We've some code guidlines for our framework. You'll find them [here][Code Guidelines]
+**Note:** We've some [[Code guidelines]] for our framework.
 
 #### Pull requests
 1. Fork our repository
@@ -65,7 +65,7 @@ There are two ways to contribute to Ikarus. You could either create pull request
 4. Create a pull request
 
 #### Get involved
-Just send us an email to team@ikarus-framework.de with some references and a nice text (We want to know who you are before we invite you to join us).
+Read the [[Get involved]] article to learn how to contribute to Ikarus!
 
 ### Get the system rollin'
 **Note:** This is just a temporary way to install Ikarus. We'll release an installer soon (It will use PHAR which makes it very nifty).
