@@ -16,8 +16,8 @@
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
 namespace ikarus\util;
+use ikarus\system\exception\MissingDependencyException;
 use ikarus\system\exception\StrictStandardException;
-
 use \ReflectionClass;
 
 /**
@@ -103,8 +103,28 @@ class ClassUtil {
 		// convert object to string
 		if (!is_string($className)) $className = get_class($className);
 		
+		// dependency check
+		if (!class_exists($className, true)) throw new MissingDependencyException("Cannot find class '%s'", $className);
+		
+		// get information
 		$reflectionClass = new ReflectionClass($className);
 		return $reflectionClass->isAbstract();
+	}
+	
+	/**
+	 * Checks whether a class is an interface.
+	 * @param			mixed			$className
+	 * @return			boolean
+	 */
+	public static function isInterface($className) {
+		// convert object to string
+		if (!is_string($className)) $className = get_class($className);
+		
+		// dependency check
+		if (!class_exists($className, true)) throw new MissingDependencyException("Cannot find class '%s'", $className);
+		
+		// get information
+		return interface_exists($className, true);
 	}
 	
 	/**
