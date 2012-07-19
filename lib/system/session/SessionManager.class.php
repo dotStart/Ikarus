@@ -16,6 +16,8 @@
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
 namespace ikarus\system\session;
+use ikarus\system\application\IApplication;
+use ikarus\system\application\IConfigureableComponent;
 use ikarus\system\database\QueryEditor;
 use ikarus\system\exception\ApplicationException;
 use ikarus\system\Ikarus;
@@ -33,7 +35,7 @@ use ikarus\util\StringUtil;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-class SessionManager {
+class SessionManager implements IConfigureableComponent {
 	
 	/**
 	 * Contains true if the client does not support cookies
@@ -84,7 +86,7 @@ class SessionManager {
 	 * @param			ikarus\system\application\IApplication			$application
 	 * @return			void
 	 */
-	public function configure($application) {
+	public function configure(IApplication $application) {
 		$this->boot($application);
 	}
 	
