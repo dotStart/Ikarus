@@ -72,7 +72,7 @@ Read the [Get involved] article to learn how to contribute to Ikarus!
 
 1. Clone the repository
 2. Copy the `contrib/databaseConfig.default.php` to `config.inc.php` and edit it as you need.
-3. Import the database layout to your database instance (It relies in `contrib/installer/install.sql`
+3. Import the database layout to your database instance (It relies in `contrib/installer/install.sql`)
 4. See "[Getting Started]"
 
 ## License
