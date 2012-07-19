@@ -62,6 +62,16 @@ class ClassUtil {
 	}
 	
 	/**
+	 * Checks whether a class exists or not (includes interfaces)
+	 * @param			string			$className
+	 * @param			boolean			$autoload
+	 * @return			boolean
+	 */
+	public static function classExists($className, $autoload = false) {
+		return (class_exists($className, $autoload) or interface_exists($className, $autoload));
+	}
+	
+	/**
 	 * @see class_alias()
 	 */
 	public static function createAlias($originalClass, $aliasClass) {
@@ -69,7 +79,7 @@ class ClassUtil {
 		if (!is_string($originalClass)) $originalClass = get_class($originalClass);
 		
 		// dependency check
-		if (!class_exists($originalClass, true)) throw new MissingDependencyException("Cannot find class '%s'", $originalClass);
+		if (!static::classExists($originalClass, true)) throw new MissingDependencyException("Cannot find class '%s'", $originalClass);
 		
 		// create alias
 		return class_alias($originalClass, $aliasClass);
@@ -83,7 +93,7 @@ class ClassUtil {
 		if (!is_string($className)) $className = get_class($className);
 		
 		// dependency check
-		if (!class_exists($className, true)) throw new MissingDependencyException("Cannot find class '%s'", $className);
+		if (!static::classExists($className, true)) throw new MissingDependencyException("Cannot find class '%s'", $className);
 		
 		$class = new ReflectionClass($className);
 		return $class->getConstants();
@@ -99,7 +109,7 @@ class ClassUtil {
 		if (!is_string($className)) $className = get_class($className);
 		
 		// dependency check
-		if (!class_exists($className, true)) throw new MissingDependencyException("Cannot find class '%s'", $className);
+		if (!static::classExists($className, true)) throw new MissingDependencyException("Cannot find class '%s'", $className);
 		
 		// get information
 		$reflectionClass = new ReflectionClass($className);
@@ -124,7 +134,7 @@ class ClassUtil {
 		if (!is_string($className)) $className = get_class($className);
 		
 		// dependency check
-		if (!class_exists($className, true)) throw new MissingDependencyException("Cannot find class '%s'", $className);
+		if (!static::classExists($className, true)) throw new MissingDependencyException("Cannot find class '%s'", $className);
 		
 		// get information
 		$reflectionClass = new ReflectionClass($className);
@@ -142,7 +152,7 @@ class ClassUtil {
 		if (!is_string($className)) $className = get_class($className);
 		
 		// dependency check
-		if (!class_exists($className, true)) throw new MissingDependencyException("Cannot find class '%s'", $className);
+		if (!static::classExists($className, true)) throw new MissingDependencyException("Cannot find class '%s'", $className);
 		
 		// get information
 		$reflectionClass = new ReflectionClass($className);
@@ -160,7 +170,7 @@ class ClassUtil {
 		if (!is_string($className)) $className = get_class($className);
 		
 		// dependency check
-		if (!class_exists($className, true)) throw new MissingDependencyException("Cannot find class '%s'", $className);
+		if (!static::classExists($className, true)) throw new MissingDependencyException("Cannot find class '%s'", $className);
 		
 		// get information
 		return interface_exists($className, true);
@@ -177,11 +187,11 @@ class ClassUtil {
 		if (!is_string($targetClass)) $targetClass = get_class($targetClass);
 		
 		// dependency check
-		if (!class_exists($className, true)) throw new MissingDependencyException("Cannot find class '%s'", $className);
-		if (!class_exists($targetClass, true)) throw new MissingDependencyException("Cannot find class '%s'", $targetClass);
+		if (!static::classExists($className, true)) throw new MissingDependencyException("Cannot find class '%s'", $className);
+		if (!static::classExists($targetClass, true)) throw new MissingDependencyException("Cannot find class '%s'", $targetClass);
 		
 		// normal classes
-		if (class_exists($targetClass)) return is_subclass_of($className, $targetClass);
+		if (static::classExists($targetClass)) return is_subclass_of($className, $targetClass);
 		
 		// interfaces
 		if (interface_exists($targetClass)) {
@@ -201,7 +211,7 @@ class ClassUtil {
 		if (!is_string($className)) $className = get_class($className);
 		
 		// dependency check
-		if (!class_exists($className, true)) throw new MissingDependencyException("Cannot find class '%s'", $className);
+		if (!static::classExists($className, true)) throw new MissingDependencyException("Cannot find class '%s'", $className);
 		
 		// get information
 		return method_exists($className, $methodName);
