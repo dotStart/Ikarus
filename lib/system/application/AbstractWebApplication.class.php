@@ -56,11 +56,7 @@ abstract class AbstractWebApplication extends AbstractApplication {
 		Ikarus::requestComponent('ikarus\system\io\WebOutputManager', 'WebOutputManager');
 		
 		// configure components
-		if ($this->isPrimaryApplication()) {
-			Ikarus::getSessionManager()->configure($this);
-			Ikarus::getStyleManager()->configure($this);
-			Ikarus::getLanguageManager()->configure($this);
-		}
+		if ($this->isPrimaryApplication()) Ikarus::configureComponents($this);
 	}
 }
 ?>
