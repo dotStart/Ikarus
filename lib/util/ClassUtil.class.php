@@ -112,6 +112,24 @@ class ClassUtil {
 	}
 	
 	/**
+	 * Checks whether a class is instantiable.
+	 * @param			mixed			$className
+	 * @return			boolean
+	 * @throws			MissingDependencyException
+	 */
+	public static function isInstantiable($className) {
+		// convert object to string
+		if (!is_string($className)) $className = get_class($className);
+		
+		// dependency check
+		if (!class_exists($className, true)) throw new MissingDependencyException("Cannot find class '%s'", $className);
+		
+		// get information
+		$reflectionClass = new ReflectionClass($className);
+		return $reflectionClass->isInstantiable();
+	}
+	
+	/**
 	 * Checks whether a class is an interface.
 	 * @param			mixed			$className
 	 * @return			boolean
