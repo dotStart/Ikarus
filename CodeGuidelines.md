@@ -39,7 +39,7 @@ switch ($answerToLifeTheUniverseAndEverything) {
 		break;
 }
 // ...
-`´`
+```
 Additionally you should forget them if you're just executing simple tasks. As example:
 ```php
 <?php
