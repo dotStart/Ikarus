@@ -17,6 +17,7 @@
  */
 namespace ikarus\system\language;
 use ikarus\system\application\IApplication;
+use ikarus\system\application\IConfigurableComponent;
 use ikarus\system\exception\SystemException;
 use ikarus\system\Ikarus;
 use ikarus\system\language\Language;
@@ -31,7 +32,7 @@ use ikarus\system\language\Language;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-class LanguageManager {
+class LanguageManager implements IConfigurableComponent {
 	
 	/**
 	 * Contains the current choosen language
