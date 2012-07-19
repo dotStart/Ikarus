@@ -95,6 +95,19 @@ class ClassUtil {
 	}
 	
 	/**
+	 * Checks whether a class is abstract.
+	 * @param			string			$className
+	 * @return			boolean
+	 */
+	public static function isAbstract($className) {
+		// convert object to string
+		if (!is_string($className)) $className = get_class($className);
+		
+		$reflectionClass = new ReflectionClass($className);
+		return $reflectionClass->isAbstract();
+	}
+	
+	/**
 	 * Returns true if the given class inherits from given target class
 	 * @param			mixed			$className
 	 * @param			mixed			$targetClass
