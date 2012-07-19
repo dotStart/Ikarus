@@ -96,8 +96,9 @@ class ClassUtil {
 	
 	/**
 	 * Checks whether a class is abstract.
-	 * @param			string			$className
+	 * @param			mixed			$className
 	 * @return			boolean
+	 * @throws			MissingDependencyException
 	 */
 	public static function isAbstract($className) {
 		// convert object to string
@@ -133,6 +134,7 @@ class ClassUtil {
 	 * Checks whether a class is an interface.
 	 * @param			mixed			$className
 	 * @return			boolean
+	 * @throws			MissingDependencyException
 	 */
 	public static function isInterface($className) {
 		// convert object to string
