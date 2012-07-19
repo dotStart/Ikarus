@@ -16,8 +16,7 @@
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
 namespace ikarus\system\io;
-use ikarus\system\exception\StrictStandardException;
-
+use ikarus\system\exception\MissingDependencyException;
 use ikarus\system\Ikarus;
 use ikarus\util\StringUtil;
 
@@ -62,7 +61,7 @@ class WebOutputManager {
 				$className = StringUtil::firstCharToUpperCase($outputType).'OutputHandle';
 				
 				// validate class
-				if (!class_exists($className, true)) throw new MissingClassException("Cannot find class '%s'", $className);
+				if (!class_exists($className, true)) throw new MissingDependencyException("Cannot find class '%s'", $className);
 				
 				// construct
 				return new $className($data);
