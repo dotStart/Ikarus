@@ -18,6 +18,10 @@
 namespace ikarus\system\io;
 use ikarus\system\exception\MissingDependencyException;
 use ikarus\system\Ikarus;
+use ikarus\system\io\output\DebugOutputHandle;
+use ikarus\system\io\output\JSONOutputHandle;
+use ikarus\system\io\output\XMLOutputHandle;
+use ikarus\util\ClassUtil;
 use ikarus\util\StringUtil;
 
 /**
@@ -60,8 +64,11 @@ class WebOutputManager {
 				// build className
 				$className = StringUtil::firstCharToUpperCase($outputType).'OutputHandle';
 				
+				// build path
+				$classPath = ClassUtil::buildPath('ikarus\\system\\io\\output', $className);
+				
 				// validate class
-				if (!class_exists($className, true)) throw new MissingDependencyException("Cannot find class '%s'", $className);
+				if (!class_exists($classPath, true)) throw new MissingDependencyException("Cannot find class '%s'", $className);
 				
 				// construct
 				return new $className($data);
