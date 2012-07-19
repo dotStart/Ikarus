@@ -21,7 +21,7 @@ use ikarus\system\Ikarus;
 use ikarus\util\StringUtil;
 
 /**
- * Manages web outputs (Such as XML, HTML or JSon).
+ * Manages web outputs (Such as XML, HTML or JSON).
  * @author		Johannes Donath
  * @copyright		2012 Evil-Co.de
  * @package		de.ikarus-framework.core
