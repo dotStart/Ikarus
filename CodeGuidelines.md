@@ -100,5 +100,5 @@ $string1 = 'Blah';
 $string2 = 'Wah wah wah ... '.$string1.' ... wah wah wah';
 // ...
 ```
-
+* * *
 Currently this is all. Please contact us or just change it if you find some crazy code guideline which is not listed here.
