@@ -27,6 +27,7 @@ namespace ikarus\util;
 ## Braces
 All `{ }` braces have to be on the same line as your statement. As example:
 ```php
+<?php
 // ...
 switch ($answerToLifeTheUniverseAndEverything) {
 	case 42:
@@ -41,6 +42,7 @@ switch ($answerToLifeTheUniverseAndEverything) {
 `´`
 Additionally you should forget them if you're just executing simple tasks. As example:
 ```php
+<?php
 // ...
 if ($answerToLifeTheUniverseAndEverything == 42) doThis();
 // ...
@@ -66,6 +68,7 @@ else
 Well, we just want to write complete code. In this case we please you to ignore the fact that writing `break;` after a return or exit statement is totally senseless.
 As example we would use the following code:
 ```php
+<?php
 // ...
 switch($answerToLifeTheUniverseAndEverything) {
 	case 21:
@@ -82,6 +85,7 @@ switch($answerToLifeTheUniverseAndEverything) {
 ## Defining empty methods / classes
 Please don't use newlines there. As example:
 ```php
+<?php
 // ...
 class Senseless extends NormalClass { }
 // ...
@@ -90,6 +94,7 @@ class Senseless extends NormalClass { }
 ## String-Literals
 Please don't use doublequotes (`"`) as long as you don't need them (You'll need them for newlines and other escape sequences). Additionally you'll have to use the following syntax to add variables to your string:
 ```php
+<?php
 // ...
 $string1 = 'Blah';
 $string2 = 'Wah wah wah ... '.$string1.' ... wah wah wah';
