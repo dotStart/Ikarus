@@ -89,6 +89,6 @@ GNU General Public License for more details.
 You should have received a copy of the [GNU Lesser General Public License]
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-[Code Guidelines]: CodeGuidelines.md
-[Getting Started]: GettingStarted.md
+[Code Guidelines]: Project-Ikarus/CodeGuidelines.md
+[Getting Started]: Project-Ikarus/GettingStarted.md
 [GNU Lesser General Public License]: http://www.gnu.org/licenses/lgpl.txt
