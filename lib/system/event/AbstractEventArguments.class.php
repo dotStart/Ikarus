@@ -38,14 +38,6 @@ abstract class AbstractEventArguments implements IEventArguments {
 	protected $content = array();
 	
 	/**
-	 * Constructs the object.
-	 * @param			array			$content
-	 */
-	public function __construct($content) {
-		$this->content = $content;
-	}
-	
-	/**
 	 * Returns the value of a specific variable.
 	 * @param			string			$variable
 	 * @throws			StrictStandardException
