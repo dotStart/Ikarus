@@ -40,11 +40,5 @@ interface IEvent {
 	 * @return			IEventArguments
 	 */
 	public function getArguments();
-	
-	/**
-	 * Returns the name of this event.
-	 * @return			string
-	 */
-	public function getEventName();
 }
 ?>

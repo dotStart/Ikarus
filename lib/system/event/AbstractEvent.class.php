@@ -48,12 +48,5 @@ abstract class AbstractEvent implements IEvent {
 	public function getArguments() {
 		return $this->arguments;
 	}
-	
-	/**
-	 * @see ikarus\system\event.IEvent::getEventName()
-	 */
-	public function getEventName() {
-		return substr(get_class($this), (strrpost(get_class($this), '/') + 1), (strlen(get_class($this)) - 5));
-	}
 }
 ?>
