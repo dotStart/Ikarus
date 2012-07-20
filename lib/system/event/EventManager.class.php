@@ -75,7 +75,7 @@ class EventManager {
 		if ($eventClass === null) $eventClass = get_class($event);
 		
 		// strict standards
-		if (!ClassUtil::isInstanceOf($event, $eventClass)) throw new StrictStandardException('"%s" has to be a parent of "%s" in case to use it as alias', $eventClass, get_class($event));
+		if (get_class($event) != $eventClass and !ClassUtil::isInstanceOf($event, $eventClass)) throw new StrictStandardException('"%s" has to be a parent of "%s" in case to use it as alias', $eventClass, get_class($event));
 		
 		// normal listeners
 		if (isset($this->listenerList[$eventClass]))
