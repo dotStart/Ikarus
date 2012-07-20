@@ -27,5 +27,40 @@ namespace ikarus\system\event;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-abstract class AbstractEventArguments implements IEventArguments { }
+use ikarus\system\exception\StrictStandardException;
+
+abstract class AbstractEventArguments implements IEventArguments {
+	
+	/**
+	 * Contains the content of this argument list.
+	 * @var	array
+	 */
+	protected $content = array();
+	
+	/**
+	 * Constructs the object.
+	 * @param			array			$content
+	 */
+	public function __construct($content) {
+		$this->content = $content;
+	}
+	
+	/**
+	 * Returns the value of a specific variable.
+	 * @param			string			$variable
+	 * @throws			StrictStandardException
+	 */
+	public function __get($variable) {
+		if ($this->_isset($variable)) return $this->content[$variable];
+		throw new StrictStandardException('Cannot access non-existant variable "%s" in class "%s"', $variable, get_class($this));
+	}
+	
+	/**
+	 * Checks whether a variable exists or not.
+	 * @param			string			$variable
+	 */
+	public function __isset($variable) {
+		return array_key_exists($variable, $this->content);
+	}
+}
 ?>
