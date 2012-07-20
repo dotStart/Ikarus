@@ -54,11 +54,12 @@ class EventManager {
 
 	/**
 	 * Fires an event
-	 * @param	mixed	$class
-	 * @param	string	$event
+	 * @param			mixed			$class
+	 * @param			string			$event
+	 * @param			mixed			$parents
 	 * @return			void
 	 */
-	public function fire($class, $event) {
+	public function fire($class, $event, $parents = null) {
 		$fireClassName = (is_string($class) ? $class : get_class($class));
 		
 		// normal listeners
@@ -96,6 +97,17 @@ class EventManager {
 								
 							$instance->execute($class, $event, $listenerInformation);
 						}
+		
+		// call parents
+		if ($parents !== null) {
+			// single parent
+			if (!is_array($parents)) $parents = array($parents);
+			
+			// fire all parents
+			foreach($parents as $parent) {
+				$this->fire($class, $parent);
+			}
+		}
 	}
 
 	/**
