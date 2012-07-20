@@ -16,6 +16,8 @@
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
 namespace ikarus\system\event;
+use ikarus\system\exception\StrictStandardException;
+
 use ikarus\system\Ikarus;
 use ikarus\system\exception\SystemException;
 use ikarus\util\ClassUtil;
@@ -34,7 +36,7 @@ class EventManager {
 
 	/**
 	 * Contains all EventListeners
-	 * @var array<array<array<EventListener>>>
+	 * @var array
 	 */
 	protected $listenerList = null;
 	
@@ -51,20 +53,33 @@ class EventManager {
 	public function __construct($packageID = IKARUS_ID) {
 		$this->loadCache($packageID);
 	}
+	
+	/**
+	 * Alias for ikarus\system\event.EventManager::fire()
+	 * @see	ikarus\system\event.EventManager::fire()
+	 */
+	public function fireSimpleEvent($className) {
+		// construct a new instance of event
+		$event = new $className(new EventArguments());
+		return $this->fire($event);
+	}
 
 	/**
 	 * Fires an event
-	 * @param			mixed			$class
-	 * @param			string			$event
-	 * @param			mixed			$parents
+	 * @param			IEvent			$class
+	 * @param			string			$eventClass
 	 * @return			void
 	 */
-	public function fire($class, $event, $parents = null) {
-		$fireClassName = (is_string($class) ? $class : get_class($class));
+	public function fire(IEvent $event, $eventClass = null) {
+		// get eventClass (if not already set)
+		if ($eventClass === null) $eventClass = $event->getEventName();
+		
+		// strict standards
+		if (!ClassUtil::isInstanceOf($event, $eventClass)) throw new StrictStandardException('"%s" has to be a parent of "%s" in case to use it as alias', $eventClass, get_class($event));
 		
 		// normal listeners
-		if (isset($this->listenerList[$fireClassName][$event]))
-			foreach($this->listenerList[$fireClassName][$event] as $listenerInformation) {
+		if (isset($this->listenerList[$eventClass]))
+			foreach($this->listenerList[$eventClass] as $listenerInformation) {
 				$className = $listenerInformation->listenerClass;
 				
 				// get listener instance
@@ -73,40 +88,14 @@ class EventManager {
 				else
 					$instance = $this->listenerInstances[$listenerInformation->listenerClass];
 					
-				$instance->execute($class, $event, $listenerInformation);
+				$instance->execute($event, $listenerInformation);
 			}
 		
-		// inherited listeners
-		foreach($this->listenerList as $targetClass => $events)
-			if (array_key_exists($event, $events) and ClassUtil::isInstanceOf($class, $targetClass))
-				foreach($events as $eventName => $listeners)
-					if ($eventName == $event)
-						foreach($listeners as $listenerInformation) {
-							if (!$listenerInformation->inherit) continue;
-							
-							$className = $listenerInformation->listenerClass;
-							
-							// get listener instance
-							if (!isset($this->listenerInstances[$listenerInformation->listenerClass]))
-								$instance = $this->listenerInstances[$listenerInformation->listenerClass] = new $className();
-							else
-								$instance = $this->listenerInstances[$listenerInformation->listenerClass];
-								
-							// strict standards
-							if (!ClassUtil::isInstanceOf($instance, 'ikarus\\system\\event\\IEventListener')) throw new StrictStandardException("Cannot use class '%s' as event listener", $listenerInformation->listenerClass);
-								
-							$instance->execute($class, $event, $listenerInformation);
-						}
+		// fire parents (if any)
+		$parents = ClassUtil::getParents($event);
 		
-		// call parents
-		if ($parents !== null) {
-			// single parent
-			if (!is_array($parents)) $parents = array($parents);
-			
-			// fire all parents
-			foreach($parents as $parent) {
-				$this->fire($class, $parent);
-			}
+		foreach($parents as $parent) {
+			$this->fire($event, $parent);
 		}
 	}
 
