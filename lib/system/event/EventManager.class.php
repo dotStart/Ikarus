@@ -72,7 +72,7 @@ class EventManager {
 	 */
 	public function fire(IEvent $event, $eventClass = null) {
 		// get eventClass (if not already set)
-		if ($eventClass === null) $eventClass = $event->getEventName();
+		if ($eventClass === null) $eventClass = get_class($event);
 		
 		// strict standards
 		if (!ClassUtil::isInstanceOf($event, $eventClass)) throw new StrictStandardException('"%s" has to be a parent of "%s" in case to use it as alias', $eventClass, get_class($event));

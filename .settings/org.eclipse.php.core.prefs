@@ -1,6 +1,6 @@
-#Mon Jul 16 20:04:49 CEST 2012
+#Wed Jul 18 18:52:58 CEST 2012
 eclipse.preferences.version=1
 include_path=0;/Ikarus
-org.eclipse.php.core.phpDoc=false
+org.eclipse.php.core.phpDoc=true
 phpVersion=php5.3
 use_asp_tags_as_php=false
