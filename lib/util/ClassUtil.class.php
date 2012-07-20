@@ -86,6 +86,19 @@ class ClassUtil {
 	}
 	
 	/**
+	 * Returns a list of parent interfaces.
+	 * @param			string			$className
+	 * @return			array<string>
+	 */
+	public static function getInterfaces($className) {
+		// convert object to string
+		if (!is_string($className)) $className = get_class($className);
+		
+		$reflectionClass = new ReflectionClass($className);
+		return $reflectionClass->getInterfaceNames();
+	}
+	
+	/**
 	 * @see ReflectionClass::getConstants()
 	 */
 	public static function getConstantList($className) {
@@ -114,6 +127,31 @@ class ClassUtil {
 		// get information
 		$reflectionClass = new ReflectionClass($className);
 		return $reflectionClass->getNamespaceName();
+	}
+	
+	/**
+	 * Returns a list of all parents.
+	 * @param			mixed			$className
+	 * @param			boolean			$getInterfaces			Set this to true if you need a list of interfaces, too.
+	 * @return			array<string>
+	 */
+	public static function getParents($className, $getInterfaces = false) {
+		// convert object to string
+		if (!is_string($className)) $className = get_class($className);
+		
+		// create default return value
+		$parents = array();
+		
+		// get interfaces
+		if ($getInterfaces) $parents = static::getInterfaces($className);
+		
+		// append parents
+		$reflectionClass = new ReflectionClass($className);
+		while($parent = $reflectionClass->getParentClass()) { // TODO: Verify this. Currently there's no documentation available for ReflectionClass::getParentClass()
+			$parents[] = $parent->getName();
+		}
+		
+		return $parents;
 	}
 	
 	/**
