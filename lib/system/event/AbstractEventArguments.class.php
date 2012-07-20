@@ -38,6 +38,20 @@ abstract class AbstractEventArguments implements IEventArguments {
 	protected $content = array();
 	
 	/**
+	 * Allows developers to call AbstractEventArguments::getVariableName()
+	 * @param			string			$method
+	 * @param			array			$arguments
+	 * @return			mixed
+	 * @throws			StrictStandardException
+	 */
+	public function __call($method, $arguments) {
+		if (!count($arguments) and substr($method, 0, 3) == 'get') {
+			if ($this->__isset(lcfirst(substr($method, 3)))) return $this->__get(lcfirst(substr($method, 3)));
+		}
+		throw new StrictStandardException('Cannot call non-existant method "%s->%s()"', get_class($this), $method);
+	}
+	
+	/**
 	 * Returns the value of a specific variable.
 	 * @param			string			$variable
 	 * @throws			StrictStandardException
