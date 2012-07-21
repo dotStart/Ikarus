@@ -33,7 +33,7 @@ interface IEvent {
 	 * Constructs the object.
 	 * @param			IEventArguments			$arguments
 	 */
-	public function __construct(IEventArguments $arguments);
+	// public function __construct(IEventArguments $arguments);
 	
 	/**
 	 * Returns the event arguments object.
