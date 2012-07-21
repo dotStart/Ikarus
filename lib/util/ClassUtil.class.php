@@ -146,9 +146,12 @@ class ClassUtil {
 		if ($getInterfaces) $parents = static::getInterfaces($className);
 		
 		// append parents
-		$reflectionClass = new ReflectionClass($className);
-		while($parent = $reflectionClass->getParentClass()) { // TODO: Verify this. Currently there's no documentation available for ReflectionClass::getParentClass()
+		$parent = (new ReflectionClass($className))->getParentClass();
+		$lastParent = $parent->getName();
+		while($parent->getName() != $lastParent) { // TODO: Verify this. Currently there's no documentation available for ReflectionClass::getParentClass()
+			var_dump($parent->getName(), $parents);
 			$parents[] = $parent->getName();
+			$parent = $parent->getParentClass();
 		}
 		
 		return $parents;
