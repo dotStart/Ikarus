@@ -99,12 +99,22 @@ abstract class DatabaseObject {
 	public function __isset($variable) {
 		return array_key_exists($variable, $this->data);
 	}
+	
+	/**
+	 * Unsets the given variable (Support for unset($databaseObject->variable))
+	 * @param			string			$variable
+	 * @return			void
+	 */
+	public function __unset($variable) {
+		if (!$this->_isset($variable)) return;
+		unset($this->data[$variable]);
+	}
 
 	/**
 	 * Magic method to handle properties from database row
-	 * @param	string	$variable
-	 * @return mixed
-	 * @throws SystemException
+	 * @param			string			$variable
+	 * @return			mixed
+	 * @throws			SystemException
 	 */
 	public function __get($variable) {
 		// strict standard
@@ -119,10 +129,10 @@ abstract class DatabaseObject {
 
 	/**
 	 * Magic method to handle methods such as getXYZ and isXYZ
-	 * @param	string	$name
-	 * @param	array	$arguments
-	 * @return mixed
-	 * @throws SystemException
+	 * @param			string			$name
+	 * @param			array			$arguments
+	 * @return			mixed
+	 * @throws			SystemException
 	 */
 	public function __call($name, $arguments) {
 		// handle getXYZ methods
