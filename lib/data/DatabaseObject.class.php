@@ -31,19 +31,19 @@ use ikarus\system\exception\SystemException;
  * @version		2.0.0-0001
  */
 abstract class DatabaseObject {
-	
+
 	/**
 	 * Contains all variables from database
 	 * @var array
 	 */
 	protected $data = null;
-	
+
 	/**
 	 * Contains the field name for row identifier (or primary key)
 	 * @var			string
 	 */
 	protected static $identifierField = null;
-	
+
 	/**
 	 * Contains the name of the table where all data of this database object is stored
 	 * @var			string
@@ -57,7 +57,7 @@ abstract class DatabaseObject {
 	public function __construct($row) {
 		$this->handleData($row);
 	}
-	
+
 	/**
 	 * Returns an object by identifier (if configured)
 	 * @param			mixed			$identifier
@@ -67,7 +67,7 @@ abstract class DatabaseObject {
 	public static function getByIdentifier($identifier) {
 		// check for configuration
 		if (!static::$tableName or static::$identifierField) throw new SystemException('The database object %s is not configured for method %s', __CLASS__, __METHOD__);
-		
+
 		// get data via editor
 		$editor = new QueryEditor();
 		$editor->from(array(static::$tableName => 'databaseObjectTable'));
@@ -75,10 +75,10 @@ abstract class DatabaseObject {
 		$stmt = $editor->prepare();
 		$stmt->bind($identifier);
 		$result = $stmt->fetch();
-		
+
 		// no rows found?
 		if (!$result) return null;
-		
+
 		// create object
 		return (new static($result->__toArray()));
 	}
@@ -90,7 +90,7 @@ abstract class DatabaseObject {
 	protected function handleData($data) {
 		$this->data = $data;
 	}
-	
+
 	/**
 	 * Checks whether the given variable exists in this database object
 	 * @param			string			$variable
@@ -99,7 +99,7 @@ abstract class DatabaseObject {
 	public function __isset($variable) {
 		return array_key_exists($variable, $this->data);
 	}
-	
+
 	/**
 	 * Unsets the given variable (Support for unset($databaseObject->variable))
 	 * @param			string			$variable
@@ -119,10 +119,10 @@ abstract class DatabaseObject {
 	public function __get($variable) {
 		// strict standard
 		if (!$this->__isset($variable)) throw new StrictStandardException("The variable '%s' is not defined in DatabaseObject %s", $variable, get_class($this));
-		
+
 		// handle variables in data array
 		if (array_key_exists($variable, $this->data)) return $this->data[$variable];
-		
+
 		// no variable found
 		return null;
 	}
