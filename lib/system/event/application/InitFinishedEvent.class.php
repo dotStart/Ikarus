@@ -16,7 +16,6 @@
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
 namespace ikarus\system\event\application;
-use ikarus\system\event\AbstractEvent;
 
 /**
  * This event occurs if an application finishes it's init sequence.
@@ -28,5 +27,5 @@ use ikarus\system\event\AbstractEvent;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-class InitFinishedEvent extends AbstractEvent { }
+class InitFinishedEvent extends ApplicationEvent { }
 ?>
