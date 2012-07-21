@@ -16,6 +16,10 @@
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
 namespace ikarus\system\application;
+use ikarus\system\event\application\ApplicationEventArguments;
+use ikarus\system\event\application\BootEvent;
+use ikarus\system\event\application\InitFinishedEvent;
+use ikarus\system\event\application\ShutdownEvent;
 use ikarus\system\exception\StrictStandardException;
 use ikarus\system\Ikarus;
 use ikarus\util\ClassUtil;
@@ -78,14 +82,15 @@ abstract class AbstractApplication implements IApplication {
 		$this->environment = $environment;
 		$this->primaryApplication = $primaryApplication;
 		
-		Ikarus::getEventManager()->fire($this, 'initFinished');
+		// fire InitFinished event
+		Ikarus::getEventManager()->fire(new InitFinishedEvent(new ApplicationEventArguments($this)));
 	}
 	
 	/**
 	 * @see ikarus\system\application.IApplication::boot()
 	 */
 	public function boot() {
-		Ikarus::getEventManager()->fire($this, 'boot');
+		Ikarus::getEventManager()->fire(new BootEvent(new ApplicationEventArguments($this)));
 		
 		$this->registerDefaultCacheResources();
 		$this->registerDefaultComponents();
@@ -142,7 +147,7 @@ abstract class AbstractApplication implements IApplication {
 	 * @see ikarus\system\application.IApplication::shutdown()
 	 */
 	public function shutdown() {
-		Ikarus::getEventManager()->fire($this, 'shutdown');
+		Ikarus::getEventManager()->fire(new ShutdownEvent(new ApplicationEventArguments($this)));
 		
 		$this->shutdownDefaultComponents();
 	}
