@@ -29,7 +29,7 @@ use ikarus\system\event\AbstractEvent;
  * @version		2.0.0-0001
  */
 abstract class SessionEvent extends AbstractEvent {
-	
+
 	/**
 	 * Constructs the object.
 	 * @param			SessionEventArguments			$arguments

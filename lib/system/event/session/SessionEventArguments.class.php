@@ -30,7 +30,7 @@ use ikarus\system\session\ISession;
  * @version		2.0.0-0001
  */
 class SessionEventArguments extends AbstractEventArguments {
-	
+
 	/**
 	 * @see ikarus\system\event\IEventArguments::__construct()
 	 */
