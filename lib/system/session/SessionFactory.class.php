@@ -17,8 +17,10 @@
  */
 namespace ikarus\system\session;
 use ikarus\system\exception\StrictStandardException;
-use ikarus\system\event\session\CreatedSessionIDEvent;
+use ikarus\system\event\session\factory\CreatedSessionIDEvent;
+use ikarus\system\event\session\factory\CreateSessionEvent;
 use ikarus\system\event\session\factory\SessionIDArguments;
+use ikarus\system\event\session\SessionEventArguments;
 use ikarus\system\Ikarus;
 use ikarus\util\ClassUtil;
 use ikarus\util\StringUtil;
