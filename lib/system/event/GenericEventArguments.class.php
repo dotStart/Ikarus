@@ -18,7 +18,7 @@
 namespace ikarus\system\event;
 
 /**
- * 
+ *
  * @author		Johannes Donath
  * @copyright		2012 Evil-Co.de
  * @package		de.ikarus-framework.core
@@ -28,12 +28,12 @@ namespace ikarus\system\event;
  * @version		2.0.0-0001
  */
 class GenericEventArguments extends AbstractEventArguments {
-	
+
 	/**
 	 * Constructs the object.
 	 * @param			array			$content
 	 */
-	public function __construct($content) {
+	public function __construct($content = array()) {
 		$this->content = $content;
 	}
 }
