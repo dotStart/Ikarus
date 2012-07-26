@@ -34,8 +34,9 @@ class SessionEventArguments extends AbstractEventArguments {
 	/**
 	 * @see ikarus\system\event\IEventArguments::__construct()
 	 */
-	public function __construct(ISession $session) {
+	public function __construct(ISession $session, $abbreviation = null) {
 		$this->content['session'] = $session;
+		if ($abbreviation !== null) $this->content['abbreviation'] = $abbreviation;
 	}
 }
 ?>
