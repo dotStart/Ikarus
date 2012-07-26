@@ -16,6 +16,7 @@
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
 namespace ikarus\system\event;
+use ikarus\system\exception\StrictStandardException;
 
 /**
  * The base class for all event arguments.
@@ -27,16 +28,14 @@ namespace ikarus\system\event;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-use ikarus\system\exception\StrictStandardException;
-
 abstract class AbstractEventArguments implements IEventArguments {
-	
+
 	/**
 	 * Contains the content of this argument list.
 	 * @var	array
 	 */
 	protected $content = array();
-	
+
 	/**
 	 * Allows developers to call AbstractEventArguments::getVariableName()
 	 * @param			string			$method
@@ -50,7 +49,7 @@ abstract class AbstractEventArguments implements IEventArguments {
 		}
 		throw new StrictStandardException('Cannot call non-existant method "%s->%s()"', get_class($this), $method);
 	}
-	
+
 	/**
 	 * Returns the value of a specific variable.
 	 * @param			string			$variable
@@ -60,7 +59,7 @@ abstract class AbstractEventArguments implements IEventArguments {
 		if ($this->_isset($variable)) return $this->content[$variable];
 		throw new StrictStandardException('Cannot access non-existant variable "%s" in class "%s"', $variable, get_class($this));
 	}
-	
+
 	/**
 	 * Checks whether a variable exists or not.
 	 * @param			string			$variable
