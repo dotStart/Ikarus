@@ -16,7 +16,7 @@
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
 namespace ikarus\system\event\session\factory;
-use ikarus\system\event\AbstractEvent;
+use ikarus\system\event\session\SessionEvent;
 
 /**
  * This event occurs if a session ID has been created successfully.
@@ -28,7 +28,7 @@ use ikarus\system\event\AbstractEvent;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-class CreatedSessionIDEvent extends AbstractEvent {
+class CreatedSessionIDEvent extends SessionEvent {
 
 	/**
 	 * @see ikarus\system\event.IEvent::__construct()
