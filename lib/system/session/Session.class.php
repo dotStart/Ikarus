@@ -17,11 +17,16 @@
  */
 namespace ikarus\system\session;
 use ikarus\data\DatabaseObject;
+use ikarus\system\event\session\InitEvent;
+use ikarus\system\event\session\InitFinishedEvent;
+use ikarus\system\event\session\SessionEventArguments;
+use ikarus\system\event\session\UpdateEvent;
+use ikarus\system\event\session\UpdateFinishedEvent;
 use ikarus\system\Ikarus;
 use ikarus\util\StringUtil;
 
 /**
- * 
+ *
  * @author		Johannes Donath
  * @copyright		2011 Evil-Co.de
  * @package		de.ikarus-framework.core
@@ -31,21 +36,28 @@ use ikarus\util\StringUtil;
  * @version		2.0.0-0001
  */
 class Session extends DatabaseObject implements ISession {
-	
+
 	/**
 	 * @see ikarus\system\session.ISession::__construct()
 	 */
 	public function __construct($data) {
 		parent::__construct($data);
-		
+
 		$this->init();
 	}
-	
+
 	/**
 	 * Reads default information of session
 	 * @return			void
 	 */
 	protected function init() {
+		// fire event
+		$event = new InitEvent(new SessionEventArguments($this));
+		Ikarus::getEventManager()->fire($event);
+
+		// cancellable event
+		if ($event->isCancelled()) return;
+
 		// detect default information
 		$this->data['userAgent'] = (isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : null);
 		$this->data['acceptLanguage'] = (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? $_SERVER['HTTP_ACCEPT_LANGUAGE'] : null);
@@ -53,15 +65,23 @@ class Session extends DatabaseObject implements ISession {
 		$this->data['requestURI'] = (isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : null);
 		$this->data['ipAddress'] = (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : null);
 		$this->data['hostname'] = (isset($_SERVER['REMOTE_ADDR']) ? gethostbyaddr($_SERVER['REMOTE_ADDR']) : null);
-		
+
 		// fire event
-		Ikarus::getEventManager()->fire($this, 'init');
+		Ikarus::getEventManager()->fire(new InitFinishedEvent(new SessionEventArguments($this)));
 	}
-	
+
 	/**
 	 * @see ikarus\system\session.ISession::update()
 	 */
 	public function update() {
+		// fire event
+		$event = new UpdateEvent(new SessionEventArguments($this));
+		Ikarus::getEventManager()->fire($event);
+
+		// cancellable event
+		if ($event->isCancelled()) return;
+
+		// update row
 		$sql = "UPDATE
 				ikarus".IKARUS_N."_session
 			SET
@@ -75,6 +95,9 @@ class Session extends DatabaseObject implements ISession {
 		$stmt->bind($this->sessionID);
 		$stmt->bind($this->packageID);
 		$stmt->execute();
+
+		// fire event
+		Ikarus::getEventManager()->fire(new UpdateFinishedEvent(new SessionEventArguments($this)));
 	}
 }
 ?>
