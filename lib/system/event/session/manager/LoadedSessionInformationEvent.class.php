@@ -16,6 +16,7 @@
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
 namespace ikarus\system\event\session\manager;
+use ikarus\system\event\AbstractEvent;
 use ikarus\system\event\session\SessionEvent;
 use ikarus\system\event\session\factory\SessionIDArguments;
 
@@ -36,7 +37,7 @@ class LoadedSessionInformationEvent extends SessionEvent {
 	 * @param			SessionIDArguments			$arguments
 	 */
 	public function __construct(SessionIDArguments $arguments) {
-		parent::__construct($arguments);
+		AbstractEvent::__construct($arguments);
 	}
 }
 ?>
