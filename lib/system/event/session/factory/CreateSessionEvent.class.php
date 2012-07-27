@@ -31,6 +31,12 @@ use ikarus\system\event\session\CancellableSessionEvent;
 class CreateSessionEvent extends CancellableSessionEvent {
 
 	/**
+	 * Contains a replacement for the newly created session (This has to be set on cancel).
+	 * @var	ISession
+	 */
+	private $replacement = null;
+
+	/**
 	 * Sets the replacement for original session.
 	 * @param			ISession			$replacement
 	 * @return			void
