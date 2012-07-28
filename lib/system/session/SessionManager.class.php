@@ -16,6 +16,12 @@
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
 namespace ikarus\system\session;
+use ikarus\system\event\session\SessionEventArguments;
+use ikarus\system\event\session\manager\ClearSessionsEvent;
+use ikarus\system\event\session\manager\LoadedSessionInformationEvent;
+use ikarus\system\event\session\manager\RegisterSessionEvent;
+use ikarus\system\event\session\factory\SessionIDArguments;
+use ikarus\system\event\GenericEventArguments;
 use ikarus\system\application\IApplication;
 use ikarus\system\application\IConfigurableComponent;
 use ikarus\system\database\QueryEditor;
@@ -36,25 +42,25 @@ use ikarus\util\StringUtil;
  * @version		2.0.0-0001
  */
 class SessionManager implements IConfigurableComponent {
-	
+
 	/**
 	 * Contains true if the client does not support cookies
 	 * @var			boolean
 	 */
 	protected static $disableCookies = false;
-	
+
 	/**
 	 * Contains all registered session objects
 	 * @var			array<ikarus\system\session\ISession>
 	 */
 	protected $sessions = array();
-	
+
 	/**
 	 * Contains the session query parameter used if cookies aren't available
 	 * @var			string
 	 */
 	protected static $sessionQueryParameter = '';
-	
+
 	/**
 	 * Boots the session
 	 * @param			ikarus\system\application\IApplication			$application
@@ -69,18 +75,25 @@ class SessionManager implements IConfigurableComponent {
 			$this->loadSessionInformation($application->getPackageID(), $application);
 		}
 	}
-	
+
 	/**
 	 * Clears all session information
 	 * @return			void
 	 */
 	public function clearSessions() {
+		// fire event
+		$event = new ClearSessionsEvent(new EmptyEventArguments());
+		Ikarus::getEventManager()->fire($event);
+
+		// check for cancelled event
+		if ($event->isCancelled()) return;
+
 		// reset session tracking
 		HeaderUtil::setCookie('sessionID', '', TIME_NOW - 3600);
 		if (isset($_REQUEST['s'])) unset($_REQUEST['s']);
 		$this->sessions = array();
 	}
-	
+
 	/**
 	 * Configures the session instance
 	 * @param			ikarus\system\application\IApplication			$application
@@ -89,7 +102,7 @@ class SessionManager implements IConfigurableComponent {
 	public function configure(IApplication $application) {
 		$this->boot($application);
 	}
-	
+
 	/**
 	 * Detects the sessionID from query parameters or cookies (if supported)
 	 * @return			string
@@ -97,17 +110,17 @@ class SessionManager implements IConfigurableComponent {
 	protected static function getSessionID() {
 		// disable cookies if not support
 		if (HeaderUtil::cookiesSupported() === false) static::$disableCookies = true;
-		
+
 		// get cookies
 		if (HeaderUtil::getCookie('sessionID') !== null) return HeaderUtil::getCookie('sessionID');
-		
+
 		// get session parameter
 		if (isset($_REQUEST['s'])) return StringUtil::trim($_REQUEST['s']);
-		
+
 		// nothing found
 		return null;
 	}
-	
+
 	/**
 	 * Returns the current session query parameter
 	 * @return			string
@@ -115,7 +128,7 @@ class SessionManager implements IConfigurableComponent {
 	public static function getSessionQueryParameter() {
 		return static::$sessionQueryParameter;
 	}
-	
+
 	/**
 	 * Loads needed sessions to memory
 	 * @param			integer			$packageID
@@ -125,7 +138,7 @@ class SessionManager implements IConfigurableComponent {
 	protected function loadSessionInformation($packageID, $application) {
 		// try to load ikarus session
 		$sessionID = static::getSessionID();
-		
+
 		if ($sessionID !== null) {
 			$editor = new QueryEditor();
 			$editor->from(array('ikarus'.IKARUS_N.'_session' => 'session'));
@@ -133,11 +146,11 @@ class SessionManager implements IConfigurableComponent {
 			$editor->where('environment = ?');
 			DependencyUtil::generateDependencyQuery($application->getPackageID(), $editor, 'session');
 			$stmt = $editor->prepare(null, true);
-			
+
 			$stmt->bind($sessionID);
 			$stmt->bind($application->getEnvironment());
 			$result = $stmt->fetchList();
-			
+
 			// save information
 			foreach($result as $session) {
 				if (!static::validateRemoteAddress($session->ipAddress, $_SERVER['REMOTE_ADDR'])) throw new ApplicationException('IP Address is not valid for this session');
@@ -145,21 +158,24 @@ class SessionManager implements IConfigurableComponent {
 				$this->registerSession($session->abbreviation, unserialize($session->sessionData));
 			}
 		}
-		
+
 		// generate new sessionID
 		if ($sessionID === null or !count($result)) $sessionID = SessionFactory::createSessionID();
-		
+
 		// create sessions if needed
 		if (!$this->sessionExists('ikarus')) SessionFactory::createSession($sessionID, 'ikarus', IKARUS_ID, $application->getEnvironment());
 		if (!$this->sessionExists($application->getAbbreviation())) SessionFactory::createSession($sessionID, $application->getAbbreviation(), $application->getPackageID(), $application->getEnvironment());
-	
+
 		// validate ikarus session
 		if (!$this->sessionExists('ikarus')) throw new ApplicationException('Ikarus session was not created');
-		
+
 		// save sessionID
 		static::saveSessionID($sessionID);
+
+		// fire event
+		Ikarus::getEventManager()->fire(new LoadedSessionInformationEvent(new SessionIDArguments($sessionID)));
 	}
-	
+
 	/**
 	 * Registers a new session
 	 * @param			string			$abbreviation
@@ -168,13 +184,23 @@ class SessionManager implements IConfigurableComponent {
 	 * @return			void
 	 */
 	public function registerSession($abbreviation, ISession $sessionInstance) {
+		// fire event
+		$event = new RegisterSessionEvent(new SessionEventArguments($sessionInstance, $abbreviation));
+		Ikarus::getEventManager()->fire($event);
+
+		// cancellable event (allows instance replacement)
+		if ($event->isCancelled() and $event->getReplacement() === null)
+			return;
+		elseif ($event->isCancelled())
+			$sessionInstance = $event->getReplacement();
+
 		// strict standard
 		if ($this->sessionExists($abbreviation)) throw new StrictStandardException("A session with abbreviation '%s' does already exist", $abbreviation);
-		
+
 		// save
 		$this->sessions[$abbreviation] = $sessionInstance;
 	}
-	
+
 	/**
 	 * Saves the sessionID at client
 	 * @param			string			$sessionID
@@ -183,11 +209,11 @@ class SessionManager implements IConfigurableComponent {
 	protected static function saveSessionID($sessionID) {
 		// save cookies
 		HeaderUtil::setCookie('sessionID', $sessionID);
-		
+
 		// save query parameter information if needed
 		if (!HeaderUtil::cookiesSupported()) static::$sessionQueryParameter = 's='.urlencode($sessionID);
 	}
-	
+
 	/**
 	 * Checks whether a session with specified abbreviation exists
 	 * @param			string			$abbreviation
@@ -196,7 +222,7 @@ class SessionManager implements IConfigurableComponent {
 	public function sessionExists($abbreviation) {
 		return isset($this->sessions[$abbreviation]);
 	}
-	
+
 	/**
 	 * Validates ip addresses for sessions
 	 * @param			string			$checkAddress
@@ -206,52 +232,52 @@ class SessionManager implements IConfigurableComponent {
 	protected function validateRemoteAddress($checkAddress, $currentAddress) {
 		// checks disabled?
 		if (!Ikarus::getConfiguration()->get('security.general.ipCheckEnabled')) return true;
-		
+
 		// for performance ;-)
 		if ($checkAddress == $currentAddress) return true;
-		
+
 		// valid IP?
 		if (filter_var($currentAddress, FILTER_VALIDATE_IP) === false) return false;
-		
+
 		if (filter_var($currentAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) !== false) { // IPv6
 			// split addresses
 			$checkAddress = explode(':', $checkAddress);
 			$currentAddress = explode(':', $currentAddress);
-			
+
 			// same ip version?
 			if (count($currentAddress) <= 0) return false;
-			
+
 			// loop
 			foreach($checkAddress as $key => $block) {
 				// block maximum
 				if ($key > Ikarus::getConfiguration()->get('security.general.ip6CheckMaximumBlockCount')) break;
-				
+
 				// check
 				if (!isset($currentAddress[$key]) or $currentAddress[$key] != $checkAddress[$key]) return false;
 			}
-			
+
 			return true;
 		} else { // IPv4
 			// split addresses
 			$checkAddress = explode('.', $checkAddress);
 			$currentAddress = explode('.', $currentAddress);
-			
+
 			// same ip version?
 			if (count($currentAddress) <= 0) return false;
-			
+
 			// loop
 			foreach($checkAddress as $key => $block) {
 				// block maximum
 				if ($key > Ikarus::getConfiguration()->get('security.general.ip4CheckMaximumBlockCount')) break;
-				
+
 				// check
 				if (!isset($currentAddress[$key]) or $currentAddress[$key] != $checkAddress[$key]) return false;
 			}
-			
+
 			return true;
 		}
 	}
-	
+
 	/**
 	 * Validates user agents for sessions
 	 * @param			string			$sessionUserAgent
@@ -261,7 +287,7 @@ class SessionManager implements IConfigurableComponent {
 	public static function validateUserAgent($sessionUserAgent, $currentUserAgent) {
 		// checks disabled?
 		if (!Ikarus::getConfiguration()->get('security.general.userAgentCheckEnabled')) return true;
-		
+
 		return ($sessionUserAgent == $currentUserAgent);
 	}
 }
