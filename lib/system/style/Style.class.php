@@ -17,6 +17,10 @@
  */
 namespace ikarus\system\style;
 use ikarus\data\DatabaseObject;
+use ikarus\system\event\style\CssCodeBuildEvent;
+use ikarus\system\event\style\CssCodeBuiltEvent;
+use ikarus\system\event\style\CssEventArguments;
+use ikarus\system\event\style\StyleEventArguments;
 use ikarus\system\Ikarus;
 use ikarus\util\StringUtil;
 
@@ -32,23 +36,23 @@ use ikarus\util\StringUtil;
  * @todo		Add methods
  */
 class Style extends DatabaseObject {
-	
+
 	/**
 	 * Contains a list of all css definitions in this style
 	 * @var			ikarus\system\database\DatabaseResultList
 	 */
 	protected $cssDefinitions = array();
-	
+
 	/**
 	 * @see ikarus\data\DatabaseObject::$identifierField
 	 */
 	protected static $identifierField = 'styleID';
-	
+
 	/**
 	 * @see ikarus\data\DatabaseObject::$tableName
 	 */
 	protected static $tableName = 'ikarus1_style';
-	
+
 	/**
 	 * Builds a minified version of style's css code
 	 * @return			string
@@ -56,51 +60,61 @@ class Style extends DatabaseObject {
 	public function buildCssCode() {
 		$mediaQueries = array();
 		$css = '';
-		
+
+		// fire event
+		$event = new CssCodeBuildEvent(new StyleEventArguments($this));
+		Ikarus::getEventManager()->fire($event);
+
+		// cancellable event
+		if ($event->isCancelled()) return $event->getReplacement();
+
 		// raw processing
 		foreach($this->cssDefinitions as $definition) {
 			// stop if css definition is disabled
 			if (!$definition->isEnabled) continue;
-			
+
 			// save to media query
 			if (!isset($mediaQueries[$definition->cssMediaQuery])) $mediaQueries[$definition->cssMediaQuery] = array();
 			$mediaQueries[$definition->cssMediaQuery][] = $definition;
 		}
-		
+
 		// process media queries
 		foreach($mediaQueries as $mediaQuery => $definitions) {
 			// add media query
 			$css .= '@media '.$mediaQuery."{\n\t";
-			
+
 			// loop through definitions
 			foreach($definitions as $definition) {
 				// add comment
 				$css .= '/* '.$definition->definitionComment." */\n\t";
-				
+
 				// add selector
 				$css .= $definition->cssSelector.'{';
-				
+
 				// add content (without newlines)
 				$css .= StringUtil::replace("\n", '', $definition->cssCode);
-				
+
 				// add ending brace
 				$css .= "}\n\t";
 			}
-			
+
 			// add close brace
 			$css .= '}';
 		}
-		
+
+		// fire event
+		Ikarus::getEventManager()->fire(new CssCodeBuiltEvent(new CssEventArguments($this, $css)));
+
+		// return built css
 		return $css;
 	}
-	
+
 	/**
 	 * Loads the css definition cache
 	 * @return			void
 	 */
 	public function loadCache() {
 		Ikarus::getCacheManager()->getDefaultAdapter()->createResource('style-'.$this->styleID, 'style-'.$this->styleID, 'ikarus\\system\\cache\\builder\\CacheBuilderStyle');
-		
 		$this->cssDefinitions = Ikarus::getCacheManager()->getDefaultAdapter()->get('style-'.$this->styleID);
 	}
 }
