@@ -41,13 +41,13 @@ use ikarus\system\exception\SystemException;
  * @version		2.0.0-0001
  */
 class File {
-	
+
 	/**
 	 * Contains the file resource
 	 * @var			resource
 	 */
 	protected $resource = null;
-	
+
 	/**
 	 * Contains the filename
 	 * @var			string
@@ -67,7 +67,7 @@ class File {
 			throw new SystemException('Can not open file ' . $filename, 11012);
 		}
 	}
-	
+
 	/**
 	 * Returnes the given filename
 	 * @return			string
@@ -75,7 +75,7 @@ class File {
 	public function getFilename() {
 		return $this->filename;
 	}
-	
+
 	/**
 	 * Returns the current file handle
 	 * @return			Resource
