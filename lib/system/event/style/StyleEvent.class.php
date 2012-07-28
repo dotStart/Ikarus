@@ -33,7 +33,7 @@ class StyleEvent extends AbstractEvent implements IStyleEvent {
 	 * Constructs the object.
 	 * @param			StyleEventAruments			$arguments
 	 */
-	public function __construct(StyleEventAruments $arguments) {
+	public function __construct(StyleEventArguments $arguments) {
 		parent::__construct($arguments);
 	}
 }
