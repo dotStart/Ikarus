@@ -18,6 +18,8 @@
 namespace ikarus\system\language;
 use ikarus\system\application\IApplication;
 use ikarus\system\application\IConfigurableComponent;
+use ikarus\system\event\language\ActiveLanguageSetEvent;
+use ikarus\system\event\language\LanguageEventArguments;
 use ikarus\system\exception\SystemException;
 use ikarus\system\Ikarus;
 use ikarus\system\language\Language;
@@ -33,7 +35,7 @@ use ikarus\system\language\Language;
  * @version		2.0.0-0001
  */
 class LanguageManager implements IConfigurableComponent {
-	
+
 	/**
 	 * Contains the current choosen language
 	 * @var			ikarus\system\language\Language
@@ -45,13 +47,13 @@ class LanguageManager implements IConfigurableComponent {
 	 * @var			ikarus\system\application\IApplication
 	 */
 	protected $application = null;
-	
+
 	/**
 	 * Contains a list of available languages
 	 * @var			array<ikarus\system\language\Language>
 	 */
 	protected $languageList = null;
-	
+
 	/**
 	 * Configures a language manager instance
 	 * @param			ikarus\system\application\IApplication			$application
@@ -60,14 +62,14 @@ class LanguageManager implements IConfigurableComponent {
 	public function configure(IApplication $application) {
 		// configure instance
 		$this->application = $application;
-		
+
 		// load cache
 		$this->loadLanguageCache();
-		
+
 		// set active language
 		$this->setActiveLanguage(((isset($_REQUEST['languageID']) and $this->getLanguage($_REQUEST['languageID']) !== null) ? $this->getLanguage($_REQUEST['languageID']) : $this->getDefaultLanguage()));
 	}
-	
+
 	/**
 	 * Returns the default language
 	 * @throws			ikarus\system\exception\SystemException
@@ -77,7 +79,7 @@ class LanguageManager implements IConfigurableComponent {
 		foreach($this->languageList as $language) if ($language->isDefault) return $language;
 		throw new SystemException('No default language set');
 	}
-	
+
 	/**
 	 * Returns a language by identifier
 	 * @param			integer			$languageID
@@ -87,17 +89,17 @@ class LanguageManager implements IConfigurableComponent {
 		foreach($this->languageList as $language) if ($language->languageID == $languageID) return $language;
 		return null;
 	}
-	
+
 	/**
 	 * Loads the language cache
 	 * @return			void
 	 */
 	protected function loadLanguageCache() {
 		Ikarus::getCacheManager()->getDefaultAdapter()->createResource('lannguages-'.$this->application->getPackageID(), 'languages-'.$this->application->getPackageID(), 'ikarus\\system\\cache\\builder\\CacheBuilderLanguages');
-		
+
 		$this->languageList = Ikarus::getCacheManager()->getDefaultAdapter()->get('lannguages-'.$this->application->getPackageID());
 	}
-	
+
 	/**
 	 * Sets a language as active
 	 * @param			ikarus\system\language\Language			$language
@@ -106,6 +108,9 @@ class LanguageManager implements IConfigurableComponent {
 	public function setActiveLanguage(Language $language) {
 		$this->activeLanguage = $language;
 		$this->activeLanguage->loadCache();
+
+		// fire event
+		Ikarus::getEventManager()->fire(new ActiveLanguageSetEvent(new LanguageEventArguments($language)));
 	}
 }
 ?>
