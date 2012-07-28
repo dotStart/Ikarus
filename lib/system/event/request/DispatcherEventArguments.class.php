@@ -17,6 +17,7 @@
  */
 namespace ikarus\system\event\request;
 use ikarus\system\event\AbstractEventArguments;
+use ikarus\system\application\IApplication;
 
 /**
  * Stores dispatcher information.
