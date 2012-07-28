@@ -18,7 +18,7 @@
 namespace ikarus\system\style;
 use ikarus\system\application\IConfigurableComponent;
 use ikarus\system\application\IApplication;
-use ikarus\system\event\DefaultStyleSetEvent;
+use ikarus\system\event\style\DefaultStyleSetEvent;
 use ikarus\system\exception\SystemException;
 use ikarus\system\Ikarus;
 
