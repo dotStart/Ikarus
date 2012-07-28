@@ -16,7 +16,7 @@
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
 namespace ikarus\system\event\style;
-use ikarus\system\event\style\StyleEventArguments;
+use ikarus\system\event\AbstractCancellableEvent;
 
 /**
  * This is the base class for all cancellable style events.
