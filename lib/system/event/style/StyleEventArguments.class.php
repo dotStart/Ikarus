@@ -17,6 +17,7 @@
  */
 namespace ikarus\system\event\style;
 use ikarus\system\event\AbstractEventArguments;
+use ikarus\system\style\Style;
 
 /**
  * This class stores a style object.
