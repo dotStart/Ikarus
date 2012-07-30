@@ -183,6 +183,7 @@ class Ikarus extends NonInstantiableClass {
 	/**
 	 * Fixes damage created by magic quotes
 	 * @return			void
+	 * @deprecated			We require PHP 5.4! This is senseless and should be removed.
 	 */
 	protected static final function fixMagicQuotes() {
 		// check for php 5.4+ (magic quotes are deprecated since php 5.4)
