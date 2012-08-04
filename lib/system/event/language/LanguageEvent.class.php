@@ -28,7 +28,7 @@ use ikarus\system\event\AbstractEvent;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-class LanguageEvent extends AbstractEvent implements ILanguageEvent {
+abstract class LanguageEvent extends AbstractEvent implements ILanguageEvent {
 
 	/**
 	 * Constructs the object.

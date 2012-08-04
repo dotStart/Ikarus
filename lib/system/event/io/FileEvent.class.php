@@ -28,5 +28,5 @@ use ikarus\system\event\AbstractEvent;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-class FileEvent extends AbstractEvent implements IFileEvent { }
+abstract class FileEvent extends AbstractEvent implements IFileEvent { }
 ?>

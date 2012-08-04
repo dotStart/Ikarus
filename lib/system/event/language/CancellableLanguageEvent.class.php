@@ -28,7 +28,7 @@ use ikarus\system\event\AbstractCancellableEvent;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-class CancellableLanguageEvent extends AbstractCancellableEvent implements ILanguageEvent {
+abstract class CancellableLanguageEvent extends AbstractCancellableEvent implements ILanguageEvent {
 
 	/**
 	 * Constructs the object.

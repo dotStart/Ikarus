@@ -27,7 +27,7 @@ namespace ikarus\system\event\style;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-class StyleEvent extends AbstractEvent implements IStyleEvent {
+abstract class StyleEvent extends AbstractEvent implements IStyleEvent {
 
 	/**
 	 * Constructs the object.

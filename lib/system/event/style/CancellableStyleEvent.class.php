@@ -28,7 +28,7 @@ use ikarus\system\event\AbstractCancellableEvent;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-class CancellableStyleEvent extends AbstractCancellableEvent implements IStyleEvent {
+abstract class CancellableStyleEvent extends AbstractCancellableEvent implements IStyleEvent {
 
 	/**
 	 * Constructs the object.
