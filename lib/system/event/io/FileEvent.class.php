@@ -16,6 +16,7 @@
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
 namespace ikarus\system\event\io;
+use ikarus\system\event\AbstractEvent;
 
 /**
  * This is the base file for all file related events.
