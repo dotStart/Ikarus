@@ -68,7 +68,7 @@ abstract class AbstractPage implements IPage {
 	 */
 	public function __construct() {
 		// fire construct@AbstractPage
-		Ikarus::getEventManager()->fire($this, 'construct');
+		Ikarus::getEventManager()->fire($this, 'construct', 'pageMethod');
 	}
 	
 	/**
@@ -76,7 +76,7 @@ abstract class AbstractPage implements IPage {
 	 */
 	public final function init() {
 		// fire init@AbstractPage
-		Ikarus::getEventManager()->fire($this, 'init');
+		Ikarus::getEventManager()->fire($this, 'init', 'pageMethod');
 		
 		// add default dependencies
 		$this->registerDependencies();
@@ -87,10 +87,10 @@ abstract class AbstractPage implements IPage {
 			$this->checkDependencies();
 			
 			// fire dependencyCheckSucceeded@AbstractPage
-			Ikarus::getEventManager()->fire($this, 'dependencyCheckSucceeded');
+			Ikarus::getEventManager()->fire($this, 'dependencyCheckSucceeded', 'dependencyCheckStatusChanged');
 		} catch (MissingDependencyException $ex) {
 			// fire dependencyCheckFailed@AbstractPage
-			Ikarus::getEventManager()->fire($this, 'dependencyCheckFailed');
+			Ikarus::getEventManager()->fire($this, 'dependencyCheckFailed', 'dependencyCheckStatusChanged');
 			
 			// throw exception
 			throw $ex;
@@ -105,11 +105,11 @@ abstract class AbstractPage implements IPage {
 			// check
 			$this->checkPermissions();
 			
-			// fire permissionCheckSucceeded@AbstractPage
-			Ikarus::getEventManager()->fire($this, 'permissionCheckSucceeded');
+			// fire permissionCheckSucceeded@AbstractPage and parent permissionCheckStatusChanged@AbstractPage
+			Ikarus::getEventManager()->fire($this, 'permissionCheckSucceeded', 'permissionCheckStatusChanged');
 		} catch (SystemException $ex) {
-			// fire permissionCheckFailed@AbstractPage
-			Ikarus::getEventManager()->fire($this, 'permissionCheckFailed');
+			// fire permissionCheckFailed@AbstractPage and parent permissionCheckStatusChanged@AbstractPage
+			Ikarus::getEventManager()->fire($this, 'permissionCheckFailed', 'permissionCheckStatusChanged');
 			
 			// throw exception
 			throw $ex;
@@ -128,7 +128,7 @@ abstract class AbstractPage implements IPage {
 	 */
 	public function checkDependencies() {
 		// fire checkDependencies@AbstractPage
-		Ikarus::getEventManager()->fire($this, 'checkDependencies');
+		Ikarus::getEventManager()->fire($this, 'checkDependencies', 'pageMethod');
 		
 		// check each dependency
 		foreach($this->requirements as $abbreviation => $dependency) {
@@ -143,7 +143,7 @@ abstract class AbstractPage implements IPage {
 	 */
 	public function checkPermissions() {
 		// fire checkPermissions@AbstractPage
-		Ikarus::getEventManager()->fire($this, 'checkPermissions');
+		Ikarus::getEventManager()->fire($this, 'checkPermissions', 'pageMethod');
 		
 		// check needed permissions
 		if (!empty($this->neededPermissions)) Ikarus::getGroupManager()->getGroupHandle(Ikarus::getUser())->checkPermission($this->neededPermissions);
@@ -158,7 +158,7 @@ abstract class AbstractPage implements IPage {
 	 */
 	public function readData() {
 		// fire readData@AbstractPage
-		Ikarus::getEventManager()->fire($this, 'readData');
+		Ikarus::getEventManager()->fire($this, 'readData', 'pageMethod');
 	}
 	
 	/**
@@ -167,7 +167,7 @@ abstract class AbstractPage implements IPage {
 	 */
 	public function readParameters() {
 		// fire readParameters@AbstractPage
-		Ikarus::getEventManager()->fire($this, 'readParameters');
+		Ikarus::getEventManager()->fire($this, 'readParameters', 'pageMethod');
 	}
 	
 	/**
@@ -176,7 +176,7 @@ abstract class AbstractPage implements IPage {
 	 */
 	public function registerDependencies() {
 		// fire registerDependencies@AbstractPage
-		Ikarus::getEventManager()->fire($this, 'registerDependencies');
+		Ikarus::getEventManager()->fire($this, 'registerDependencies', 'pageMethod');
 		
 		// group manager
 		$this->requirements['GroupManager'] = 'ikarus\\system\\group\\GroupManager';
@@ -189,7 +189,7 @@ abstract class AbstractPage implements IPage {
 	 */
 	public function show() {
 		// fire show@AbstractPage
-		Ikarus::getEventManager()->fire($this, 'show');
+		Ikarus::getEventManager()->fire($this, 'show', 'pageMethod');
 		
 		// get data
 		$data = $this->returnData;
