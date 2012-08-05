@@ -143,7 +143,7 @@ class ExtensionManager {
 	 */
 	public function autoload($className) {
 		// fire event
-		$event = AutoloadEvent(new ClassNameEventArguments($className));
+		$event = new AutoloadEvent(new ClassNameEventArguments($className));
 		Ikarus::getEventManager()->fire($event);
 
 		// cancellable event
@@ -152,7 +152,7 @@ class ExtensionManager {
 		// loop through autoload hooks
 		foreach($this->autoloadHooks as $hook) {
 			// fire event
-			$event = AutoloadHookExecuteEvent(new CallbackEventArguments($hook));
+			$event = new AutoloadHookExecuteEvent(new CallbackEventArguments($hook));
 			Ikarus::getEventManager()->fire($event);
 
 			// cancellable event
