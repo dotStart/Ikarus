@@ -15,14 +15,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
-namespace ikarus\page;
+namespace ikarus\action;
 use ikarus\system\exception\MissingDependencyException;
 use ikarus\system\exception\SystemException;
 use ikarus\system\Ikarus;
 use ikarus\util\ClassUtil;
 
 /**
- * The base class for all pages.
+ * The base class for all actions.
  * @author		Johannes Donath
  * @copyright		2012 Evil-Co.de
  * @package		de.ikarus-framework.core
@@ -31,180 +31,180 @@ use ikarus\util\ClassUtil;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-abstract class AbstractPage implements IPage {
-	
+abstract class AbstractAction implements IAction {
+
 	/**
 	 * Contains an error message produced by this resource.
 	 * @var	string
 	 */
 	public $errorMessage = 'Success';
-	
+
 	/**
 	 * Contains an error number produced by this resource.
 	 * @var	integer
 	 */
 	public $errorNumber = 0;
-	
+
 	/**
-	 * Contains an array or a string containing the permissions needed to access this page.
+	 * Contains an array or a string containing the permissions needed to access this action.
 	 * @var	mixed
 	 */
 	public $neededPermissions = '';
-	
+
 	/**
 	 * Contains the data that should be encoded as json.
 	 * @var	mixed
 	 */
 	public $returnData = null;
-	
+
 	/**
 	 * Defines dependencies for this resource.
 	 * @var	array
 	 */
 	public $requirements = array();
-	
+
 	/**
-	 * @see ikarus\page.IPage::__construct()
+	 * @see ikarus\action.IAction::__construct()
 	 */
 	public function __construct() {
-		// fire construct@AbstractPage
-		Ikarus::getEventManager()->fire($this, 'construct', 'pageMethod');
+		// fire construct@AbstractAction
+		Ikarus::getEventManager()->fire($this, 'construct', 'actionMethod');
 	}
-	
+
 	/**
-	 * @see ikarus\page.IPage::init()
+	 * @see ikarus\action.IAction::init()
 	 */
 	public final function init() {
-		// fire init@AbstractPage
-		Ikarus::getEventManager()->fire($this, 'init', 'pageMethod');
-		
+		// fire init@AbstractAction
+		Ikarus::getEventManager()->fire($this, 'init', 'actionMethod');
+
 		// add default dependencies
 		$this->registerDependencies();
-		
+
 		// check dependencies
 		try {
 			// check
 			$this->checkDependencies();
-			
-			// fire dependencyCheckSucceeded@AbstractPage
+
+			// fire dependencyCheckSucceeded@AbstractAction
 			Ikarus::getEventManager()->fire($this, 'dependencyCheckSucceeded', 'dependencyCheckStatusChanged');
 		} catch (MissingDependencyException $ex) {
-			// fire dependencyCheckFailed@AbstractPage
+			// fire dependencyCheckFailed@AbstractAction
 			Ikarus::getEventManager()->fire($this, 'dependencyCheckFailed', 'dependencyCheckStatusChanged');
-			
+
 			// throw exception
 			throw $ex;
 		}
-		
+
 		// read data
 		$this->readParameters();
 		$this->readData();
-		
+
 		// check permissions
 		try {
 			// check
 			$this->checkPermissions();
-			
-			// fire permissionCheckSucceeded@AbstractPage and parent permissionCheckStatusChanged@AbstractPage
+
+			// fire permissionCheckSucceeded@AbstractAction and parent permissionCheckStatusChanged@AbstractAction
 			Ikarus::getEventManager()->fire($this, 'permissionCheckSucceeded', 'permissionCheckStatusChanged');
 		} catch (SystemException $ex) {
-			// fire permissionCheckFailed@AbstractPage and parent permissionCheckStatusChanged@AbstractPage
+			// fire permissionCheckFailed@AbstractAction and parent permissionCheckStatusChanged@AbstractAction
 			Ikarus::getEventManager()->fire($this, 'permissionCheckFailed', 'permissionCheckStatusChanged');
-			
+
 			// throw exception
 			throw $ex;
 		}
-		
+
 		// show data
 		$this->show();
-		
-		// fire initFinished@AbstractPage
+
+		// fire initFinished@AbstractAction
 		Ikarus::getEventManager()->fire($this, 'initFinished');
 	}
-	
+
 	/**
 	 * Checks against all defined class dependencies.
 	 * @throws MissingDependencyException
 	 */
 	public function checkDependencies() {
-		// fire checkDependencies@AbstractPage
-		Ikarus::getEventManager()->fire($this, 'checkDependencies', 'pageMethod');
-		
+		// fire checkDependencies@AbstractAction
+		Ikarus::getEventManager()->fire($this, 'checkDependencies', 'actionMethod');
+
 		// check each dependency
 		foreach($this->requirements as $abbreviation => $dependency) {
 			if ((is_integer($abbreviation) and !Ikarus::componentLoaded($dependency)) or (is_string($abbreviation)) and !Ikraus::componentLoaded($dependency, $abbreviation)) throw new MissingDependencyException("Cannot find dependency '%s'", $dependency);
 		}
 	}
-	
+
 	/**
 	 * Checks for needed permissions.
 	 * @return			void
 	 * @throws			SystemException
 	 */
 	public function checkPermissions() {
-		// fire checkPermissions@AbstractPage
-		Ikarus::getEventManager()->fire($this, 'checkPermissions', 'pageMethod');
-		
+		// fire checkPermissions@AbstractAction
+		Ikarus::getEventManager()->fire($this, 'checkPermissions', 'actionMethod');
+
 		// check needed permissions
 		if (!empty($this->neededPermissions)) Ikarus::getGroupManager()->getGroupHandle(Ikarus::getUser())->checkPermission($this->neededPermissions);
-		
-		// fire defaultPermissionsChecked@AbstractPage
+
+		// fire defaultPermissionsChecked@AbstractAction
 		Ikarus::getEventManager()->fire($this, 'defaultPermissionsChecked');
 	}
-	
+
 	/**
 	 * Reads information.
 	 * @return			void
 	 */
 	public function readData() {
-		// fire readData@AbstractPage
-		Ikarus::getEventManager()->fire($this, 'readData', 'pageMethod');
+		// fire readData@AbstractAction
+		Ikarus::getEventManager()->fire($this, 'readData', 'actionMethod');
 	}
-	
+
 	/**
 	 * Reads all given parameters.
 	 * @return			void
 	 */
 	public function readParameters() {
-		// fire readParameters@AbstractPage
-		Ikarus::getEventManager()->fire($this, 'readParameters', 'pageMethod');
+		// fire readParameters@AbstractAction
+		Ikarus::getEventManager()->fire($this, 'readParameters', 'actionMethod');
 	}
-	
+
 	/**
 	 * Registers dependencies.
 	 * Note: This is only needed for abstract classes.
 	 */
 	public function registerDependencies() {
-		// fire registerDependencies@AbstractPage
-		Ikarus::getEventManager()->fire($this, 'registerDependencies', 'pageMethod');
-		
+		// fire registerDependencies@AbstractAction
+		Ikarus::getEventManager()->fire($this, 'registerDependencies', 'actionMethod');
+
 		// group manager
 		$this->requirements['GroupManager'] = 'ikarus\\system\\group\\GroupManager';
 		$this->requirements['WebOutputManager'] = 'ikarus\\system\\io\\WebOutputManager';
 	}
-	
+
 	/**
 	 * Shows the data generated by this resource.
 	 * @return			void
 	 */
 	public function show() {
-		// fire show@AbstractPage
-		Ikarus::getEventManager()->fire($this, 'show', 'pageMethod');
-		
+		// fire show@AbstractAction
+		Ikarus::getEventManager()->fire($this, 'show', 'actionMethod');
+
 		// get data
 		$data = $this->returnData;
-		
+
 		// object support
 		if (is_object($data)) {
 			// serialize support
 			if (ClassUtil::isInstanceOf($data, '\\Serializable'))
 				$data = serialize($data);
-			
+
 			// __toString() support (fallback)
 			else
 				$data = (string) $data;
 		}
-		
+
 		// fix information (encoding related problems)
 		if (is_array($data)) {
 			foreach($data as $key => $val) {
@@ -212,17 +212,17 @@ abstract class AbstractPage implements IPage {
 			}
 		} elseif (is_string($data))
 			$data = utf8_encode($data);
-		
+
 		// encode data
 		$returnValue = array(
 			'errorNumber'		=>	$this->errorNumber,
 			'errorMessage'		=>	$this->errorMessage,
 		);
 		if (!is_null($data) and !empty($data)) $returnValue['data'] = $data;
-		
+
 		// generate output
 		$output = Ikarus::getWebOutputManager()->generateOutput($returnValue);
-		
+
 		// show output
 		$output->render();
 	}
