@@ -168,13 +168,11 @@ abstract class DatabaseObject {
 		if (substr($name, 0, 3) == 'get' ) {
 			$variable = substr($name, 3);
 			$variable{0} = StringUtil::toLowerCase($variable{0});
-			if (isset($this->data[$variable])) return $this->data[$variable];
+			if (isset($this->__isset($variable))) return $this->__get($variable);
 		}
 
 		// handle isXYZ methods
-		if (substr($name, 0, 2) == 'is') {
-			if (isset($this->data[$name])) return $this->data[$name];
-		}
+		if (substr($name, 0, 2) == 'is' and isset($this->__isset($name))) return $this->__get($name);
 
 		// handle undefined methods
 		throw new SystemException("Method '%s' does not exist in class %s", $name, get_class($this));
