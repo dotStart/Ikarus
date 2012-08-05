@@ -16,7 +16,7 @@
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
 namespace ikarus\system\event\extension;
-use ikarus\system\event\extension\CancellableExtensionEvent;
+use ikarus\system\event\ClassNameEventArguments;
 
 /**
  * This event occurs if an autoload event is passed to extension manager.
