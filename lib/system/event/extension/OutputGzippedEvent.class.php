@@ -16,7 +16,7 @@
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
 namespace ikarus\system\event\extension;
-use ikarus\system\event\extension\CancellableExtensionEvent;
+use ikarus\system\event\io\BufferEventArguments;
 
 /**
  * This event occurs if the output has been gzipped.
