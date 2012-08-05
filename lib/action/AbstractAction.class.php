@@ -16,6 +16,20 @@
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
 namespace ikarus\action;
+use ikarus\system\event\action\ConstructEvent;
+use ikarus\system\event\action\InitEvent;
+use ikarus\system\event\action\InitFinishedEvent;
+use ikarus\system\event\action\CheckDependencyEvent;
+use ikarus\system\event\action\CheckPermissionsEvent;
+use ikarus\system\event\action\DefaultPermissionsCheckedEvent;
+use ikarus\system\event\action\DependencyCheckSucceededEvent;
+use ikarus\system\event\action\DependencyCheckFailedEvent;
+use ikarus\system\event\action\PermissionCheckSucceededEvent;
+use ikarus\system\event\action\PermissionCheckFailedEvent;
+use ikarus\system\event\action\ReadDataEvent;
+use ikarus\system\event\action\ReadParametersEvent;
+use ikarus\system\event\action\RegisterDependenciesEvent;
+use ikarus\system\event\action\ShowEvent;
 use ikarus\system\exception\MissingDependencyException;
 use ikarus\system\exception\SystemException;
 use ikarus\system\Ikarus;
@@ -67,16 +81,20 @@ abstract class AbstractAction implements IAction {
 	 * @see ikarus\action.IAction::__construct()
 	 */
 	public function __construct() {
-		// fire construct@AbstractAction
-		Ikarus::getEventManager()->fire($this, 'construct', 'actionMethod');
+		// fire event
+		Ikarus::getEventManager()->fire(new ConstructEvent(new ActionEventArguments($this)));
 	}
 
 	/**
 	 * @see ikarus\action.IAction::init()
 	 */
 	public final function init() {
-		// fire init@AbstractAction
-		Ikarus::getEventManager()->fire($this, 'init', 'actionMethod');
+		// fire event
+		$event = new InitEvent(new ActionEventArguments($this));
+		Ikarus::getEventManager()->fire($event);
+
+		// cancellable event
+		if ($event->isCancelled()) return;
 
 		// add default dependencies
 		$this->registerDependencies();
@@ -86,11 +104,11 @@ abstract class AbstractAction implements IAction {
 			// check
 			$this->checkDependencies();
 
-			// fire dependencyCheckSucceeded@AbstractAction
-			Ikarus::getEventManager()->fire($this, 'dependencyCheckSucceeded', 'dependencyCheckStatusChanged');
+			// fire event
+			Ikarus::getEventManager()->fire(new DependencyCheckSucceededEvent(new ActionEventArguments($this)));
 		} catch (MissingDependencyException $ex) {
-			// fire dependencyCheckFailed@AbstractAction
-			Ikarus::getEventManager()->fire($this, 'dependencyCheckFailed', 'dependencyCheckStatusChanged');
+			// fire event
+			Ikarus::getEventManager()->fire(new DependencyCheckFailedEvent(new ActionEventArguments($this)));
 
 			// throw exception
 			throw $ex;
@@ -105,11 +123,11 @@ abstract class AbstractAction implements IAction {
 			// check
 			$this->checkPermissions();
 
-			// fire permissionCheckSucceeded@AbstractAction and parent permissionCheckStatusChanged@AbstractAction
-			Ikarus::getEventManager()->fire($this, 'permissionCheckSucceeded', 'permissionCheckStatusChanged');
+			// fire event
+			Ikarus::getEventManager()->fire(new PermissionCheckSucceeded(new ActionEventArguments($this)));
 		} catch (SystemException $ex) {
-			// fire permissionCheckFailed@AbstractAction and parent permissionCheckStatusChanged@AbstractAction
-			Ikarus::getEventManager()->fire($this, 'permissionCheckFailed', 'permissionCheckStatusChanged');
+			// fire event
+			Ikarus::getEventManager()->fire(new PermissionCheckFailed(new ActionEventArguments($this)));
 
 			// throw exception
 			throw $ex;
@@ -118,8 +136,8 @@ abstract class AbstractAction implements IAction {
 		// show data
 		$this->show();
 
-		// fire initFinished@AbstractAction
-		Ikarus::getEventManager()->fire($this, 'initFinished');
+		// fire event
+		Ikarus::getEventManager()->fire(new InitFinishedEvent(new ActionEventArguments($this)));
 	}
 
 	/**
@@ -127,8 +145,8 @@ abstract class AbstractAction implements IAction {
 	 * @throws MissingDependencyException
 	 */
 	public function checkDependencies() {
-		// fire checkDependencies@AbstractAction
-		Ikarus::getEventManager()->fire($this, 'checkDependencies', 'actionMethod');
+		// fire event
+		Ikarus::getEventManager()->fire(new CheckDependencyEvent(new ActionEventArguments($this)));
 
 		// check each dependency
 		foreach($this->requirements as $abbreviation => $dependency) {
@@ -142,14 +160,18 @@ abstract class AbstractAction implements IAction {
 	 * @throws			SystemException
 	 */
 	public function checkPermissions() {
-		// fire checkPermissions@AbstractAction
-		Ikarus::getEventManager()->fire($this, 'checkPermissions', 'actionMethod');
+		// fire event
+		$event = new CheckPermissionsEvent(new ActionEventArguments($this));
+		Ikarus::getEventManager()->fire($event);
+
+		// cancellable event
+		if ($event->isCancelled()) return;
 
 		// check needed permissions
 		if (!empty($this->neededPermissions)) Ikarus::getGroupManager()->getGroupHandle(Ikarus::getUser())->checkPermission($this->neededPermissions);
 
-		// fire defaultPermissionsChecked@AbstractAction
-		Ikarus::getEventManager()->fire($this, 'defaultPermissionsChecked');
+		// fire event
+		Ikarus::getEventManager()->fire(new DefaultPermissionsCheckedEvent(new ActionEventArguments($this)));
 	}
 
 	/**
@@ -157,8 +179,8 @@ abstract class AbstractAction implements IAction {
 	 * @return			void
 	 */
 	public function readData() {
-		// fire readData@AbstractAction
-		Ikarus::getEventManager()->fire($this, 'readData', 'actionMethod');
+		// fire event
+		Ikarus::getEventManager()->fire(new ReadDataEvent(new ActionEventArguments($this)));
 	}
 
 	/**
@@ -166,8 +188,8 @@ abstract class AbstractAction implements IAction {
 	 * @return			void
 	 */
 	public function readParameters() {
-		// fire readParameters@AbstractAction
-		Ikarus::getEventManager()->fire($this, 'readParameters', 'actionMethod');
+		// fire event
+		Ikarus::getEventManager()->fire(new ReadParametersEvent(new ActionEventArguments($this)));
 	}
 
 	/**
@@ -175,8 +197,12 @@ abstract class AbstractAction implements IAction {
 	 * Note: This is only needed for abstract classes.
 	 */
 	public function registerDependencies() {
-		// fire registerDependencies@AbstractAction
-		Ikarus::getEventManager()->fire($this, 'registerDependencies', 'actionMethod');
+		// fire event
+		$event = new RegisterDependenciesEvent(new ActionEventArguments($this));
+		Ikarus::getEventManager()->fire($event);
+
+		// cancellable event
+		if ($event->isCancelled()) return;
 
 		// group manager
 		$this->requirements['GroupManager'] = 'ikarus\\system\\group\\GroupManager';
@@ -188,8 +214,12 @@ abstract class AbstractAction implements IAction {
 	 * @return			void
 	 */
 	public function show() {
-		// fire show@AbstractAction
-		Ikarus::getEventManager()->fire($this, 'show', 'actionMethod');
+		// fire event
+		$event = new ShowEvent(new ActionEventArguments($this));
+		Ikarus::getEventManager()->fire($event);
+
+		// cancellable event
+		if ($event->isCancelled()) return;
 
 		// get data
 		$data = $this->returnData;
