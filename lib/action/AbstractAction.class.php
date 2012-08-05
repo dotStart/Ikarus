@@ -16,6 +16,7 @@
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
 namespace ikarus\action;
+use ikarus\system\event\action\ActionEventArguments;
 use ikarus\system\event\action\ConstructEvent;
 use ikarus\system\event\action\InitEvent;
 use ikarus\system\event\action\InitFinishedEvent;
