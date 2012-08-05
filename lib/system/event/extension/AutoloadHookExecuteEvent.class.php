@@ -16,6 +16,7 @@
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
 namespace ikarus\system\event\extension;
+use ikarus\system\event\CallbackEventArguments;
 
 /**
  * This event occurs if an autoload hook is executed.
