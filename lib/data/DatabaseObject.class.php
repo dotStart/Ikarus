@@ -17,6 +17,11 @@
  */
 namespace ikarus\data;
 use ikarus\system\database\QueryEditor;
+use ikarus\system\event\data\DatabaseObjectEventArguments;
+use ikarus\system\event\data\GetByIdentifierEvent;
+use ikarus\system\event\data\HandleDataEvent;
+use ikarus\system\event\data\IdentifierEventArguments;
+use ikarus\system\event\data\MagicGetEvent;
 use ikarus\system\exception\StrictStandardException;
 use ikarus\system\exception\SystemException;
 
@@ -65,6 +70,16 @@ abstract class DatabaseObject {
 	 * @returns			ikarus\data\DatabaseObject
 	 */
 	public static function getByIdentifier($identifier) {
+		// fire event
+		$event = new GetByIdentifierEvent(new IdentifierEventArguments($identifier));
+		Ikarus::getEventManager()->fire($event);
+
+		// cancellable event
+		if ($event->isCancelled() and $event->getReplacement() === null)
+			throw new StrictStandardException("Missing replacement for database object");
+		elseif ($event->isCancelled())
+			return $event->getReplacement();
+
 		// check for configuration
 		if (!static::$tableName or static::$identifierField) throw new SystemException('The database object %s is not configured for method %s', __CLASS__, __METHOD__);
 
@@ -88,7 +103,11 @@ abstract class DatabaseObject {
 	 * @param	array	$data
 	 */
 	protected function handleData($data) {
+		// save data
 		$this->data = $data;
+
+		// fire event
+		Ikarus::getEventManager()->fire(new HandleDataEvent(new DatabaseObjectEventArguments($this)));
 	}
 
 	/**
@@ -117,6 +136,16 @@ abstract class DatabaseObject {
 	 * @throws			SystemException
 	 */
 	public function __get($variable) {
+		// fire event
+		$event = new MagicGetEvent(new IdentifierEventArguments($variable));
+		Ikarus::getEventManager()->fire($event);
+
+		// cancellable event
+		if ($event->isCancelled() and $event->getReplacement() === null)
+			throw new StrictStandardException('Missing replacement for variable "%s"', $variable);
+		elseif ($event->isCancelled())
+			return $event->getReplacement();
+
 		// strict standard
 		if (!$this->__isset($variable)) throw new StrictStandardException("The variable '%s' is not defined in DatabaseObject %s", $variable, get_class($this));
 
