@@ -18,7 +18,10 @@
 namespace ikarus\data;
 use \Countable;
 use \Iterator;
+use ikarus\system\event\data\DatabaseObjectListEventArguments;
+use ikarus\system\event\data\HandleObjectsEvent;
 use ikarus\system\exception\SystemException;
+use ikarus\system\Ikarus;
 
 /**
  * Handles a list of database objects
@@ -74,18 +77,22 @@ class DatabaseObjectList implements Iterator, Countable {
 	 * @param	array	$objectList
 	 */
 	protected function handleObjects($objectList) {
+		// save data
 		$this->objectList = $objectList;
+
+		// fire event
+		Ikarus::getEventManager()->fire(new HandleObjectsEvent(new DatabaseObjectListEventArguments($this)));
 	}
 
 	/** ITERATOR METHODS **/
-	
+
 	/**
 	 * @see Countable::count()
 	 */
 	public function count() {
 		return count($this->objectList);
 	}
-	
+
 	/**
 	 * @see Iterator::rewind()
 	 */
@@ -116,7 +123,7 @@ class DatabaseObjectList implements Iterator, Countable {
 	public function next() {
 		$this->objectPointer++;
 	}
-	
+
 	/**
 	 * @see Iterator::valid()
 	 */
