@@ -104,6 +104,20 @@ class SessionManager implements IConfigurableComponent {
 	}
 
 	/**
+	 * Returns a session.
+	 * @param			string			$abbreviation
+	 * @return			ISession
+	 * @throws			StrictStandardException
+	 */
+	public function getSession($abbreviation) {
+		// validate
+		if (!$this->sessionExists($abbreviation)) throw new StrictStandardException('Tried to access missing session "%s"', $abbreviation);
+
+		// return
+		return $this->sessions[$abbreviation];
+	}
+
+	/**
 	 * Detects the sessionID from query parameters or cookies (if supported)
 	 * @return			string
 	 */
