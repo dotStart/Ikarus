@@ -34,7 +34,7 @@ abstract class DataEvent extends AbstractEvent implements IDataEvent {
 	 * Constructs the object.
 	 * @param			DatabaseObjectArguments			$arguments
 	 */
-	public function __construct(DatabaseObjectArguments $arguments) {
+	public function __construct(DatabaseObjectEventArguments $arguments) {
 		parent::__construct($arguments);
 	}
 }
