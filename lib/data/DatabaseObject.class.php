@@ -24,6 +24,7 @@ use ikarus\system\event\data\MagicGetEvent;
 use ikarus\system\event\IdentifierEventArguments;
 use ikarus\system\exception\StrictStandardException;
 use ikarus\system\exception\SystemException;
+use ikarus\system\Ikarus;
 
 /**
  * Represents a database row
@@ -70,15 +71,18 @@ abstract class DatabaseObject {
 	 * @returns			ikarus\data\DatabaseObject
 	 */
 	public static function getByIdentifier($identifier) {
-		// fire event
-		$event = new GetByIdentifierEvent(new IdentifierEventArguments($identifier));
-		Ikarus::getEventManager()->fire($event);
+		// eventing
+		if (Ikarus::getEventManager() !== null) {
+			// fire event
+			$event = new GetByIdentifierEvent(new IdentifierEventArguments($identifier));
+			Ikarus::getEventManager()->fire($event);
 
-		// cancellable event
-		if ($event->isCancelled() and $event->getReplacement() === null)
-			throw new StrictStandardException("Missing replacement for database object");
-		elseif ($event->isCancelled())
-			return $event->getReplacement();
+			// cancellable event
+			if ($event->isCancelled() and $event->getReplacement() === null)
+				throw new StrictStandardException("Missing replacement for database object");
+			elseif ($event->isCancelled())
+				return $event->getReplacement();
+		}
 
 		// check for configuration
 		if (!static::$tableName or static::$identifierField) throw new SystemException('The database object %s is not configured for method %s', __CLASS__, __METHOD__);
@@ -107,7 +111,7 @@ abstract class DatabaseObject {
 		$this->data = $data;
 
 		// fire event
-		Ikarus::getEventManager()->fire(new HandleDataEvent(new DatabaseObjectEventArguments($this)));
+		if (Ikarus::getEventManager() !== null) Ikarus::getEventManager()->fire(new HandleDataEvent(new DatabaseObjectEventArguments($this)));
 	}
 
 	/**
@@ -136,15 +140,18 @@ abstract class DatabaseObject {
 	 * @throws			SystemException
 	 */
 	public function __get($variable) {
-		// fire event
-		$event = new MagicGetEvent(new IdentifierEventArguments($variable));
-		Ikarus::getEventManager()->fire($event);
+		// eventing
+		if (Ikarus::getEventManager() !== null) {
+			// fire event
+			$event = new MagicGetEvent(new IdentifierEventArguments($variable));
+			Ikarus::getEventManager()->fire($event);
 
-		// cancellable event
-		if ($event->isCancelled() and $event->getReplacement() === null)
-			throw new StrictStandardException('Missing replacement for variable "%s"', $variable);
-		elseif ($event->isCancelled())
-			return $event->getReplacement();
+			// cancellable event
+			if ($event->isCancelled() and $event->getReplacement() === null)
+				throw new StrictStandardException('Missing replacement for variable "%s"', $variable);
+			elseif ($event->isCancelled())
+				return $event->getReplacement();
+		}
 
 		// strict standard
 		if (!$this->__isset($variable)) throw new StrictStandardException("The variable '%s' is not defined in DatabaseObject %s", $variable, get_class($this));
@@ -168,11 +175,11 @@ abstract class DatabaseObject {
 		if (substr($name, 0, 3) == 'get' ) {
 			$variable = substr($name, 3);
 			$variable{0} = StringUtil::toLowerCase($variable{0});
-			if (isset($this->__isset($variable))) return $this->__get($variable);
+			if ($this->__isset($variable)) return $this->__get($variable);
 		}
 
 		// handle isXYZ methods
-		if (substr($name, 0, 2) == 'is' and isset($this->__isset($name))) return $this->__get($name);
+		if (substr($name, 0, 2) == 'is' and $this->__isset($name)) return $this->__get($name);
 
 		// handle undefined methods
 		throw new SystemException("Method '%s' does not exist in class %s", $name, get_class($this));
