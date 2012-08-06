@@ -28,7 +28,7 @@ use ikarus\system\event\AbstractEvent;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-abstract class DataEvent extends AbstractEvent implements DataEvent {
+abstract class DataEvent extends AbstractEvent implements IDataEvent {
 
 	/**
 	 * Constructs the object.
