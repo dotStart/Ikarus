@@ -20,8 +20,8 @@ use ikarus\system\database\QueryEditor;
 use ikarus\system\event\data\DatabaseObjectEventArguments;
 use ikarus\system\event\data\GetByIdentifierEvent;
 use ikarus\system\event\data\HandleDataEvent;
-use ikarus\system\event\data\IdentifierEventArguments;
 use ikarus\system\event\data\MagicGetEvent;
+use ikarus\system\event\IdentifierEventArguments;
 use ikarus\system\exception\StrictStandardException;
 use ikarus\system\exception\SystemException;
 
