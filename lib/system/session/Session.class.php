@@ -71,6 +71,25 @@ class Session extends DatabaseObject implements ISession {
 	}
 
 	/**
+	 * Logs the user in.
+	 * @param			integer			$userID
+	 * @return			void
+	 */
+	public function login($userID) {
+		// save data
+		$this->data['userID'] = $userID;
+
+		// create user profile
+		$this->data['user'] = SessionFactory::createUserObject($this->abbreviation, $userID);
+
+		// get additional data
+		$this->data['humanReadableUserIdentifier'] = $this->getUser()->getEmail(); // TODO: This should be dynamic
+
+		// update
+		$this->update();
+	}
+
+	/**
 	 * @see ikarus\system\session.ISession::update()
 	 */
 	public function update() {
