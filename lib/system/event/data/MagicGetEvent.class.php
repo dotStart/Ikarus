@@ -16,6 +16,7 @@
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
 namespace ikarus\system\event\data;
+use ikarus\system\event\AbstractCancellableEvent;
 use ikarus\system\event\IdentifierEventArguments;
 
 /**
