@@ -59,6 +59,7 @@ class SessionFactory {
 		$className = $abbreviation.'\\'.static::SESSION_CLASS_PATH;
 
 		$instance = new $className(array(
+			'abbreviation'			=>	$abbreviation,
 			'sessionID'			=>	$sessionID,
 			'packageID'			=>	$packageID,
 			'environment'			=>	$environment
