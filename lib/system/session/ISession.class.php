@@ -28,13 +28,26 @@ namespace ikarus\system\session;
  * @version		2.0.0-0001
  */
 interface ISession {
-	
+
 	/**
 	 * Creates a new instance of type ISession
 	 * @param			array			$data
 	 */
 	public function __construct($data);
-	
+
+	/**
+	 * Sets the user for this session.
+	 * @param			integer			$userID
+	 * @return			void
+	 */
+	public function login($userID);
+
+	/**
+	 * Clears all user information from this session.
+	 * @return			void
+	 */
+	public function logout();
+
 	/**
 	 * Updates the database row of this session
 	 * @return			void
