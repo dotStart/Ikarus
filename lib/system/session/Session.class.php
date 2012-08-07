@@ -94,7 +94,7 @@ class Session extends DatabaseObject implements ISession {
 		// save data
 		$this->data['userID'] = null;
 		$this->data['user'] = null;
-		$this->data['humanReadableuserIdentifier'] = null;
+		$this->data['humanReadableUserIdentifier'] = null;
 
 		// update
 		$this->update();
@@ -110,6 +110,30 @@ class Session extends DatabaseObject implements ISession {
 
 		// cancellable event
 		if ($event->isCancelled()) return;
+
+		// update native stored information
+		$sql = "UPDATE
+				ikarus".IKARUS_N."_session
+			SET
+				humanReadableUserIdentifier = ?,
+				userID = ?,
+				ipAddress = ?,
+				userAgent = ?,
+				packageID = ?,
+				environment = ?,
+				abbreviation = ?
+			WHERE
+				sessionID = ?";
+		$stmt = Ikarus::getDatabaseManager()->getDefaultAdapter()->prepareStatement($sql);
+		$stmt->bind($this->humanReadableUserIdentifier);
+		$stmt->bind($this->userID);
+		$stmt->bind($this->ipAddress);
+		$stmt->bind($this->userAgent);
+		$stmt->bind($this->packageID);
+		$stmt->bind($this->environment);
+		$stmt->bind($this->abbreviation);
+		$stmt->bind($this->sessionID);
+		$stmt->execute();
 
 		// update row
 		$sql = "UPDATE
