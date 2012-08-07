@@ -71,9 +71,7 @@ class Session extends DatabaseObject implements ISession {
 	}
 
 	/**
-	 * Logs the user in.
-	 * @param			integer			$userID
-	 * @return			void
+	 * @see ikarus\system\session.ISession::login()
 	 */
 	public function login($userID) {
 		// save data
@@ -84,6 +82,19 @@ class Session extends DatabaseObject implements ISession {
 
 		// get additional data
 		$this->data['humanReadableUserIdentifier'] = $this->getUser()->getEmail(); // TODO: This should be dynamic
+
+		// update
+		$this->update();
+	}
+
+	/**
+	 * @see ikarus\system\session.ISession::logout()
+	 */
+	public function logout() {
+		// save data
+		$this->data['userID'] = null;
+		$this->data['user'] = null;
+		$this->data['humanReadableuserIdentifier'] = null;
 
 		// update
 		$this->update();
