@@ -191,6 +191,24 @@ class SessionManager implements IConfigurableComponent {
 	}
 
 	/**
+	 * @see ikarus\system\session.ISession::login()
+	 */
+	public function login($userID) {
+		foreach($this->sessions as $session) {
+			$session->login($userID);
+		}
+	}
+
+	/**
+	 * @see ikarus\system\session.ISession::logout()
+	 */
+	public function logout() {
+		foreach($this->sessions as $session) {
+			$session->logout();
+		}
+	}
+
+	/**
 	 * Registers a new session
 	 * @param			string			$abbreviation
 	 * @param			ISession		$sessionInstance
