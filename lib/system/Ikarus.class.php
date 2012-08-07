@@ -44,7 +44,7 @@ require_once(IKARUS_DIR.'lib/pattern/NonInstantiableClass.class.php');
  * @subpackage		system
  * @category		Ikarus Framework
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
- * @version		2.0.0-0001
+ * @version		2.0.0-0001 (Codename: Raw Emerald)
  */
 class Ikarus extends NonInstantiableClass {
 
