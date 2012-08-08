@@ -46,7 +46,7 @@ class CacheBuilderRequestDispatcherControllerTypes implements ICacheBuilder {
 		$typeList = array();
 
 		foreach($resultList as $result) {
-			$typeList[$result->parameterName] = $result->controllerDirectory;
+			$typeList[$result->parameterName] = $result->controllerNamespace;
 		}
 
 		return $typeList;
