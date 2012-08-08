@@ -30,13 +30,13 @@ use ikarus\util\DependencyUtil;
  * @version		2.0.0-0001
  */
 class CacheBuilderApplications implements ICacheBuilder {
-	
+
 	/**
 	 * @see ikarus\system\cache.CacheBuilder::getData()
 	 */
-	public static function getData($resourceName) {
+	public static function getData($resourceName, $additionalCacheBuilderParameters = array()) {
 		list($resourceName, $packageID) = explode('-', $resourceName);
-		
+
 		$editor = new QueryEditor();
 		$editor->from(array('ikarus'.IKARUS_N.'_application' => 'app'));
 		DependencyUtil::generateDependencyQuery($packageID, $editor, 'app');

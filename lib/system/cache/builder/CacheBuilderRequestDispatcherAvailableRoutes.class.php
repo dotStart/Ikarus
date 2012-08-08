@@ -30,26 +30,26 @@ use ikarus\util\DependencyUtil;
  * @version		2.0.0-0001
  */
 class CacheBuilderRequestDispatcherAvailableRoutes implements ICacheBuilder {
-	
+
 	/**
 	 * @see ikarus\system\cache.CacheBuilder::getData()
 	 */
-	public static function getData($resourceName) {
+	public static function getData($resourceName, $additionalCacheBuilderParameters = array()) {
 		list($resourceName, $packageID) = explode('-', $resourceName);
-		
+
 		$editor = new QueryEditor();
 		$editor->from(array('ikarus'.IKARUS_N.'_request_route' => 'requestRoute'));
 		DependencyUtil::generateDependencyQuery($packageID, $editor, 'requestRoute');
 		$stmt = $editor->prepare();
 		$resultList = $stmt->fetchList();
-		
+
 		$routeList = array();
-		
+
 		foreach($resultList as $result) {
 			if (!isset($routeList[$result->parameterName])) $routeList[$result->parameterName] = array();
 			$routeList[$result->parameterName][$result->routeName] = array('controllerName' => $result->controllerName, 'controllerDirectory' => $result->controllerDirectory);
 		}
-		
+
 		return $routeList;
 	}
 }

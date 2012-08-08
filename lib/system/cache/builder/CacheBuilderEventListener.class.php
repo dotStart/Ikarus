@@ -30,27 +30,27 @@ use ikarus\util\DependencyUtil;
  * @version		2.0.0-0001
  */
 class CacheBuilderEventListener implements ICacheBuilder {
-	
+
 	/**
 	 * @see ikarus\system\cache.CacheBuilder::getData()
 	 */
-	public static function getData($resourceName) {
+	public static function getData($resourceName, $additionalCacheBuilderParameters = array()) {
 		list($resourceName, $packageID) = explode('-', $resourceName);
-		
+
 		$editor = new QueryEditor();
 		$editor->from(array('ikarus'.IKARUS_N.'_event_listener' => 'listener'));
 		DependencyUtil::generateDependencyQuery($packageID, $editor, 'listener');
 		$stmt = $editor->prepare();
 		$resultList = $stmt->fetchList();
-		
+
 		$listenerList = array();
-		
+
 		foreach($resultList as $result) {
 			if (!isset($listenerList[$result->className])) $listenerList[$result->className] = array();
 			if (!isset($listenerList[$result->className][$result->eventName])) $listenerList[$result->className][$result->eventName] = array();
 			$listenerList[$result->className][$result->eventName][] = $result;
 		}
-		
+
 		return $listenerList;
 	}
 }

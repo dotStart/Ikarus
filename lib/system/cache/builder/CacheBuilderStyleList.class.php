@@ -31,13 +31,13 @@ use ikarus\util\DependencyUtil;
  * @version		2.0.0-0001
  */
 class CacheBuilderStyleList implements ICacheBuilder {
-	
+
 	/**
 	 * @see ikarus\system\cache.CacheBuilder::getData()
 	 */
-	public static function getData($resourceName) {
+	public static function getData($resourceName, $additionalCacheBuilderParameters = array()) {
 		list($resourceName, $packageID, $environment) = explode('-', $resourceName);
-		
+
 		$editor = new QueryEditor();
 		$editor->from(array('ikarus'.IKARUS_N.'_style' => 'style'));
 		$editor->where('environment = ?');
@@ -46,13 +46,13 @@ class CacheBuilderStyleList implements ICacheBuilder {
 		$stmt = $editor->prepare();
 		$stmt->bind($environment);
 		$resultList = $stmt->fetchList();
-		
+
 		$styleList = array();
-		
+
 		foreach($resultList as $result) {
 			$styleList[] = new Style($result->__toArray());
 		}
-		
+
 		return $styleList;
 	}
 }

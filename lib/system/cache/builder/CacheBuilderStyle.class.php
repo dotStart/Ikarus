@@ -29,13 +29,13 @@ use ikarus\system\database\QueryEditor;
  * @version		2.0.0-0001
  */
 class CacheBuilderStyle implements ICacheBuilder {
-	
+
 	/**
 	 * @see ikarus\system\cache.CacheBuilder::getData()
 	 */
-	public static function getData($resourceName) {
+	public static function getData($resourceName, $additionalCacheBuilderParameters = array()) {
 		list($resourceName, $styleID) = explode('-', $resourceName);
-		
+
 		$editor = new QueryEditor();
 		$editor->from(array('ikarus'.IKARUS_N.'_style_css' => 'style_css'));
 		$editor->where('styleID = ?');

@@ -30,25 +30,25 @@ use ikarus\util\DependencyUtil;
  * @version		2.0.0-0001
  */
 class CacheBuilderRequestDispatcherControllerTypes implements ICacheBuilder {
-	
+
 	/**
 	 * @see ikarus\system\cache.CacheBuilder::getData()
 	 */
-	public static function getData($resourceName) {
+	public static function getData($resourceName, $additionalCacheBuilderParameters = array()) {
 		list($resourceName, $packageID) = explode('-', $resourceName);
-		
+
 		$editor = new QueryEditor();
 		$editor->from(array('ikarus'.IKARUS_N.'_request_controller_type' => 'controllerType'));
 		DependencyUtil::generateDependencyQuery($packageID, $editor, 'controllerType');
 		$stmt = $editor->prepare();
 		$resultList = $stmt->fetchList();
-		
+
 		$typeList = array();
-		
+
 		foreach($resultList as $result) {
 			$typeList[$result->parameterName] = $result->controllerDirectory;
 		}
-		
+
 		return $typeList;
 	}
 }

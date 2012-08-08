@@ -28,12 +28,13 @@ namespace ikarus\system\cache\builder;
  * @version		2.0.0-0001
  */
 interface ICacheBuilder {
-	
+
 	/**
 	 * Returns datat that should be written to cache
 	 * @param			string			$resourceName
+	 * @param			array			$additionalParameters
 	 * @return			mixed
 	 */
-	public static function getData($resourceName);
+	public static function getData($resourceName, $additionalParameters = array());
 }
 ?>

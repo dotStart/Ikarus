@@ -29,26 +29,26 @@ use ikarus\system\database\QueryEditor;
  * @version		2.0.0-0001
  */
 class CacheBuilderLanguage implements ICacheBuilder {
-	
+
 	/**
 	 * @see ikarus\system\cache.CacheBuilder::getData()
 	 */
-	public static function getData($resourceName) {
+	public static function getData($resourceName, $additionalCacheBuilderParameters = array()) {
 		list($resourceName, $languageID) = explode('-', $resourceName);
-		
+
 		$editor = new QueryEditor();
 		$editor->from(array('ikarus'.IKARUS_N.'_language_variables' => 'languageVariables'));
 		$editor->where('languageID = ?');
 		$stmt = $editor->prepare();
 		$stmt->bind($languageID);
 		$resultList = $stmt->fetchList();
-		
+
 		$languageVariables = array();
-		
+
 		foreach($resultList as $languageVariable) {
 			$languageVariables[$languageVariable->variableName] = $languageVariable;
 		}
-		
+
 		return $languageVariables;
 	}
 }

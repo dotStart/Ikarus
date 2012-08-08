@@ -31,13 +31,13 @@ use ikarus\util\DependencyUtil;
  * @version		2.0.0-0001
  */
 class CacheBuilderLanguages implements ICacheBuilder {
-	
+
 	/**
 	 * @see ikarus\system\cache.CacheBuilder::getData()
 	 */
-	public static function getData($resourceName) {
+	public static function getData($resourceName, $additionalCacheBuilderParameters = array()) {
 		list($resourceName, $packageID) = explode('-', $resourceName);
-		
+
 		$editor = new QueryEditor();
 		$editor->from(array('ikarus'.IKARUS_N.'_language' => 'language'));
 		$editor->where('isEnabled = 1');
@@ -45,13 +45,13 @@ class CacheBuilderLanguages implements ICacheBuilder {
 		DependencyUtil::generateDependencyQuery($packageID, $editor, 'language');
 		$stmt = $editor->prepare();
 		$resultList = $stmt->fetchList();
-		
+
 		$languageList = array();
-		
+
 		foreach($resultList as $language) {
 			$languageList[] = new Language($language->__toArray());
 		}
-		
+
 		return $languageList;
 	}
 }
