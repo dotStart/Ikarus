@@ -28,13 +28,13 @@ namespace ikarus\system\cache\adapter;
  * @version		2.0.0-0001
  */
 interface ICacheAdapter {
-	
+
 	/**
 	 * Creates a new instance of type ICacheAdapter
 	 * @param			array			$adapterParameters
 	 */
 	public function __construct($adapterParameters = array());
-	
+
 	/**
 	 * Creates a new cache resource for later use
 	 * @param			string			$resourceName
@@ -42,11 +42,12 @@ interface ICacheAdapter {
 	 * @param			string			$cacheBuilderClass
 	 * @param			integer			$minimalLifetime
 	 * @param			integer			$maximalLifetime
+	 * @param			array			$additionalCacheBuilderParameters
 	 * @throws			SystemException
 	 * @return			boolean
 	 */
-	public function createResource($resourceName, $cacheFile, $cacheBuilderClass, $minimalLifetime = 0, $maximalLifetime = 0);
-	
+	public function createResource($resourceName, $cacheFile, $cacheBuilderClass, $minimalLifetime = 0, $maximalLifetime = 0, $additionalCacheBuilderParameters = array());
+
 	/**
 	 * Returns the content of given resource
 	 * @param			string			$resourceName
@@ -54,13 +55,13 @@ interface ICacheAdapter {
 	 * @return			mixed
 	 */
 	public function get($resourceName);
-	
+
 	/**
 	 * Returns true if this adapter is supported by php installation
 	 * @return			boolean
 	 */
 	public static function isSupported();
-	
+
 	/**
 	 * Closes the cache adapter connection (if any)
 	 * @return			void
