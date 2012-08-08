@@ -35,6 +35,6 @@ interface ICacheBuilder {
 	 * @param			array			$additionalParameters
 	 * @return			mixed
 	 */
-	public static function getData($resourceName, $additionalParameters = array());
+	public static function getData($resourceName, $additionalParameters);
 }
 ?>

@@ -35,7 +35,7 @@ class CacheBuilderLanguages implements ICacheBuilder {
 	/**
 	 * @see ikarus\system\cache.CacheBuilder::getData()
 	 */
-	public static function getData($resourceName, $additionalCacheBuilderParameters = array()) {
+	public static function getData($resourceName, $additionalParameters) {
 		list($resourceName, $packageID) = explode('-', $resourceName);
 
 		$editor = new QueryEditor();
