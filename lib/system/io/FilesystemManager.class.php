@@ -20,6 +20,7 @@ use ikarus\system\event\EmptyEventArguments;
 use ikarus\system\event\io\AdapterEventArguments;
 use ikarus\system\event\io\CreateFileHandleEvent;
 use ikarus\system\event\io\DefaultAdapterSetEvent;
+use ikarus\system\event\io\FilenameEventArguments;
 use ikarus\system\event\io\ShutdownEvent;
 use ikarus\system\Ikarus;
 use ikarus\system\exception\StrictStandardException;
@@ -110,7 +111,7 @@ class FilesystemManager {
 		// events ...
 		if (Ikarus::getEventManager() !== null) {
 			// fire event
-			$event = CreateFileHandleEvent(new FilenameEventArguments($fileName));
+			$event = new CreateFileHandleEvent(new FilenameEventArguments($fileName));
 			Ikarus::getEventManager()->fire($event);
 
 			// cancellable event
