@@ -189,7 +189,7 @@ class SystemException extends Exception implements IPrintableException {
 	 * @see Exception::getCode()
 	 */
 	public function __getCode() {
-		return "0x".dechex(parent::getCode());
+		return "0x".StringUtil::toUpperCase(dechex(parent::getCode()));
 	}
 
 	/**
