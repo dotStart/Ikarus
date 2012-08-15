@@ -29,26 +29,26 @@ use ikarus\system\Ikarus;
  * @version		2.0.0-0001
  */
 abstract class NamedUserException extends SystemException {
-	
+
 	/**
 	 * @see ikarus\system\exception.SystemException::EXCEPTION_TITLE
 	 */
 	const EXCEPTION_TITLE = 'Unknown problem';
-	
+
 	/**
 	 * Contains a HTTP header that should be used
 	 * @var			string
 	 */
 	protected $header = 'HTTP/1.1 400 Bad Request';
-	
+
 	/**
 	 * Creates a new instance of type SystemException
 	 * @param			string			$message
 	 */
 	public function __construct($message = '') {
-		$this->message = $message;
+		parent::__construct($message);
 	}
-	
+
 	/**
 	 * @see ikarus\system\exception.SystemException::show()
 	 */
