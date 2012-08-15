@@ -65,6 +65,9 @@ class Session extends DatabaseObject implements ISession {
 		$this->data['requestURI'] = (isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : null);
 		$this->data['ipAddress'] = (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : null);
 		$this->data['hostname'] = (isset($_SERVER['REMOTE_ADDR']) ? gethostbyaddr($_SERVER['REMOTE_ADDR']) : null);
+		$this->data['userID'] = null;
+		$this->data['user'] = null;
+		$this->data['humanReadableUserIdentifier'] = null;
 
 		// fire event
 		Ikarus::getEventManager()->fire(new InitFinishedEvent(new SessionEventArguments($this)));
