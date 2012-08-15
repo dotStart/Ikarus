@@ -35,13 +35,13 @@ use ikarus\util\StringUtil;
  * @version		2.0.0-0001
  */
 class SystemException extends Exception implements IPrintableException {
-	
+
 	/**
 	 * Contains a title that will appear in error messages and in error logs
 	 * @var			string
 	 */
 	const EXCEPTION_TITLE = 'Core error';
-	
+
 	/**
 	 * Contains additional elements that should added to message body
 	 * @var			string
@@ -53,7 +53,7 @@ class SystemException extends Exception implements IPrintableException {
 	 * @var	string
 	 */
 	protected $information = array();
-	
+
 	/**
 	 * Contains additional error information that should only appear in encoded error reports
 	 * @var			string
@@ -89,7 +89,7 @@ class SystemException extends Exception implements IPrintableException {
 			$code = $code + ($i + 1) + ord($message{$i});
 		}
 		$code = $code * 100;
-		
+
 		// little workaround
 		// Note this is absolutly senseless ... xD
 		if (isset($arguments[1]) && is_array($arguments[1])) {
@@ -99,14 +99,14 @@ class SystemException extends Exception implements IPrintableException {
 			}
 			$arguments = $fixedArguments;
 		}
-		
+
 		// format new message
 		if (count($arguments) > 1) $message = call_user_func_array('sprintf', $arguments);
 
 		// call Exception::__construct()
 		parent::__construct($message, $code);
 	}
-	
+
 	/**
 	 * Removes full paths from issuer file
 	 * @return		string
@@ -124,17 +124,17 @@ class SystemException extends Exception implements IPrintableException {
 	public function __getTraceAsString() {
 		// get trace array
 		$trace = $this->getTrace();
-		
+
 		// init variables
 		$string = "";
-		
+
 		// add elements
 		foreach($trace as $index => $element) {
 			$string .= "#".$index." ".(isset($element['file']) ? $this->prepareFilePath($element['file']) : 'unknown')."(".(isset($element['line']) ? $element['line'] : 0)."): ".(isset($element['class']) ? $element['class'].$element['type'] : '').$element['function'].'(';
 			foreach($element['args'] as $key => $argument) {
 				if ($key > 0) $string .= ', ';
 				$string .= gettype($argument);
-				
+
 				switch(gettype($argument)) {
 					case 'array':
 						$string .= '('.count($argument).')';
@@ -157,8 +157,8 @@ class SystemException extends Exception implements IPrintableException {
 			}
 			$string .= ")\n";
 		}
-		
-		
+
+
 		$string = preg_replace('/Database->__construct\(.*\)/', 'Database->__construct(...)', $string);
 		$string = preg_replace('/mysqli->mysqli\(.*\)/', 'mysqli->mysqli(...)', $string);
 		$string = preg_replace('/Database->connect\(.*\)/', 'MySQLDatabase->connect(...)', $string);
@@ -166,7 +166,7 @@ class SystemException extends Exception implements IPrintableException {
 		$string = preg_replace('/DatabaseManager->addConnection\(.*\)/', 'DatabaseManager->addConnection(...)', $string);
 		return $string;
 	}
-	
+
 	/**
 	 * Generates the error report
 	 * @return			string
@@ -174,24 +174,31 @@ class SystemException extends Exception implements IPrintableException {
 	public final function generateErrorReport() {
 		// get serialized information
 		$report = serialize(array_merge($this->information, $this->hiddenInformation));
-		
+
 		// encrypt
 		try {
 			$report = EncryptionManager::encryptForMaintainer($report);
 			$encrypted = true;
 		} Catch (SystemException $ex) { }
-		
+
 		// put all together
 		return $report = "-------- ".(isset($encrypted) ? "ENCRYPTED " : "")."REPORT BEGIN --------\n".chunk_split(base64_encode($report), 76, "\n")."-------- REPORT END ---------";
 	}
-	
+
+	/**
+	 * @see Exception::getCode()
+	 */
+	public function __getCode() {
+		return "0x".dechex(parent::getCode());
+	}
+
 	/**
 	 * Modifies current error information
 	 */
 	public function modifyInformation() {
 		// core information
 		$this->information['error message'] = StringUtil::encodeHTML($this->getMessage());
-		$this->information['error code'] = '<a href="http://www.ikarus-framework.de/error/'.intval($this->getCode()).'">'.intval($this->getCode()).'</a>';
+		$this->information['error code'] = '<a href="http://www.ikarus-framework.de/error/'.$this->__getCode().'">'.$this->__getCode().'</a>';
 		$this->information['file'] = StringUtil::encodeHTML($this->__getFile()).' ('.$this->getLine().')';
 		$this->information['php version'] = StringUtil::encodeHTML(phpversion()).' ('.PHP_OS.')';
 		$this->information['zend version'] = StringUtil::encodeHTML(zend_version());
@@ -201,13 +208,13 @@ class SystemException extends Exception implements IPrintableException {
 		$this->information['date'] = gmdate('r');
 		if (isset($_SERVER['REQUEST_URI'])) $this->information['request'] = StringUtil::encodeHTML($_SERVER['REQUEST_URI']);
 		if (isset($_SERVER['HTTP_REFERER'])) $this->information['referer'] = StringUtil::encodeHTML($_SERVER['HTTP_REFERER']);
-		
+
 		// hidden information
 		$this->hiddenInformation['files'] = array_map(array($this, 'prepareFilePath'), get_included_files());
 		$this->hiddenInformation['constants'] = get_defined_constants(true);
 		$this->hiddenInformation['constants'] = array_keys($this->hiddenInformation['constants']['user']);
 		$this->hiddenInformation['extensions'] = get_loaded_extensions();
-		
+
 		// sort hidden information
 		asort($this->hiddenInformation['files']);
 		asort($this->hiddenInformation['constants']);
@@ -224,20 +231,20 @@ class SystemException extends Exception implements IPrintableException {
 		// notify application manager
 		Ikarus::getApplicationManager()->handleApplicationError($this);
 	}
-	
+
 	/**
 	 * @see ikarus\system\exception.IPrintableException::showMinimal()
 	 */
 	public function showMinimal() {
 		// modify information
 		$this->modifyInformation();
-		
+
 		// send status code
 		@header('HTTP/1.1 503 Service Unavailable');
-		
+
 		// print report
 		echo '<?xml version="1.0" encoding="UTF-8"?>';
-		
+
 		?>
 		<!DOCTYPE html>
 		<html>
@@ -250,17 +257,17 @@ class SystemException extends Exception implements IPrintableException {
 			<body>
 				<div class="systemException">
 					<h1><?php echo static::EXCEPTION_TITLE; ?>: <?php echo StringUtil::encodeHTML($this->getMessage()); ?></h1>
-					
+
 					<div>
 						<p>
-							<?php 
+							<?php
 							foreach($this->information as $label => $value) echo '<b>'.$label.':</b> '.$value.'<br />';
 							?>
 						</p>
-						
+
 						<h2><a href="javascript:void(0);" onclick="$('#stacktrace').toggle('blind'); $(this).text(($(this).text() == '+' ? '-' : '+'));">+</a>Stacktrace</h2>
 						<pre id="stacktrace" style="display: none;"><?php echo StringUtil::encodeHTML($this->__getTraceAsString()); ?></pre>
-						
+
 						<h2><a href="javascript:void(0);" onclick="$('#files').toggle('blind'); $(this).text(($(this).text() == '+' ? '-' : '+'));">+</a>Files</h2>
 						<pre id="files" style="display: none;"><?php $includes = array_map(array($this, 'prepareFilePath'), get_included_files()); asort($includes); foreach($includes as $file) echo $file."\n"; ?></pre>
 
@@ -281,34 +288,34 @@ class SystemException extends Exception implements IPrintableException {
 									$string .= '('.strlen($constantValue).')';
 									break;
 							}
-							
+
 							// create padding
 							echo str_pad($constant, (max(array_map('strlen', $constants)) + 4), " ", STR_PAD_RIGHT).$string."\n";
 						} ?></pre>
-					
+
 						<h2><a href="javascript:void(0);" onclick="$('#extensions').toggle('blind'); $(this).text(($(this).text() == '+' ? '-' : '+'));">+</a>Extensions</h2>
 						<pre id="extensions" style="display: none;"><?php $extensions = get_loaded_extensions(); asort($extensions); foreach($extensions as $extension) echo $extension."\n"; ?></pre>
-					
+
 						<?php echo $this->additionalInformationElements; ?>
-					
+
 						<h2><a href="javascript:void(0);" onclick="$('#errorReport').toggle('blind'); $(this).text(($(this).text() == '+' ? '-' : '+'));">+</a>Report</h2>
 						<pre id="errorReport" style="display: none;">Ikarus Framework Error Report<br /><br /><?php echo $this->generateErrorReport(); ?></pre>
 					</div>
-					
+
 					<?php echo $this->functions; ?>
 				</div>
 			</body>
 		</html>
 		<?php
 	}
-	
+
 	/**
 	 * Calculates the relative path to given file
 	 * @param			string		$path
 	 * @return			string
 	 */
 	protected function prepareFilePath($path) {
-		return FileUtil::removeTrailingSlash(FileUtil::getRelativePath(IKARUS_DIR, $path));	
+		return FileUtil::removeTrailingSlash(FileUtil::getRelativePath(IKARUS_DIR, $path));
 	}
 }
 ?>
