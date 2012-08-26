@@ -39,13 +39,13 @@ class EventManager {
 	 * @var array
 	 */
 	protected $listenerList = null;
-	
+
 	/**
 	 * Contains a list of listener instances
 	 * @var	array<EventListener>
 	 */
 	protected $listenerInstances = array();
-	
+
 	/**
 	 * Creates a new instance of type EventManager
 	 * @param			integer			$packageID
@@ -53,7 +53,7 @@ class EventManager {
 	public function __construct($packageID = IKARUS_ID) {
 		$this->loadCache($packageID);
 	}
-	
+
 	/**
 	 * Alias for ikarus\system\event.EventManager::fire()
 	 * @see	ikarus\system\event.EventManager::fire()
@@ -73,27 +73,27 @@ class EventManager {
 	public function fire(IEvent $event, $eventClass = null) {
 		// get eventClass (if not already set)
 		if ($eventClass === null) $eventClass = get_class($event);
-		
+
 		// strict standards
 		if (get_class($event) != $eventClass and !ClassUtil::isInstanceOf($event, $eventClass)) throw new StrictStandardException('"%s" has to be a parent of "%s" in case to use it as alias', $eventClass, get_class($event));
-		
+
 		// normal listeners
 		if (isset($this->listenerList[$eventClass]))
 			foreach($this->listenerList[$eventClass] as $listenerInformation) {
 				$className = $listenerInformation->listenerClass;
-				
+
 				// get listener instance
 				if (!isset($this->listenerInstances[$listenerInformation->listenerClass]))
 					$instance = $this->listenerInstances[$listenerInformation->listenerClass] = new $className();
 				else
 					$instance = $this->listenerInstances[$listenerInformation->listenerClass];
-					
-				$instance->execute($event, $listenerInformation);
+
+				$instance->execute($event);
 			}
-		
+
 		// fire parents (if any)
 		$parents = ClassUtil::getParents($event);
-		
+
 		foreach($parents as $parent) {
 			$this->fire($event, $parent);
 		}
