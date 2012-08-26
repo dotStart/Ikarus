@@ -28,13 +28,12 @@ namespace ikarus\system\event\listener;
  * @version		2.0.0-0001
  */
 interface IEventListener {
-	
+
 	/**
 	 * Executes something on recognized event
-	 * @param			mixed			$eventObj
-	 * @param			string			$eventName
+	 * @param			IEvent			$eventObj
 	 * @return			void
 	 */
-	public function execute($eventObj, $eventName);
+	public function execute($eventObj);
 }
 ?>
