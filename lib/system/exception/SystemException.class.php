@@ -198,7 +198,7 @@ class SystemException extends Exception implements IPrintableException {
 	public function modifyInformation() {
 		// core information
 		$this->information['error message'] = StringUtil::encodeHTML($this->getMessage());
-		$this->information['error code'] = '<a href="http://www.ikarus-framework.de/error/'.$this->__getCode().'">'.$this->__getCode().'</a>';
+		$this->information['error code'] = '<a href="http://www.ikarus-framework.de/wiki/Error:'.$this->__getCode().'">'.$this->__getCode().'</a>';
 		$this->information['file'] = StringUtil::encodeHTML($this->__getFile()).' ('.$this->getLine().')';
 		$this->information['php version'] = StringUtil::encodeHTML(phpversion()).' ('.PHP_OS.')';
 		$this->information['zend version'] = StringUtil::encodeHTML(zend_version());
