@@ -21,7 +21,7 @@ use ikarus\system\exception\SystemException;
 use ikarus\system\Ikarus;
 
 /**
- * Provides a cache builder that stores its data on disk
+ * Provides a cache adapter that stores its data on disk.
  * @author		Johannes Donath
  * @copyright		2011 Evil-Co.de
  * @package		de.ikarus-framework.core
