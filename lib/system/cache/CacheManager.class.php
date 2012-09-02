@@ -17,6 +17,7 @@
  */
 namespace ikarus\system\cache;
 use ikarus\system\exception\StrictStandardException;
+use ikarus\system\exception\SystemException;
 use ikarus\system\Ikarus;
 use ikarus\util\ClassUtil;
 
@@ -107,6 +108,19 @@ class CacheManager {
 	}
 
 	/**
+	 * Returns a connection.
+	 * @param			string			$linkID
+	 * @return			array<ikarus\system\cache\adapter\ICacheAdapter>
+	 */
+	public function getConnection($linkID) {
+		// strict standards
+		if (!array_key_exists($linkID, $this->connections)) throw new StrictStandardException('Cannot access non-existing cache connection "%s"', $linkID);
+
+		// return connection
+		return $this->connections[$linkID];
+	}
+
+	/**
 	 * Loads an adapter
 	 * @param			string			$adapterName
 	 * @throws			StrictStandardException
@@ -166,7 +180,7 @@ class CacheManager {
 		if (!array_key_exists($linkID, $this->connections)) throw new SystemException("Cannot create fallback: The specified linkID does not name a cache connection", $linkID);
 
 		// save fallback
-		$this->fallbacks[$linkID] = $fallback;
+		$this->fallbacks[$fallback] = $linkID;
 	}
 
 	/**
@@ -185,19 +199,21 @@ class CacheManager {
 	 */
 	protected function startAdapters() {
 		$sql = "SELECT
-				*,
+				source.*,
 				adapter.adapterClass
 			FROM
 				ikarus".IKARUS_N."_cache_source source
 			LEFT JOIN
 				ikarus".IKARUS_N."_cache_adapter adapter
 			ON
-				(source.adapterID = adapter.adapterID)";
+				(source.adapterID = adapter.adapterID)
+			ORDER BY
+				source.fallbackFor DESC, source.connectionID ASC";
 		$stmt = Ikarus::getDatabaseManager()->getDefaultAdapter()->prepareStatement($sql);
 		$resultList = $stmt->fetchList();
 
 		foreach($resultList as $result) {
-			$adapter = $this->createConnection($result->adapterClass, $result->adapterParameters, $result->connectionID);
+			$adapter = $this->createConnection($result->adapterClass, (!empty($result->adapterParameters) ? unserialize($result->adapterParameters) : null), $result->connectionID);
 			if ($result->isDefaultConnection) $this->setDefaultAdapter($adapter);
 			if ($result->fallbackFor) $this->setFallback($result->connectionID, $result->fallbackFor);
 		}
