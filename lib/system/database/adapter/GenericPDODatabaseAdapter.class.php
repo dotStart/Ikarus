@@ -33,14 +33,14 @@ use \PDOException;
  */
 
 class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
-	
+
 	/**
 	 * @see ikarus\system\database\adapter.AbstractDatabaseAdapter::$neededDatabaseParameters
 	 */
 	protected $neededDatabaseParameters = array(
 		'connectionType'
 	);
-	
+
 	/**
 	 * @see ikarus\system\database\adapter.AbstractDatabaseAdapter::connect()
 	 */
@@ -48,7 +48,7 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 		try {
 			// connect
 			$this->connection = new PDO($this->databaseParameters['connectionType'].':host='.$this->hostname.';port='.$this->port, $this->user, $this->password, array(PDO::ATTR_PERSISTENT => true));
-		
+
 			// set attributes
 			$this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			$this->connection->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
@@ -58,7 +58,7 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 			throw new DatabaseException($this, "Cannot connect to database: %s", $ex->getMessage());
 		}
 	}
-	
+
 	/**
 	 * @see ikarus\system\database\adapter.AbstractDatabaseAdapter::execute()
 	 */
@@ -66,13 +66,13 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 		try {
 			// parse query
 			$this->parseQuery($query);
-			
+
 			// save query
 			$this->lastQuery = $query;
-			
+
 			// get results
 			$this->connection->query($query);
-			
+
 			// update query count
 			$this->queryCount++;
 		} catch (PDOException $ex) {
@@ -81,7 +81,7 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 			throw $e;
 		}
 	}
-	
+
 	/**
 	 * @see ikarus\system\database\adapter.AbstractDatabaseAdapter::getClientVersion()
 	 */
@@ -89,10 +89,10 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 		try {
 			if ($this->connection !== null) return $this->connection->getAttribute(PDO::ATTR_CLIENT_VERSION);
 		} Catch (PDOException $ex) { }
-		
+
 		return 'unknown';
 	}
-	
+
 	/**
 	 * @see ikarus\system\database\adapter.AbstractDatabaseAdapter::getErrorDescription()
 	 */
@@ -103,24 +103,24 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 		}
 		return parent::getErrorDescription();
 	}
-	
+
 	/**
 	 * @see ikarus\system\database\adapter.AbstractDatabaseAdapter::getErrorInformation()
 	 */
 	public function getErrorInformation() {
 		$information = array();
-		
+
 		try {
 			if (!$this->connection) return $information;
-			
+
 			$information['pdo driver'] = $this->connection->getAttribute(PDO::ATTR_DRIVER_NAME);
 			$information['connection status'] = $this->connection->getAttribute(PDO::ATTR_CONNECTION_STATUS);
 			$information['server information'] = $this->connection->getAttribute(PDO::ATTR_SERVER_INFO);
 		} Catch (PDOException $ex) { }
-		
+
 		return $information;
 	}
-	
+
 	/**
 	 * @see ikarus\system\database\adapter.AbstractDatabaseAdapter::getErrorNumber()
 	 */
@@ -128,7 +128,7 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 		if ($this->connection !== null) return $this->connection->errorCode();
 		return parent::getErrorNumber();
 	}
-	
+
 	/**
 	 * @see ikarus\system\database\adapter.AbstractDatabaseAdapter::getInsertID()
 	 */
@@ -139,7 +139,7 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 			throw new DatabaseException($this, "Cannot fetch last insert ID");
 		}
 	}
-	
+
 	/**
 	 * @see ikarus\system\database\adapter.AbstractDatabaseAdapter::getResultObject()
 	 */
@@ -147,7 +147,7 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 		if ($result->rowCount() <= 0) return (new DatabaseResultList(array()));
 		return parent::getResultObject($result, $forceList);
 	}
-	
+
 	/**
 	 * @see ikarus\system\database\adapter.AbstractDatabaseAdapter::getVersion()
 	 */
@@ -157,21 +157,21 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 		} Catch (PDOException $ex) { }
 		return 'unknown';
 	}
-	
+
 	/**
 	 * @see ikarus\system\database\adapter.AbstractDatabaseAdapter::isSupported()
 	 */
 	public static function isSupported() {
 		return (extension_loaded('PDO'));
 	}
-	
+
 	/**
 	 * @see ikarus\system\database\adapter.AbstractDatabaseAdapter::quote()
 	 */
 	public function quote($string) {
 		return $this->connection->quote($string);
 	}
-	
+
 	/**
 	 * @see ikarus\system\database\adapter.AbstractDatabaseAdapter::sendQuery()
 	 */
@@ -179,16 +179,16 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 		try {
 			// parse query
 			$this->parseQuery($query);
-			
+
 			// save query
 			$this->lastQuery = $query;
-			
+
 			// get results
 			$result = $this->connection->query($query);
-			
+
 			// update query count
 			$this->queryCount++;
-			
+
 			// return result object (if any)
 			return $this->lastResult = $this->getResultObject($result, $forceList);
 		} catch (PDOException $ex) {
@@ -197,7 +197,7 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 			throw $e;
 		}
 	}
-	
+
 	/**
 	 * @see ikarus\system\database\adapter.AbstractDatabaseAdapter::shutdown()
 	 */
