@@ -16,6 +16,7 @@
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
 namespace ikarus\system\exception\cache;
+use ikarus\system\exception\SystemException;
 
 /**
  * Base class for all cache exceptions.
