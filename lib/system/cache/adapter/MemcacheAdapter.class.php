@@ -55,7 +55,7 @@ class MemcacheAdapter implements ICacheAdapter {
 		$this->memcache = new Memcache();
 
 		// split serverList
-		foreach($$adapterParameters['serverList'] as $server) {
+		foreach($adapterParameters['serverList'] as $server) {
 			list($hostname, $port, $persistant, $weight) = explode(':', $server);
 
 			$this->memcache->addServer($hostname, intval($port), ($persistant == 'true'), $weight);
