@@ -16,6 +16,7 @@
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
 namespace ikarus\system\cache\adapter;
+use ikarus\system\exception\cache\ConnectionException;
 
 /**
  * Provides a cache adapter which stores it's contents on a Memcached.
