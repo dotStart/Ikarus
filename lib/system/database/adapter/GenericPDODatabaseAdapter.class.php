@@ -144,8 +144,13 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 	 * @see ikarus\system\database\adapter.AbstractDatabaseAdapter::getResultObject()
 	 */
 	protected function getResultObject($result, $forceList = false) {
+		$resultList = array();
+		while($row = $result->fetch()) {
+			$resultList[] = $row;
+		}
+
 		if ($result->rowCount() <= 0) return (new DatabaseResultList(array()));
-		return parent::getResultObject($result, $forceList);
+		return parent::getResultObject($resultList, $forceList);
 	}
 
 	/**
