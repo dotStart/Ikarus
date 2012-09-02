@@ -207,6 +207,8 @@ class CacheManager {
 				ikarus".IKARUS_N."_cache_adapter adapter
 			ON
 				(source.adapterID = adapter.adapterID)
+			WHERE
+				source.isDisabled = 0
 			ORDER BY
 				source.fallbackFor DESC, source.connectionID ASC";
 		$stmt = Ikarus::getDatabaseManager()->getDefaultAdapter()->prepareStatement($sql);
