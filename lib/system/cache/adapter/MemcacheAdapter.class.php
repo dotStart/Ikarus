@@ -64,18 +64,18 @@ class MemcacheAdapter implements ICacheAdapter {
 
 	/**
 	 * Checks wheter a cache entry should be rebuilded.
-	 * @param			string			$cacheFile
+	 * @param			string			$cacheKey
 	 * @param			string			$cacheBuilderClass
 	 * @param			integer			$minimalLifetime
 	 * @param			integer			$maximalLifetime
 	 * @return			boolean
 	 */
-	protected function cacheNeedsRebuild($cacheFile, $cacheBuilderClass, $minimalLifetime, $maximalLifetime) {
+	protected function cacheNeedsRebuild($cacheKey, $cacheBuilderClass, $minimalLifetime, $maximalLifetime) {
 		// non-existant cache
-		if ($this->memcache->get($cacheFile, MEMCACHE_COMPRESSED) === false) true;
+		if ($this->memcache->get($cacheKey, MEMCACHE_COMPRESSED) === false) true;
 
 		// check lifetime
-		$content = unserialize($this->memcache->get($cacheFile, MEMCACHE_COMPRESSED));
+		$content = unserialize($this->memcache->get($cacheKey, MEMCACHE_COMPRESSED));
 
 		// minimal lifetime
 		if ($content['creationTimestamp'] + $minimalLifetime > TIME_NOW) return false;
@@ -90,11 +90,11 @@ class MemcacheAdapter implements ICacheAdapter {
 	/**
 	 * @see ikarus\system\cache\adapter.ICacheAdapter::createResource()
 	 */
-	public function createResource($resourceName, $cacheFile, $cacheBuilderClass, $minimalLifetime = 0, $maximalLifetime = 0, $additionalCacheBuilderParameters = array()) {
+	public function createResource($resourceName, $cacheKey, $cacheBuilderClass, $minimalLifetime = 0, $maximalLifetime = 0, $additionalCacheBuilderParameters = array()) {
 		try {
-			$this->storeCacheResource($resourceName, $this->loadCache($cacheFile, $cacheBuilderClass, $minimalLifetime, $maximalLifetime));
+			$this->storeCacheResource($resourceName, $this->loadCache($cacheKey, $cacheBuilderClass, $minimalLifetime, $maximalLifetime));
 		} Catch (SystemException $ex) {
-			$this->storeCacheResource($resourceName, $this->storeCacheData($cacheFile, $this->getCacheData($cacheBuilderClass, $resourceName, $additionalCacheBuilderParameters)));
+			$this->storeCacheResource($resourceName, $this->storeCacheData($cacheKey, $this->getCacheData($cacheBuilderClass, $resourceName, $additionalCacheBuilderParameters)));
 		}
 		return true;
 	}
@@ -142,7 +142,7 @@ class MemcacheAdapter implements ICacheAdapter {
 	 */
 	protected function loadCache($cacheKey, $cacheBuilderClass, $minimalLifetime, $maximalLifetime) {
 		// rebuild if needed
-		if ($this->cacheFileNeedsRebuild($cacheKey, $cacheBuilderClass, $minimalLifetime, $maximalLifetime)) throw new SystemException("A rebuild is needed for the cache item '%s'", $cacheKey);
+		if ($this->cacheNeedsRebuild($cacheKey, $cacheBuilderClass, $minimalLifetime, $maximalLifetime)) throw new SystemException("A rebuild is needed for the cache item '%s'", $cacheKey);
 
 		// load information from server
 		$cacheContent = unserialize($this->memcache->get($cacheKey));
