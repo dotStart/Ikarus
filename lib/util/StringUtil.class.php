@@ -30,7 +30,7 @@ use ikarus\system\IKARUS;
  * @version		1.0.0-0001
  */
 class StringUtil {
-	
+
 	/**
 	 * Contains a pattern that matches on HTML elements/documents
 	 * @var			string
@@ -178,7 +178,7 @@ class StringUtil {
 	 * @see strlen()
 	 */
 	public static function length($string) {
-		if (Ikarus::getConfiguration()->get('global.advanced.useMBString'))
+		if (Ikarus::getConfiguration() !== null and Ikarus::getConfiguration()->get('global.advanced.useMBString'))
 			return mb_strlen($string);
 		else
 			return strlen($string);
@@ -188,7 +188,7 @@ class StringUtil {
 	 * @see strpos()
 	 */
 	public static function indexOf($hayStack, $needle, $offset = 0) {
-		if (Ikarus::getConfiguration()->get('global.advanced.useMBString'))
+		if (Ikarus::getConfiguration() !== null and Ikarus::getConfiguration()->get('global.advanced.useMBString'))
 			return mb_strpos($hayStack, $needle, $offset);
 		else
 			return strpos($hayStack, $needle, $offset);
@@ -198,7 +198,7 @@ class StringUtil {
 	 * @see stripos()
 	 */
 	public static function indexOfIgnoreCase($hayStack, $needle, $offset = 0) {
-		if (Ikarus::getConfiguration()->get('global.advanced.useMBString'))
+		if (Ikarus::getConfiguration() !== null and Ikarus::getConfiguration()->get('global.advanced.useMBString'))
 			return mb_strpos(static::toLowerCase($hayStack), static::toLowerCase($needle), $offset);
 		else
 			return stripos($hayStack, $needle, $offset);
@@ -208,7 +208,7 @@ class StringUtil {
 	 * @see strrpos()
 	 */
 	public static function lastIndexOf($hayStack, $needle) {
-		if (Ikarus::getConfiguration()->get('global.advanced.useMBString'))
+		if (Ikarus::getConfiguration() !== null and Ikarus::getConfiguration()->get('global.advanced.useMBString'))
 			return mb_strrpos($hayStack, $needle);
 		else
 			return strrpos($hayStack, $needle);
@@ -218,7 +218,7 @@ class StringUtil {
 	 * @see substr()
 	 */
 	public static function substring($string, $start, $length = null) {
-		if (Ikarus::getConfiguration()->get('global.advanced.useMBString')) {
+		if (Ikarus::getConfiguration() !== null and Ikarus::getConfiguration()->get('global.advanced.useMBString')) {
 			if ($length !== null) return mb_substr($string, $start, $length);
 			return mb_substr($string, $start);
 		} else {
@@ -231,7 +231,7 @@ class StringUtil {
 	 * @see strtolower()
 	 */
 	public static function toLowerCase($string) {
-		if (Ikarus::getConfiguration()->get('global.advanced.useMBString'))
+		if (Ikarus::getConfiguration() !== null and Ikarus::getConfiguration()->get('global.advanced.useMBString'))
 			return mb_strtolower($string);
 		else
 			return strtolower($string);
@@ -241,7 +241,7 @@ class StringUtil {
 	 * @see strtoupper()
 	 */
 	public static function toUpperCase($string) {
-		if (Ikarus::getConfiguration()->get('global.advanced.useMBString'))
+		if (Ikarus::getConfiguration() !== null and Ikarus::getConfiguration()->get('global.advanced.useMBString'))
 			return mb_strtoupper($string);
 		else
 			return strtoupper($string);
@@ -251,7 +251,7 @@ class StringUtil {
 	 * @see substr_count()
 	 */
 	public static function countSubstring($hayStack, $needle) {
-		if (Ikarus::getConfiguration()->get('global.advanced.useMBString'))
+		if (Ikarus::getConfiguration() !== null and Ikarus::getConfiguration()->get('global.advanced.useMBString'))
 			return mb_substr_count($hayStack, $needle);
 		else
 			return substr_count($hayStack, $needle);
@@ -261,7 +261,7 @@ class StringUtil {
 	 * @see ucfirst()
 	 */
 	public static function firstCharToUpperCase($string) {
-		if (Ikarus::getConfiguration()->get('global.advanced.useMBString'))
+		if (Ikarus::getConfiguration() !== null and Ikarus::getConfiguration()->get('global.advanced.useMBString'))
 			return static::toUpperCase(static::substring($string, 0, 1)).static::substring($string, 1);
 		else
 			return ucfirst($string);
@@ -271,7 +271,7 @@ class StringUtil {
 	 * @see ucwords()
 	 */
 	public static function wordsToUpperCase($string) {
-		if (Ikarus::getConfiguration()->get('global.advanced.useMBString'))
+		if (Ikarus::getConfiguration() !== null and Ikarus::getConfiguration()->get('global.advanced.useMBString'))
 			return mb_convert_case($string, MB_CASE_TITLE);
 		else
 			return ucwords($string);
@@ -288,7 +288,7 @@ class StringUtil {
 	 * @see str_ireplace()
 	 */
 	public static function replaceIgnoreCase($search, $replace, $subject, &$count = 0) {
-		if (Ikarus::getConfiguration()->get('global.advanced.useMBString')) {
+		if (Ikarus::getConfiguration() !== null and Ikarus::getConfiguration()->get('global.advanced.useMBString')) {
 			$startPos = static::indexOf(static::toLowerCase($subject), static::toLowerCase($search));
 			if ($startPos === false)
 				return $subject;
@@ -441,12 +441,12 @@ class StringUtil {
 	 */
 	public static function executeWordFilter($word, $filter) {
 		if ($filter == '') return true;
-		
+
 		$word = static::toLowerCase($word);
 
 		if ($filter != '') {
 			$forbiddenNames = explode("\n", static::toLowerCase(static::unifyNewlines($filter)));
-			
+
 			foreach ($forbiddenNames as $forbiddenName)
 				if (static::indexOf($forbiddenName, '*') !== false) {
 					$forbiddenName = static::replace('\*', '.*', preg_quote($forbiddenName, '/'));
@@ -465,7 +465,7 @@ class StringUtil {
 	 * @return		string
 	 */
 	public static function splitIntoChunks($string, $length = 75, $break = "\r\n") {
-		if (Ikarus::getConfiguration()->get('global.advanced.useMBString'))
+		if (Ikarus::getConfiguration() !== null and Ikarus::getConfiguration()->get('global.advanced.useMBString'))
 			return mb_ereg_replace('.{'.$length.'}', "\\0".$break, $string);
 		else
 			return chunk_split($string, $length, $break);
