@@ -17,6 +17,7 @@
  */
 namespace ikarus\system\cache\adapter;
 use ikarus\system\exception\cache\ConnectionException;
+use \Memcache;
 
 /**
  * Provides a cache adapter which stores it's contents on a Memcached.
