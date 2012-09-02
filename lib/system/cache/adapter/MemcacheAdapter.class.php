@@ -86,16 +86,16 @@ class MemcacheAdapter implements ICacheAdapter {
 	 */
 	protected function cacheNeedsRebuild($cacheKey, $cacheBuilderClass, $minimalLifetime, $maximalLifetime) {
 		// non-existant cache
-		if ($this->memcache->get($cacheKey, MEMCACHE_COMPRESSED) === false) true;
+		if ($this->memcache->get($cacheKey, MEMCACHE_COMPRESSED) === false) return true;
 
 		// check lifetime
 		$content = unserialize($this->memcache->get($cacheKey, MEMCACHE_COMPRESSED));
 
 		// minimal lifetime
-		if ($content['creationTimestamp'] + $minimalLifetime > TIME_NOW) return false;
+		if ($minimalLifetime and $content['creationTimestamp'] + $minimalLifetime > TIME_NOW) return false;
 
 		// maximal lifetime
-		if ($content['creationTimestamp'] + $maximalLifetime < TIME_NOW) return true;
+		if ($maximalLifetime and $content['creationTimestamp'] + $maximalLifetime < TIME_NOW) return true;
 
 		// all ok
 		return false;
