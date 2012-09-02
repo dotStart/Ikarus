@@ -33,6 +33,12 @@ use \Memcache;
 class MemcacheAdapter implements ICacheAdapter {
 
 	/**
+	 * This string is used to test the connection.
+	 * @var			string
+	 */
+	const TEST_STRING = 'This cache item was created by Satan';
+
+	/**
 	 * Contains all stored cache resources.
 	 * @var			array
 	 */
@@ -60,6 +66,13 @@ class MemcacheAdapter implements ICacheAdapter {
 
 			$this->memcache->addServer($hostname, intval($port), ($persistant == 'true'), $weight);
 		}
+
+		// check connection
+		@$this->memcache->add('test', serialize(array(
+			'creationTimestamp'	=> TIME_NOW,
+			'content'		=> static::TEST_STRING
+		)));
+		if (@$this->memcache->get('test', MEMCACHE_COMPRESSED) != static::TEST_STRING) throw new ConnectionException("Cannot create a correct memcache connection");
 	}
 
 	/**
@@ -168,7 +181,7 @@ class MemcacheAdapter implements ICacheAdapter {
 		$this->memcache->add($cacheKey, serialize(array(
 			'creationTimestamp'	=> TIME_NOW,
 			'content'		=> $data
-		)));
+		)), MEMCACHE_COMPRESSED);
 
 		return $data;
 	}
