@@ -29,7 +29,6 @@ use \Memcache;
  * @category		Ikarus Framework
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
- * @todo		Check for bugs
  */
 class MemcacheAdapter implements ICacheAdapter {
 
