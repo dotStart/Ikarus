@@ -17,6 +17,7 @@
  */
 namespace ikarus\system\cache\adapter;
 use ikarus\system\exception\cache\ConnectionException;
+use ikarus\system\exception\SystemException;
 use \Memcache;
 
 /**
@@ -68,11 +69,11 @@ class MemcacheAdapter implements ICacheAdapter {
 		}
 
 		// check connection
-		@$this->memcache->add('test', serialize(array(
+		$this->memcache->add('test', serialize(array(
 			'creationTimestamp'	=> TIME_NOW,
 			'content'		=> static::TEST_STRING
 		)));
-		if (@$this->memcache->get('test', MEMCACHE_COMPRESSED) != static::TEST_STRING) throw new ConnectionException("Cannot create a correct memcache connection");
+		$this->memcache->get('test', MEMCACHE_COMPRESSED);
 	}
 
 	/**
