@@ -290,6 +290,9 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::parseQuery()
 	 */
 	public function parseQuery($query) {
+		// replace ikarus abbreviation
+		$query = StringUtil::replace('ikarus1_', 'ikarus'.Ikarus::getPackageID().'_', $query);
+
 		// replace application abbreviation
 		if (Ikarus::getApplicationManager() !== null) {
 			foreach(Ikarus::getApplicationManager()->getApplicationList() as $abbreviation => $application) {
