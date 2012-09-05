@@ -79,6 +79,12 @@ class Ikarus extends NonInstantiableClass {
 	protected static $configurationObj = null;
 
 	/**
+	 * Contains the time of init sequence
+	 * @var		int64
+	 */
+	protected static $currentTime = -1;
+
+	/**
 	 * Contains an instance of DatabaseManager
 	 * @var		DatabaseManager
 	 */
@@ -107,6 +113,9 @@ class Ikarus extends NonInstantiableClass {
 	 * @return		void
 	 */
 	public static final function init() {
+		// save current time
+		static::$currentTime = time();
+
 		// start core components
 		static::fixMagicQuotes();
 		static::initDatabaseManager();
@@ -274,6 +283,14 @@ class Ikarus extends NonInstantiableClass {
 	public static final function getFilesystemManager() {
 		if (static::$filesystemManagerObj === null) static::initFilesystemManager();
 		return static::$filesystemManagerObj;
+	}
+
+	/**
+	 * Returns the init time.
+	 * @return		int64
+	 */
+	public static final function getTime() {
+		return static::$currentTime;
 	}
 
 	/**
