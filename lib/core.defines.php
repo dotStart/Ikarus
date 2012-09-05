@@ -63,6 +63,7 @@ define('IKARUS_VERSION_BUILD', '0001');
 /**
  * Defines Ikarus' package ID.
  * @var			integer
+ * @deprecated		This is not used. The database adapter replaces the packageIDs automatically.
  */
 define('IKARUS_ID', 1);
 ?>
