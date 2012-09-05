@@ -324,7 +324,7 @@ class Ikarus extends NonInstantiableClass {
 	 * @return		void
 	 */
 	protected static final function initConfiguration() {
-		static::$configurationObj = new Configuration(IKARUS_DIR.static::CONFIGURATION_FILE);
+		static::$configurationObj = new Configuration(static::getPath().static::CONFIGURATION_FILE);
 		static::$configurationObj->loadOptions();
 
 		// disable or enable assertions
@@ -406,7 +406,7 @@ class Ikarus extends NonInstantiableClass {
 			// check for registered applications
 			if ($applicationPrefix == 'ikarus') { // FIXME: This should not be hardcoded
 				// generate class path
-				$classPath = IKARUS_DIR.'lib/'.implode('/', $namespaces).'.class.php';
+				$classPath = static::getPath().'lib/'.implode('/', $namespaces).'.class.php';
 
 				// include needed file
 				if (file_exists($classPath)) {
@@ -454,7 +454,7 @@ class Ikarus extends NonInstantiableClass {
 	 */
 	public static function handleAssertion($file, $line, $code) {
 		// get the relative version of file parameter
-		$file = FileUtil::removeTrailingSlash(FileUtil::getRelativePath(IKARUS_DIR, $file));
+		$file = FileUtil::removeTrailingSlash(FileUtil::getRelativePath(static::getPath(), $file));
 
 		// print error message
 		throw new SystemException("Assertion failed in file %s on line %u", $file, $line);
@@ -517,5 +517,5 @@ class Ikarus extends NonInstantiableClass {
 }
 
 // post includes
-require_once(IKARUS_DIR.'lib/core.functions.php');
+require_once(Ikarus::getPath().'lib/core.functions.php');
 ?>
