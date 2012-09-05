@@ -286,6 +286,14 @@ class Ikarus extends NonInstantiableClass {
 	}
 
 	/**
+	 * Returns Ikarus' path with a trailing slash.
+	 * @return		string
+	 */
+	public static final function getPath() {
+		return dirname(__FILE__).'/';
+	}
+
+	/**
 	 * Returns the init time.
 	 * @return		int64
 	 */
