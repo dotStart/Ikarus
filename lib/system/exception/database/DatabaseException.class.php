@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
-namespace ikarus\system\exception;
+namespace ikarus\system\exception\database;
 use ikarus\util\StringUtil;
 
 /**
@@ -41,7 +41,7 @@ class DatabaseException extends SystemException {
 	 * @var string
 	 */
 	protected $sqlVersion = null;
-	
+
 	/**
 	 * Contains an error query (if any)
 	 * @var			string
@@ -92,7 +92,7 @@ class DatabaseException extends SystemException {
 	public function getErrorNumber() {
 		return $this->databaseDriver->getErrorNumber();
 	}
-	
+
 	/**
 	 * Returns the sql client version of php installation
 	 * @return			string
@@ -117,22 +117,22 @@ class DatabaseException extends SystemException {
 	 */
 	public function modifyInformation() {
 		parent::modifyInformation();
-		
+
 		$this->information['database driver'] = StringUtil::encodeHTML($this->getDatabaseType());
 		$this->information['sql error'] = StringUtil::encodeHTML($this->getErrorDesc());
 		$this->information['sql error number'] = StringUtil::encodeHTML($this->getErrorNumber());
 		$this->information['sql version'] = StringUtil::encodeHTML($this->getSQLVersion());
 		$this->information['sql client version'] = StringUtil::encodeHTML($this->getSQLClientVersion());
 		$this->information = array_merge($this->information, $this->databaseDriver->getErrorInformation());
-		
+
 		if (is_string($this->errorQuery)) {
 			$this->additionalInformationElements .= '<h2><a href="javascript:void(0);" onclick="$(\'#errorQuery\').toggle(\'blind\'); $(this).text(($(this).text() == \'+\' ? \'-\' : \'+\'));">+</a>Query</h2>';
 			$this->additionalInformationElements .= '<pre id="errorQuery" style="display: none;">'.StringUtil::encodeHTML($this->errorQuery).'</pre>';
-			
+
 			$this->hiddenInformation['error query'] = StringUtil::encodeHTML($this->errorQuery);
 		}
 	}
-	
+
 	/**
 	 * Sets the query that produces this exception (if any)
 	 * @param			string			$query
