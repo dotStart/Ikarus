@@ -247,6 +247,7 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	 * @return			mixed
 	 */
 	protected function getResultObject($result, $forceList = false) {
+		if (count($result) <= 0 and $forceList) return new DatabaseResultList(array());
 		if (count($result) <= 0) return null;
 		if (count($result) > 1 or $forceList) {
 			return (new DatabaseResultList($result));
