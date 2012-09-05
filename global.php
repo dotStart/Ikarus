@@ -32,6 +32,7 @@
 /**
  * Contains Ikarus' main directory with a trailing slash.
  * @var			string
+ * @deprecated		Use Ikarus::getPath()
  */
 define('IKARUS_DIR', dirname(__FILE__).'/');
 
