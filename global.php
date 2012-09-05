@@ -27,7 +27,12 @@
  * @version		2.0.0-0001
  */
 
-// defines
+/* defines */
+
+/**
+ * Contains Ikarus' main directory with a trailing slash.
+ * @var			string
+ */
 define('IKARUS_DIR', dirname(__FILE__).'/');
 
 /**
