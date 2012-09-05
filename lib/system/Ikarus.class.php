@@ -290,7 +290,8 @@ class Ikarus extends NonInstantiableClass {
 	 * @return		string
 	 */
 	public static final function getPath() {
-		return dirname(__FILE__).'/';
+		if (!class_exists('FileUtil', true)) return dirname(__FILE__).'/../../';
+		return FileUtil::getRealPath(dirname(__FILE__).'/../../');
 	}
 
 	/**
