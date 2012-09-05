@@ -28,12 +28,41 @@ namespace ikarus;
  */
 
 /** version defines **/
+/**
+ * Contains the complete Ikarus version (Major.Minor.Revision).
+ * @var			string
+ */
 define('IKARUS_VERSION', '2.0.0');
+
+/**
+ * Contains Ikarus' major version.
+ * @var			integer
+ */
 define('IKARUS_VERSION_MAJOR', 2);
+
+/**
+ * Contains Ikarus' minor version.
+ * @var			integer
+ */
 define('IKARUS_VERSION_MINOR', 0);
+
+/**
+ * Contains Ikarus' revision.
+ * @var			integer
+ */
 define('IKARUS_VERSION_REVISION', 0);
+
+/**
+ * Contains Ikarus' build ID.
+ * Note: This is currently unused.
+ * @var			integer
+ */
 define('IKARUS_VERSION_BUILD', '0001');
 
 /** package defines **/
+/**
+ * Defines Ikarus' package ID.
+ * @var			integer
+ */
 define('IKARUS_ID', 1);
 ?>
