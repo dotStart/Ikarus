@@ -29,6 +29,12 @@
 
 // defines
 define('IKARUS_DIR', dirname(__FILE__).'/');
+
+/**
+ * Contains the start time.
+ * @var			integer
+ * @deprecated		Please use Ikarus::getTime()
+ */
 define('TIME_NOW', time());
 
 // include core functions and application core
