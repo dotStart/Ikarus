@@ -18,8 +18,9 @@
 namespace ikarus\system\database\adapter;
 use ikarus\system\database\DatabaseResult;
 use ikarus\system\database\DatabaseResultList;
-use ikarus\system\exception\DatabaseException;
-use ikarus\system\exception\SystemException;
+use ikarus\system\exception\database\ConnectionParameterException;
+use ikarus\system\exception\database\DatabaseException;
+use ikarus\system\exception\NotImplementedException;
 use ikarus\system\Ikarus;
 use ikarus\util\StringUtil;
 
@@ -131,7 +132,7 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 		parse_str($databaseParameters, $this->databaseParameters);
 
 		// check database parameters
-		if (count(array_diff($this->neededDatabaseParameters, array_keys($this->databaseParameters)))) throw new SystemException("Cannot start database adapter %s: Needed database parameters are missing", __CLASS__);
+		if (count(array_diff($this->neededDatabaseParameters, array_keys($this->databaseParameters)))) throw new ConnectionParameterException("Cannot start database adapter %s: Needed database parameters are missing", __CLASS__);
 
 		// start connection
 		$this->connect();
@@ -153,7 +154,7 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::execute()
 	 */
 	public function execute($query) {
-		throw new SystemException("The adapter %s is not completely implemented and does not support method %s", get_class($this), __FUNCTION__);
+		throw new NotImplementedException("The adapter %s is not completely implemented and does not support method %s", get_class($this), __FUNCTION__);
 	}
 
 	/**
@@ -335,7 +336,7 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::sendQuery()
 	 */
 	public function sendQuery($query, $forceList = false) {
-		throw new SystemException("The adapter %s is not completely implemented and does not support method %s", get_class($this), __FUNCTION__);
+		throw new NotImplementedException("The adapter %s is not completely implemented and does not support method %s", get_class($this), __FUNCTION__);
 	}
 
 	/**
