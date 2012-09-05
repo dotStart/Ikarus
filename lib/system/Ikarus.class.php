@@ -286,6 +286,15 @@ class Ikarus extends NonInstantiableClass {
 	}
 
 	/**
+	 * Returns Ikarus' package ID
+	 * @todo		This is currently hardcoded.
+	 * @return		integer
+	 */
+	public static final function getPackageID() {
+		return 1;
+	}
+
+	/**
 	 * Returns Ikarus' path with a trailing slash.
 	 * @return		string
 	 */
