@@ -73,7 +73,7 @@ class CacheManager {
 	 */
 	public function createConnection($adapterName, $parameters = array(), $linkID = null) {
 		// validate adapter name
-		if (!$this->adapterIsLoaded($adapterName)) throw new SystemException("Cannot start adapter '%s': The adapter was not loaded", $adapterName);
+		if (!$this->adapterIsLoaded($adapterName)) throw new SystemException("Cannot start adapter '%s': The adapter is not loaded", $adapterName);
 
 		// get class name
 		$className = static::ADAPTER_CLASS_PREFIX.$adapterName;
