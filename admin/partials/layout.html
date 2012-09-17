@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:ng="http://www.angularjs.org" xmlns:ikarus="http://www.ikarus-framework.de" ng:app="Ikarus">
+	<head>
+		<title ng:bind="page.headTitle">Loading ... - Ikarus Framework</title>
+		<meta charset="UTF-8" />
+		<meta http-equiv="content-type" content="text/html" />
+		<meta name="robots" content="{{page.robots}}" />
+		
+		<!-- IE Fixes -->
+		<!--[if lte IE 8]>
+			<script>
+				document.createElement('ng:include');
+				document.createElement('ng:pluralize');
+				document.createElement('ng:view');
+			</script>
+		<![endif]-->
+		
+		<!-- Scripts -->
+		<script type="text/javascript" src="index.php?action=JavaScriptLibraries"></script>
+		<script type="text/javascript" src="index.php?action=IconCache"></script>
+		
+		<!-- Stylesheets -->
+		<link rel="stylesheet" type="text/css" href="index.php?action=StylesheetCache" />
+		{{layout.additionalStylesheets}}
+	</head>
+	<body>
+		<!-- Page wrapper -->
+		<section id="pageWrapper">
+			<header id="headerContainer">
+				<section id="pageTitle">
+					<img ng:src="{{application.logoURI}}" alt="" />
+					<h1>{{application.applicationTitle}} {{application.applicationVersion}}</h1>
+				</section>
+			</header>
+			<section id="sidebarContainer">
+				<!-- User Panel -->
+				<section id="userPanel">
+					<div class="userInformation">
+						<img src="{{core.user.avatarURI}}" alt="" class="avatar icon48" />
+						<div class="userNameWrapper">
+							<p class="userNote">Signed in as</p>
+							<h3 class="userName" ng:bind="core.user.username">Nobody</h3>
+						</div>
+					</div>
+					<nav class="actions">
+						<ul>
+							<li>
+								<a href="#!/user/profile/{{core.user.userID}}"><span>Profile</span></a>
+							</li>
+							<li>
+								<a href="#!/user/logout"><span>Logout</span></a>
+							</li>
+						</ul>
+					</nav>
+				</section>
+				
+				<!-- Search Form -->
+				<section id="searchForm">
+					<form ng:submit="search()">
+						<input type="text" name="q" id="q" placeholder="Search" ng:model="query" />
+						<input type="image" src="{{"submit.svg" | Image}}" class="icon24" />
+					</form>
+				</section>
+				
+				<!-- Notifications -->
+				<section id="notificationList">
+					<a ikarus:popupMenu="notificationList">
+						<span class="notificationCount">20</span>
+						<h3>{{"ikarus.admin.notificationList.title" | Language}}</h3>
+					</a>
+					<div id="notificationList" style="display: none">
+						<ul>
+							<li ng:repeat="notification in notificationList" id="notification{{$index}}" ikarus:notification="{{$index}}">{{notification}}</li>
+						</ul>
+					</div>
+				</section>
+			
+				<!-- Sidebar items -->
+				<nav id="sidebar">
+					<ul>
+						<li ng:repeat="item in sidebarMenu" id="sidebarMenuItem{{$index}}" ikarus:menu="{{$index}}">
+							<a href="{{item.link}}" title="{{item.title | Language}}">
+								<img src="{{item.icon | Image}}" alt="" class="icon24" />
+								<span ng:bind="item.title"></span>
+							</a>
+							
+							<nav id="sidebarSubMenu{{$index}}" ikarus:subMenu="{{$index}}">
+								<ul>
+									<li ng:repeat="subItem in item.subMenu" ikarus:subMenu="{{$index}}">
+										<a href="{{subItem.link}}" title="{{subItem.title | Language}}">
+											<img src="{{subItem.icon | Image}}" alt="" class="icon24" />
+											<span ng:bind="subItem.title"></span>
+										</a>
+									</li>
+								</ul>
+							</nav>
+						</li>
+					</ul>
+				</nav>
+			</section>
+			
+			<section id="mainContainer">
+				<nav class="breadcrumbs main">
+					<ul>
+						<li class="first"><span ng:bind="application.title"></span></li>
+						{{page.breadcrumbs}}
+					</ul>
+				</nav>
+			
+				<hgroup id="mainHeadline">
+					<h2>{{page.title}}</h2>
+					<h3>{{page.description}}</h3>
+				</hgroup>
+				
+				<section id="main" ng:view>
+				</section>
+			</section>
+			
+			<!-- Footer -->
+			<footer id="footerContainer">
+				<a href="#" class="toTopLink"><img src="{{"up.svg" | Image}}" alt="" class="icon24" /></a>
+			
+				<div class="copyrightWrapper">
+					<p class="copyright"><a href="http://www.ikarus-framework.de">Ikarus Framework</a> &copy; 2012 Evil-Co.de</p>
+					{{additionalCopyrights}}
+				</div>
+			</footer>
+		</section>
+	</body>
+</html>
