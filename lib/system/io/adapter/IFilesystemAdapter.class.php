@@ -136,7 +136,7 @@ interface IFilesystemAdapter {
 	 * @throws			ikarus\system\exception\StrictStandardException
 	 * @return			integer
 	 */
-	public function getModificationTime($fileName);
+	public function getModificationTimestamp($fileName);
 	
 	/**
 	 * Checks whether the target is a directory
