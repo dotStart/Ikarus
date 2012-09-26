@@ -88,9 +88,9 @@ class DiskFilesystemAdapter implements IFilesystemAdapter {
 	/**
 	 * @see ikarus\system\io\adapter.IFilesystemAdapter::fileWriteable()
 	 */
-	public function fileWriteable($fileName) {
+	public function fileWritable($fileName) {
 		Ikarus::getFilesystemManager()->validatePath($fileName);
-		return is_writeable($fileName);
+		return is_writable($fileName);
 	}
 	
 	/**

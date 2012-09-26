@@ -94,13 +94,13 @@ interface IFilesystemAdapter {
 	public function fileReadable($fileName);
 	
 	/**
-	 * Checks whether a file is writeable
+	 * Checks whether a file is writable
 	 * @param			string			$fileName
 	 * @throws			ikarus\system\exception\io\IOException
 	 * @throws			ikarus\system\exception\StrictStandardException
 	 * @return			boolean
 	 */
-	public function fileWriteable($fileName);
+	public function fileWritable($fileName);
 	
 	/**
 	 * Returns the creation time of a file as unix timestamp
