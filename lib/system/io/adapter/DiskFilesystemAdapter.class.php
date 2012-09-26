@@ -96,7 +96,7 @@ class DiskFilesystemAdapter implements IFilesystemAdapter {
 	/**
 	 * @see ikarus\system\io\adapter.IFilesystemAdapter::getCreationTime()
 	 */
-	public function getCreationTime($fileName) {
+	public function getCreationTimestamp($fileName) {
 		Ikarus::getFilesystemManager()->validatePath($fileName);
 		return filectime($fileName);
 	}

@@ -109,7 +109,7 @@ interface IFilesystemAdapter {
 	 * @throws			ikarus\system\exception\StrictStandardException
 	 * @return			integer
 	 */
-	public function getCreationTime($fileName);
+	public function getCreationTimestamp($fileName);
 
 	/**
 	 * Returns an iterator with all directory contents
