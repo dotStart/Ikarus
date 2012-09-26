@@ -34,6 +34,15 @@ use ikarus\system\io\FTP;
 class FileUtil {
 	
 	/**
+	 * Returns the parent directory's path.
+	 * @param			string			$path
+	 * @return			string
+	 */
+	public static function getDirectoryName($path) {
+		return dirname($path);
+	}
+	
+	/**
 	 * Returns the filepath for a temporary file
 	 * @param 	string 		$prefix
 	 * @param 	string 		$extension
@@ -254,6 +263,7 @@ class FileUtil {
 	 * Downloads a package archive from an http URL
 	 * @param	string		$httpUrl
 	 * @param	string		$prefix
+	 * @todo	Move this. This should not be here.
 	 * @return	string		path to the dowloaded file
 	 */
 	public static function downloadFileFromHttp($httpUrl, $prefix = 'package') {
