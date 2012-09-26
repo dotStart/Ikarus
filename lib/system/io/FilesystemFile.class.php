@@ -28,7 +28,7 @@ use ikarus\util\FileUtil;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-class FilesystemFile {
+class FilesystemFile implements IFileInfo {
 	
 	/**
 	 * Contains the parent filesystem adapter.
@@ -78,6 +78,20 @@ class FilesystemFile {
 	 */
 	public function getFilesize() {
 		return $this->adapter->getFilesize($this->filePath);
+	}
+	
+	/**
+	 * @see ikarus\system\io.IFileInfo::isDirectory()
+	 */
+	public function isDirectory() {
+		return false;
+	}
+	
+	/**
+	 * @see ikarus\system\io.IFileInfo::isFile()
+	 */
+	public function isFile() {
+		return true;
 	}
 	
 	/**
