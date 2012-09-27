@@ -78,7 +78,7 @@ class PackageFileReader {
 	 * Contains decoded json string.
 	 * @var			PackageInformation
 	 */
-	protected $package = array();
+	protected $package = null;
 	
 	/**
 	 * Contains unprocessed file contents.
