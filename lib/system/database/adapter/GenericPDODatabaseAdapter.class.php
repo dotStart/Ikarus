@@ -17,7 +17,7 @@
  */
 namespace ikarus\system\database\adapter;
 use ikarus\system\database\DatabaseResultList;
-use ikarus\system\exception\DatabaseException;
+use ikarus\system\exception\database\DatabaseException;
 use \PDO;
 use \PDOException;
 
