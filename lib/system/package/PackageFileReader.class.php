@@ -54,7 +54,7 @@ class PackageFileReader {
 	 * Contains the current file version.
 	 * @var			string
 	 */
-	const FILE_VERSION = '1.0.0';
+	const FILE_VERSION = '2.0.0';
 
 	/**
 	 * Contains the complete path to package file.
@@ -72,7 +72,7 @@ class PackageFileReader {
 	 * Contains package file's version string.
 	 * @var			string
 	 */
-	protected $fileVersion = '1.0.0';
+	protected $fileVersion = '2.0.0';
 	
 	/**
 	 * Contains decoded json string.
