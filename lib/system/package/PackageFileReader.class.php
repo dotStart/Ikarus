@@ -130,7 +130,7 @@ class PackageFileReader {
 		}
 		
 		// decode contents
-		$this->package = unserialize($this->fileContents);
+		$this->package = PackageInformation::decode($this->fileContents);
 	}
 	
 	/**
