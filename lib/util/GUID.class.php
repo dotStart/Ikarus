@@ -54,7 +54,7 @@ class GUID {
 	 * @param			string			$prefixInformation
 	 * @return			string
 	 */
-	public function generate($prefixInformation = null) {
+	public static function generate($prefixInformation = null) {
 		// get default prefix if needed
 		if ($prefixInformation === null) $prefixInformation = static::DEFAULT_PREFIX;
 		
