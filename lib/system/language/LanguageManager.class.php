@@ -16,6 +16,7 @@
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
 namespace ikarus\system\language;
+use ikarus\system\application\IApplication;
 use ikarus\system\application\IConfigurableComponent;
 use ikarus\system\event\language\ActiveLanguageSetEvent;
 use ikarus\system\event\language\LanguageEventArguments;
@@ -57,7 +58,7 @@ class LanguageManager implements IConfigurableComponent {
 	 * @param			ikarus\system\application\IApplication			$application
 	 * @return			void
 	 */
-	public function configure(ikarus\system\application\IApplication $application) {
+	public function configure(IApplication $application) {
 		// configure instance
 		$this->application = $application;
 
