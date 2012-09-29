@@ -70,12 +70,12 @@ class GUID {
 			
 			// process "prefix"
 			if ($index == static::PREFIX_BIT_INDEX) {
-				$guid .= StringUtil::substring(HashManager::hash($prefixInformation), 0, strlen($template));
+				$guid .= StringUtil::substring(HashUtil::hash($prefixInformation), 0, strlen($template));
 				continue;
 			}
 			
 			// process
-			$guid .= StringUtil::substring(HashManager::hash(Ikarus::getTime()), 0, strlen($template));
+			$guid .= StringUtil::substring(HashUtil::hash(Ikarus::getTime()), 0, strlen($template));
 		}
 		
 		return $guid;
