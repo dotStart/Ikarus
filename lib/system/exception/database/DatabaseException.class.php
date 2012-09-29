@@ -16,6 +16,7 @@
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
 namespace ikarus\system\exception\database;
+use ikarus\system\exception\SystemException;
 use ikarus\util\StringUtil;
 
 /**

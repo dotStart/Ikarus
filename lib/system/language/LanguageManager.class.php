@@ -21,7 +21,6 @@ use ikarus\system\event\language\ActiveLanguageSetEvent;
 use ikarus\system\event\language\LanguageEventArguments;
 use ikarus\system\exception\SystemException;
 use ikarus\system\Ikarus;
-use ikarus\system\language\Language;
 
 /**
  * Manages languages and localisations
