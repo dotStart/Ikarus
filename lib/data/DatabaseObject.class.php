@@ -25,6 +25,7 @@ use ikarus\system\event\IdentifierEventArguments;
 use ikarus\system\exception\StrictStandardException;
 use ikarus\system\exception\SystemException;
 use ikarus\system\Ikarus;
+use ikarus\util\ClassUtil;
 
 /**
  * Represents a database row
@@ -107,6 +108,9 @@ abstract class DatabaseObject {
 	 * @param	array	$data
 	 */
 	protected function handleData($data) {
+		// convert data
+		if (ClassUtil::isInstanceOf($data, 'ikarus\\system\\database\\DatabaseResult')) $data = $data->__toArray();
+		
 		// save data
 		$this->data = $data;
 
