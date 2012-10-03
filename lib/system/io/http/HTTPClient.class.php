@@ -17,6 +17,8 @@
  */
 namespace ikarus\system\io\http;
 
+use ikarus\system\exception\io\http\HTTPException;
+use ikarus\system\exception\io\http\ConnectionException;
 use ikarus\system\Ikarus;
 
 /**
