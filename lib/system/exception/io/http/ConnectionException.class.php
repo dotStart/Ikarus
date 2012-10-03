@@ -17,8 +17,6 @@
  */
 namespace ikarus\system\exception\io\http;
 
-use ikarus\system\exception\CoreException;
-
 /**
  * This exception occurs if the server can't e
  * @author		Johannes Donath
