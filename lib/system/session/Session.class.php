@@ -65,42 +65,10 @@ class Session extends DatabaseObject implements ISession {
 		$this->data['requestURI'] = (isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : null);
 		$this->data['ipAddress'] = (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : null);
 		$this->data['hostname'] = (isset($_SERVER['REMOTE_ADDR']) ? gethostbyaddr($_SERVER['REMOTE_ADDR']) : null);
-		$this->data['userID'] = null;
 		$this->data['user'] = null;
-		$this->data['humanReadableUserIdentifier'] = null;
 
 		// fire event
 		Ikarus::getEventManager()->fire(new InitFinishedEvent(new SessionEventArguments($this)));
-	}
-
-	/**
-	 * @see ikarus\system\session.ISession::login()
-	 */
-	public function login($userID) {
-		// save data
-		$this->data['userID'] = $userID;
-
-		// create user profile
-		$this->data['user'] = SessionFactory::createUserObject($this->abbreviation, $userID);
-
-		// get additional data
-		$this->data['humanReadableUserIdentifier'] = $this->getUser()->getEmail(); // TODO: This should be dynamic
-
-		// update
-		$this->update();
-	}
-
-	/**
-	 * @see ikarus\system\session.ISession::logout()
-	 */
-	public function logout() {
-		// save data
-		$this->data['userID'] = null;
-		$this->data['user'] = null;
-		$this->data['humanReadableUserIdentifier'] = null;
-
-		// update
-		$this->update();
 	}
 
 	/**
@@ -118,7 +86,6 @@ class Session extends DatabaseObject implements ISession {
 		$sql = "UPDATE
 				ikarus".IKARUS_N."_session
 			SET
-				humanReadableUserIdentifier = ?,
 				userID = ?,
 				ipAddress = ?,
 				userAgent = ?,
@@ -128,7 +95,6 @@ class Session extends DatabaseObject implements ISession {
 			WHERE
 				sessionID = ?";
 		$stmt = Ikarus::getDatabaseManager()->getDefaultAdapter()->prepareStatement($sql);
-		$stmt->bind($this->humanReadableUserIdentifier);
 		$stmt->bind($this->userID);
 		$stmt->bind($this->ipAddress);
 		$stmt->bind($this->userAgent);

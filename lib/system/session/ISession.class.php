@@ -36,19 +36,6 @@ interface ISession {
 	public function __construct($data);
 
 	/**
-	 * Sets the user for this session.
-	 * @param			integer			$userID
-	 * @return			void
-	 */
-	public function login($userID);
-
-	/**
-	 * Clears all user information from this session.
-	 * @return			void
-	 */
-	public function logout();
-
-	/**
 	 * Updates the database row of this session
 	 * @return			void
 	 */
