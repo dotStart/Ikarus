@@ -17,7 +17,10 @@
  */
 namespace ikarus\data\user;
 use ikarus\data\DatabaseObject;
-use ikarus\system\IKARUS;
+use ikarus\system\auth\IUserObject;
+use ikarus\system\database\QueryEditor;
+use ikarus\system\Ikarus;
+use ikarus\util\DependencyUtil;
 
 /**
  * Represents a user row
@@ -29,22 +32,22 @@ use ikarus\system\IKARUS;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-class User extends DatabaseObject {
+class User extends DatabaseObject implements IUserObject {
 
 	/**
 	 * Reads a row from database
-	 * @param	integer	$userID
-	 * @param	array	$row
+	 * @param			string			$userID
+	 * @param			array			$row
 	 */
 	public function __construct($userID, $row = null) {
 		if ($userID !== null) {
-			$sql = "SELECT
-					*
-				FROM
-					ikarus".IKARUS_N."_user
-				WHERE
-					userID = ".$userID;
-			$row = IKARUS::getDatabase()->getFirstRow($sql);
+			$query = new QueryEditor();
+			$query->from(array('ikarus1_user' => 'user'));
+			$query->where('userID = ?');
+			$stmt = $query->prepare();
+			$stmt->bind($userID);
+			
+			$row = $stmt->execute();
 		}
 
 		parent::__construct($row);
