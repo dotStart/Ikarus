@@ -257,7 +257,7 @@ class ClassUtil {
 		$property = $reflectionClass->getProperty('classDependencies');
 			
 		// validate visibility
-		if (!$property->isStatic() or !$property->isPrivate()) return;
+		if (!$property->isStatic() or !$property->isProtected()) return;
 		
 		// set accessible and get information
 		$property->setAccessible(true);
