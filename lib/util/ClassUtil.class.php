@@ -18,6 +18,7 @@
 namespace ikarus\util;
 use ikarus\system\exception\MissingDependencyException;
 use ikarus\system\exception\StrictStandardException;
+use ikarus\system\Ikarus;
 use \ReflectionClass;
 
 /**
@@ -242,6 +243,30 @@ class ClassUtil {
 		
 		// fallback
 		return false;
+	}
+	
+	/**
+	 * Loads dependencies defined by a given class.
+	 * @param			string			$className
+	 * @return			void
+	 */
+	public static function loadDependencies($className) {
+		$reflectionClass = new ReflectionClass($className);
+		if (!$reflectionClass->hasProperty('classDependencies')) return;
+		
+		$property = $reflectionClass->getProperty('classDependencies');
+			
+		// validate visibility
+		if (!$property->isStatic() or !$property->isPrivate()) return;
+		
+		// set accessible and get information
+		$property->setAccessible(true);
+		$dependencies = $property->getValue();
+		
+		// check dependencies
+		foreach($dependencies as $dependency) {
+			if (!Ikarus::componentLoaded($dependency)) Ikarus::requestComponent($dependency);
+		}
 	}
 	
 	/**
