@@ -17,6 +17,7 @@
  */
 namespace ikarus\util;
 use ikarus\system\database\QueryEditor;
+use ikarus\system\Ikarus;
 
 /**
  * Provides methods for using dependency trees
@@ -31,16 +32,31 @@ use ikarus\system\database\QueryEditor;
 class DependencyUtil {
 	
 	/**
-	 * Generates a basic dependency query
+	 * Generates a basic dependency query.
 	 * @param			integer				$packageID
 	 * @param			QueryEditor			$query
 	 * @param			string				$table
-	 * @return			string
+	 * @return			void
 	 */
 	public static function generateDependencyQuery($packageID, QueryEditor $query, $table) {
-		$query->join(QueryEditor::LEFT_JOIN, array('ikarus'.IKARUS_N.'_package_dependency' => 'dependency'), $table.'.packageID = dependency.packageID', '');
+		$query->join(QueryEditor::LEFT_JOIN, array('ikarus1_package_dependency' => 'dependency'), $table.'.packageID = dependency.packageID', '');
 		$query->where('dependency.packageID = '.$packageID.' OR dependency.dependencyID = '.$packageID.' OR '.$table.'.packageID = '.$packageID);
 		$query->order('dependency.dependencyLevel ASC');
+	}
+	
+	/**
+	 * Generates a basic instance query (A query which depends on an application instance).
+	 * @param			integer				$instanceID
+	 * @param			QueryEditor			$query
+	 * @param			string				$table
+	 * @return			void
+	 */
+	public static function generateInstanceQuery($instanceID, QueryEditor $query, $table) {
+		if (Ikarus::getConfiguration()->get('application.dependency.inheritParentInstanceInformation')) {
+			$query->join(QueryEditor::LEFT_JOIN, array('ikarus1_package_instance' => 'instance'), $table.'instanceID = instance.instanceID', '');
+			static::generateDependencyQuery('instance.packageID', $query, $table);
+		}
+		$query->where($table.'.instanceID = '.$instanceID);
 	}
 }
 ?>
