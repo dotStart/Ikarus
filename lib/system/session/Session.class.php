@@ -36,6 +36,12 @@ use ikarus\util\StringUtil;
  * @version		2.0.0-0001
  */
 class Session extends DatabaseObject implements ISession {
+	
+	/**
+	 * Stores a list of built-in variables which are read-only from external sources.
+	 * @var			string[]
+	 */
+	protected $builtInVariables = array();
 
 	/**
 	 * @see ikarus\system\session.ISession::__construct()
@@ -66,9 +72,47 @@ class Session extends DatabaseObject implements ISession {
 		$this->data['ipAddress'] = (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : null);
 		$this->data['hostname'] = (isset($_SERVER['REMOTE_ADDR']) ? gethostbyaddr($_SERVER['REMOTE_ADDR']) : null);
 		$this->data['user'] = null;
+		
+		// register built-in variables
+		$this->registerBuiltInVariable(array(
+			'userAgent',		'acceptLanguage',
+			'requestMethod',	'requestURI',
+			'ipAddress',		'hostname'
+		));
 
 		// fire event
 		Ikarus::getEventManager()->fire(new InitFinishedEvent(new SessionEventArguments($this)));
+	}
+	
+	/**
+	 * @see \ikarus\system\session\ISession::isReadOnly()
+	 */
+	public function isReadOnly($variableName) {
+		return (in_array($variableName, $this->builtInVariables));
+	}
+	
+	/**
+	 * Registers a built-in variable which is read-only to external calls.
+	 * @param			string			$variableName
+	 * @return			void
+	 */
+	protected function registerBuiltInVariable($variableName) {
+		if (is_array($variableName)) {
+			foreach($variableName as $variable) $this->registerBuiltInVariable($variable);
+			return;
+		}
+		
+		$this->builtInVariables[] = $variableName;
+	}
+	
+	/**
+	 * @see \ikarus\system\session\ISession::setVariable()
+	 */
+	public function setVariable($variableName, $variableValue) {
+		// read only variables
+		if ($this->isReadOnly($variableName)) throw new StrictStandardException('Cannot set value of read-only variable "%s"', $variableName);
+		
+		$this->data[$variableName] = $variableValue;
 	}
 
 	/**
