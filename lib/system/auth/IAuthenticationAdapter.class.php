@@ -37,6 +37,7 @@ interface IAuthenticationAdapter {
 	
 	/**
 	 * Returns a user object (if any).
+	 * @param			ikarus\system\session\ISession			$session
 	 * @return			ikarus\system\auth\IUserObject
 	 */
 	public function getUserObject(ikarus\system\session\ISession $session = null);
