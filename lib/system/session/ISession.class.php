@@ -34,6 +34,13 @@ interface ISession {
 	 * @param			array			$data
 	 */
 	public function __construct($data);
+	
+	/**
+	 * Checks whether a session variable is read only.
+	 * @param			string			$variableName
+	 * @return			boolean
+	 */
+	public function isReadOnly($variableName);
 
 	/**
 	 * Sets a session variable.
