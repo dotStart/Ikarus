@@ -36,6 +36,14 @@ interface ISession {
 	public function __construct($data);
 
 	/**
+	 * Sets a session variable.
+	 * @param			string			$variableName
+	 * @param			mixed			$variableValue
+	 * @return			void
+	 */
+	public function setVariable($variableName, $variableValue);
+	
+	/**
 	 * Updates the database row of this session
 	 * @return			void
 	 */
