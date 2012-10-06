@@ -22,5 +22,11 @@ interface IUserObjectExtension {
 	 * @param			IUserObject			$object
 	 */
 	public function __construct(IUserObject $object);
+	
+	/**
+	 * Returns the original user object.
+	 * @return			IUserObject
+	 */
+	public function getOriginalUserObject();
 }
 ?>
