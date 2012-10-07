@@ -109,7 +109,7 @@ abstract class DatabaseObject {
 	 */
 	protected function handleData($data) {
 		// convert data
-		if (ClassUtil::isInstanceOf($data, 'ikarus\\system\\database\\DatabaseResult')) $data = $data->__toArray();
+		if (is_object($data) and ClassUtil::isInstanceOf($data, 'ikarus\\system\\database\\DatabaseResult')) $data = $data->__toArray();
 		
 		// save data
 		$this->data = $data;
