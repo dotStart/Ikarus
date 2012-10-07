@@ -51,6 +51,7 @@ abstract class AbstractWebApplication extends AbstractApplication {
 		
 		// request components
 		Ikarus::requestComponent('ikarus\system\session\SessionManager', 'SessionManager');
+		Ikarus::requestComponent('ikarus\system\auth\AuthenticationManager', 'AuthenticationManager');
 		Ikarus::requestComponent('ikarus\system\style\StyleManager', 'StyleManager');
 		Ikarus::requestComponent('ikarus\system\language\LanguageManager', 'LanguageManager');
 		Ikarus::requestComponent('ikarus\system\io\WebOutputManager', 'WebOutputManager');
