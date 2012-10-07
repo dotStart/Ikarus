@@ -252,16 +252,11 @@ class ClassUtil {
 	 */
 	public static function loadDependencies($className) {
 		$reflectionClass = new ReflectionClass($className);
-		if (!$reflectionClass->hasProperty('classDependencies')) return;
+		if (!$reflectionClass->hasPropertyConstant('DEPENDENCIES')) return;
 		
-		$property = $reflectionClass->getProperty('classDependencies');
+		$constant = $reflectionClass->getConstant('DEPENDENCIES');
 			
-		// validate visibility
-		if (!$property->isStatic() or !$property->isProtected()) return;
-		
-		// set accessible and get information
-		$property->setAccessible(true);
-		$dependencies = $property->getValue();
+		$dependencies = explode(',', $constant);
 		
 		// check dependencies
 		foreach($dependencies as $dependency) {
