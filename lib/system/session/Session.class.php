@@ -139,7 +139,7 @@ class Session extends DatabaseObject implements ISession {
 			WHERE
 				sessionID = ?";
 		$stmt = Ikarus::getDatabaseManager()->getDefaultAdapter()->prepareStatement($sql);
-		$stmt->bind($this->userID);
+		$stmt->bind(($this->user !== null ? $this->user->getUserID() : null));
 		$stmt->bind($this->ipAddress);
 		$stmt->bind($this->userAgent);
 		$stmt->bind($this->packageID);
