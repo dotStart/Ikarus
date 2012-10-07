@@ -40,12 +40,9 @@ use ikarus\util\GUID;
 class AuthenticationManager implements IConfigurableComponent {
 	
 	/**
-	 * Defines dependencies for this class (They will be loaded automatically).
-	 * @var			string[]
+	 * @see ikarus\util\ClassUtil::getDependencies()
 	 */
-	protected static final $classDependencies = array(
-		'ikarus\\system\\session\\SessionManager'	
-	);
+	const DEPENDENCIES = 'ikarus\\system\\session\\SessionManager';
 	
 	/**
 	 * Contains the current primary application.
