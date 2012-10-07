@@ -31,12 +31,13 @@ interface IApplication {
 	
 	/**
 	 * Creates a new instance of type IApplication
+	 * @param			integer			$instanceID
 	 * @param			string			$abbreviation
 	 * @param			string			$libraryNamespace
 	 * @param			integer			$packageID
 	 * @param			string			$environment
 	 */
-	public function __construct($abbreviation, $libraryNamespace, $packageID, $environment, $primaryApplication = false);
+	public function __construct($instanceID, $abbreviation, $libraryNamespace, $packageID, $environment, $primaryApplication = false);
 	
 	/**
 	 * Boots the application
@@ -55,6 +56,12 @@ interface IApplication {
 	 * @return			string
 	 */
 	public function getEnvironment();
+	
+	/**
+	 * Returns the instanceID of this application.
+	 * @return			integer
+	 */
+	public function getInstanceID();
 	
 	/**
 	 * Returns the library namespace of this application

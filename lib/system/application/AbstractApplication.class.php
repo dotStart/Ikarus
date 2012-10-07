@@ -53,6 +53,12 @@ abstract class AbstractApplication implements IApplication {
 	 * @var			string
 	 */
 	protected $environment = '';
+	
+	/**
+	 * Contains the instance ID.
+	 * @var			string
+	 */
+	protected $instanceID = 0;
 
 	/**
 	 * Contains an library namespace for this application
@@ -75,7 +81,8 @@ abstract class AbstractApplication implements IApplication {
 	/**
 	 * @see ikarus\system\application.IApplication::__construct()
 	 */
-	public function __construct($abbreviation, $libraryNamespace, $packageID, $environment, $primaryApplication = false) {
+	public function __construct($instanceID, $abbreviation, $libraryNamespace, $packageID, $environment, $primaryApplication = false) {
+		$this->instanceID = $instanceID;
 		$this->abbreviation = $abbreviation;
 		$this->libraryNamespace = ClassUtil::buildPath($abbreviation, $libraryNamespace);
 		$this->packageID = $packageID;
@@ -108,6 +115,10 @@ abstract class AbstractApplication implements IApplication {
 	 */
 	public function getEnvironment() {
 		return $this->environment;
+	}
+	
+	public function getInstanceID() {
+		return $this->instanceID;
 	}
 
 	/**
