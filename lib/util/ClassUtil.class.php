@@ -252,7 +252,7 @@ class ClassUtil {
 	 */
 	public static function loadDependencies($className) {
 		$reflectionClass = new ReflectionClass($className);
-		if (!$reflectionClass->hasPropertyConstant('DEPENDENCIES')) return;
+		if (!$reflectionClass->hasConstant('DEPENDENCIES')) return;
 		
 		$constant = $reflectionClass->getConstant('DEPENDENCIES');
 			
