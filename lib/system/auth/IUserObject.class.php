@@ -40,5 +40,25 @@ interface IUserObject {
 	 * @return			string
 	 */
 	public function getHumanReadableIdentifier();
+	
+	/**
+	 * Registers a new extension.
+	 * @param			string					$extension
+	 * @return			void
+	 */
+	public function registerExtension($extensionClass);
+	
+	/**
+	 * Unregisters an extension.
+	 * @param			IUserObjectExtension			$extension
+	 * @return			void
+	 */
+	public function unregisterExtension(IUserObjectExtension $extension);
+	
+	/**
+	 * Forwards update() calls to all extensions.
+	 * @return			void
+	 */
+	public function update();
 }
 ?>
