@@ -76,7 +76,7 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 			// update query count
 			$this->queryCount++;
 		} catch (PDOException $ex) {
-			$e = new DatabaseException($this, 'An error occoured while executing a database query');
+			$e = new DatabaseException($this, 'An error occurred while executing a database query');
 			$e->setErrorQuery($query);
 			throw $e;
 		}
@@ -197,7 +197,7 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 			// return result object (if any)
 			return $this->lastResult = $this->getResultObject($result, $forceList);
 		} catch (PDOException $ex) {
-			$e = new DatabaseException($this, 'An error occoured while executing a database query');
+			$e = new DatabaseException($this, 'An error occurred while executing a database query');
 			$e->setErrorQuery($query);
 			throw $e;
 		}
