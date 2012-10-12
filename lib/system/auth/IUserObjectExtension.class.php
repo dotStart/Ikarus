@@ -15,6 +15,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
+namespace ikarus\system\auth;
+
+/**
+ * Allows to extend user objects.
+ * @author		Johannes Donath
+ * @copyright		2012 Evil-Co.de
+ * @package		de.ikarus-framework.core
+ * @subpackage		system
+ * @category		Ikarus Framework
+ * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
+ * @version		2.0.0-0001
+ */
 interface IUserObjectExtension {
 	
 	/**
