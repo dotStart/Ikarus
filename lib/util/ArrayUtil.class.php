@@ -18,8 +18,8 @@
 namespace ikarus\util;
 
 /**
- * Provides util methods for arrays
- * @author		Johannes Donath (originally written by Marcel Werk, WoltLab)
+ * Provides wrapper methods for arrays.
+ * @author		Johannes Donath
  * @copyright		2011 Evil-Co.de
  * @package		de.ikarus-framework.core
  * @subpackage		system
@@ -30,7 +30,7 @@ namespace ikarus\util;
 class ArrayUtil {
 	
 	/**
-	 * Appends a suffix to all elements of the given array.
+	 * Appends a suffix to a stack of strings (Non-string elements will be ignored).
 	 * @param			array			$array
 	 * @param			string			$suffix
 	 * @return			array
@@ -39,25 +39,29 @@ class ArrayUtil {
 		if (!is_array($array)) throw new StrictStandardException(__CLASS__.'::'.__FUNCTION__.' expects parameter 1 to be array');
 		
 		return array_map(function($element) {
+			if (!is_string($element)) return $element;
 			return $element.$suffix;
 		}, $array);
 	}
 	
 	/**
-	 * Converts html special characters in arrays.
-	 * Note: This method is recursive
+	 * Converts all non-html conform chars into HTML compatible strings (Non-string elements will be ignored).
 	 * @param			array			$array
 	 * @return			array
 	 */
 	public static function encodeHTML($array) {
 		if (!is_array($array)) throw new StrictStandardException(__CLASS__.'::'.__FUNCTION__.' expects parameter 1 to be array');
 		
-		return array_map(array('static', 'encodeHTML'), $array);
+		return array_map(function($element) {
+			if (is_array($element))
+				return static::encodeHTML($element);
+			elseif (is_string($element))
+				return StringUtil::encodeHTML($element);
+		}, $array);
 	}
 	
 	/**
-	 * Encodes all strings in UTF8.
-	 * Note: This could crash PHP if there are more levels in the given array as PHP allows for method nestings.
+	 * Encodes a string stack into UTF8 (useful for json_encode()).
 	 * @param			array			$array
 	 * @return			array
 	 * @throws			StrictStandardException
@@ -74,7 +78,7 @@ class ArrayUtil {
 	}
 	
 	/**
-	 * Searches for a part of $search in $array
+	 * Searches for a string in the whole stack (recursive).
 	 * @param			array			$array
 	 * @param			array			$search
 	 * @return			boolean
@@ -90,20 +94,23 @@ class ArrayUtil {
 	}
 	
 	/**
-	 * Applies intval() to all elements of an array.
-	 * Note: This method is recursive
+	 * Converts all elements (!) into integers.
 	 * @param			array			$array
 	 * @return			array
 	 */
 	public static function toIntegerArray($array) {
 		if (!is_array($array)) throw new StrictStandardException(__CLASS__.'::'.__FUNCTION__.' expects parameter 1 to be array');
 		
-		return array_map(array('static', 'toIntegerArray'), $array);
+		return array_map(function($element) {
+			if (is_array($element))
+				return static::toIntegerArray($element);
+			elseif (!is_integer($element))
+				return intval($element); // TODO: We should create a util for such methods.
+		}, $array);
 	}
 	
 	/**
-	 * Applies StringUtil::trim() to all elements of an array.
-	 * Note: This method is recursive
+	 * Trims all elements of a string stack (Non-string elements will be ignored).
 	 * @param			array			$array
 	 * @param			boolean			$removeEmptyElements
 	 * @return			array 
@@ -111,21 +118,36 @@ class ArrayUtil {
 	public static function trim($array, $removeEmptyElements = true) {
 		if (!is_array($array)) throw new StrictStandardException(__CLASS__.'::'.__FUNCTION__.' expects parameter 1 to be array');
 		
-		$array = array_map(array('static', 'trim'), $array);
-		if ($removeEmptyElements) foreach($array as $key => $value) if (empty($value)) unset($array[$key]);
+		$array = array_map(function($element) {
+			if (is_array($element))
+				return static::trim($element);
+			elseif (is_string($element))
+				return StringUtil::trim($element);
+		}, $array);
+		
+		// delete "" (0) strings (empty)
+		if ($removeEmptyElements)
+			foreach($array as $key => $value)
+				if (empty($value)) unset($array[$key]);
+		
+		// all done
 		return $array;
 	}
 
 	/**
-	 * Converts dos to unix newlines.
-	 * Note: This method is recursive
+	 * Replaces all non-*NIX newlines with *NIX newlines (Non-string elements will be ignored).
 	 * @param			array			$array
 	 * @return			array
 	 */
 	public static function unifyNewlines($array) {
 		if (!is_array($array)) throw new StrictStandardException(__CLASS__.'::'.__FUNCTION__.' expects parameter 1 to be array');
 		
-		return array_map(array('static', 'unifyNewlines'), $array);
+		return array_map(function($element) {
+			if (is_array($element))
+				return static::unifyNewlines($element);
+			elseif (is_string($element))
+				return StringUtil::unifyNewlines($element);
+		}, $array);
 	}
 }
 ?>
