@@ -210,6 +210,14 @@ class StringUtil {
 	}
 	
 	/**
+	 * Checks whether mbstring is available.
+	 * @return boolean
+	 */
+	protected static function mbStringAvailable() {
+		return extension_loaded('mbstring');
+	}
+	
+	/**
 	 * @see str_replace()
 	 */
 	public static function replace($search, $replace, $subject, &$count = null) {
