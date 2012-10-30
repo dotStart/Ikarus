@@ -44,23 +44,6 @@ class ArrayUtil {
 	}
 	
 	/**
-	 * Converts a array of strings to requested character encoding.
-	 * Note: This method is recursive
-	 * @see ikarus\util\StringUtil::convertEncoding
-	 * @param			string			$inCharset
-	 * @param			string			$outCharset
-	 * @param			string			$array
-	 * @return			string
-	 */
-	public static function convertEncoding($inCharset, $outCharset, $array) {
-		if (!is_array($array)) throw new StrictStandardException(__CLASS__.'::'.__FUNCTION__.' expects parameter 1 to be array');
-		
-		return array_map(function($element) {
-			return static::convertEncoding($inCharset, $outCharset, $element);
-		}, $array);
-	}
-	
-	/**
 	 * Converts html special characters in arrays.
 	 * Note: This method is recursive
 	 * @param			array			$array
