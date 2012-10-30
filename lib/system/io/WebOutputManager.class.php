@@ -22,6 +22,7 @@ use ikarus\system\io\output\DebugOutputHandle;
 use ikarus\system\io\output\JSONOutputHandle;
 use ikarus\system\io\output\XMLOutputHandle;
 use ikarus\util\ClassUtil;
+use ikarus\util\HeaderUtil;
 use ikarus\util\StringUtil;
 
 /**
@@ -94,6 +95,14 @@ class WebOutputManager {
 		
 		// add without value
 		$this->outputVariables[$name] = null;
+	}
+	
+	/**
+	 * Alias for HeaderUtil::sendHeader()
+	 * @see ikarus\system\util.HeaderUtil::sendHeader()
+	 */
+	public function sendHeader($name, $content) {
+		return HeaderUtil::sendHeader($name, $content);
 	}
 	
 	/**
