@@ -1,128 +1,147 @@
 <!DOCTYPE html>
-<html xmlns:ng="http://www.angularjs.org" xmlns:ikarus="http://www.ikarus-framework.de" ng:app="Ikarus">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ng="http://www.angularjs.org" xmlns:ikarus="http://www.ikarus-framework.de" ng:app="Ikarus">
 	<head>
-		<title ng:bind="page.headTitle">Loading ... - Ikarus Framework</title>
+		<!-- Basic page information -->
+		<title ng:bind="{{pageInformation.title}}">Loading ... - Ikarus Framework</title>
 		<meta charset="UTF-8" />
-		<meta http-equiv="content-type" content="text/html" />
-		<meta name="robots" content="{{page.robots}}" />
 		
-		<!-- IE Fixes -->
-		<!--[if lte IE 8]>
-			<script>
-				document.createElement('ng:include');
-				document.createElement('ng:pluralize');
-				document.createElement('ng:view');
-			</script>
-		<![endif]-->
+		<!-- Meta information -->
+		<meta name="robots" content="{{pageInformation.robots}}" />
+		<meta name="description" ng:repeat="description in pageInformation.description" lang="{{description.lang}}" content="{{description.content}}" />
+		<meta name="keywords" ng:repeat="keywords in pageInformation.keywords" lang="{{keywords.lang}}" content="{{keywords.content}}" />
+		<meta name="application-name" content="{{applicationInformation.applicationName}}" />
+		<meta name="generator" content="{{applicationInformation.generatorString}}" />
+		
+		<!-- Stylesheets -->
+		<link rel="stylesheet" type="text/css" href="index.php?action=Stylesheet" />
 		
 		<!-- Scripts -->
 		<script type="text/javascript" src="index.php?action=JavaScriptLibraries"></script>
-		<script type="text/javascript" src="index.php?action=IconCache"></script>
-		
-		<!-- Stylesheets -->
-		<link rel="stylesheet" type="text/css" href="index.php?action=StylesheetCache" />
-		{{layout.additionalStylesheets}}
 	</head>
-	<body>
+	<body id="{{pageInformation.bodyID}}" class="{{pageInformation.bodyClassName}}">
+		<!-- Login wrapper -->
+		<section id="loginWrapper">
+			<header id="loginHeaderContainer">
+				<img ng:src="{{"loginHeader.svg" | Image}}" alt="" title="{{applicationInformation.generatorString}}" id="loginLogo" />
+			</header>
+			<section id="loginPanelWrapper">
+				<section id="loginPanel">
+					<h3>{{"acp.global.loginPanel.title" | Language}}</h3>
+					<form id="loginForm">
+						<div class="formElement">
+							<div class="formField input-prepend">
+								<span class="add-on"><i class="icon-user"></i></span>
+								<input type="text" name="username" id="username" placeholder="Username" />
+							</div>
+						</div>
+						<div class="formElement">
+							<div class="formField input-prepend">
+								<span class="add-on"><i class="icon-password"></i></span>
+								<input type="password" name="password" id="password" placeholder="Password" />
+							</div>
+						</div>
+						<div class="formSubmit">
+							<button type="submit" class="btn">{{"global.submit" | Language}}</button>
+						</div>
+					</form>
+				</section>
+			</section>
+			<footer id="loginPanelFooter">
+				<div class="copyrightWrapper">
+					<p class="copyright"><a href="http://www.ikarus-framework.de">Ikarus Framework</a> &copy; <span class="year">2012</span> <span class="company">Evil-Co.de</span></p>
+					<p class="copyright" ng:repeat="copyright in pagePlaceholders.copyright"><a href="{{copyright.href}}" ng:bind="copyright.title"></a> &copy; <span class="year" ng:bind="copyright.year"></span> <span class="company" ng:bind="copyright.company"></span></p>
+				</div>
+			</footer>
+		</section>
+		
 		<!-- Page wrapper -->
-		<section id="pageWrapper">
+		<section id="pageWrapper container-fluid">
 			<header id="headerContainer">
 				<section id="pageTitle">
-					<img ng:src="{{application.logoURI}}" alt="" />
-					<h1>{{application.applicationTitle}} {{application.applicationVersion}}</h1>
+					<a href="#/">
+						<img ng:src="{{"logo.svg" | Image}}" id="pageLogo" alt="" />
+						<h1 ng:bind="applicationInformation.applicationName">Ikarus Framework 1.33.7</h1>
+					</a>
+				</section>
+				
+				<section id="userActions" class="btn-toolbar pull-right">
+					<div class="btn-group">
+						<a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#">User <span class="caret"></span></a>
+						<ul class="dropdown-menu pull-right">
+							<li><a href="#/User/Edit/Me">Edit Profile</a></li>
+							<li><a href="#/User/Edit/Me">Logout</a></li>
+						</ul>
+					</div>
+					<div class="btn-group">
+						<a class="btn btn-info btn-small dropdown-toggle" data-toggle="dropdown">Notifications <span ng:show="global.notificationList.new.length">({{global.notificationList.new.length}})</span> <span class="caret"></span></a>
+						<ul class="dropdown-menu pull-right">
+							<li class="nav-header" ng:show="global.notificationList.new.length">New ({{global.notificationList.new.length}})</li>
+							<li ng:repeat="notification in global.notificationList.new"><a href="{{notification.URI}}" ng:bind="notification.title"></a></li>
+							
+							<li class="nav-header" ng:show="global.notificationList.old.length">Old ({{global.notificationList.old.length}})</li>
+							<li ng:repeat="notification in global.notificationList.old"><a href="{{notification.URI}}" ng:bind="notification.title"></a></li>
+						</ul>
+					</div>
 				</section>
 			</header>
-			<section id="sidebarContainer">
-				<!-- User Panel -->
-				<section id="userPanel">
-					<div class="userInformation">
-						<img src="{{core.user.avatarURI}}" alt="" class="avatar icon48" />
-						<div class="userNameWrapper">
-							<p class="userNote">Signed in as</p>
-							<h3 class="userName" ng:bind="core.user.username">Nobody</h3>
+			<section id="pageContents" class="row-fluid">
+				<aside id="sidebarContainer" class="span2">
+					<!-- User Panel -->
+					<section id="userPanel">
+						<div class="userInformation">
+							<img ng:src="{{"noAvatar.svg" | Image}}" alt="" class="avatar icon48" />
+							<div class="userNameWrapper">
+								<p class="userNote">{{"acp.global.userPanel.userNote" | Language}}</p>
+								<h3 class="userName" ng:bind="auth.humanReadableIdentifier">Unknown</h3>
+							</div>
 						</div>
-					</div>
-					<nav class="actions">
+					</section>
+					
+					<!-- Search Form -->
+					<section id="searchForm">
+						<form class="form-search">
+							<div class="input-append">
+								<input type="text" name="q" id="q" placeholder="Query" class="span8 search-query" />
+								<button type="submit" class="btn">{{ "global.search.submit" | Language }}</button>
+							</div>
+						</form>
+					</section>
+				
+					<!-- Sidebar items -->
+					<nav id="sidebar">
 						<ul>
-							<li>
-								<a href="#!/user/profile/{{core.user.userID}}"><span>Profile</span></a>
-							</li>
-							<li>
-								<a href="#!/user/logout"><span>Logout</span></a>
+							<li ng:repeat="item in pageInformation.sidebarMenu" ng:class="item.className">
+								<a href="{{item.href}}" title="{{item.title}}" ng:class="item.linkClassName">
+									<img ng:src="{{item.image | Image}}" alt="" class="icon24" />
+									<span>{{item.title}}</span>
+								</a>
+								<nav class="subMenu minimizableContainer" style="display: none;">
+									<ul>
+										<li ng:repeat="subItem in item.subMenu" ng:class="subItem.className">
+											<a href="subItem.href" title="{{subItem.title}}">
+												<img ng:src="{{subItem.image | Image}}" alt="" class="icon24" />
+												<span>{{subItem.title}}</span>
+											</a>
+										</li>
+									</ul>
+								</nav>
 							</li>
 						</ul>
 					</nav>
-				</section>
+				</aside>
 				
-				<!-- Search Form -->
-				<section id="searchForm">
-					<form ng:submit="search()">
-						<input type="text" name="q" id="q" placeholder="Search" ng:model="query" />
-						<input type="image" src="{{"submit.svg" | Image}}" class="icon24" />
-					</form>
-				</section>
-				
-				<!-- Notifications -->
-				<section id="notificationList">
-					<a ikarus:popupMenu="notificationList">
-						<span class="notificationCount">20</span>
-						<h3>{{"ikarus.admin.notificationList.title" | Language}}</h3>
-					</a>
-					<div id="notificationList" style="display: none">
-						<ul>
-							<li ng:repeat="notification in notificationList" id="notification{{$index}}" ikarus:notification="{{$index}}">{{notification}}</li>
-						</ul>
-					</div>
-				</section>
-			
-				<!-- Sidebar items -->
-				<nav id="sidebar">
-					<ul>
-						<li ng:repeat="item in sidebarMenu" id="sidebarMenuItem{{$index}}" ikarus:menu="{{$index}}">
-							<a href="{{item.link}}" title="{{item.title | Language}}">
-								<img src="{{item.icon | Image}}" alt="" class="icon24" />
-								<span ng:bind="item.title"></span>
-							</a>
-							
-							<nav id="sidebarSubMenu{{$index}}" ikarus:subMenu="{{$index}}">
-								<ul>
-									<li ng:repeat="subItem in item.subMenu" ikarus:subMenu="{{$index}}">
-										<a href="{{subItem.link}}" title="{{subItem.title | Language}}">
-											<img src="{{subItem.icon | Image}}" alt="" class="icon24" />
-											<span ng:bind="subItem.title"></span>
-										</a>
-									</li>
-								</ul>
-							</nav>
-						</li>
-					</ul>
-				</nav>
-			</section>
-			
-			<section id="mainContainer">
-				<nav class="breadcrumbs main">
-					<ul>
-						<li class="first"><span ng:bind="application.title"></span></li>
-						{{page.breadcrumbs}}
-					</ul>
-				</nav>
-			
-				<hgroup id="mainHeadline">
-					<h2>{{page.title}}</h2>
-					<h3>{{page.description}}</h3>
-				</hgroup>
-				
-				<section id="main" ng:view>
-				</section>
+				<section id="mainContainer" ng:view></section>
 			</section>
 			
 			<!-- Footer -->
 			<footer id="footerContainer">
-				<a href="#" class="toTopLink"><img src="{{"up.svg" | Image}}" alt="" class="icon24" /></a>
-			
-				<div class="copyrightWrapper">
-					<p class="copyright"><a href="http://www.ikarus-framework.de">Ikarus Framework</a> &copy; 2012 Evil-Co.de</p>
-					{{additionalCopyrights}}
+				<div id="footer">
+					<a ng:click="toTop()" class="toTopLink"><img ng:src="{{ "up.svg" | Image}}" alt="" class="icon24" /></a>
+				
+					<div class="copyrightWrapper">
+						<p class="copyright"><a href="http://www.ikarus-framework.de">Ikarus Framework</a> &copy; <span class="year">2012</span> <span class="company">Evil-Co.de</span></p>
+						<p class="copyright" ng:repeat="copyright in pagePlaceholders.copyright"><a href="{{copyright.href}}" ng:bind="copyright.title"></a> &copy; <span class="year" ng:bind="copyright.year"></span> <span class="company" ng:bind="copyright.company"></span></p>
+					</div>
 				</div>
 			</footer>
 		</section>
