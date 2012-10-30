@@ -17,8 +17,7 @@
  */
 namespace ikarus\system\cache\builder;
 use ikarus\data\encryption\KeyPair;
-use ikarus\data\encryption\PrivateKey;
-use ikarus\data\encryption\PublicKey;
+use ikarus\data\encryption\Key;
 use ikarus\system\database\QueryEditor;
 use ikarus\util\DependencyUtil;
 
@@ -47,7 +46,7 @@ class CacheBuilderApplicationKeys implements ICacheBuilder {
 		$keyList = array();
 		
 		foreach($resultList as $key) {
-			$keyList[$key->keyID] = ($key->isPublic ? new PublicKey(null, $key) : new PrivateKey(null, $key));
+			$keyList[$key->keyID] = new Key(null, $key);
 		}
 		
 		$editor = QueryEditor();
