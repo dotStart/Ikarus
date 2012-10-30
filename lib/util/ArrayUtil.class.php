@@ -30,6 +30,49 @@ namespace ikarus\util;
 class ArrayUtil {
 	
 	/**
+	 * Appends a suffix to all elements of the given array.
+	 * @param			array			$array
+	 * @param			string			$suffix
+	 * @return			array
+	 */
+	public static function appendSuffix($array, $suffix) {
+		return array_map(function($element) {
+			return $element.$suffix;
+		}, $array);
+	}
+	
+	/**
+	 * Converts a array of strings to requested character encoding.
+	 * Note: This method is recursive
+	 * @see ikarus\util\StringUtil::convertEncoding
+	 * @param			string			$inCharset
+	 * @param			string			$outCharset
+	 * @param			string			$array
+	 * @return			string
+	 */
+	public static function convertEncoding($inCharset, $outCharset, $array) {
+		if (!is_array($array))
+			return StringUtil::convertEncoding($inCharset, $outCharset, $array);
+		else
+			return array_map(function($element) {
+			return static::convertEncoding($inCharset, $outCharset, $element);
+		}, $array);
+	}
+	
+	/**
+	 * Converts html special characters in arrays.
+	 * Note: This method is recursive
+	 * @param			array			$array
+	 * @return			array
+	 */
+	public static function encodeHTML($array) {
+		if (!is_array($array))
+			return StringUtil::encodeHTML($array);
+		else
+			return array_map(array('static', 'encodeHTML'), $array);
+	}
+	
+	/**
 	 * Searches for a part of $search in $array
 	 * @param			array			$array
 	 * @param			array			$search
@@ -41,6 +84,32 @@ class ArrayUtil {
 			if (in_array($val, $search)) return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * Applies stripslashes on all elements of an array.
+	 * Note: This method is recursive
+	 * @param			array			$array
+	 * @return			array
+	 */
+	public static function stripslashes($array) {
+		if (!is_array($array))
+			return stripslashes($array);
+		else
+			return array_map(array('static', 'stripslashes'), $array);
+	}
+	
+	/**
+	 * Applies intval() to all elements of an array.
+	 * Note: This method is recursive
+	 * @param			array			$array
+	 * @return			array
+	 */
+	public static function toIntegerArray($array) {
+		if (!is_array($array))
+			return intval($array);
+		else
+			return array_map(array('static', 'toIntegerArray'), $array);
 	}
 	
 	/**
@@ -61,58 +130,6 @@ class ArrayUtil {
 	}
 
 	/**
-	 * Applies intval() to all elements of an array.
-	 * Note: This method is recursive
-	 * @param			array			$array
-	 * @return			array
-	 */
-	public static function toIntegerArray($array) {
-		if (!is_array($array))
-			return intval($array);
-		else
-			return array_map(array('static', 'toIntegerArray'), $array);
-	}
-
-	/**
-	 * Converts html special characters in arrays.
-	 * Note: This method is recursive
-	 * @param			array			$array
-	 * @return			array
-	 */
-	public static function encodeHTML($array) {
-		if (!is_array($array))
-			return StringUtil::encodeHTML($array);
-		else
-			return array_map(array('static', 'encodeHTML'), $array);
-	}
-
-
-	/**
-	 * Applies stripslashes on all elements of an array.
-	 * Note: This method is recursive
-	 * @param			array			$array
-	 * @return			array
-	 */
-	public static function stripslashes($array) {
-		if (!is_array($array))
-			return stripslashes($array);
-		else
-			return array_map(array('static', 'stripslashes'), $array);
-	}
-
-	/**
-	 * Appends a suffix to all elements of the given array.
-	 * @param			array			$array
-	 * @param			string			$suffix
-	 * @return			array
-	 */
-	public static function appendSuffix($array, $suffix) {
-		return array_map(function($element) {
-			return $element.$suffix;
-		}, $array);
-	}
-
-	/**
 	 * Converts dos to unix newlines.
 	 * Note: This method is recursive
 	 * @param			array			$array
@@ -123,24 +140,6 @@ class ArrayUtil {
 			return StringUtil::unifyNewlines($array);
 		else
 			return array_map(array('static', 'unifyNewlines'), $array);
-	}
-
-	/**
-	 * Converts a array of strings to requested character encoding.
-	 * Note: This method is recursive
-	 * @see ikarus\util\StringUtil::convertEncoding
-	 * @param			string			$inCharset
-	 * @param			string			$outCharset
-	 * @param			string			$array
-	 * @return			string
-	 */
-	public static function convertEncoding($inCharset, $outCharset, $array) {
-		if (!is_array($array))
-			return StringUtil::convertEncoding($inCharset, $outCharset, $array);
-		else
-			return array_map(function($element) {
-				return static::convertEncoding($inCharset, $outCharset, $element);
-			}, $array);
 	}
 }
 ?>
