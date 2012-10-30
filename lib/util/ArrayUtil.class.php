@@ -73,6 +73,24 @@ class ArrayUtil {
 	}
 	
 	/**
+	 * Encodes all strings in UTF8.
+	 * Note: This could crash PHP if there are more levels in the given array as PHP allows for method nestings.
+	 * @param			array			$array
+	 * @return			array
+	 * @throws			StrictStandardException
+	 */
+	public static function encodeUTF8($array) {
+		if (!is_array($array)) throw new StrictStandardException(__CLASS__.'::'.__FUNCTION__.' expects parameter 1 to be array');
+		
+		return array_map(function($element) {
+			if (is_array($element))
+				return static::encodeUTF8($element);
+			elseif (is_string($element))
+				return StringUtil::encodeUTF8($element);
+		}, $array);
+	}
+	
+	/**
 	 * Searches for a part of $search in $array
 	 * @param			array			$array
 	 * @param			array			$search
