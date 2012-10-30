@@ -36,6 +36,8 @@ class ArrayUtil {
 	 * @return			array
 	 */
 	public static function appendSuffix($array, $suffix) {
+		if (!is_array($array)) throw new StrictStandardException(__CLASS__.'::'.__FUNCTION__.' expects parameter 1 to be array');
+		
 		return array_map(function($element) {
 			return $element.$suffix;
 		}, $array);
@@ -51,10 +53,9 @@ class ArrayUtil {
 	 * @return			string
 	 */
 	public static function convertEncoding($inCharset, $outCharset, $array) {
-		if (!is_array($array))
-			return StringUtil::convertEncoding($inCharset, $outCharset, $array);
-		else
-			return array_map(function($element) {
+		if (!is_array($array)) throw new StrictStandardException(__CLASS__.'::'.__FUNCTION__.' expects parameter 1 to be array');
+		
+		return array_map(function($element) {
 			return static::convertEncoding($inCharset, $outCharset, $element);
 		}, $array);
 	}
@@ -66,10 +67,9 @@ class ArrayUtil {
 	 * @return			array
 	 */
 	public static function encodeHTML($array) {
-		if (!is_array($array))
-			return StringUtil::encodeHTML($array);
-		else
-			return array_map(array('static', 'encodeHTML'), $array);
+		if (!is_array($array)) throw new StrictStandardException(__CLASS__.'::'.__FUNCTION__.' expects parameter 1 to be array');
+		
+		return array_map(array('static', 'encodeHTML'), $array);
 	}
 	
 	/**
@@ -80,6 +80,8 @@ class ArrayUtil {
 	 * @todo Check for a better way to do this.
 	 */
 	public static function in_array($array, $search) {
+		if (!is_array($array)) throw new StrictStandardException(__CLASS__.'::'.__FUNCTION__.' expects parameter 1 to be array');
+		
 		foreach($array as $val) {
 			if (in_array($val, $search)) return true;
 		}
@@ -93,10 +95,9 @@ class ArrayUtil {
 	 * @return			array
 	 */
 	public static function stripslashes($array) {
-		if (!is_array($array))
-			return stripslashes($array);
-		else
-			return array_map(array('static', 'stripslashes'), $array);
+		if (!is_array($array)) throw new StrictStandardException(__CLASS__.'::'.__FUNCTION__.' expects parameter 1 to be array');
+		
+		return array_map(array('static', 'stripslashes'), $array);
 	}
 	
 	/**
@@ -106,10 +107,9 @@ class ArrayUtil {
 	 * @return			array
 	 */
 	public static function toIntegerArray($array) {
-		if (!is_array($array))
-			return intval($array);
-		else
-			return array_map(array('static', 'toIntegerArray'), $array);
+		if (!is_array($array)) throw new StrictStandardException(__CLASS__.'::'.__FUNCTION__.' expects parameter 1 to be array');
+		
+		return array_map(array('static', 'toIntegerArray'), $array);
 	}
 	
 	/**
@@ -120,13 +120,11 @@ class ArrayUtil {
 	 * @return			array 
 	 */
 	public static function trim($array, $removeEmptyElements = true) {
-		if (!is_array($array))
-			return StringUtil::trim($array);
-		else {
-			$array = array_map(array('static', 'trim'), $array);
-			if ($removeEmptyElements) foreach($array as $key => $value) if (empty($value)) unset($array[$key]);
-			return $array;
-		}
+		if (!is_array($array)) throw new StrictStandardException(__CLASS__.'::'.__FUNCTION__.' expects parameter 1 to be array');
+		
+		$array = array_map(array('static', 'trim'), $array);
+		if ($removeEmptyElements) foreach($array as $key => $value) if (empty($value)) unset($array[$key]);
+		return $array;
 	}
 
 	/**
@@ -136,10 +134,9 @@ class ArrayUtil {
 	 * @return			array
 	 */
 	public static function unifyNewlines($array) {
-		if (!is_array($array))
-			return StringUtil::unifyNewlines($array);
-		else
-			return array_map(array('static', 'unifyNewlines'), $array);
+		if (!is_array($array)) throw new StrictStandardException(__CLASS__.'::'.__FUNCTION__.' expects parameter 1 to be array');
+		
+		return array_map(array('static', 'unifyNewlines'), $array);
 	}
 }
 ?>
