@@ -90,5 +90,35 @@ class XMLUtil {
 	
 		return $array; 
 	}
+	
+	/**
+	 * Converts an array into an XML document.
+	 * @param			mixed[]			$data
+	 * @param			string			$root			Defaults to 'data'
+	 * @param			string			$doc
+	 * @return			DOMDocument
+	 */
+	public static function convertFromArray($data, $root = null, $doc = null) {
+		// create root element
+		if ($root === null) {
+			$doc = new DOMDocument('1.0', 'UTF-8');
+			$root = $doc->createElement(($rootElement === null ? 'data' : $rootElement));
+			$doc->appendChild($root);
+		}
+		
+		foreach($data as $key => $value) {
+			$element = $doc->createElement($key);
+			if (is_array($value))
+				static::convertFromArray($value, $element, $doc);
+			else {
+				$value = $element->createCDATASection((string) $value);
+				$element->appendChild($value);
+			}
+			
+			$root->appendChild($element);
+		}
+		
+		return $doc;
+	}
 }
 ?>
