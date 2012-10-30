@@ -67,19 +67,12 @@ class Language extends DatabaseObject {
 	 * @param			string			$variableName
 	 * @param			boolean			$disableCompilation
 	 */
-	public function get($variableName, $disableCompilation = false) {
+	public function get($variableName) {
 		// return variable name if variable doesn't exist
 		if (!isset($this->languageVariables[$variableName])) return $variableName;
 		
 		// get content
-		$content = $this->languageVariables[$variableName]->variableContent;
-		
-		// return if compilation is disabled
-		if ($disableCompilation or !$this->languageVariables[$variableName]->isDynamicVariable or !Ikarus::componentAbbreviationExists('Template')) return $content;
-		
-		// compile ...
-		return $content;
-		// TODO: Add compilation here
+		return $this->languageVariables[$variableName]->variableContent;
 	}
 }
 ?>
