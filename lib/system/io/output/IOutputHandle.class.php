@@ -42,5 +42,11 @@ interface IOutputHandle {
 	 * @throws			ikarus\system\exception\io.OutputException
 	 */
 	public function render();
+	
+	/**
+	 * Sends all headers defined by this output handle.
+	 * @return			void
+	 */
+	public function sendHeaders();
 }
 ?>
