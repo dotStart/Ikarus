@@ -83,6 +83,15 @@ class StringUtil {
 	}
 	
 	/**
+	 * Encodes a string as UTF8 (usually used for json_encode() stuff).
+	 * @param			string			$string
+	 * @return			string
+	 */
+	public static function encodeUTF8($string) {
+		return utf8_encode($string);
+	}
+	
+	/**
 	 * @see ucfirst()
 	 */
 	public static function firstCharToUpperCase($string) {
