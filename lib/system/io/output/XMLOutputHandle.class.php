@@ -44,5 +44,13 @@ class XMLOutputHandle extends AbstractOutputHandle implements IOutputHandle  {
 		$doc = XMLUtil::convertToArray($data);
 		return $dox->saveXML();
 	}
+	
+	/**
+	 * (non-PHPdoc)
+	 * @see \ikarus\system\io\output\IOutputHandle::sendHeaders()
+	 */
+	public function sendHeaders() {
+		Ikarus::getWebOutputManager()->sendHeader('Content-Type', 'text/xml');
+	}
 }
 ?>
