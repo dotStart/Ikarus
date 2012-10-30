@@ -74,5 +74,13 @@ class Language extends DatabaseObject {
 		// get content
 		return $this->languageVariables[$variableName]->variableContent;
 	}
+	
+	/**
+	 * Returns the whole list of variables.
+	 * @return array<string>
+	 */
+	public function getVariables() {
+		return $this->languageVariables;
+	}
 }
 ?>
