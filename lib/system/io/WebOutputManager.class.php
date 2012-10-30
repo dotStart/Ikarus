@@ -37,6 +37,12 @@ use ikarus\util\StringUtil;
 class WebOutputManager {
 	
 	/**
+	 * Stores a list of output variables with their values.
+	 * @var			mixed[]
+	 */
+	protected $outputVariables = array();
+	
+	/**
 	 * Generates a new output handle.
 	 * @param			mixed			$data
 	 * @param			string			$outputType			xml, json, html, debug and custom output handlers are supported.
@@ -49,16 +55,16 @@ class WebOutputManager {
 		// construct correct handle.
 		switch($outputType) {
 			case 'xml':
-				return new XMLOutputHandle($data);
+				return new XMLOutputHandle($data, $this->outputVariables);
 				break;
 			case 'json':
-				return new JSONOutputHandle($data);
+				return new JSONOutputHandle($data, $this->outputVariables);
 				break;
 			case 'html':
-				return new HTMLOutputHandle($data);
+				return new HTMLOutputHandle($data, $this->outputVariables);
 				break;
 			case 'debug':
-				return new DebugOutputHandle($data);
+				return new DebugOutputHandle($data, $this->outputVariables);
 				break;
 			default:
 				// build className
@@ -71,9 +77,37 @@ class WebOutputManager {
 				if (!class_exists($classPath, true)) throw new MissingDependencyException("Cannot find class '%s'", $className);
 				
 				// construct
-				return new $className($data);
+				return new $className($data, $this->outputVariables);
 				break;
 		}
+	}
+	
+	/**
+	 * Registers an output variable (they've to get send thru the output handle)
+	 * @param			string			$name
+	 * @return			void
+	 * @throws			StrictStandardException
+	 */
+	public function registerOutputVariable($name) {
+		// validate key
+		if (array_key_exists($name, $this->outputVariables)) throw new StrictStandardException('Output variable "%s" does already exist', $name);
+		
+		// add without value
+		$this->outputVariables[$name] = null;
+	}
+	
+	/**
+	 * Sets an output variable.
+	 * @param			string			$name
+	 * @param			mixed			$value
+	 * @return			void
+	 * @throws			StrictStandardException
+	 */
+	public function setOutputVariable($name, $value) {
+		// validate key
+		if (!array_key_exists($name, $this->outputVariables)) throw new StrictStandardException('Cannot set non-existing output variable "%s"', $name);
+		
+		$this->outputVariables[$name] = $value;
 	}
 }
 ?>
