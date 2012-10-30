@@ -32,8 +32,9 @@ interface IOutputHandle {
 	/**
 	 * Constructs the object.
 	 * @param			mixed			$data
+	 * @param			mixed[]			$outputVariables
 	 */
-	public function __construct($data);
+	public function __construct($data, $outputVariables);
 	
 	/**
 	 * Renders the output.
