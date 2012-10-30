@@ -90,18 +90,6 @@ class ArrayUtil {
 	}
 	
 	/**
-	 * Applies stripslashes on all elements of an array.
-	 * Note: This method is recursive
-	 * @param			array			$array
-	 * @return			array
-	 */
-	public static function stripslashes($array) {
-		if (!is_array($array)) throw new StrictStandardException(__CLASS__.'::'.__FUNCTION__.' expects parameter 1 to be array');
-		
-		return array_map(array('static', 'stripslashes'), $array);
-	}
-	
-	/**
 	 * Applies intval() to all elements of an array.
 	 * Note: This method is recursive
 	 * @param			array			$array
