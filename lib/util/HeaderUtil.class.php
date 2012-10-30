@@ -65,8 +65,8 @@ class HeaderUtil {
 	 */
 	public static function redirect($location, $prependDir = true, $sendStatusCode = false) {
 		if ($prependDir and Ikarus::componentAbbreviationExists('SessionManager')) $location = FileUtil::addTrailingSlash(FileUtil::unifyDirSeperator(dirname(Ikarus::getSessionManager()->getSession('ikarus')->requestURI))) . $location;
-		if ($sendStatusCode) @header('HTTP/1.0 301 Moved Permanently');
-		header('Location: '.$location);
+		if ($sendStatusCode) static::sendHeader('HTTP/1.0 301 Moved Permanently');
+		static::sendHeader('Location: '.$location);
 	}
 
 	/**
@@ -77,18 +77,26 @@ class HeaderUtil {
 	 * @return			void
 	 */
 	public static function setCookie($name, $value = '', $expire = 0) {
-		@header('Set-Cookie: '.rawurlencode(Ikarus::getConfiguration()->get('global.http.cookiePrefix').$name).'='.rawurlencode($value).($expire ? '; expires='.gmdate('D, d-M-Y H:i:s', $expire).' GMT' : '').(Ikarus::getConfiguration()->get('global.http.cookiePath') ? '; path='.Ikarus::getConfiguration()->get('global.http.cookiePath') : '').(Ikarus::getConfiguration()->get('global.http.cookieDomain') ? '; domain='.Ikarus::getConfiguration()->get('global.http.cookieDomain') : '').((isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443') ? '; secure' : '').'; HttpOnly', false);
+		static::sendHeader('Set-Cookie', rawurlencode(Ikarus::getConfiguration()->get('global.http.cookiePrefix').$name).'='.rawurlencode($value).($expire ? '; expires='.gmdate('D, d-M-Y H:i:s', $expire).' GMT' : '').(Ikarus::getConfiguration()->get('global.http.cookiePath') ? '; path='.Ikarus::getConfiguration()->get('global.http.cookiePath') : '').(Ikarus::getConfiguration()->get('global.http.cookieDomain') ? '; domain='.Ikarus::getConfiguration()->get('global.http.cookieDomain') : '').((isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443') ? '; secure' : '').'; HttpOnly', false);
 	}
 
+	/**
+	 * Alias for header()
+	 * @see header()
+	 */
+	public static function sendHeader($name, $content, $replace = true) {
+		@header($name.': '.$content, $replace);
+	}
+	
 	/**
 	 * Sends no cache headers
 	 * @return			void
 	 */
 	public static function sendNoCacheHeaders() {
-		@header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-		@header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
-		@header('Cache-Control: no-cache, must-revalidate');
-		@header('Pragma: no-cache');
+		static::sendHeader('Expires', 'Mon, 26 Jul 1997 05:00:00 GMT');
+		static::sendHeader('Last-Modified', gmdate('D, d M Y H:i:s').' GMT');
+		static::sendHeader('Cache-Control', 'no-cache, must-revalidate');
+		static::sendHeader('Pragma', 'no-cache');
 	}
 }
 ?>
