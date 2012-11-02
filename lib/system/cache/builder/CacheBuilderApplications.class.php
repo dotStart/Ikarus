@@ -35,11 +35,12 @@ class CacheBuilderApplications implements ICacheBuilder {
 	 * @see ikarus\system\cache.CacheBuilder::getData()
 	 */
 	public static function getData($resourceName, $additionalParameters) {
-		list($resourceName, $packageID) = explode('-', $resourceName);
+		list($resourceName, $instanceID) = explode('-', $resourceName);
 
 		$editor = new QueryEditor();
-		$editor->from(array('ikarus'.IKARUS_N.'_application' => 'app'));
-		DependencyUtil::generateDependencyQuery($packageID, $editor, 'app');
+		$editor->from(array('ikarus1_instance' => 'instance'), array('documentRoot', 'instanceID'));
+		$editor->join(QueryEditor::LEFT_JOIN, array('ikarus1_application' => 'app'), 'instance.applicationID = app.applicationID', '*');
+		DependencyUtil::generateDependencyQuery('app.packageID', $editor, 'app');
 		$stmt = $editor->prepare();
 		return $stmt->fetchList();
 	}
