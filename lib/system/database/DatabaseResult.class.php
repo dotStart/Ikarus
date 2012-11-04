@@ -35,12 +35,7 @@ class DatabaseResult extends DatabaseObject {
 	 */
 	protected function handleData($data) {
 		// handle arrays
-		if (is_array($data)) return parent::handleData($data);
-		
-		// handle objects
-		foreach($data as $key => $value) {
-			$this->data[$key] = $value;
-		}
+		return parent::handleData($data);
 	}
 	
 	/**
