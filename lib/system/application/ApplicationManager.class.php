@@ -76,6 +76,24 @@ class ApplicationManager {
 			$app->boot();
 		}
 	}
+	
+	/**
+	 * Detects the instanceID for current request.
+	 * @return			void
+	 * @todo			This does not work for CLI applications.
+	 */
+	protected function detectInstanceID() {
+		// get cache
+		Ikarus::getCacheManager()->getDefaultAdapter()->createResource('instances', 'ikarus\\system\\cache\\builder\\application\\Instances');
+		$instances = Ikarus::getCacheManager()->getDefaultAdapter()->get('instances');
+		
+		// get instanceID
+		foreach($instances as $instance) {
+			if ($instance->domainName and $instance->domainName != $_SERVER['HTTP_HOST']) continue;
+			if ($instance->documentRoot and $instance->documentRoot != dirname($_SERVER['PHP_SELF'])) continue;
+			return $instance->instanceID;
+		}
+	}
 
 	/**
 	 * Displays the given exception
@@ -125,7 +143,7 @@ class ApplicationManager {
 	 */
 	protected function loadApplicationCache() {
 		// handle developer mode
-		$packageID = (defined('PACKAGE_ID') ? PACKAGE_ID : IKARUS_ID);
+		$instanceID = $this->detectInstanceID();
 
 		// load cache
 		Ikarus::getCacheManager()->getDefaultAdapter()->createResource('applications-'.$packageID, 'applications-'.$packageID, 'ikarus\system\cache\builder\CacheBuilderApplications');
