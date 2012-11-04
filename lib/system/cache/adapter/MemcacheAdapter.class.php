@@ -103,11 +103,11 @@ class MemcacheAdapter implements ICacheAdapter {
 	/**
 	 * @see ikarus\system\cache\adapter.ICacheAdapter::createResource()
 	 */
-	public function createResource($resourceName, $cacheKey, $cacheBuilderClass, $minimalLifetime = 0, $maximalLifetime = 0, $additionalCacheBuilderParameters = array()) {
+	public function createResource($resourceName, $cacheBuilderClass, $minimalLifetime = 0, $maximalLifetime = 0, $additionalCacheBuilderParameters = array()) {
 		try {
-			$this->storeCacheResource($resourceName, $this->loadCache($cacheKey, $cacheBuilderClass, $minimalLifetime, $maximalLifetime));
+			$this->storeCacheResource($resourceName, $this->loadCache($resourceName, $cacheBuilderClass, $minimalLifetime, $maximalLifetime));
 		} Catch (SystemException $ex) {
-			$this->storeCacheResource($resourceName, $this->storeCacheData($cacheKey, $this->getCacheData($cacheBuilderClass, $resourceName, $additionalCacheBuilderParameters)));
+			$this->storeCacheResource($resourceName, $this->storeCacheData($resourceName, $this->getCacheData($cacheBuilderClass, $resourceName, $additionalCacheBuilderParameters)));
 		}
 		return true;
 	}

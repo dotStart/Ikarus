@@ -38,7 +38,6 @@ interface ICacheAdapter {
 	/**
 	 * Creates a new cache resource for later use
 	 * @param			string			$resourceName
-	 * @param			string			$cacheFile
 	 * @param			string			$cacheBuilderClass
 	 * @param			integer			$minimalLifetime
 	 * @param			integer			$maximalLifetime
@@ -46,7 +45,7 @@ interface ICacheAdapter {
 	 * @throws			SystemException
 	 * @return			boolean
 	 */
-	public function createResource($resourceName, $cacheFile, $cacheBuilderClass, $minimalLifetime = 0, $maximalLifetime = 0, $additionalCacheBuilderParameters = array());
+	public function createResource($resourceName, $cacheBuilderClass, $minimalLifetime = 0, $maximalLifetime = 0, $additionalCacheBuilderParameters = array());
 
 	/**
 	 * Returns the content of given resource

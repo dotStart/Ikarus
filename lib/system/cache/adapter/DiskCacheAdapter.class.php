@@ -70,9 +70,9 @@ class DiskCacheAdapter implements ICacheAdapter {
 	/**
 	 * @see ikarus\system\cache\adapter.ICacheAdapter::createResource()
 	 */
-	public function createResource($resourceName, $cacheFile, $cacheBuilderClass, $minimalLifetime = 0, $maximalLifetime = 0, $additionalCacheBuilderParameters = array()) {
-		// fix file path
-		$cacheFile = IKARUS_DIR.'cache/cache.'.$cacheFile.'.php';
+	public function createResource($resourceName, $cacheBuilderClass, $minimalLifetime = 0, $maximalLifetime = 0, $additionalCacheBuilderParameters = array()) {
+		// get file path
+		$cacheFile = IKARUS_DIR.'cache/cache.'.$resourceName.'.php';
 
 		try {
 			$this->storeCacheResource($resourceName, $this->loadCacheFile($cacheFile, $cacheBuilderClass, $minimalLifetime, $maximalLifetime));
