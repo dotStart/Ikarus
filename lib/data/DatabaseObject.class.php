@@ -26,6 +26,7 @@ use ikarus\system\exception\StrictStandardException;
 use ikarus\system\exception\SystemException;
 use ikarus\system\Ikarus;
 use ikarus\util\ClassUtil;
+use ikarus\util\StringUtil;
 
 /**
  * Represents a database row
@@ -176,7 +177,7 @@ abstract class DatabaseObject {
 	 */
 	public function __call($name, $arguments) {
 		// handle getXYZ methods
-		if (substr($name, 0, 3) == 'get' ) {
+		if (StringUtil::substring($name, 0, 3) == 'get' ) {
 			$variable = substr($name, 3);
 			$variable{0} = StringUtil::toLowerCase($variable{0});
 			if ($this->__isset($variable)) return $this->__get($variable);
