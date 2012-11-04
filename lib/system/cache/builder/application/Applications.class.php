@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
-namespace ikarus\system\cache\builder;
+namespace ikarus\system\cache\builder\application;
 use ikarus\system\cache\builder\ICacheBuilder;
 use ikarus\system\database\QueryEditor;
 use ikarus\util\DependencyUtil;
