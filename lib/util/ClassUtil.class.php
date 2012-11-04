@@ -232,6 +232,9 @@ class ClassUtil {
 		if (!static::classExists($className, true)) throw new MissingDependencyException("Cannot find class '%s'", $className);
 		if (!static::classExists($targetClass, true)) throw new MissingDependencyException("Cannot find class '%s'", $targetClass);
 		
+		// equal check
+		if ($className == $targetClass) return true;
+		
 		// normal classes
 		if (static::classExists($targetClass)) return is_subclass_of($className, $targetClass);
 		
