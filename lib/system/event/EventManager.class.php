@@ -105,7 +105,7 @@ class EventManager {
 	 * @return			void
 	 */
 	protected function loadCache($packageID) {
-		Ikarus::getCacheManager()->getDefaultAdapter()->createResource('eventListener-'.$packageID, 'eventListener-'.$packageID, 'ikarus\system\cache\builder\CacheBuilderEventListener');
+		Ikarus::getCacheManager()->getDefaultAdapter()->createResource('eventListener-'.$packageID, 'ikarus\\system\\cache\\builder\\event\\EventListener');
 		$this->listenerList = Ikarus::getCacheManager()->getDefaultAdapter()->get('eventListener-'.$packageID);
 	}
 }
