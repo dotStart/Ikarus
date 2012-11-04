@@ -78,21 +78,24 @@ class ApplicationManager {
 	}
 	
 	/**
-	 * Detects the instanceID for current request.
+	 * Detects the instance for current request.
 	 * @return			void
 	 * @todo			This does not work for CLI applications.
 	 */
-	protected function detectInstanceID() {
+	protected function detectInstance() {
 		// get cache
 		Ikarus::getCacheManager()->getDefaultAdapter()->createResource('instances', 'ikarus\\system\\cache\\builder\\application\\Instances');
 		$instances = Ikarus::getCacheManager()->getDefaultAdapter()->get('instances');
 		
 		// get instanceID
 		foreach($instances as $instance) {
-			if ($instance->domainName and $instance->domainName != $_SERVER['HTTP_HOST']) continue;
-			if ($instance->documentRoot and $instance->documentRoot != dirname($_SERVER['PHP_SELF'])) continue;
-			return $instance->instanceID;
+			if ($instance->getDomainName() and $instance->getDomainName() != $_SERVER['HTTP_HOST']) continue;
+			if ($instance->getDocumentRoot() and $instance->getDocumentRoot() != dirname($_SERVER['PHP_SELF'])) continue;
+			return $instance;
 		}
+		
+		// something went wrong?!
+		throw new ApplicationException("There is no matching application instance");
 	}
 
 	/**
@@ -143,11 +146,11 @@ class ApplicationManager {
 	 */
 	protected function loadApplicationCache() {
 		// handle developer mode
-		$instanceID = $this->detectInstanceID();
+		$instance = $this->detectInstance();
 
 		// load cache
-		Ikarus::getCacheManager()->getDefaultAdapter()->createResource('applications-'.$packageID, 'applications-'.$packageID, 'ikarus\system\cache\builder\CacheBuilderApplications');
-		$applicationList = Ikarus::getCacheManager()->getDefaultAdapter()->get('applications-'.$packageID);
+		Ikarus::getCacheManager()->getDefaultAdapter()->createResource('applications-'.$instance->getPackageID(), 'ikarus\\system\\cache\\builder\\application\\Applications');
+		$applicationList = Ikarus::getCacheManager()->getDefaultAdapter()->get('applications-'.$instance->getPackageID());
 
 		// create application instances
 		foreach($applicationList as $application) {
@@ -164,7 +167,7 @@ class ApplicationManager {
 			if (!ClassUtil::isInstanceOf($className, 'ikarus\\system\\application\\IApplication')) throw new StrictStandardException("Cannot load application '%s' (%s): Class '%s' is not an instance of IApplication", $application->applicationTitle, $application->applicationAbbreviation, $className);
 
 			// create application instance
-			$this->applications[$application->applicationAbbreviation] = new $className($application->applicationAbbreviation, $application->libraryNamespace, $application->packageID, (defined('IKARUS_ENVIRONMENT') ? IKARUS_ENVIRONMENT : 'frontend'), ($packageID == $application->packageID ? true : false));
+			$this->applications[$application->applicationAbbreviation] = new $className($application->applicationAbbreviation, $application->libraryNamespace, $application->packageID, (defined('IKARUS_ENVIRONMENT') ? IKARUS_ENVIRONMENT : 'frontend'), ($instance->getPackageID() == $application->packageID ? true : false));
 		}
 	}
 
