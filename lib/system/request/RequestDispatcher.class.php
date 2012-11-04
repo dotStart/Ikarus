@@ -149,8 +149,8 @@ class RequestDispatcher extends Singleton {
 	 */
 	protected function loadDispatcherCache($packageID) {
 		// add resources
-		Ikarus::getCacheManager()->getDefaultAdapter()->createResource('requestDispatcherControllerTypes-'.$packageID, 'requestDispatcherControllerTypes-'.$packageID, 'ikarus\system\cache\builder\CacheBuilderRequestDispatcherControllerTypes');
-		Ikarus::getCacheManager()->getDefaultAdapter()->createResource('requestDispatcherAvailableRoutes-'.$packageID, 'requestDispatcherAvailableRoutes-'.$packageID, 'ikarus\system\cache\builder\CacheBuilderRequestDispatcherAvailableRoutes');
+		Ikarus::getCacheManager()->getDefaultAdapter()->createResource('requestDispatcherControllerTypes-'.$packageID, 'ikarus\system\cache\builder\request\ControllerTypes');
+		Ikarus::getCacheManager()->getDefaultAdapter()->createResource('requestDispatcherAvailableRoutes-'.$packageID, 'ikarus\system\cache\builder\request\AvailableRoutes');
 
 		// save information
 		$this->availableControllerTypes = Ikarus::getCacheManager()->getDefaultAdapter()->get('requestDispatcherControllerTypes-'.$packageID);
