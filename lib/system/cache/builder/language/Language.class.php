@@ -15,7 +15,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
-namespace ikarus\system\cache\builder;
+namespace ikarus\system\cache\builder\language;
+use ikarus\system\cache\builder\ICacheBuilder;
 use ikarus\system\database\QueryEditor;
 
 /**
@@ -28,7 +29,7 @@ use ikarus\system\database\QueryEditor;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-class CacheBuilderLanguage implements ICacheBuilder {
+class Language implements ICacheBuilder {
 
 	/**
 	 * @see ikarus\system\cache.CacheBuilder::getData()

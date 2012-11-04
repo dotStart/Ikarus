@@ -15,53 +15,42 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
-namespace ikarus\system\cache\builder;
-use ikarus\data\encryption\KeyPair;
-use ikarus\data\encryption\Key;
+namespace ikarus\system\cache\builder\request;
+use ikarus\system\cache\builder\ICacheBuilder;
 use ikarus\system\database\QueryEditor;
 use ikarus\util\DependencyUtil;
 
 /**
- * Caches application keys (to sign or verify).
+ * Caches all controller types
  * @author		Johannes Donath
- * @copyright		© Copyright 2012 Evil-Co.de <http://www.evil-co.com>
+ * @copyright		2011 Evil-Co.de
  * @package		de.ikarus-framework.core
  * @subpackage		system
  * @category		Ikarus Framework
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-class CacheBuilderApplicationKeys implements ICacheBuilder {
-	
+class ControllerTypes implements ICacheBuilder {
+
 	/**
-	 * @see ikarus\system\cache\builder\ICacheBuilder
+	 * @see ikarus\system\cache.CacheBuilder::getData()
 	 */
 	public static function getData($resourceName, $additionalParameters) {
-		$editor = QueryEditor();
-		$editor->from(array('ikarus1_encryption_key' => 'encryption_key'));
-		DependencyUtil::generateDependencyQuery($additionalParameters['packageID'], $editor, 'encryption_key');
+		list($resourceName, $packageID) = explode('-', $resourceName);
+
+		$editor = new QueryEditor();
+		$editor->from(array('ikarus'.IKARUS_N.'_request_controller_type' => 'controllerType'));
+		DependencyUtil::generateDependencyQuery($packageID, $editor, 'controllerType');
 		$stmt = $editor->prepare();
 		$resultList = $stmt->fetchList();
-		
-		$keyList = array();
-		
-		foreach($resultList as $key) {
-			$keyList[$key->keyID] = new Key(null, $key);
-		}
-		
-		$editor = QueryEditor();
-		$editor->from(array('ikarus1_encryption_key_pair' => 'encryption_key_pair'));
-		DependencyUtil::generateDependencyQuery($additionalParameters['packageID'], $editor, 'encryption_key');
-		$stmt = $editor->prepare();
-		$resultList = $stmt->fetchList();
-		
-		$keyPairList = array();
-		
+
+		$typeList = array();
+
 		foreach($resultList as $result) {
-			$keyPairList[] = new KeyPair(($result->publicKey ? $keyList[$result->publicKey] : null), ($result->privateKey ? $keyList[$result->privateKey] : null));
+			$typeList[$result->parameterName] = $result->controllerNamespace;
 		}
-		
-		return $keyPairList;
+
+		return $typeList;
 	}
 }
 ?>

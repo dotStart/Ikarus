@@ -15,13 +15,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
-namespace ikarus\system\cache\builder;
+namespace ikarus\system\cache\builder\style;
+use ikarus\system\cache\builder\ICacheBuilder;
 use ikarus\system\database\QueryEditor;
-use ikarus\system\style\Style;
-use ikarus\util\DependencyUtil;
 
 /**
- * Caches all controller types
+ * Caches the css definitions of a style
  * @author		Johannes Donath
  * @copyright		2011 Evil-Co.de
  * @package		de.ikarus-framework.core
@@ -30,30 +29,20 @@ use ikarus\util\DependencyUtil;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-class CacheBuilderStyleList implements ICacheBuilder {
+class Style implements ICacheBuilder {
 
 	/**
 	 * @see ikarus\system\cache.CacheBuilder::getData()
 	 */
 	public static function getData($resourceName, $additionalParameters) {
-		list($resourceName, $packageID, $environment) = explode('-', $resourceName);
+		list($resourceName, $styleID) = explode('-', $resourceName);
 
 		$editor = new QueryEditor();
-		$editor->from(array('ikarus'.IKARUS_N.'_style' => 'style'));
-		$editor->where('environment = ?');
-		$editor->where('isEnabled = 1');
-		DependencyUtil::generateDependencyQuery($packageID, $editor, 'style');
+		$editor->from(array('ikarus'.IKARUS_N.'_style_css' => 'style_css'));
+		$editor->where('styleID = ?');
 		$stmt = $editor->prepare();
-		$stmt->bind($environment);
-		$resultList = $stmt->fetchList();
-
-		$styleList = array();
-
-		foreach($resultList as $result) {
-			$styleList[] = new Style($result->__toArray());
-		}
-
-		return $styleList;
+		$stmt->bind($styleID);
+		return $stmt->fetchList();
 	}
 }
 ?>

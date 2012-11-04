@@ -15,12 +15,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
-namespace ikarus\system\cache\builder;
+namespace ikarus\system\cache\builder\language;
+use ikarus\system\cache\builder\ICacheBuilder;
 use ikarus\system\database\QueryEditor;
+use ikarus\system\language\Language;
 use ikarus\util\DependencyUtil;
 
 /**
- * Caches all controller types
+ * Caches the css definitions of a style
  * @author		Johannes Donath
  * @copyright		2011 Evil-Co.de
  * @package		de.ikarus-framework.core
@@ -29,7 +31,7 @@ use ikarus\util\DependencyUtil;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-class CacheBuilderRequestDispatcherControllerTypes implements ICacheBuilder {
+class Languages implements ICacheBuilder {
 
 	/**
 	 * @see ikarus\system\cache.CacheBuilder::getData()
@@ -38,18 +40,20 @@ class CacheBuilderRequestDispatcherControllerTypes implements ICacheBuilder {
 		list($resourceName, $packageID) = explode('-', $resourceName);
 
 		$editor = new QueryEditor();
-		$editor->from(array('ikarus'.IKARUS_N.'_request_controller_type' => 'controllerType'));
-		DependencyUtil::generateDependencyQuery($packageID, $editor, 'controllerType');
+		$editor->from(array('ikarus'.IKARUS_N.'_language' => 'language'));
+		$editor->where('isEnabled = 1');
+		$editor->where('hasContent = 1');
+		DependencyUtil::generateDependencyQuery($packageID, $editor, 'language');
 		$stmt = $editor->prepare();
 		$resultList = $stmt->fetchList();
 
-		$typeList = array();
+		$languageList = array();
 
-		foreach($resultList as $result) {
-			$typeList[$result->parameterName] = $result->controllerNamespace;
+		foreach($resultList as $language) {
+			$languageList[] = new Language($language->__toArray());
 		}
 
-		return $typeList;
+		return $languageList;
 	}
 }
 ?>

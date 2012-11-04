@@ -15,7 +15,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
-namespace ikarus\system\cache\builder;
+namespace ikarus\system\cache\builder\event;
+use ikarus\system\cache\builder\ICacheBuilder;
 use ikarus\system\database\QueryEditor;
 use ikarus\util\DependencyUtil;
 
@@ -29,7 +30,7 @@ use ikarus\util\DependencyUtil;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-class CacheBuilderEventListener implements ICacheBuilder {
+class EventListener implements ICacheBuilder {
 
 	/**
 	 * @see ikarus\system\cache.CacheBuilder::getData()
