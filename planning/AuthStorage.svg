@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="58cm" height="18cm" viewBox="19 19 1142 345" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g>
+    <rect style="fill: #ffffff" x="20" y="20" width="240" height="60"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="20" y="20" width="240" height="60"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="140" y="45.9">
+      <tspan x="140" y="45.9">User Object</tspan>
+      <tspan x="140" y="61.9">(ikarus\system\auth\IUserObject)</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="380" y="20" width="320" height="60"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="380" y="20" width="320" height="60"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="540" y="45.9">
+      <tspan x="540" y="45.9">Auth Manager</tspan>
+      <tspan x="540" y="61.9">(ikarus\system\auth\AuthenticationManager)</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="260" y1="50" x2="370.264" y2="50"/>
+    <polygon style="fill: #000000" points="377.764,50 367.764,55 370.264,50 367.764,45 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="377.764,50 367.764,55 370.264,50 367.764,45 "/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="840" y="20" width="320" height="60"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="840" y="20" width="320" height="60"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1000" y="45.9">
+      <tspan x="1000" y="45.9">Auth Adapter</tspan>
+      <tspan x="1000" y="61.9">(ikarus\system\auth\IAuthenticationAdapter)</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="700" y1="50" x2="830.264" y2="50"/>
+    <polygon style="fill: #000000" points="837.764,50 827.764,55 830.264,50 827.764,45 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="837.764,50 827.764,55 830.264,50 827.764,45 "/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="20" y="140" width="320" height="54"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="20" y="140" width="320" height="54"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="180" y="162.9">
+      <tspan x="180" y="162.9">Auth Storage Adapter</tspan>
+      <tspan x="180" y="178.9">(ikarus\system\auth\storage\IStorageAdapter)</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="560" y="220" width="400.062" height="22"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="560" y="220" width="400.062" height="22"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="600.006" y1="220" x2="600.006" y2="242"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="920.056" y1="220" x2="920.056" y2="242"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="760.031" y="235">
+      <tspan x="760.031" y="235">storeVariable(String variableName, mixed value)</tspan>
+    </text>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1000,80 1000,231 969.799,231 "/>
+    <polygon style="fill: #000000" points="962.299,231 972.299,226 969.799,231 972.299,236 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="962.299,231 972.299,226 969.799,231 972.299,236 "/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="560" y="260" width="400" height="22"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="560" y="260" width="400" height="22"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="600" y1="260" x2="600" y2="282"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="920" y1="260" x2="920" y2="282"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="760" y="275">
+      <tspan x="760" y="275">getVariable(String variableName)</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="140" y="300" width="400" height="22"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="140" y="300" width="400" height="22"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="180" y1="300" x2="180" y2="322"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="500" y1="300" x2="500" y2="322"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="340" y="315">
+      <tspan x="340" y="315">variableExists(String variableName)</tspan>
+    </text>
+  </g>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 4; stroke: #000000" points="100,194 100,311 140,311 "/>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1000,80 1000,271 969.736,271 "/>
+    <polygon style="fill: #000000" points="962.236,271 972.236,266 969.736,271 972.236,276 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="962.236,271 972.236,266 969.736,271 972.236,276 "/>
+  </g>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 4; stroke: #000000" points="100,194 100,231 560,231 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 4; stroke: #000000" points="100,194 100,271 560,271 "/>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="760,282 760,311 549.736,311 "/>
+    <polygon style="fill: #000000" points="542.236,311 552.236,306 549.736,311 552.236,316 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="542.236,311 552.236,306 549.736,311 552.236,316 "/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="140" y="340" width="400" height="22"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="140" y="340" width="400" height="22"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="180" y1="340" x2="180" y2="362"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="500" y1="340" x2="500" y2="362"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="340" y="355">
+      <tspan x="340" y="355">migrate(StorageAdapter previous)</tspan>
+    </text>
+  </g>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 4; stroke: #000000" points="100,194 100,351 140,351 "/>
+</svg>

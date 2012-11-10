@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="60cm" height="30cm" viewBox="39 19 1182 581" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g>
+    <path style="fill: #ffffff" d="M 520 499.833 C 556,484.958 574,480 610,480 C 646,480 664,484.958 700,499.833 L 700,579.167 C 664,594.042 646,599 610,599 C 574,599 556,594.042 520,579.167 L 520,499.833z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 520 499.833 C 556,484.958 574,480 610,480 C 646,480 664,484.958 700,499.833 L 700,579.167 C 664,594.042 646,599 610,599 C 574,599 556,594.042 520,579.167 L 520,499.833"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 520 499.833 C 556,514.708 574,519.667 610,519.667 C 646,519.667 664,514.708 700,499.833"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="610" y="545.417">
+      <tspan x="610" y="545.417">Session API</tspan>
+      <tspan x="610" y="561.417">(Storage)</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="40" y="20" width="167" height="54"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="40" y="20" width="167" height="54"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="123.5" y="42.9">
+      <tspan x="123.5" y="42.9">Ikarus Core</tspan>
+      <tspan x="123.5" y="58.9">(ikarus\system\Ikarus)</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="460" y="20" width="320" height="54"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="460" y="20" width="320" height="54"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="620" y="42.9">
+      <tspan x="620" y="42.9">Auth Manager</tspan>
+      <tspan x="620" y="58.9">(ikarus\system\auth\AuthenticationManager)</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="208.005" y1="47" x2="450.264" y2="47"/>
+    <polygon style="fill: #000000" points="457.764,47 447.764,52 450.264,47 447.764,42 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="457.764,47 447.764,52 450.264,47 447.764,42 "/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="460" y="120" width="320" height="22"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="460" y="120" width="320" height="22"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="492" y1="120" x2="492" y2="142"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="748" y1="120" x2="748" y2="142"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="620" y="135">
+      <tspan x="620" y="135">Load Auth Adapter</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="620" y1="74" x2="620" y2="110.264"/>
+    <polygon style="fill: #000000" points="620,117.764 615,107.764 620,110.264 625,107.764 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="620,117.764 615,107.764 620,110.264 625,107.764 "/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="40" y="260" width="360" height="60"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="40" y="260" width="360" height="60"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="220" y="285.9">
+      <tspan x="220" y="285.9">Simple Auth Adapter</tspan>
+      <tspan x="220" y="301.9">(ikarus\system\auth\IGenericAuthenticationAdapter)</tspan>
+    </text>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="460,131 220,131 220,250.264 "/>
+    <polygon style="fill: #000000" points="220,257.764 215,247.764 220,250.264 225,247.764 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="220,257.764 215,247.764 220,250.264 225,247.764 "/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="840" y="260" width="380" height="60"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="840" y="260" width="380" height="60"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1030" y="285.9">
+      <tspan x="1030" y="285.9">Advanced Auth Adapter</tspan>
+      <tspan x="1030" y="301.9">(ikarus\system\auth\IAdvancedAuthenticationAdapter)</tspan>
+    </text>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="780,131 1030,131 1030,250.264 "/>
+    <polygon style="fill: #000000" points="1030,257.764 1025,247.764 1030,250.264 1035,247.764 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1030,257.764 1025,247.764 1030,250.264 1035,247.764 "/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="40" y="360" width="360" height="22"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="40" y="360" width="360" height="22"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="76" y1="360" x2="76" y2="382"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="364" y1="360" x2="364" y2="382"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="220" y="375">
+      <tspan x="220" y="375">auth(String username, String password)</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="220" y1="320" x2="220" y2="350.264"/>
+    <polygon style="fill: #000000" points="220,357.764 215,347.764 220,350.264 225,347.764 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="220,357.764 215,347.764 220,350.264 225,347.764 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="400,365.5 610,365.5 610,470.264 "/>
+    <polygon style="fill: #000000" points="610,477.764 605,467.764 610,470.264 615,467.764 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="610,477.764 605,467.764 610,470.264 615,467.764 "/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="840" y="360" width="380" height="22"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="840" y="360" width="380" height="22"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="878" y1="360" x2="878" y2="382"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="1182" y1="360" x2="1182" y2="382"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1030" y="375">
+      <tspan x="1030" y="375">logion(ISession)</tspan>
+    </text>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="840,365.5 610,365.5 610,470.264 "/>
+    <polygon style="fill: #000000" points="610,477.764 605,467.764 610,470.264 615,467.764 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="610,477.764 605,467.764 610,470.264 615,467.764 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="1030" y1="320" x2="1030" y2="350.264"/>
+    <polygon style="fill: #000000" points="1030,357.764 1025,347.764 1030,350.264 1035,347.764 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1030,357.764 1025,347.764 1030,350.264 1035,347.764 "/>
+  </g>
+</svg>
