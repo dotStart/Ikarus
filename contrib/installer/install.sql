@@ -157,9 +157,12 @@ INSERT INTO ikarus1_language (languageName, translatedName, languageCode, isEnab
 
 INSERT INTO ikarus1_option (optionID, optionName, optionValue, optionType, packageID) VALUES
 	(NULL,	'global.advanced.debug',					'1',		'boolean',		1),
-	(NULL,	'filesystem.general.defaultAdapter',		'Disk',		'text',			1),
-	(NULL,	'filesystem.general.adapterParameters',		NULL,		'serialized',	1),
-	(NULL,	'output.general.type',						'xml',		'text',			1);
+	(NULL,	'filesystem.general.defaultAdapter',				'Disk',		'text',			1),
+	(NULL,	'filesystem.general.adapterParameters',				NULL,		'serialized',		1),
+	(NULL,	'output.general.type',						'xml',		'text',			1),
+	(NULL,	'system.encryption.secureMode',					'1',		'boolean',		1),
+	(NULL,	'system.encryption.secureModeKey'				'12345678',	'text',			1), -- Note: This is just a dummy value. The installer should regenerate this.
+	(NULL,	'system.encryption.secureModeIV',				'a9sd80ausfd8hginspﬂ9g78s7fu89a7'	'text', 1); -- Note: THis is just a dummy value. The installer should regenerate this.
 
 INSERT INTO ikarus1_request_controller_type (controllerTypeID, parameterName, controllerNamespace, packageID) VALUES
 	(NULL, 'action', 'action', 1);
