@@ -212,5 +212,16 @@ class Configuration {
 			$this->rawOptionList[] = $result;
 		}
 	}
+	
+	/**
+	 * Sets a variable during runtime.
+	 * Note: This method will store nothing into database.
+	 * @param			string			$key
+	 * @param			mixed			$value
+	 * @return			void
+	 */
+	public function set($key, $value) {
+		$this->options[$key] = $value;
+	}
 }
 ?>
