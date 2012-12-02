@@ -34,103 +34,55 @@ use ikarus\system\Ikarus;
 class HTTPClient {
 	
 	/**
-	 * Defines the used HTTP version.
-	 * @var			string
+	 * Executes a request.
+	 * @param			RequestBuilder			$request
+	 * @return			\ikarus\system\io\http\Response
+	 * @throws			ConnectionException
 	 */
-	const HTTP_VERSION = '1.1';
-	
-	/**
-	 * Defines the used newline (Windows compatible).
-	 * @var			string
-	 */
-	const NEWLINE = "\r\n";
-	
-	/**
-	 * Defines a DELETE request.
-	 * @var			string
-	 */
-	const REQUEST_DELETE = 'DELETE';
-	
-	/**
-	 * Defines a GET request.
-	 * @var			string
-	 */
-	const REQUEST_GET = 'GET';
-	
-	/**
-	 * Defines an OPTIONS request.
-	 * @var			string
-	 */
-	const REQUEST_OPTIONS = 'OPTIONS';
-	
-	/**
-	 * Defines a POST request.
-	 * @var			string
-	 */
-	const REQUEST_POST = 'POST';
-	
-	/**
-	 * Defines a PURGE request.
-	 * @var			string
-	 */
-	const REQUEST_PURGE = 'PURGE';
-	
-	/**
-	 * Defines a PUT request.
-	 * @var			string
-	 */
-	const REQUEST_PUT = 'PUT';
-	
-	/**
-	 * Defines a list of valid request operations.
-	 * @var			string[]
-	 */
-	protected static $validRequestTypes = array(
-		static::REQUEST_DELETE,
-		static::REQUEST_GET,
-		static::REQUEST_OPTIONS,
-		static::REQUEST_POST,
-		static::REQUEST_PURGE,
-		static::REQUEST_PUT
-	);
-	
-	/**
-	 * Builds a request string (HTTP-Syntax)
-	 * @param			string			$type
-	 * @param			string			$URI
-	 * @param			string[]		$data
-	 */
-	public static function buildRequestString($type, $URI, $data = array()) {
-		// validate type
-		if (!in_array($type, static::$validRequestTypes)) throw new HTTPException('Invalid request type "%s" supplied to '.__CLASS__.'::'.__FUNCTION__);
+	public static function executeQuery(RequestBuilder $request) {
+		// get connection
+		$connection = $request->createConnection();
 		
-		// parse URI
-		$parsedURI = static::parseURI($URI);
+		// validate connection
+		if (!$connection) throw new ConnectionException('Cannot establish connection to server "%s"', $urlInformation['host']);
 		
-		// encode data
-		$dataString = http_build_query($data);
+		// send request
+		$connection->puts($request->__toString());
 		
-		// build query
-		$request = $type.' '; // type
-		$request .= $parsedURI['path']; // main path
-		$request .= (!empty($parsedURI['query']) ? '?'.$parsedURI['query'] : ''); // query
-		$request .= 'HTTP/'.static::HTTP_VERSION.static::NEWLINE;  // HTTP-Version
-		$request .= 'User-Agent: '.sprintf(static::USER_AGENT, IKARUS_VERSION).';'; // User-Agent
-		$request .= (Ikarus::componentAbbreviationExists('LanguageManager') ? ' '.Ikarus::getLanguageManager()->getActiveLanguage()->getLanguageCode() : '').static::NEWLINE; // language code
-		$request .= 'Accept: */*'.static::NEWLINE; // accept everything
-		$request .= 'Accept-Language: '.(Ikarus::componentAbbreviationExists('LanguageManager') ? Ikarus::getLanguageManager()->getActiveLanguage()->getLanguageCode() : 'en-US').static::NEWLINE; // Accept language
-		$request .= 'Host: '.$parsedURI['host'].static::NEWLINE; // Hostname
-		if (!empty($data)) { // Support for post-data
-			$request .= 'Content-Type: application/x-www-form-urlencoded'.static::NEWLINE; // content type
-			$request .= 'Content-Length: '.strlen($dataString).static::NEWLINE; // add content length
+		// init read array
+		$buffer = '';
+			
+		// read http response.
+		while (!$connection->eof()) {
+			// append contents
+			$buffer .= $connection->gets();
 		}
-		$request .= 'Connection: Close'.static::NEWLINE.static::NEWLINE;
 		
-		// append data
-		if (!empty($data)) $request .= $dataString;
+		// close remote file
+		$connection->close();
 		
-		// finished building
-		return $request;
+		// parse response
+		$response = Response::parse($buffer);
+		
+		// check for redirects
+		if ($response->getStatusCode() == 302 or $response->getStatusCode() == 307) {
+			// get location field
+			$locationHeader = null;
+			
+			foreach($response->getHeaders() as $header) {
+				if ($header->getName() == 'Location') $locationHeader = $header;
+			}
+			
+			// validation
+			if ($locationHeader === null) throw new HTTPException('Protocol violation: Got status code %u but there is no location header present', $response->getStatusCode());
+			
+			// change request and resend
+			$request->setPathFromURI($locationHeader->getValue());
+			
+			return static::executeQuery($request);
+		}
+		
+		return $response;
 	}
 	
 	/**
@@ -141,74 +93,12 @@ class HTTPClient {
 	 * @return			string
 	 */
 	public static function get($URI) {
-		// init buffer
-		$buffer = "";
+		// init request
+		$request = RequestBuilder::fromURI($uri);
+		$request->setMethod(RequestBuilder::TYPE_GET);
 		
-		// get proxy
-		$options = array();
-		if (Ikarus::getConfiguration()->get('global.advanced.httpProxy')) $options['http']['proxy'] = Ikarus::getConfiguration()->get('global.advanced.httpProxy');
-		
-		// parse URI
-		$urlInformation = static::parseURI($URI);
-		
-		// build request URI
-		$request = static::buildRequestString(static::REQUEST_GET, $URI);
-		
-		// create connection
-		$server = static::createConnection($urlInformation);
-		
-		// validate connection
-		if (!$server) throw new ConnectionException('Cannot establish connection to server "%s"', $urlInformation['host']);
-		
-		// send request
-		$remoteFile->puts($request);
-		
-		// waiting for response
-		$waiting = true;
-		
-		// init read array
-		$readResponse = array();
-			
-		// read http response.
-		while (!$remoteFile->eof()) {
-			// append contents
-			$readResponse[] = $remoteFile->gets();
-	
-			// look if we are done with transferring the requested file.
-			if ($waiting)
-				// got a response?
-				if (rtrim($readResponse[count($readResponse) - 1]) == '') $waiting = false;
-			else {
-				// look if the webserver sent an error http statuscode
-				// This has still to be checked if really sufficient!
-				$arrayHeader = array('201', '301', '302', '303', '307', '404');
-				
-				// get error headers
-				foreach ($arrayHeader as $code) {
-					$error = strpos($readResponse[0], $code);
-				}
-				
-				// check for errors
-				if ($error !== false) throw new HTTPException('Cannot read file "%s" at host "%s"', $urlInformation['path'], $urlInformation['host']);
-					
-				// write to the target system.
-				$buffer .= $readResponse[count($readResponse) - 1];
-			}
-		}
-		
-		// close remote file
-		$remoteFile->close();
-		
-		// return filename
-		return $buffer;
-	}
-	
-	/**
-	 * Wrapper for parse_url()
-	 * @see			parse_url()
-	 */
-	public static function parseURI($URI) {
-		return parse_url($URI);
+		// execute query
+		return static::executeQuery($request);
 	}
 	
 	/**
@@ -220,66 +110,13 @@ class HTTPClient {
 	 * @return			string
 	 */
 	public static function post($URI, $data = array()) {
-		// init buffer
-		$buffer = "";
+		// init request
+		$request = RequestBuilder::fromURI($uri);
+		$request->setMethod(RequestBuilder::TYPE_POST);
+		$request->setPostData($data);
 		
-		// get proxy
-		$options = array();
-		if (Ikarus::getConfiguration()->get('global.advanced.httpProxy')) $options['http']['proxy'] = Ikarus::getConfiguration()->get('global.advanced.httpProxy');
-		
-		// parse URI
-		$urlInformation = static::parseURI($URI);
-		
-		// build request URI
-		$request = static::buildRequestString(static::REQUEST_POST, $URI, $data);
-		
-		// create connection
-		$server = static::createConnection($urlInformation);
-		
-		// validate connection
-		if (!$server) throw new ConnectionException('Cannot establish connection to server "%s"', $urlInformation['host']);
-		
-		// send request
-		$remoteFile->puts($request);
-		
-		// waiting for response
-		$waiting = true;
-		
-		// init read array
-		$readResponse = array();
-			
-		// read http response.
-		while (!$remoteFile->eof()) {
-			// append contents
-			$readResponse[] = $remoteFile->gets();
-		
-			// look if we are done with transferring the requested file.
-			if ($waiting)
-				// got a response?
-				if (rtrim($readResponse[count($readResponse) - 1]) == '') $waiting = false;
-			else {
-				// look if the webserver sent an error http statuscode
-				// This has still to be checked if really sufficient!
-				$arrayHeader = array('201', '301', '302', '303', '307', '404');
-		
-				// get error headers
-				foreach ($arrayHeader as $code) {
-					$error = strpos($readResponse[0], $code);
-				}
-		
-				// check for errors
-				if ($error !== false) throw new HTTPException('Cannot read file "%s" at host "%s"', $urlInformation['path'], $urlInformation['host']);
-					
-				// write to the target system.
-				$buffer .= $readResponse[count($readResponse) - 1];
-			}
-		}
-		
-		// close remote file
-		$remoteFile->close();
-		
-		// return filename
-		return $buffer;
+		// execute query
+		return static::executeQuery($request);
 	}
 }
 ?>
