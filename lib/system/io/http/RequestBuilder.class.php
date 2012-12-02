@@ -277,20 +277,7 @@ class RequestBuilder {
 		
 		// create object
 		$obj = new static();
-		$obj->setScheme((isset($uri['scheme']) ? $uri['scheme'] : 'http'));
-		$obj->setHostname($uri['host']);
-		$obj->setPort((isset($uri['port']) ? $uri['port'] : 80));
-		if (isset($uri['user'])) $obj->setUsername($uri['user']);
-		if (isset($uri['pass'])) $obj->setPassword($uri['pass']);
-		$obj->setPath((isset($uri['path']) ? $uri['path'] : '/'));
-		if (isset($uri['query'])) {
-			// parse query
-			$variables = parse_str($uri['query']);
-			
-			foreach($variables as $key => $value) {
-				$obj->addQueryVariable($key, $value);
-			}
-		}
+		$obj->setPathFromURI($uri);
 	}
 	
 	/**
@@ -402,6 +389,30 @@ class RequestBuilder {
 	 */
 	public function setPath($path) {
 		$this->path = $path;
+	}
+	
+	/**
+	 * Sets all needed properties from URI.
+	 * @param			string			$uri
+	 * @return			void
+	 */
+	public function setPathFromURI($uri) {
+		$uri = parse_url($uri);
+		
+		$this->setScheme((isset($uri['scheme']) ? $uri['scheme'] : 'http'));
+		$this->setHostname($uri['host']);
+		$this->setPort((isset($uri['port']) ? $uri['port'] : 80));
+		if (isset($uri['user'])) $this->setUsername($uri['user']);
+		if (isset($uri['pass'])) $this->setPassword($uri['pass']);
+		$this->setPath((isset($uri['path']) ? $uri['path'] : '/'));
+		if (isset($uri['query'])) {
+			// parse query
+			$variables = parse_str($uri['query']);
+				
+			foreach($variables as $key => $value) {
+				$this->addQueryVariable($key, $value);
+			}
+		}
 	}
 	
 	/**
