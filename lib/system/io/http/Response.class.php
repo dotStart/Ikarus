@@ -55,6 +55,18 @@ class Response {
 	protected $headers = array();
 	
 	/**
+	 * Stores the received status code.
+	 * @var			integer
+	 */
+	protected $statusCode = 0;
+	
+	/**
+	 * Stores the received status message.
+	 * @var			string
+	 */
+	protected $statusMessage = '';
+	
+	/**
 	 * Adds a new header to list.
 	 * @param			Header			$header
 	 * @return			void
@@ -118,11 +130,24 @@ class Response {
 		$inHeader = true;
 		$response = new static();
 		
-		foreach($buffer as $line) {
+		foreach($buffer as $lineNo => $line) {
 			if ($inHeader) {
 				if (rtrim($line) == '') {
 					$inHeader = false;
 					continue;
+				}
+				
+				// parse first line
+				if ($lineNo == 0) {
+					// split
+					list($httpHeader, $errorCode, $message) = explode(' ', $line, 3);
+					
+					// validate http header
+					if ($httpHeader != RequestBuilder::HTTP_VERSION) throw new HTTPException('Protocol violation: Got wrong HTTP header "%s", expected "%s"', $httpHeader, RequestBuilder::HTTP_VERSION);
+					
+					// set data
+					$response->setStatusCode(intval($errorCode));
+					$response->setStatusMessage($message);
 				}
 			
 				if (Header::isValid($line)) $response->addHeader(Header::parse($line));
@@ -152,6 +177,40 @@ class Response {
 	 */
 	public function getHeaders() {
 		return $this->headers;
+	}
+	
+	/**
+	 * Returns the received status code.
+	 * @return			integer
+	 */
+	public function getStatusCode() {
+		return $this->statusCode;
+	}
+	
+	/**
+	 * Returns the received status message.
+	 * @return			string
+	 */
+	public function getStatusMessage() {
+		return $this->statusMessage;
+	}
+	
+	/**
+	 * Sets a new status code.
+	 * @param			integer			$code
+	 * @return			void
+	 */
+	public function setStatusCode($code) {
+		$this->statusCode = $code;
+	}
+	
+	/**
+	 * Sets a new status message.
+	 * @param			string			$message
+	 * @return			void
+	 */
+	public function setStatusMessage($message) {
+		$this->statusMessage = $message;
 	}
 }
 ?>
