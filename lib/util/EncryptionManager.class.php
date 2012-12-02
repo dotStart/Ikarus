@@ -141,14 +141,15 @@ class EncryptionManager {
 	/**
 	 * Hashes data with sha256
 	 * @param			string			$data
+	 * @param			boolean			$disableEncryption			Disables the encryption. Note: You should never use this if it's absolutely pointless whether the system encrypts the data or not.
 	 * @return			string
 	 */
-	public static function hash($data) {
+	public static function hash($data, $disableEncryption = false) {
 		// create simple hash
 		$hash = hash(static::HASH_ALGORITHM, $data);
 		
 		// encrypt data if needed
-		if (Ikarus::getConfiguration() != null and Ikarus::getConfiguration()->get('system.encryption.secureMode')) $hash = static::encrypt(Ikarus::getConfiguration()->get('system.encryption.secureModeKey'), $hash, Ikarus::getConfiguration()->get('system.encryption.secureModeIV'));
+		if (Ikarus::getConfiguration() != null and Ikarus::getConfiguration()->get('system.encryption.secureMode') and !$disableEncryption) $hash = static::encrypt(Ikarus::getConfiguration()->get('system.encryption.secureModeKey'), $hash, Ikarus::getConfiguration()->get('system.encryption.secureModeIV'));
 		
 		// return hash
 		return $hash;
