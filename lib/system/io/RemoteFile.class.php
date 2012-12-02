@@ -16,12 +16,12 @@
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
 namespace ikarus\system\io;
-use ikarus\system\exception\SystemException;
+use ikarus\system\exception\io\IOException;
 
 /**
- * The RemoteFile class opens a connection to a remote host as a file.
- * @author		Originally developed by Marcel Werk
- * @copyright		2001-2009 WoltLab GmbH
+ * Allows to open up connections to external resources.
+ * @author		Johannes Donath
+ * @copyright		© Copyright 2012 Evil-Co.de <http://www.evil-co.com>
  * @package		de.ikarus-framework.core
  * @subpackage		system
  * @category		Ikarus Framework
@@ -29,29 +29,77 @@ use ikarus\system\exception\SystemException;
  * @version		2.0.0-0001
  */
 class RemoteFile extends File {
-	protected $host;
-	protected $port;
+	
+	/**
+	 * Stores the time which has to exceed before the connection is marked as failed.
+	 * @var			integer
+	 */
+	protected $connectionTimeout = 0;
+	
+	/**
+	 * Stores the hostname of the connection target.
+	 * @var			string
+	 */
+	protected $hostname = '';
+	
+	/**
+	 * Stores the port of the target.
+	 * @var			integer
+	 */
+	protected $port = 0;
+	
+	/**
+	 * Stores the last error occurred.
+	 * @var			integer
+	 */
 	protected $errorNumber = 0;
-	protected $errorDesc = '';
+	
+	/**
+	 * Stores the last error description.
+	 * @var			string
+	 */
+	protected $errorDescription = '';
 
 	/**
 	 * Opens a new connection to a remote host.
-	 * @param 	string		$host
-	 * @param 	string		$port
-	 * @param 	integer		$timeout
+	 * @param			string			$hostname
+	 * @param			string			$port
+	 * @param			integer			$timeout
 	 */
-	public function __construct($host, $port, $timeout = 30) {
-		$this->host = $host;
+	public function __construct($hostname, $port, $timeout = 30) {
+		// store connection detail
+		$this->hostname = $host;
 		$this->port = $port;
-		$this->resource = fsockopen($host, $port, $this->errorNumber, $this->errorDesc, $timeout);
-		if ($this->resource === false) {
-			throw new SystemException('Can not connect to ' . $host, 14000);
-		}
+		$this->connectionTimeout = $timeout;
+		
+		// create resource
+		$this->createConnection();
+	}
+	
+	/**
+	 * Creates the connection.
+	 * @return			void
+	 * @throws IOException
+	 */
+	public function createConnection() {
+		// create connection
+		$this->resource = fsockopen($this->hostname, $this->port, $this->errorNumber, $this->errorDescription, $this->connectionTimeout);
+		
+		// validate resource
+		if ($this->resource === false) throw new IOException('Cannot connect to %s:%u (%u): %s', $this->hostname, $this->port, $this->errorNumber, $this->errorDescription);
+	}
+	
+	/**
+	 * Returns the current connection timeout.
+	 * @return			integer
+	 */
+	public function getConnectionTimeout() {
+		return $this->connectionTimeout;
 	}
 
 	/**
 	 * Returns the error number of the last error.
-	 * @return 	integer
+	 * @return 			integer
 	 */
 	public function getErrorNumber() {
 		return $this->errorNumber;
@@ -59,10 +107,53 @@ class RemoteFile extends File {
 
 	/**
 	 * Returns the error description of last error.
-	 * @return	string
+	 * @return			string
 	 */
-	public function getErrorDesc() {
-		return $this->errorDesc;
+	public function getErrorDescription() {
+		return $this->errorDescription;
+	}
+	
+	/**
+	 * Returns the current hostname.
+	 * @return			string
+	 */
+	public function getHostname() {
+		return $this->hostname;
+	}
+	
+	/**
+	 * Returns the current port.
+	 * @return			integer
+	 */
+	public function getPort() {
+		return $this->port;
+	}
+	
+	/**
+	 * Sets a new connection timeout.
+	 * @param			integer			$timeout
+	 * @return			void
+	 */
+	public function setConnectionTimeout($timeout) {
+		$this->connectionTimeout = $timeout;
+	}
+	
+	/**
+	 * Sets a new hostname.
+	 * @param			string			$hostname
+	 * @return			void
+	 */
+	public function setHostname($hostname) {
+		$this->hostname = $hostname;
+	}
+	
+	/**
+	 * Sets a new port.
+	 * @param			integer			$port
+	 * @return			void
+	 */
+	public function setPort($port) {
+		$this->port = $port;
 	}
 }
 ?>
