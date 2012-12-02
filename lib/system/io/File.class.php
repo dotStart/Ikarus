@@ -16,24 +16,12 @@
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
 namespace ikarus\system\io;
-use ikarus\system\exception\SystemException;
+use ikarus\system\exception\io\IOException;
 
 /**
- * The File class handles all file operations.
- *
- * Example:
- * using php functions:
- * $fp = fopen('filename', 'wb');
- * fwrite($fp, '...');
- * fclose($fp);
- *
- * using this class:
- * $file = new File('filename');
- * $file->write('...');
- * $file->close();
- *
- * @author		Johannes Donath (Originally developed by Marcel Werk)
- * @copyright		2001-2009 WoltLab GmbH, 2011 Evil-Co.de
+ * Allows to access files.
+ * @author		Johannes Donath
+ * @copyright		© Copyright 2012 Evil-Co.de <http://www.evil-co.com>
  * @package		de.ikarus-framework.core
  * @subpackage		system
  * @category		Ikarus Framework
@@ -43,29 +31,48 @@ use ikarus\system\exception\SystemException;
 class File {
 
 	/**
-	 * Contains the file resource
-	 * @var			resource
-	 */
-	protected $resource = null;
-
-	/**
 	 * Contains the filename
 	 * @var			string
 	 */
 	protected $filename = '';
 
 	/**
+	 * Contains the file resource
+	 * @var			resource
+	 */
+	protected $resource = null;
+	
+	/**
+	 * Stores the resource mode to use.
+	 * @var			string
+	 */
+	protected $resourceMode = '';
+	
+	/**
 	 * Opens a new file.
 	 *
 	 * @param 		string			$filename
 	 * @param 		string			$mode
+	 * @throws		IOException
 	 */
 	public function __construct($filename, $mode = 'wb') {
 		$this->filename = $filename;
-		$this->resource = fopen($filename, $mode);
-		if ($this->resource === false) {
-			throw new SystemException('Can not open file ' . $filename, 11012);
-		}
+		$this->resourceMode = $mode;
+		
+		$this->open();
+	}
+	
+	/**
+	 * Opens up the file.
+	 * @return			void
+	 * @throws			IOException
+	 */
+	public function open() {
+		// open resource
+		$this->resource = fopen($this->filename, $this->resourceMode);
+		
+		// validate
+		if ($this->resource === false) throw new IOException('Cannot open file "%s" in mode %s', $this->filename, $this->resourceMode);
 	}
 
 	/**
@@ -79,31 +86,33 @@ class File {
 	/**
 	 * Returns the current file handle
 	 * @return			Resource
+	 * @deprecated			Everything should be wrapped in some way.
 	 */
 	public function getResource() {
 		return $this->resource;
 	}
 
 	/**
-	 * Calls the specified function on the open file.
-	 * Do not call this function directly. Use $file->write('') instead.
-	 *
+	 * Allows to call file methods without any need of direct implementation.
 	 * @param 			string			$function
 	 * @param 			array			$arguments
 	 * @return			mixed
 	 */
 	public function __call($function, $arguments) {
 		if (function_exists('f' . $function)) {
+			// append resource as parameter
 			array_unshift($arguments, $this->resource);
+			
+			// call f<method>()
 			return call_user_func_array('f' . $function, $arguments);
-		}
-		else if (function_exists($function)) {
+		} elseif (function_exists($function)) {
+			// append filename as parameter
 			array_unshift($arguments, $this->filename);
+			
+			// call <method>()
 			return call_user_func_array($function, $arguments);
-		}
-		else {
-			throw new SystemException('Can not call file method ' . $function, 11003);
-		}
+		} else
+			throw new NotImplementedException('Called unsupported method "%s" from file context', $function);
 	}
 }
 ?>
