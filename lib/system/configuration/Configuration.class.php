@@ -214,6 +214,14 @@ class Configuration {
 	}
 	
 	/**
+	 * Queues the option file for regeneration.
+	 * @return			void
+	 */
+	public function regenerate() {
+		@unlink($this->fileName);
+	}
+	
+	/**
 	 * Sets a variable during runtime.
 	 * Note: This method will store nothing into database.
 	 * @param			string			$key
