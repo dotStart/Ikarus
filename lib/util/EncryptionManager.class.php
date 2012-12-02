@@ -18,6 +18,7 @@
 namespace ikarus\util;
 use ikarus\system\exception\encryption\EncryptionException;
 use ikarus\system\exception\encryption\EncryptionFailedException;
+use ikarus\system\Ikarus;
 
 /**
  * Manages encryptions
@@ -143,7 +144,14 @@ class EncryptionManager {
 	 * @return			string
 	 */
 	public static function hash($data) {
-		return hash(static::HASH_ALGORITHM, $data);
+		// create simple hash
+		$hash = hash(static::HASH_ALGORITHM, $data);
+		
+		// encrypt data if needed
+		if (Ikarus::getConfiguration() != null and Ikarus::getConfiguration()->get('system.encryption.secureMode')) $hash = static::encrypt(Ikarus::getConfiguration()->get('system.encryption.secureModeKey'), $hash, Ikarus::getConfiguration()->get('system.encryption.secureModeIV'));
+		
+		// return hash
+		return $hash;
 	}
 }
 ?>
