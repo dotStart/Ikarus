@@ -31,7 +31,7 @@ use ikarus\system\Ikarus;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-class HTTPClient {
+class Client {
 	
 	/**
 	 * Executes a request.
