@@ -30,6 +30,7 @@ use ikarus\system\exception\SystemException;
 use ikarus\system\extension\ExtensionManager;
 use ikarus\system\io\FilesystemManager;
 use ikarus\util\ClassUtil;
+use ikarus\util\EncryptionManager;
 use ikarus\util\FileUtil;
 
 // includes
