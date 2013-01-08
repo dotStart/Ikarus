@@ -47,7 +47,7 @@ class EncryptionManager {
 	 * Contains the name of the algorithm used for hashes
 	 * @var				string
 	 */
-	const HASH_ALGORITHM = 'sha256';
+	const HASH_ALGORITHM = MHASH_SHA512;
 	
 	/**
 	 * Creates an initialization vector
@@ -143,7 +143,7 @@ class EncryptionManager {
 	 * @return			string
 	 */
 	public static function hash($data) {
-		return hash(static::HASH_ALGORITHM, $data);
+		return mhash(static::HASH_ALGORITHM, $data);
 	}
 }
 ?>
