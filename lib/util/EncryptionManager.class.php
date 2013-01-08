@@ -143,7 +143,29 @@ class EncryptionManager {
 	 * @return			string
 	 */
 	public static function hash($data) {
-		return mhash(static::HASH_ALGORITHM, $data);
+		$hash = mhash(static::HASH_ALGORITHM, $data);
+		
+		// encrypt data if needed
+		if (Ikarus::getConfiguration() != null and Ikarus::getConfiguration()->get('system.encryption.secureMode') and !$disableEncryption) $hash = static::encrypt(Ikarus::getConfiguration()->get('system.encryption.secureModeKey'), $hash, Ikarus::getConfiguration()->get('system.encryption.secureModeIV'));
+		
+		// return hash
+		return $hash;
+	}
+	
+	/**
+	 * Loads all information needed for global encryption.
+	 * @return			void
+	 */
+	public static final function initGlobalEncryption() {
+		// check for encryption file
+		if (!file_exists(IKARUS_DIR.'encryption.inc.php')) return;
+	
+		// include
+		require_once(IKARUS_DIR.'encryption.inc.php');
+	
+		// store new values
+		Ikarus::getConfiguration()->set('system.encryption.secureModeKey', $encryptionKey);
+		Ikarus::getConfiguration()->set('system.encryption.secureModeIV', $encryptionIV);
 	}
 }
 ?>

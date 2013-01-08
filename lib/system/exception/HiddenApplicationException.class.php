@@ -49,9 +49,9 @@ class HiddenApplicationException extends SystemException {
 		<html>
 			<head>
 				<title>An error occoured</title>
-				<link rel="stylesheet" type="text/css" href="<?php echo RELATIVE_IKARUS_DIR; ?>style/fatalError.css" />
-				<script type="text/javascript" src="<?php echo RELATIVE_IKARUS_DIR; ?>js/3rdParty/jquery.min.js"></script>
-				<script type="text/javascript" src="<?php echo RELATIVE_IKARUS_DIR; ?>js/3rdParty/jquery-ui.min.js"></script>
+				<link rel="stylesheet" type="text/css" href="<?php echo RELATIVE_IKARUS_DIR; ?>assets/style/fatalError.css" />
+				<script type="text/javascript" src="<?php echo RELATIVE_IKARUS_DIR; ?>assets/js/3rdParty/jquery.min.js"></script>
+				<script type="text/javascript" src="<?php echo RELATIVE_IKARUS_DIR; ?>assets/js/3rdParty/jquery-ui.min.js"></script>
 			</head>
 			<body>
 				<div class="hiddenApplicationException">

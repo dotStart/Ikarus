@@ -30,6 +30,7 @@ use ikarus\system\exception\SystemException;
 use ikarus\system\extension\ExtensionManager;
 use ikarus\system\io\FilesystemManager;
 use ikarus\util\ClassUtil;
+use ikarus\util\EncryptionManager;
 use ikarus\util\FileUtil;
 
 // includes
@@ -120,6 +121,7 @@ class Ikarus extends NonInstantiableClass {
 		static::fixMagicQuotes();
 		static::initDatabaseManager();
 		static::initConfiguration();
+		static::initEncryptionManager();
 		static::initCacheManager();
 		static::initEventManager();
 		static::initApplicationManager();
@@ -349,6 +351,15 @@ class Ikarus extends NonInstantiableClass {
 		static::$databaseManagerObj = new DatabaseManager();
 
 		static::$databaseManagerObj->startDefaultAdapter();
+	}
+	
+	/**
+	 * Loads up all needed information for the global encryption system.
+	 * Note: There are some dummy values in our database which will be used instead if there's no special configuration available.
+	 * @return		void
+	 */
+	protected static final function initEncryptionManager() {
+		EncryptionManager::initGlobalEncryption();
 	}
 
 	/**
