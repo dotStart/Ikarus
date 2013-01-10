@@ -5,19 +5,18 @@ This framework will basically run with the default configuration of PHP but ther
 Required server configuration
 -----------------------------
 lighttpd, apache or nginx (I haven't tested other servers)
-PHP 5.3+
+PHP 5.4+
 MySQL (Other SQL-Servers may work)
 
 Required PHP configuration
 --------------------------
-safe_mode off
-If you plan to use the administration to install packages you should really set a max upload sizer bigger than 2M
+max upload size > 2M (If you plan to install packages)
 
 Required PHP modules
 --------------------
 SPL
 Reflection
-hash() SHA-256 support
+mhash with SHA-512 support
 
 Optional PHP modules
 --------------------
