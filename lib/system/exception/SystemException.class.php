@@ -249,6 +249,8 @@ class SystemException extends Exception implements IPrintableException {
 		<!DOCTYPE html>
 		<html>
 			<head>
+				<meta charset="UTF-8" />
+				<meta name="Content-Type" content="text/html;Charset=UTF-8" />
 				<title><?php echo static::EXCEPTION_TITLE; ?>: <?php echo StringUtil::encodeHTML($this->getMessage()); ?></title>
 				<link rel="stylesheet" type="text/css" href="<?php echo RELATIVE_IKARUS_DIR; ?>style/fatalError.css" />
 				<script type="text/javascript" src="<?php echo RELATIVE_IKARUS_DIR; ?>assets/script/jquery.min.js"></script>
