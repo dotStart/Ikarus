@@ -35,13 +35,13 @@ class EncryptionManager {
 	 * Contains the name of the algorithm that should used for en/decryption
 	 * @var				string
 	 */
-	const CRYPT_ALGORITHM = 'rijndael-256';
+	const CRYPT_ALGORITHM = MCRYPT_RIJNDAEL_256;
 	
 	/**
 	 * Contains the mode for en/decryption
 	 * @var				string
 	 */
-	const CRYPT_MODE = 'ctr';
+	const CRYPT_MODE = MCRYPT_MODE_CBC;
 	
 	/**
 	 * Contains the name of the algorithm used for hashes
