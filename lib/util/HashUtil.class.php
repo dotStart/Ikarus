@@ -33,13 +33,7 @@ class HashUtil {
 	 * Defines the used checksum algorithm.
 	 * @var			string
 	 */
-	const CHECKSUM_ALGORITHM = 'sha256';
-	
-	/**
-	 * Defines the used hash algorithm.
-	 * @var			string
-	 */
-	const HASH_ALGORITHM = 'sha256';
+	const CHECKSUM_ALGORITHM = MHASH_SHA256;
 	
 	/**
 	 * Generates a checksum.
@@ -47,16 +41,17 @@ class HashUtil {
 	 * @return			string
 	 */
 	public static function generateChecksum($fileContents) {
-		return hash(static::CHECKSUM_ALGORITHM, $fileContents);
+		return mhash(static::CHECKSUM_ALGORITHM, $fileContents);
 	}
 	
 	/**
 	 * Hashes a string.
 	 * @param			string			$str
 	 * @return			string
+	 * @deprecated			This method has been replaced with EncryptionManager::hash() which provides more security for sensetive data.
 	 */
 	public static function hash($str) {
-		return hash(static::HASH_ALGORITHM, $str);
+		return EncryptionManager::hash($str);
 	}
 }
 ?>
