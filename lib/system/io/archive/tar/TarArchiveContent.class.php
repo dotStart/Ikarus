@@ -170,6 +170,14 @@ class TarArchiveContent implements ArchiveContent {
 	}
 	
 	/**
+	 * Returns a content's original modification time.
+	 * @return			integer
+	 */
+	public function getModificationTime() {
+		return $this->modificationTime;
+	}
+	
+	/**
 	 * Returns the offset which specified the exact position in tar archive.
 	 * @return			integer
 	 */
@@ -256,6 +264,15 @@ class TarArchiveContent implements ArchiveContent {
 	 */
 	public function setMode($mode = 0755) {
 		$this->mode = $mode;
+	}
+	
+	/**
+	 * Sets a content's original modification time.
+	 * @param			integer			$time
+	 * @return			void
+	 */
+	public function setModificationTime($time) {
+		$this->modificationTime = $time;
 	}
 	
 	/**
