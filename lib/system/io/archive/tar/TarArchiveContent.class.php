@@ -170,6 +170,14 @@ class TarArchiveContent implements ArchiveContent {
 	}
 	
 	/**
+	 * Returns the offset which specified the exact position in tar archive.
+	 * @return			integer
+	 */
+	public function getOffset() {
+		return $this->offset;
+	}
+	
+	/**
 	 * (non-PHPdoc)
 	 * @see \ikarus\system\io\archive\ArchiveContent::getPrefix()
 	 */
@@ -248,6 +256,14 @@ class TarArchiveContent implements ArchiveContent {
 	 */
 	public function setMode($mode = 0755) {
 		$this->mode = $mode;
+	}
+	
+	/**
+	 * Sets the offset which defines the exact position in the archive file.
+	 * @param			integer			$offset
+	 */
+	public function setOffset($offset) {
+		$this->offset = $offset;
 	}
 	
 	/**
