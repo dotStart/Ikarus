@@ -31,6 +31,12 @@ use ikarus\system\Ikarus;
 class FilesystemHandle {
 	
 	/**
+	 * Stores the adapter which is used for all operations.
+	 * @var unknown
+	 */
+	protected $adapter = null;
+	
+	/**
 	 * Contains cached file contents
 	 * @var			string
 	 */
@@ -57,6 +63,7 @@ class FilesystemHandle {
 		$this->fileName = $fileName;
 		$this->newFile = $newFile;
 		if (!$newFile) $this->buffer = ($adapter === null ? Ikarus::getFilesystemManager()->getDefaultAdapter()->readFileContents($this->fileName) : $adapter->readFileContents($this->fileName));
+		$this->adapter = $adapter;
 	}
 	
 	/**
@@ -81,9 +88,13 @@ class FilesystemHandle {
 	 * @see ikarus\system\io.FilesystemManager::writeFile()
 	 */
 	public function write(ikarus\system\io\adapter\IFilesystemAdapter $adapter = null) {
-		if ($adapter === null) $adapter = Ikarus::getFilesystemManager()->getDefaultAdapter();
+		// get correct adapter instance
+		if ($adapter === null) $adapter = ($this->adapter == null ? Ikarus::getFilesystemManager()->getDefaultAdapter() : $this->adapter);
+		
+		// create file
 		if ($this->newFile)
 			$adapter->createFile($this->fileName, $this->buffer);
+		// modify file
 		else
 			$adapter->modifyFile($this->fileName, $this->buffer);
 	}
