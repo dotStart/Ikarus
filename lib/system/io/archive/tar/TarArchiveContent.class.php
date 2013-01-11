@@ -108,8 +108,8 @@ class TarArchiveContent implements ArchiveContent {
 	 * (non-PHPdoc)
 	 * @see \ikarus\system\io\archive\ArchiveContent::extract()
 	 */
-	public function extract($filePath) {
-		$this->archive->extractFile($this, $filePath);
+	public function extract(ikarus\system\io\FilesystemHandle $handle) {
+		$this->archive->extractFile($this, $handle);
 	}
 	
 	/**

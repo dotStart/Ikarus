@@ -101,10 +101,10 @@ interface ArchiveContent {
 	
 	/**
 	 * Sets the filename of the actual file.
-	 * @param			$filename			string
+	 * @param			$handle				ikarus\system\io\FilesystemHandle
 	 * @return			void
 	 */
-	public function setFilename($filename);
+	public function setFilename(ikarus\system\io\FilesystemHandle $handle);
 	
 	/**
 	 * Sets the mode of the actual file.
