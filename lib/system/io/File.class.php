@@ -104,7 +104,7 @@ class File {
 	 * @return			mixed
 	 * @api
 	 */
-	public function __call($function, $arguments) {
+	public function __call($function, array $arguments) {
 		if (function_exists('f' . $function)) {
 			// append resource as parameter
 			array_unshift($arguments, $this->resource);

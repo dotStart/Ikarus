@@ -41,7 +41,7 @@ class DiskCacheAdapter implements ICacheAdapter {
 	/**
 	 * @see ikarus\system\cache\adapter.ICacheAdapter::__construct()
 	 */
-	public function __construct($adapterParameters = array()) { }
+	public function __construct(array $adapterParameters = array()) { }
 
 	/**
 	 * Checks wheter a cache file should be rebuilded
@@ -99,7 +99,7 @@ class DiskCacheAdapter implements ICacheAdapter {
 	 * @param			string			$resourceName
 	 * @return			mixed
 	 */
-	protected function getCacheData($cacheBuilderClass, $resourceName, $additionalCacheBuilderParameters) {
+	protected function getCacheData($cacheBuilderClass, $resourceName, array $additionalCacheBuilderParameters = array()4) {
 		// validate class
 		if (!class_exists($cacheBuilderClass, true)) throw new SystemException("Cannot use cache builder class '%s': The class does not exist!", $cacheBuilderClass);
 

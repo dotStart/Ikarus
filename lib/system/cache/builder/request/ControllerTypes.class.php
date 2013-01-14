@@ -35,7 +35,7 @@ class ControllerTypes implements ICacheBuilder {
 	/**
 	 * @see ikarus\system\cache.CacheBuilder::getData()
 	 */
-	public static function getData($resourceName, $additionalParameters) {
+	public static function getData($resourceName, array $additionalParameters) {
 		list($resourceName, $packageID) = explode('-', $resourceName);
 
 		$editor = new QueryEditor();

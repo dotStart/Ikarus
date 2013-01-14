@@ -49,7 +49,7 @@ class FTP {
 	 * @param 	string		$function
 	 * @param 	array		$arguments
 	 */
-	public function __call($function, $arguments) {
+	public function __call($function, array $arguments) {
 		array_unshift($arguments, $this->resource);
 		if (!function_exists('ftp_'.$function)) {
 			throw new SystemException('Can not call method ' . $function, 11003);

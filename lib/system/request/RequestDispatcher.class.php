@@ -65,11 +65,11 @@ class RequestDispatcher extends Singleton {
 	/**
 	 * Dispatches a request to correct controller
 	 * @param			IApplication			$application
-	 * @param			string				$requestParameters
+	 * @param			string[]			$requestParameters
 	 * @throws			IllegalLinkException
 	 * @api
 	 */
-	public function dispatch(IApplication $application, $requestParameters) {
+	public function dispatch(IApplication $application, array $requestParameters) {
 		// set defaults
 		// FIXME: This should not be hardcoded
 		if (!ArrayUtil::in_array(array_keys($requestParameters), $this->availableControllerTypes)) $requestParameters['page'] = 'Index';

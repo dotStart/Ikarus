@@ -38,7 +38,7 @@ class DiskFilesystemAdapter implements IFilesystemAdapter {
 	/**
 	 * @see ikarus\system\io\adapter.IFilesystemAdapter
 	 */
-	public function __construct($adapterParameters = array()) { }
+	public function __construct(array $adapterParameters = array()) { }
 	
 	/**
 	 * @see ikarus\system\io\adapter.IFilesystemAdapter::createDirectory()

@@ -53,7 +53,7 @@ class MemcacheAdapter implements ICacheAdapter {
 	/**
 	 * @see ikarus\system\cache\adapter.ICacheAdapter::__construct()
 	 */
-	public function __construct($adapterParameters = array()) {
+	public function __construct(array $adapterParameters = array()) {
 		// validate server list
 		if (!isset($adapterParameters['serverList'])) throw new ConnectionException("No server list for memcache adapter given");
 
@@ -103,7 +103,7 @@ class MemcacheAdapter implements ICacheAdapter {
 	/**
 	 * @see ikarus\system\cache\adapter.ICacheAdapter::createResource()
 	 */
-	public function createResource($resourceName, $cacheBuilderClass, $minimalLifetime = 0, $maximalLifetime = 0, $additionalCacheBuilderParameters = array()) {
+	public function createResource($resourceName, $cacheBuilderClass, $minimalLifetime = 0, $maximalLifetime = 0, array $additionalCacheBuilderParameters = array()) {
 		try {
 			$this->storeCacheResource($resourceName, $this->loadCache($resourceName, $cacheBuilderClass, $minimalLifetime, $maximalLifetime));
 		} Catch (SystemException $ex) {

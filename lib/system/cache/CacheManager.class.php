@@ -72,7 +72,7 @@ class CacheManager {
 	 * @return			ikarus\system\cache\adapter.ICacheAdapter
 	 * @api
 	 */
-	public function createConnection($adapterName, $parameters = array(), $linkID = null) {
+	public function createConnection($adapterName, array $parameters = array(), $linkID = null) {
 		// validate adapter name
 		if (!$this->adapterIsLoaded($adapterName)) throw new SystemException("Cannot start adapter '%s': The adapter is not loaded", $adapterName);
 

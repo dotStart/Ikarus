@@ -28,7 +28,7 @@ namespace ikarus\system\configuration\type;
  * @version		2.0.0-0001
  * @todo		Add needed methods for acp interface etc.
  */
-interface ConfigurationType {
+interface IConfigurationType {
 	
 	/**
 	 * Returns the real value of given stored value

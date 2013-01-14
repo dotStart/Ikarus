@@ -38,7 +38,7 @@ interface IDatabaseAdapter {
 	 * @param			string			$databaseParameters
 	 * @internal			This method will be called thru it's parent manager.
 	 */
-	public function __construct($hostname, $port, $user, $password, $databaseParameters);
+	public function __construct($hostname, $port, $user, $password, array $databaseParameters);
 	
 	/**
 	 * Escapes a string for use in queries.

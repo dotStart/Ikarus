@@ -89,7 +89,7 @@ class FilesystemManager {
 	 * @return			ikarus\system\io\adapter\IFilesystemAdapter
 	 * @api
 	 */
-	public function createConnection($adapterName, $adapterParameters = array(), $linkID = null) {
+	public function createConnection($adapterName, array $adapterParameters = array(), $linkID = null) {
 		// validate adapter name
 		if (!$this->adapterIsLoaded($adapterName)) throw new SystemException("Cannot create a new connection with filesystem adapter '%s': The adapter was not loaded");
 

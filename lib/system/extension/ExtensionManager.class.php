@@ -81,7 +81,7 @@ class ExtensionManager {
 	 * @return			void
 	 * @api
 	 */
-	public function addAutoloadHook($callback) {
+	public function addAutoloadHook(callable $callback) {
 		// validate callback
 		if (!is_callable($callback)) throw new StrictStandardException('The given parameter is not a valid callback');
 
@@ -103,7 +103,7 @@ class ExtensionManager {
 	 * @return			void
 	 * @api
 	 */
-	public function addOutputHook($callback) {
+	public function addOutputHook(callable $callback) {
 		// validate callback
 		if (!is_callable($callback)) throw new StrictStandardException('The given parameter is not a valid callback');
 
@@ -125,7 +125,7 @@ class ExtensionManager {
 	 * @return			void
 	 * @api
 	 */
-	public function addShutdownHook($callback) {
+	public function addShutdownHook(callable $callback) {
 		// validate callback
 		if (!is_callable($callback)) throw new StrictStandardException('The given parameter is not a valid callback');
 

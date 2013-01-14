@@ -34,7 +34,7 @@ interface ICacheAdapter {
 	 * @param			array			$adapterParameters
 	 * @internal			This is only called by the parent manager.
 	 */
-	public function __construct($adapterParameters = array());
+	public function __construct(array $adapterParameters = array());
 
 	/**
 	 * Creates a new cache resource for later use
@@ -47,7 +47,7 @@ interface ICacheAdapter {
 	 * @return			boolean
 	 * @api
 	 */
-	public function createResource($resourceName, $cacheBuilderClass, $minimalLifetime = 0, $maximalLifetime = 0, $additionalCacheBuilderParameters = array());
+	public function createResource($resourceName, $cacheBuilderClass, $minimalLifetime = 0, $maximalLifetime = 0, array $additionalCacheBuilderParameters = array());
 
 	/**
 	 * Returns the content of given resource

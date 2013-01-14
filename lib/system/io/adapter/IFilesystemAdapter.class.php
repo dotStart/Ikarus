@@ -35,7 +35,7 @@ interface IFilesystemAdapter {
 	 * @throws			ikarus\system\exception\SystemException
 	 * @internal			New instance will be created by the parent manager.
 	 */
-	public function __construct($adapterParameters = array());
+	public function __construct(array $adapterParameters = array());
 	
 	/**
 	 * Creates a new directory

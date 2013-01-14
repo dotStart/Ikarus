@@ -43,7 +43,7 @@ abstract class AbstractEventArguments implements IEventArguments {
 	 * @return			mixed
 	 * @throws			StrictStandardException
 	 */
-	public function __call($method, $arguments) {
+	public function __call($method, array $arguments) {
 		if (!count($arguments) and substr($method, 0, 3) == 'get') {
 			if ($this->__isset(lcfirst(substr($method, 3)))) return $this->__get(lcfirst(substr($method, 3)));
 		}

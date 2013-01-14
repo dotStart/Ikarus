@@ -49,7 +49,7 @@ class FilesystemDirectoryIterator implements Iterator, Countable, IFileInfo {
 	 * @param			array<IFileInfo>			$contents
 	 * @internal			New instances should get created by the parent adapter.
 	 */
-	public function __construct($contents) {
+	public function __construct(array $contents) {
 		$this->contents = $contents;
 	}
 	

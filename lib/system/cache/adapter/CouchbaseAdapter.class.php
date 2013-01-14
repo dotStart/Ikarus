@@ -53,7 +53,7 @@ class CouchbaseAdapter implements ICacheAdapter {
 	/**
 	 * @see ikarus\system\cache\adapter.ICacheAdapter::__construct()
 	 */
-	public function __construct($adapterParameters = array()) {
+	public function __construct(array $adapterParameters = array()) {
 		// validate server list
 		if (!isset($adapterParameters['server']) and !isset($adapterParameters['serverList'])) throw new ConnectionException("No server for couchbase connection specified");
 		if (isset($adapterParameters['server']) and !isset($adapterParameters['bucket'])) throw new ConnectionException("No information about connection's bucket specified");
@@ -110,7 +110,7 @@ class CouchbaseAdapter implements ICacheAdapter {
 	/**
 	 * @see ikarus\system\cache\adapter.ICacheAdapter::createResource()
 	 */
-	public function createResource($resourceName, $cacheBuilderClass, $minimalLifetime = 0, $maximalLifetime = 0, $additionalCacheBuilderParameters = array()) {
+	public function createResource($resourceName, $cacheBuilderClass, $minimalLifetime = 0, $maximalLifetime = 0, array $additionalCacheBuilderParameters = array()) {
 		try {
 			$this->storeCacheResource($resourceName, $this->loadCache($resourceName, $cacheBuilderClass, $minimalLifetime, $maximalLifetime));
 		} Catch (SystemException $ex) {

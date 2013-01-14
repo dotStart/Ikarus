@@ -98,7 +98,7 @@ class AuthenticationManager implements IConfigurableComponent {
 	 * @return			string
 	 * @api
 	 */
-	public function createInstance($adapterID, $linkID = null, $parameters = array()) {
+	public function createInstance($adapterID, $linkID = null, array $parameters = array()) {
 		// generate linkID (if not given)
 		if ($linkID === null) $linkID = GUID::generate('AuthenticationManager');
 		

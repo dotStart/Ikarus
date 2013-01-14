@@ -37,7 +37,7 @@ class ApplicationKeys implements ICacheBuilder {
 	/**
 	 * @see ikarus\system\cache\builder\ICacheBuilder
 	 */
-	public static function getData($resourceName, $additionalParameters) {
+	public static function getData($resourceName, array $additionalParameters) {
 		$editor = QueryEditor();
 		$editor->from(array('ikarus1_encryption_key' => 'encryption_key'));
 		DependencyUtil::generateDependencyQuery($additionalParameters['packageID'], $editor, 'encryption_key');
