@@ -32,6 +32,8 @@ interface IConfigurableComponent {
 	/**
 	 * Configures this component instance.
 	 * @param			IApplication			$application
+	 * @return			void
+	 * @api
 	 */
 	public function configure(IApplication $application);
 }

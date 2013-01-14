@@ -99,6 +99,7 @@ class TarArchiveContent implements ArchiveContent {
 	/**
 	 * Constructs the object.
 	 * @param			Tar			$archive
+	 * @internal			New instances will be created in the parent Tar instance.
 	 */
 	public function __construct(Tar $archive) {
 		$this->archive = $archive;
@@ -123,6 +124,7 @@ class TarArchiveContent implements ArchiveContent {
 	/**
 	 * Returns the parent archive instance.
 	 * @return \ikarus\system\io\archive\tar\Tar
+	 * @api
 	 */
 	public function getArchive() {
 		return $this->archive;
@@ -156,6 +158,7 @@ class TarArchiveContent implements ArchiveContent {
 	/**
 	 * Returns a content's original group ID.
 	 * @return			string
+	 * @api
 	 */
 	public function getGroupID() {
 		return $this->gid;
@@ -172,6 +175,7 @@ class TarArchiveContent implements ArchiveContent {
 	/**
 	 * Returns a content's original modification time.
 	 * @return			integer
+	 * @api
 	 */
 	public function getModificationTime() {
 		return $this->modificationTime;
@@ -180,6 +184,7 @@ class TarArchiveContent implements ArchiveContent {
 	/**
 	 * Returns the offset which specified the exact position in tar archive.
 	 * @return			integer
+	 * @api
 	 */
 	public function getOffset() {
 		return $this->offset;
@@ -220,6 +225,7 @@ class TarArchiveContent implements ArchiveContent {
 	/**
 	 * Returns a content's original user ID.
 	 * @return			string
+	 * @api
 	 */
 	public function getUserID() {
 		return $this->uid;
@@ -253,6 +259,7 @@ class TarArchiveContent implements ArchiveContent {
 	 * Sets a content's original group ID.
 	 * @param			string			$groupID
 	 * @return			void
+	 * @api
 	 */
 	public function setGroupID($groupID) {
 		$this->guid = $groupID;
@@ -270,6 +277,7 @@ class TarArchiveContent implements ArchiveContent {
 	 * Sets a content's original modification time.
 	 * @param			integer			$time
 	 * @return			void
+	 * @api
 	 */
 	public function setModificationTime($time) {
 		$this->modificationTime = $time;
@@ -278,6 +286,8 @@ class TarArchiveContent implements ArchiveContent {
 	/**
 	 * Sets the offset which defines the exact position in the archive file.
 	 * @param			integer			$offset
+	 * @return			void
+	 * @api
 	 */
 	public function setOffset($offset) {
 		$this->offset = $offset;
@@ -319,6 +329,7 @@ class TarArchiveContent implements ArchiveContent {
 	 * Sets a content's original user ID.
 	 * @param			string			$userID
 	 * @return			void
+	 * @api
 	 */
 	public function setUserID($userID) {
 		$this->userID = $userID;

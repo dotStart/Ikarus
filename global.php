@@ -17,7 +17,7 @@
  */
 
 /**
- * Initialisizes the Ikarus Framework
+ * The core namespace which stores all components of Ikarus.
  * @author		Johannes Donath
  * @copyright		2011 Evil-Co.de
  * @package		de.ikarus-framework.core

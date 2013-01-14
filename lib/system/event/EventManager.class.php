@@ -69,6 +69,7 @@ class EventManager {
 	 * @param			IEvent			$class
 	 * @param			string			$eventClass
 	 * @return			void
+	 * @api
 	 */
 	public function fire(IEvent $event, $eventClass = null) {
 		// get eventClass (if not already set)

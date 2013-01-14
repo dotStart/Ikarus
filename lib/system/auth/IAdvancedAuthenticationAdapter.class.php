@@ -34,6 +34,7 @@ interface IAdvancedAuthenticationAdapter {
 	 * @param			ikarus\system\session\ISession			$session
 	 * @return			boolean						True if login succeeded.
 	 * @throws			ikarus\system\exception\auth\LoginException
+	 * @api
 	 */
 	public function login(ikarus\system\session\ISession $session);
 }

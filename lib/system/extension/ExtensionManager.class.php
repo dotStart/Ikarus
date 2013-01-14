@@ -50,24 +50,25 @@ class ExtensionManager {
 
 	/**
 	 * Contains a list of callbacks that should be executed after autoloading a missing class
-	 * @var			array<callable>
+	 * @var				array<callable>
 	 */
 	protected $autoloadHooks = array();
 
 	/**
 	 * Contains a list of callbacks that should be executed before flushing output buffer
-	 * @var			array<callable>
+	 * @var				array<callable>
 	 */
 	protected $outputHooks = array();
 
 	/**
 	 * Contains a list of callbacks that should be executed before stopping the application
-	 * @var			array<callable>
+	 * @var				array<callable>
 	 */
 	protected $shutdownHooks = array();
 
 	/**
-	 * Creates a new instance of type ExtensionManager
+	 * Creates a new instance of type ExtensionManager.
+	 * @internal			This method will be called by Ikarus during it's startup period.
 	 */
 	public function __construct() {
 		ob_start(array($this, 'handleOutputBuffer'));
@@ -78,6 +79,7 @@ class ExtensionManager {
 	 * @param			callable			$callback
 	 * @throws			StrictStandardException
 	 * @return			void
+	 * @api
 	 */
 	public function addAutoloadHook($callback) {
 		// validate callback
@@ -99,6 +101,7 @@ class ExtensionManager {
 	 * @param			callable			$callback
 	 * @throws			StrictStandardException
 	 * @return			void
+	 * @api
 	 */
 	public function addOutputHook($callback) {
 		// validate callback
@@ -120,6 +123,7 @@ class ExtensionManager {
 	 * @param			callable			$callback
 	 * @throws			StrictStandardException
 	 * @return			void
+	 * @api
 	 */
 	public function addShutdownHook($callback) {
 		// validate callback
@@ -140,6 +144,7 @@ class ExtensionManager {
 	 * Executes all autoload hooks
 	 * @param			string			$className
 	 * @return			void
+	 * @internal			This method calls all registered hooks.
 	 */
 	public function autoload($className) {
 		// fire event
@@ -170,6 +175,7 @@ class ExtensionManager {
 	 * Handles the output buffer before flush is executed
 	 * @param			string			$buffer
 	 * @return			string
+	 * @internal			This method calls all registered hooks.
 	 */
 	public function handleOutputBuffer($buffer) {
 		// fire event
@@ -235,6 +241,7 @@ class ExtensionManager {
 	/**
 	 * Calls all registered shutdown hooks
 	 * @return			void
+	 * @internal			This method calls all hooks.
 	 */
 	public function shutdown() {
 		// fire event

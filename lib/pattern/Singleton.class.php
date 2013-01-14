@@ -37,36 +37,41 @@ abstract class Singleton {
 	protected static $instances = array();
 
 	/**
-	 * A protected construct method
+	 * A protected construct method.
+	 * @internal			Disallows the new operator on this class.
 	 */
 	protected function __construct() {
 		$this->init();
 	}
 
 	/**
-	 * Replaces the __construct() method
+	 * Replaces the __construct() method.
 	 * Note: You have to use this method to init own components
 	 * @return			void
+	 * @api
 	 */
 	public function init() { }
 
 	/**
-	 * A protected clone method
+	 * A protected clone method.
+	 * @return			void
+	 * @internal			Prevents cloning of this class.
 	 */
 	protected function __clone() { }
 
 	/**
-	 * Disallows serialize()
+	 * Disallows serialize().
 	 * @throws			StrictStandardException
 	 * @return			void
 	 */
 	public function __sleep() {
-		throw new StrictStandardException("It's not allowed to serialize singletons");
+		throw new StrictStandardException("Instances of class %s are not serializable", __CLASS__);
 	}
 
 	/**
 	 * Returnes an instance of Singelton
 	 * @return		Singelton
+	 * @api
 	 */
 	public static function getInstance() {
 		// get class

@@ -72,7 +72,7 @@ class QueryEditor {
 	const SQL_WILDCARD		= '*';
 
 	/**
-	 * Contains initial values for query parts array
+	 * Contains initial values for query parts array.
 	 * @var			array
 	 */
 	protected static $partsInit = array(
@@ -90,7 +90,7 @@ class QueryEditor {
 	);
 
 	/**
-	 * Contains a list of valid join types
+	 * Contains a list of valid join types.
 	 * @var			array
 	 */
 	protected static $validJoinTypes = array(
@@ -103,7 +103,7 @@ class QueryEditor {
 	);
 
 	/**
-	 * Contains a list of valid join types
+	 * Contains a list of valid join types.
 	 * @var			array
 	 */
 	protected static $validUnionTypes = array(
@@ -112,19 +112,20 @@ class QueryEditor {
 	);
 
 	/**
-	 * Contains all parts for the query
+	 * Contains all parts for the query.
 	 * @var			array
 	 */
 	protected $parts = array();
 
 	/**
-	 * Contains a list of columns wich should read
+	 * Contains a list of columns wich should read.
 	 * @var			array
 	 */
 	protected $columns = array();
 
 	/**
-	 * Creates a new instance of type QueryEditor
+	 * Creates a new instance of type QueryEditor.
+	 * @api
 	 */
 	public function __construct() {
 		$this->parts = static::$partsInit;
@@ -135,6 +136,7 @@ class QueryEditor {
 	 * @param			mixed			$columns
 	 * @param			string			$correlationName
 	 * @return			ikarus\system\database\QueryEditor
+	 * @api
 	 */
 	public function columns($columns = '*', $correlationName = null) {
 		// get values for optional arguments
@@ -166,15 +168,17 @@ class QueryEditor {
 	 * @param			mixed			$table
 	 * @param			mixed			$columns
 	 * @return			ikarus\system\database\QueryEditor
+	 * @api
 	 */
 	public function from($table, $columns = '*') {
 		return $this->join(static::FROM, $table, null, $columns);
 	}
 	
 	/**
-	 * Returns the corret column sql string
+	 * Returns the corret column sql string.
 	 * @param			mixed			$column
 	 * @param			string			$alias
+	 * qreturn			string
 	 */
 	protected function getColumnString($column, $alias) {
 		if (is_array($column))
@@ -188,7 +192,7 @@ class QueryEditor {
 	}
 	
 	/**
-	 * Returnes the sql query for table names
+	 * Returnes the sql query for table names.
 	 * @param			string			$tableName
 	 * @param			string			$correlationName
 	 * @return			string
@@ -198,7 +202,7 @@ class QueryEditor {
 	}
 	
 	/**
-	 * Returns the correct type
+	 * Returns the correct type.
 	 * @param			integer			$type
 	 * @throws			SystemException
 	 * @return			string
@@ -218,7 +222,7 @@ class QueryEditor {
 	}
 	
 	/**
-	 * Generate a unique correlation name
+	 * Generate a unique correlation name.
 	 * @param			mixed			$name
 	 * @return			string
 	 */
@@ -244,6 +248,7 @@ class QueryEditor {
 	 * Adds grouping to the query.
 	 * @param			mixed			$columns
 	 * @return			ikarus\system\database\QueryEditor
+	 * @api
 	 */
 	public function group($columns) {
 		// unify $columns
@@ -261,6 +266,7 @@ class QueryEditor {
 	 * @param			string			$condition
 	 * @param			int			$type
 	 * @return			ikarus\system\database\QueryEditor
+	 * @api
 	 */
 	public function having($condition, $type = self::TYPE_AND) {
 		if ($this->parts[static::HAVING])
@@ -271,13 +277,14 @@ class QueryEditor {
 	}
 	
 	/**
-	 * Adds a JOIN clause to query
+	 * Adds a JOIN clause to query.
 	 * @param			string			$type
 	 * @param			string			$table
 	 * @param			string			$condition
 	 * @param			mixed			$columns
 	 * @throws			SystemException
 	 * @return			ikarus\system\database\QueryEditor
+	 * @api
 	 */
 	public function join($type, $table, $condition, $columns) {
 		// validate type
@@ -325,6 +332,7 @@ class QueryEditor {
 	 * @param			int			$count
 	 * @param			int			$offset
 	 * @return			ikarus\system\database\QueryEditor
+	 * @api
 	 */
 	public function limit($count = null, $offset = null) {
 		$this->parts[static::LIMIT_COUNT] = (int) $count;
@@ -337,6 +345,7 @@ class QueryEditor {
 	 * @param			int			$page
 	 * @param			int			$itemsPerPage
 	 * @return			ikarus\system\database\QueryEditor
+	 * @api
 	 */
 	public function limitPage($page, $itemsPerPage = 20) {
 		$this->parts[static::LIMIT_COUNT] = (int) $rowCount;
@@ -348,6 +357,7 @@ class QueryEditor {
 	 * Adds a row order to the query.
 	 * @param			mixed			$columns
 	 * @return			ikarus\system\database\QueryEditor
+	 * @api
 	 */
 	public function order($columns) {
 		// unify $columns
@@ -388,7 +398,7 @@ class QueryEditor {
 	}
 
 	/**
-	 * Render columns
+	 * Render columns.
 	 * @return			string
 	 */
 	protected function renderColumns() {
@@ -409,7 +419,7 @@ class QueryEditor {
 	}
 	
 	/**
-	 * Render DISTINCT clause
+	 * Render DISTINCT clause.
 	 * @return			string
 	 */
 	protected function renderDistinct() {
@@ -418,7 +428,7 @@ class QueryEditor {
 	}
 	
 	/**
-	 * Render FOR UPDATE clause
+	 * Render FOR UPDATE clause.
 	 * @return			string
 	 */
 	protected function renderForupdate() {
@@ -427,7 +437,7 @@ class QueryEditor {
 	}
 
 	/**
-	 * Render FROM clause
+	 * Render FROM clause.
 	 * @return			string
 	 */
 	protected function renderFrom() {
@@ -458,7 +468,7 @@ class QueryEditor {
 	}
 	
 	/**
-	 * Render GROUP clause
+	 * Render GROUP clause.
 	 * @return			string
 	 */
 	protected function renderGroup() {
@@ -473,7 +483,7 @@ class QueryEditor {
 	}
 	
 	/**
-	 * Render HAVING clause
+	 * Render HAVING clause.
 	 * @return			string
 	 */
 	protected function renderHaving() {
@@ -484,7 +494,7 @@ class QueryEditor {
 	}
 	
 	/**
-	 * Render LIMIT OFFSET clause
+	 * Render LIMIT OFFSET clause.
 	 * @return			string
 	 */
 	protected function renderLimitoffset() {
@@ -503,7 +513,7 @@ class QueryEditor {
 	}
 	
 	/**
-	 * Render ORDER clause
+	 * Render ORDER clause.
 	 * @return			string
 	 */
 	protected function renderOrder() {
@@ -529,7 +539,7 @@ class QueryEditor {
 	}
 	
 	/**
-	 * Returns the correct query for this instance
+	 * Returns the correct query for this instance.
 	 * @return			string
 	 */
 	protected function renderQuery() {
@@ -542,7 +552,7 @@ class QueryEditor {
 	}
 
 	/**
-	 * Render UNION query
+	 * Render UNION query.
 	 * @return			string
 	 */
 	protected function renderUnion() {
@@ -561,7 +571,7 @@ class QueryEditor {
 	}
 
 	/**
-	 * Render WHERE clause
+	 * Render WHERE clause.
 	 * @return				string
 	 */
 	protected function renderWhere() {
@@ -570,9 +580,10 @@ class QueryEditor {
 	}
 	
 	/**
-	 * Resets the complete instance or one part
+	 * Resets the complete instance or one part.
 	 * @param			string			$part
 	 * @return			ikarus\system\database\QueryEditor
+	 * @api
 	 */
 	public function reset($part = null) {
 		if ($part == null)
@@ -631,6 +642,7 @@ class QueryEditor {
 	 * Adds a UNION clause to the query.
 	 * @param			mixed			$select
 	 * @return			ikarus\system\database\QueryEditor
+	 * @api
 	 */
 	public function union($select = array(), $type = self::SQL_UNION) {
 		// unify select parameter
@@ -651,6 +663,7 @@ class QueryEditor {
 	 * @param			string			$condition
 	 * @param			int			$type
 	 * @return			ikarus\system\database\QueryEditor
+	 * @api
 	 */
 	public function where($condition, $type = self::TYPE_AND) {		
 		// search for unions
@@ -665,6 +678,7 @@ class QueryEditor {
 	/**
 	 * Returns the query built with this instance
 	 * @return			string
+	 * @api
 	 */
 	public function __toString() {
 		return $this->renderQuery();

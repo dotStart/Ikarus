@@ -132,6 +132,7 @@ class Configuration {
 	/**
 	 * Returns the value of specified option
 	 * @param			string			$optionName
+	 * @api
 	 */
 	public function get($optionName) {
 		if (isset($this->options[$optionName])) return $this->options[$optionName];
@@ -160,6 +161,7 @@ class Configuration {
 	 * Loads all options from cache or database
 	 * Note: We can't call this from __construct() while using ikarus\system\io\FilesystemManager!
 	 * @return			void
+	 * @internal			This method will be called during it's init period.
 	 */
 	public function loadOptions() {
 		try {
@@ -216,6 +218,7 @@ class Configuration {
 	/**
 	 * Queues the option file for regeneration.
 	 * @return			void
+	 * @api
 	 */
 	public function regenerate() {
 		@unlink($this->fileName);
@@ -227,6 +230,7 @@ class Configuration {
 	 * @param			string			$key
 	 * @param			mixed			$value
 	 * @return			void
+	 * @api
 	 */
 	public function set($key, $value) {
 		$this->options[$key] = $value;

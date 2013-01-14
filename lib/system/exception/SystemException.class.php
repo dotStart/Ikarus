@@ -68,10 +68,11 @@ class SystemException extends Exception implements IPrintableException {
 
 	/**
 	 * Creates a new instance of SystemException (The message argument has the same syntax as printf())
-	 * @param	string	$message
-	 * @param	string	$argument1
-	 * @param	string	$argument2
-	 * ...
+	 * @param	string			$message
+	 * @param	string			$argument1
+	 * @param	string			$argument2
+	 * @param	string			...
+	 * @api
 	 */
 	public function __construct() {
 		// validate arguments
@@ -109,7 +110,8 @@ class SystemException extends Exception implements IPrintableException {
 
 	/**
 	 * Removes full paths from issuer file
-	 * @return		string
+	 * @return			string
+	 * @api
 	 */
 	public function __getFile() {
 		return FileUtil::removeTrailingSlash(FileUtil::getRelativePath(IKARUS_DIR, $this->getFile()));
@@ -120,6 +122,7 @@ class SystemException extends Exception implements IPrintableException {
 	 * @see			Exception::getTraceAsString()
 	 * @author		Marcel Werk
 	 * @copyright		2001-2009 WoltLab GmbH
+	 * @api
 	 */
 	public function __getTraceAsString() {
 		// get trace array
@@ -170,6 +173,7 @@ class SystemException extends Exception implements IPrintableException {
 	/**
 	 * Generates the error report
 	 * @return			string
+	 * @api
 	 */
 	public final function generateErrorReport() {
 		// get serialized information
@@ -187,13 +191,15 @@ class SystemException extends Exception implements IPrintableException {
 
 	/**
 	 * @see Exception::getCode()
+	 * @api
 	 */
 	public function __getCode() {
 		return "0x".StringUtil::toUpperCase(dechex(parent::getCode()));
 	}
 
 	/**
-	 * Modifies current error information
+	 * Modifies current error information.
+	 * @api
 	 */
 	public function modifyInformation() {
 		// core information
@@ -315,6 +321,7 @@ class SystemException extends Exception implements IPrintableException {
 	 * Calculates the relative path to given file
 	 * @param			string		$path
 	 * @return			string
+	 * @api
 	 */
 	protected function prepareFilePath($path) {
 		return FileUtil::removeTrailingSlash(FileUtil::getRelativePath(IKARUS_DIR, $path));

@@ -31,22 +31,25 @@ use ikarus\system\exception\StrictStandardException;
 class NonInstantiableClass {
 	
 	/**
-	 * A protected construct method
+	 * A protected construct method.
+	 * @internal			This method is used to prevent the new operator from creating new instances.
 	 */
 	protected function __construct() { }
 	
 	/**
-	 * A protected clone method
+	 * A protected clone method.
+	 * @internal			This method prevents PHP from cloning existing instances of this class.
 	 */
 	protected function __clone() { }
 	
 	/**
-	 * Disallows serialize()
+	 * Disallows serialize().
 	 * @throws			StrictStandardException
 	 * @return			void
+	 * @internal			This method prevents developers from serializing instances of this class.
 	 */
 	public function __sleep() {
-		throw new StrictStandardException("It's not allowed to serialize singletons");
+		throw new StrictStandardException("Instances of class %s are not serializable", __CLASS__);
 	}
 }
 ?>

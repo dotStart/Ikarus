@@ -53,6 +53,7 @@ class GroupManager implements IConfigurableComponent {
 	/**
 	 * Boots up the component.
 	 * @return			void
+	 * @api
 	 */
 	public function boot() {
 		// load cache
@@ -73,6 +74,7 @@ class GroupManager implements IConfigurableComponent {
 	 * Returns a cached group handle.
 	 * @param			User			$user
 	 * @return			UserGroupHandle
+	 * @api
 	 */
 	public function getGroupHandle(User $user) {
 		// get group IDs

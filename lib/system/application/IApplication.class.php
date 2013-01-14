@@ -36,60 +36,70 @@ interface IApplication {
 	 * @param			string			$libraryNamespace
 	 * @param			integer			$packageID
 	 * @param			string			$environment
+	 * @internal			New instances of this class are created by Ikarus ...
 	 */
 	public function __construct($instanceID, $abbreviation, $libraryNamespace, $packageID, $environment, $primaryApplication = false);
 	
 	/**
 	 * Boots the application
 	 * @return			void
+	 * @api
 	 */
 	public function boot();
 	
 	/**
 	 * Returns the application abbreviation
 	 * @return			string
+	 * @api
 	 */
 	public function getAbbreviation();
 	
 	/**
 	 * Returns the choosen environment for this application instance
 	 * @return			string
+	 * @api
 	 */
 	public function getEnvironment();
 	
 	/**
 	 * Returns the instanceID of this application.
 	 * @return			integer
+	 * @api
 	 */
 	public function getInstanceID();
 	
 	/**
 	 * Returns the library namespace of this application
 	 * @return			string
+	 * @api
 	 */
 	public function getLibraryNamespace();
 	
 	/**
 	 * Returns the packageID of this application
 	 * @return			integer
+	 * @api
 	 */
 	public function getPackageID();
 	
 	/**
 	 * Returns true if this application is the main application of this framework instance
 	 * @return			boolean
+	 * @api
 	 */
 	public function isPrimaryApplication();
 	
 	/**
 	 * Closes all application components
 	 * @return			void
+	 * @internal			This method will be called by Ikarus during it's shutdown period.
 	 */
 	public function shutdown();
 	
 	/**
 	 * Shuts down all default components
 	 * @return			void
+	 * @internal			Thhis method will be called by Ikarus during it's shutdown period.
 	 */
 	public function shutdownDefaultComponents();
 }

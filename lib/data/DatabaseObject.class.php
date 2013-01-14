@@ -42,25 +42,26 @@ abstract class DatabaseObject {
 
 	/**
 	 * Contains all variables from database
-	 * @var array
+	 * @var				array
 	 */
 	protected $data = null;
 
 	/**
 	 * Contains the field name for row identifier (or primary key)
-	 * @var			string
+	 * @var				string
 	 */
 	protected static $identifierField = null;
 
 	/**
 	 * Contains the name of the table where all data of this database object is stored
-	 * @var			string
+	 * @var				string
 	 */
 	protected static $tableName = null;
 
 	/**
 	 * Creates a new DatabaseObject instance
-	 * @param	array	$row
+	 * @param			array			$row
+	 * @api
 	 */
 	public function __construct($row) {
 		$this->handleData($row);
@@ -70,7 +71,8 @@ abstract class DatabaseObject {
 	 * Returns an object by identifier (if configured)
 	 * @param			mixed			$identifier
 	 * @throws			SystemException
-	 * @returns			ikarus\data\DatabaseObject
+	 * @return			ikarus\data\DatabaseObject
+	 * @api
 	 */
 	public static function getByIdentifier($identifier) {
 		// eventing
@@ -106,7 +108,8 @@ abstract class DatabaseObject {
 
 	/**
 	 * Handles data from database
-	 * @param	array	$data
+	 * @param			array			$data
+	 * @return			void
 	 */
 	protected function handleData($data) {
 		// convert data
@@ -123,6 +126,7 @@ abstract class DatabaseObject {
 	 * Checks whether the given variable exists in this database object
 	 * @param			string			$variable
 	 * @return			boolean
+	 * @api
 	 */
 	public function __isset($variable) {
 		return array_key_exists($variable, $this->data);
@@ -132,6 +136,7 @@ abstract class DatabaseObject {
 	 * Unsets the given variable (Support for unset($databaseObject->variable))
 	 * @param			string			$variable
 	 * @return			void
+	 * @api
 	 */
 	public function __unset($variable) {
 		if (!$this->_isset($variable)) return;
@@ -143,6 +148,7 @@ abstract class DatabaseObject {
 	 * @param			string			$variable
 	 * @return			mixed
 	 * @throws			SystemException
+	 * @api
 	 */
 	public function __get($variable) {
 		// eventing
@@ -174,6 +180,7 @@ abstract class DatabaseObject {
 	 * @param			array			$arguments
 	 * @return			mixed
 	 * @throws			SystemException
+	 * @api
 	 */
 	public function __call($name, $arguments) {
 		// handle getXYZ methods

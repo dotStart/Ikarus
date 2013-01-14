@@ -30,12 +30,14 @@ namespace ikarus\system\exception;
 interface IPrintableException {
 
 	/**
-	 * Displays the exception
+	 * Displays the exception.
+	 * @api
 	 */
 	public function show();
 	
 	/**
-	 * Shows a minimal error message
+	 * Shows a minimal error message.
+	 * @api
 	 */
 	public function showMinimal();
 }

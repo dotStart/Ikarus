@@ -32,12 +32,14 @@ interface IUserObjectExtension {
 	/**
 	 * Constructs the object and extends the source object.
 	 * @param			IUserObject			$object
+	 * @api
 	 */
 	public function __construct(IUserObject $object);
 	
 	/**
 	 * Returns the original user object.
 	 * @return			IUserObject
+	 * @api
 	 */
 	public function getOriginalUserObject();
 }

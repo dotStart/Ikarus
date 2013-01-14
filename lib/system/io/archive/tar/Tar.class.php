@@ -73,6 +73,7 @@ class Tar {
 	/**
 	 * Constructs the object.
 	 * @param			string			$archiveContent
+	 * @api
 	 */
 	public function __construct($filePath, $mode = DEFAULT_MODE) {
 		$this->filePath = $filePath;
@@ -88,6 +89,7 @@ class Tar {
 	/**
 	 * Decodes an archive.
 	 * @throws			MalformedArchiveException
+	 * @internal			This method will get called by our __construct()
 	 */
 	public function decode() {
 		// reset data
@@ -122,6 +124,7 @@ class Tar {
 	 * @param			string			$binary
 	 * @return			TarArchiveContent
 	 * @throws			IOException
+	 * @api
 	 */
 	public function decodeHeader($binary) {
 		// catch errors
@@ -187,6 +190,7 @@ class Tar {
 	 * @param			TarArchiveContent			$content
 	 * @param			ikarus\system\io\FilesystemHandle $handle
 	 * @return			void
+	 * @api
 	 */
 	public function extract(TarArchiveContent $content, ikarus\system\io\FilesystemHandle $handle) {
 		$handle->setContent($this->extractContent($content));
@@ -198,6 +202,7 @@ class Tar {
 	 * @param			TarArchiveContent			$content
 	 * @throws			InvalidExtractionException
 	 * @return			string
+	 * @api
 	 */
 	public function extractContent(TarArchiveContent $content) {
 		// check for invalid extraction requests
@@ -228,6 +233,7 @@ class Tar {
 	
 	/**
 	 * Opens up the archive file.
+	 * @internal			This method will get called by our own __construct().
 	 */
 	public function open() {
 		// open up file

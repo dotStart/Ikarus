@@ -32,12 +32,14 @@ interface IUserObject {
 	/**
 	 * Returns user's GUID (Basically a string value which isn't longer than 36 chars. See ikarus\util.GUID::FORMAT for a default format definition).
 	 * @return			string(36)
+	 * @api
 	 */
 	public function getUserID();
 	
 	/**
 	 * Returns user's human readable identifier (Usually a mail address or an alias (username)).
 	 * @return			string
+	 * @api
 	 */
 	public function getHumanReadableIdentifier();
 	
@@ -45,6 +47,7 @@ interface IUserObject {
 	 * Registers a new extension.
 	 * @param			string					$extension
 	 * @return			void
+	 * @api
 	 */
 	public function registerExtension($extensionClass);
 	
@@ -52,12 +55,14 @@ interface IUserObject {
 	 * Unregisters an extension.
 	 * @param			IUserObjectExtension			$extension
 	 * @return			void
+	 * @api
 	 */
 	public function unregisterExtension(IUserObjectExtension $extension);
 	
 	/**
 	 * Forwards update() calls to all extensions.
 	 * @return			void
+	 * @api
 	 */
 	public function update();
 }

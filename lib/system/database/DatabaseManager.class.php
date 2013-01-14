@@ -94,6 +94,7 @@ class DatabaseManager {
 	 * Returnes true if the specified adapter is already loaded
 	 * @param			string		$adapterName
 	 * @return			boolean
+	 * @api
 	 */
 	public function adapterIsLoaded($adapterName) {
 		return in_array($adapterName, $this->loadedAdapters);
@@ -109,6 +110,7 @@ class DatabaseManager {
 	 * @param			string			$databaseParameters
 	 * @throws			SystemException
 	 * @return			ikarus\system\database\adapter\IDatabaseAdapter
+	 * @api
 	 */
 	public function createConnection($adapterName, $hostname, $port, $user, $password, $databaseParameters = '', $linkID = null) {
 		// validate adapter
@@ -134,6 +136,7 @@ class DatabaseManager {
 	 * @param			string				$linkID
 	 * @throws			SystemException
 	 * @return			ikarus\system\database\adapter\IDatabaseAdapter
+	 * @api
 	 */
 	public function getConnection($linkID) {
 		// validate linkID
@@ -145,6 +148,7 @@ class DatabaseManager {
 	/**
 	 * Returns the current default connection
 	 * @return			ikarus\system\database\adapter\IDatabaseAdapter
+	 * @api
 	 */
 	public function getDefaultAdapter() {
 		if (Ikarus::getConfiguration()->get('application.instance.primaryApplicationID') !== null and isset($this->applicationConnections[Ikarus::getConfiguration()->get('application.instance.primaryApplicationID')])) return $this->applicationConnections[Ikarus::getConfiguration()->get('application.instance.primaryApplicationID')];
@@ -156,6 +160,7 @@ class DatabaseManager {
 	 * @param			string		$adapterName
 	 * @throws			SystemException
 	 * @return			void
+	 * @api
 	 */
 	public function loadAdapter($adapterName) {
 		// we don't need to reload adapters wich are already loaded
@@ -187,6 +192,7 @@ class DatabaseManager {
 	 * Sets the given handle as default adapter handle
 	 * @param			ikarus\system\database\adapter\IDatabaseAdapter			$handle
 	 * @return			void
+	 * @api
 	 */
 	public function setDefaultAdapter(adapter\IDatabaseAdapter $handle, $applicationID = null) {
 		// save application information
@@ -201,8 +207,9 @@ class DatabaseManager {
 
 	/**
 	 * Starts the default database connection
-	 * @throws		SystemException
-	 * @return		void
+	 * @throws			SystemException
+	 * @return			void
+	 * @internal			This method will be called by Ikarus during it's init period.
 	 */
 	public function startDefaultAdapter() {
 		// check for existing default adapter
@@ -237,6 +244,7 @@ class DatabaseManager {
 	/**
 	 * Closes all active connections
 	 * @return			void
+	 * @internal			This method will be called by Ikarus during it's shutdown period.
 	 */
 	public function shutdown() {
 		foreach($this->connections as $handle) {

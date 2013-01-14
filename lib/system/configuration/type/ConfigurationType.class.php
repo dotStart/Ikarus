@@ -34,6 +34,7 @@ interface ConfigurationType {
 	 * Returns the real value of given stored value
 	 * @param			string			$value
 	 * @return			mixed
+	 * @api
 	 */
 	public static function getRealValue($value);
 }

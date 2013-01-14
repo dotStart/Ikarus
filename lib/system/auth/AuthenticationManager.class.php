@@ -76,6 +76,7 @@ class AuthenticationManager implements IConfigurableComponent {
 	/**
 	 * Loads all connections from database.
 	 * @return			void
+	 * @internal			This is called by Ikarus during it's init period.
 	 */
 	public function createConnections() {
 		$editor = new QueryEditor();
@@ -95,6 +96,7 @@ class AuthenticationManager implements IConfigurableComponent {
 	 * @param			array			$parameters
 	 * @throws			MissingDependencyException
 	 * @return			string
+	 * @api
 	 */
 	public function createInstance($adapterID, $linkID = null, $parameters = array()) {
 		// generate linkID (if not given)
@@ -118,6 +120,7 @@ class AuthenticationManager implements IConfigurableComponent {
 	 * @param			string			$linkID
 	 * @return			ikarus\system\auth\IAuthenticationAdapter
 	 * @throws			StrictStandardException
+	 * @api
 	 */
 	public function getAdapter($linkID) {
 		// validate
@@ -129,6 +132,7 @@ class AuthenticationManager implements IConfigurableComponent {
 	/**
 	 * Returns the current default adapter maintained by this instance.
 	 * @return			ikarus\system\auth\IAuthenticationAdapter
+	 * @api
 	 */
 	public function getDefaultAdapter() {
 		return $this->defaultAdapter;
@@ -140,6 +144,7 @@ class AuthenticationManager implements IConfigurableComponent {
 	 * @param			string			$className
 	 * @throws			MissingDependencyException
 	 * @return			boolean
+	 * @api
 	 */
 	public function loadAdapter($adapterID, $className) {
 		// fire cancellable event
@@ -168,6 +173,7 @@ class AuthenticationManager implements IConfigurableComponent {
 	/**
 	 * Loads all available adapters which are in application's path.
 	 * @return			void
+	 * @internal			This is called by Ikarus during it's init period.
 	 */
 	public function loadAdapters() {
 		$editor = new QueryEditor();
@@ -183,6 +189,7 @@ class AuthenticationManager implements IConfigurableComponent {
 	 * Sets the current default adapter.
 	 * @param			IAuthenticationAdapter				$adapter
 	 * @return			void
+	 * @api
 	 */
 	public function setDefaultAdapter(IAuthenticationAdapter $adapter) {
 		$this->defaultAdapter = $adapter;

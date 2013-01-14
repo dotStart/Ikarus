@@ -33,6 +33,7 @@ interface IFilesystemAdapter {
 	 * Creates a new instance of type IFilesystemAdapter
 	 * @param			array			$adapterParameters
 	 * @throws			ikarus\system\exception\SystemException
+	 * @internal			New instance will be created by the parent manager.
 	 */
 	public function __construct($adapterParameters = array());
 	
@@ -42,6 +43,7 @@ interface IFilesystemAdapter {
 	 * @throws			ikarus\system\exception\io\IOException
 	 * @throws			ikarus\system\exception\StrictStandardException
 	 * @return			void
+	 * @api
 	 */
 	public function createDirectory($directoryName);
 	
@@ -53,6 +55,7 @@ interface IFilesystemAdapter {
 	 * @throws			ikarus\system\exception\StrictStandardException
 	 * @throws			ikarus\system\exception\SystemException
 	 * @return			void
+	 * @api
 	 */
 	public function createFile($fileName, $fileContent);
 	
@@ -62,6 +65,7 @@ interface IFilesystemAdapter {
 	 * @throws			ikarus\system\exception\io\IOException
 	 * @throws			ikarus\system\exception\StrictStandardException
 	 * @return			void
+	 * @api
 	 */
 	public function deleteDirectory($directoryName);
 	
@@ -72,6 +76,7 @@ interface IFilesystemAdapter {
 	 * @throws			ikarus\system\exception\StrictStandardException
 	 * @throws			ikarus\system\exception\SystemException
 	 * @return			void
+	 * @api
 	 */
 	public function deleteFile($fileName);
 	
@@ -81,6 +86,7 @@ interface IFilesystemAdapter {
 	 * @throws			ikarus\system\exception\io\IOException
 	 * @throws			ikarus\system\exception\StrictStandardException
 	 * @return			boolean
+	 * @api
 	 */
 	public function fileExists($fileName);
 	
@@ -90,6 +96,7 @@ interface IFilesystemAdapter {
 	 * @throws			ikarus\system\exception\io\IOException
 	 * @throws			ikarus\system\exception\StrictStandardException
 	 * @return			boolean
+	 * @api
 	 */
 	public function fileReadable($fileName);
 	
@@ -99,6 +106,7 @@ interface IFilesystemAdapter {
 	 * @throws			ikarus\system\exception\io\IOException
 	 * @throws			ikarus\system\exception\StrictStandardException
 	 * @return			boolean
+	 * @api
 	 */
 	public function fileWritable($fileName);
 	
@@ -108,6 +116,7 @@ interface IFilesystemAdapter {
 	 * @throws			ikarus\system\exception\io\IOException
 	 * @throws			ikarus\system\exception\StrictStandardException
 	 * @return			integer
+	 * @api
 	 */
 	public function getCreationTimestamp($fileName);
 
@@ -117,6 +126,7 @@ interface IFilesystemAdapter {
 	 * @throws			ikarus\system\exception\io\IOException
 	 * @throws			ikarus\system\exception\StrictStandardException
 	 * @return			ikarus\system\io\FilesystemIterator
+	 * @api
 	 */
 	public function getDirectoryIterator($directoryName);
 	
@@ -126,6 +136,7 @@ interface IFilesystemAdapter {
 	 * @throws			ikarus\system\exception\io\IOException
 	 * @throws			ikarus\system\exception\StrictStandardException
 	 * @return			integer
+	 * @api
 	 */
 	public function getFilesize($fileName);
 	
@@ -135,6 +146,7 @@ interface IFilesystemAdapter {
 	 * @throws			ikarus\system\exception\io\IOException
 	 * @throws			ikarus\system\exception\StrictStandardException
 	 * @return			integer
+	 * @api
 	 */
 	public function getModificationTimestamp($fileName);
 	
@@ -143,6 +155,7 @@ interface IFilesystemAdapter {
 	 * <strong>Note:</strong> This path is unique to this adapter and should NOT be used with other adapters.
 	 * @return			string
 	 * @throws			ikarus\system\exception\io\IOException
+	 * @api
 	 */
 	public function getTemporaryDirectory();
 	
@@ -152,6 +165,7 @@ interface IFilesystemAdapter {
 	 * @throws			ikarus\system\exception\io\IOException
 	 * @throws			ikarus\system\exception\StrictStandardException
 	 * @return			boolean
+	 * @api
 	 */
 	public function isDirectory($targetPath);
 	
@@ -161,12 +175,14 @@ interface IFilesystemAdapter {
 	 * @throws			ikarus\system\exception\io\IOException
 	 * @throws			ikarus\system\exception\StrictStandardException
 	 * @return			boolean
+	 * @api
 	 */
 	public function isFile($targetPath);
 	
 	/**
 	 * Returns true if needed php side components are available
 	 * @return			boolean
+	 * @api
 	 */
 	public static function isSupported();
 	
@@ -178,6 +194,7 @@ interface IFilesystemAdapter {
 	 * @throws			ikarus\system\exception\StrictStandardException
 	 * @throws			ikarus\system\exception\SystemException
 	 * @return			void
+	 * @api
 	 */
 	public function modifyFile($fileName, $fileContent);
 	
@@ -188,12 +205,14 @@ interface IFilesystemAdapter {
 	 * @throws			ikarus\system\exception\StrictStandardException
 	 * @throws			ikarus\system\exception\SystemException
 	 * @return			string
+	 * @api
 	 */
 	public function readFileContents($fileName);
 	
 	/**
 	 * Closes all filesystem adapter connections (if any)
 	 * @return			void
+	 * @internal			This method will be called by Ikarus during it's shutdown period.
 	 */
 	public function shutdown();
 }

@@ -32,12 +32,14 @@ interface IEvent {
 	/**
 	 * Constructs the object.
 	 * @param			IEventArguments			$arguments
+	 * @api
 	 */
 	// public function __construct(IEventArguments $arguments);
 	
 	/**
 	 * Returns the event arguments object.
 	 * @return			IEventArguments
+	 * @api
 	 */
 	public function getArguments();
 }

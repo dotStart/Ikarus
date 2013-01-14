@@ -38,35 +38,29 @@ class DatabaseObjectList implements Iterator, Countable {
 
 	/**
 	 * Contains all iterateable database objects
-	 * @var array
+	 * @var			array
 	 */
 	protected $objectList = array();
 
 	/**
 	 * Points to the current database object
-	 * @var integer
+	 * @var			integer
 	 */
 	protected $objectPointer = 0;
 
 	/**
 	 * Creates a new instance of DatabaseObjectList
-	 * @param	array<DatabaseObject>	$objectList
+	 * @param			array<DatabaseObject>			$objectList
+	 * @api
 	 */
 	public function __construct($objectList) {
 		$this->handleObjects($objectList);
 	}
 
 	/**
-	 * Returnes the count of all objects
-	 * @return integer
-	 */
-	public function countObjects() {
-		return count($this->objectList);
-	}
-
-	/**
 	 * Converts the iterator to array
-	 * @return array
+	 * @return			array
+	 * @api
 	 */
 	public function __toArray() {
 		return $this->objectList;
@@ -74,7 +68,9 @@ class DatabaseObjectList implements Iterator, Countable {
 
 	/**
 	 * Handles all given objects
-	 * @param	array	$objectList
+	 * @param			array			$objectList
+	 * @return			void
+	 * @api
 	 */
 	protected function handleObjects($objectList) {
 		// save data
@@ -88,6 +84,7 @@ class DatabaseObjectList implements Iterator, Countable {
 
 	/**
 	 * @see Countable::count()
+	 * @api
 	 */
 	public function count() {
 		return count($this->objectList);
@@ -95,6 +92,7 @@ class DatabaseObjectList implements Iterator, Countable {
 
 	/**
 	 * @see Iterator::rewind()
+	 * @api
 	 */
 	public function rewind() {
 		$this->objectPointer = 0;
@@ -102,6 +100,7 @@ class DatabaseObjectList implements Iterator, Countable {
 
 	/**
 	 * @see Iterator::key()
+	 * @api
 	 */
 	public function key() {
 		return $this->objectPointer;
@@ -109,6 +108,7 @@ class DatabaseObjectList implements Iterator, Countable {
 
 	/**
 	 * @see Iterator::current()
+	 * @api
 	 */
 	public function current() {
 		if (isset($this->objectList[$this->objectPointer]))
@@ -119,6 +119,7 @@ class DatabaseObjectList implements Iterator, Countable {
 
 	/**
 	 * @see Iterator::next()
+	 * @api
 	 */
 	public function next() {
 		$this->objectPointer++;
@@ -126,6 +127,7 @@ class DatabaseObjectList implements Iterator, Countable {
 
 	/**
 	 * @see Iterator::valid()
+	 * @api
 	 */
 	public function valid() {
 		return (isset($this->objectList[$this->objectPointer]));

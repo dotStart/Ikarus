@@ -42,7 +42,8 @@ class ApplicationManager {
 	protected $applications = array();
 
 	/**
-	 * Creates a new instance of type ApplicationManager
+	 * Creates a new instance of type ApplicationManager.
+	 * @api
 	 */
 	public function __construct() {
 		$this->loadApplicationCache();
@@ -52,6 +53,7 @@ class ApplicationManager {
 	 * Returns true if the given application abbreviation exists
 	 * @param			string			$abbreviation
 	 * @return			boolean
+	 * @api
 	 */
 	public function applicationAbbreviationExists($abbreviation) {
 		return array_key_exists($abbreviation, $this->applications);
@@ -68,6 +70,7 @@ class ApplicationManager {
 	/**
 	 * Boots all applications
 	 * @return			void
+	 * @internal			This method should only be used by Ikarus itself.
 	 */
 	public function boot() {
 		if (!count($this->applications)) throw new SystemException("What the fuck? There are no applications! What are you doing?!");
@@ -102,6 +105,7 @@ class ApplicationManager {
 	 * Displays the given exception
 	 * @param			SystemException			$ex
 	 * @return			void
+	 * @api
 	 */
 	public function displayErrorMessage(SystemException $ex) {
 		$exception = new HiddenApplicationException($ex->getMessage(), $ex->getCode(), $ex);
@@ -113,6 +117,7 @@ class ApplicationManager {
 	 * @param			string			$abbreviation
 	 * @throws			StrictStandardException
 	 * @return			IApplication
+	 * @api
 	 */
 	public function getApplication($abbreviation) {
 		// strict standard
@@ -124,6 +129,7 @@ class ApplicationManager {
 	/**
 	 * Returns a list of all loaded applications
 	 * @return			array<ikarus\system\application\IApplication>
+	 * @api
 	 */
 	public function getApplicationList() {
 		return $this->applications;
@@ -133,6 +139,7 @@ class ApplicationManager {
 	 * Handles application errors
 	 * @param			PrintableException			$ex
 	 * @return			void
+	 * @api
 	 */
 	public function handleApplicationError(\Exception $ex) {
 		if (ClassUtil::isInstanceOf($ex, 'ikarus\\system\\exception\\NamedUserException')) return $ex->show();
@@ -174,6 +181,7 @@ class ApplicationManager {
 	/**
 	 * Calls the shutdown method of each active application
 	 * @return			void
+	 * @internal			This method should only be called by Ikarus itsel during it's shutdown period.
 	 */
 	public function shutdown() {
 		foreach($this->applications as $application) {

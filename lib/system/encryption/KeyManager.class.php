@@ -32,6 +32,7 @@ class KeyManager {
 	/**
 	 * Constructs the object.
 	 * @param			integer			$packageID
+	 * @api
 	 */
 	public function __construct($packageID) {
 		$this->packageID = $packageID;
@@ -43,6 +44,7 @@ class KeyManager {
 	 * @param			string			$alias
 	 * @return			ikarus\system\encryption\KeyPair
 	 * @throws			MissingKeyException
+	 * @api
 	 */
 	public function getKey($alias) {
 		if (!array_key_exists($alias, $this->keyList)) throw new MissingKeyException('Cannot find key "%s" in application pool "%s"', $alias, $this->packageID);

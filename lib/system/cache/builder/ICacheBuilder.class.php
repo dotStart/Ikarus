@@ -34,6 +34,7 @@ interface ICacheBuilder {
 	 * @param			string			$resourceName
 	 * @param			array			$additionalParameters
 	 * @return			mixed
+	 * @internal			This method is called by the parent cache adapter only.
 	 */
 	public static function getData($resourceName, $additionalParameters);
 }

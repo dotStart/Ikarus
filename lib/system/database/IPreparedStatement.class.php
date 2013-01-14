@@ -33,6 +33,7 @@ interface IPreparedStatement {
 	 * Creates a new instance of type IPreparedStatement
 	 * @param			ikarus\system\database\adapter\IDatabaseAdapter		$adapter
 	 * @param			string							$statement
+	 * @internal			This method will be called by it's parent adapter or manager.
 	 */
 	public function __construct(adapter\IDatabaseAdapter $adapter, $statement);
 	
@@ -41,6 +42,7 @@ interface IPreparedStatement {
 	 * @param			mixed			$value
 	 * @param			integer			$position
 	 * @return			void
+	 * @api
 	 */
 	public function bind($value, $position = null);
 	
@@ -49,24 +51,28 @@ interface IPreparedStatement {
 	 * @param			string			$name
 	 * @param			mixed			$value
 	 * @return			void
+	 * @api
 	 */
 	public function bindNamedParameter($name, $value);
 	
 	/**
 	 * Executes the statement
 	 * @return			void
+	 * @api
 	 */
 	public function execute();
 	
 	/**
 	 * Fetches one or more items from database
 	 * @return			mixed
+	 * @api
 	 */
 	public function fetch();
 	
 	/**
 	 * Fetches a list of items from database
 	 * @return			ikarus\system\database\DatabaseResultList
+	 * @api
 	 */
 	public function fetchList();
 }

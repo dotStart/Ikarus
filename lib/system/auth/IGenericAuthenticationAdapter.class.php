@@ -35,6 +35,7 @@ interface IGenericAuthenticationAdapter {
 	 * @param			string			$password
 	 * @return			boolean
 	 * @throws			ikarus\system\exception\auth\AuthException
+	 * @api
 	 */
 	public function auth($username = null, $password = null);
 }

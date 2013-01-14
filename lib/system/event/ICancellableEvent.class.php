@@ -32,6 +32,7 @@ interface ICancellableEvent {
 	/**
 	 * Checks whether this event has been cancelled.
 	 * @return			boolean
+	 * @api
 	 */
 	public function isCancelled();
 	
@@ -39,6 +40,7 @@ interface ICancellableEvent {
 	 * Sets the cancelled state of this event.
 	 * @param			boolean			$value
 	 * @return			void
+	 * @api
 	 */
 	public function setCancelled($value = true);
 }

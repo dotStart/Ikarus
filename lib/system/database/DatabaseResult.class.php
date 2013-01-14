@@ -39,7 +39,8 @@ class DatabaseResult extends DatabaseObject {
 	}
 	
 	/**
-	 * Converts instances to arrays
+	 * Converts instances to arrays.
+	 * @api
 	 */
 	public function __toArray() {
 		return $this->data;

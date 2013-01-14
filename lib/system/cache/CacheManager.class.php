@@ -70,6 +70,7 @@ class CacheManager {
 	 * @param			string			$linkID
 	 * @throws			SystemException
 	 * @return			ikarus\system\cache\adapter.ICacheAdapter
+	 * @api
 	 */
 	public function createConnection($adapterName, $parameters = array(), $linkID = null) {
 		// validate adapter name
@@ -93,6 +94,7 @@ class CacheManager {
 	/**
 	 * Returns the current default adapter
 	 * @return			ikarus\system\cache\adapter.ICacheAdapter
+	 * @api
 	 */
 	public function getDefaultAdapter() {
 		return $this->defaultAdapter;
@@ -102,6 +104,7 @@ class CacheManager {
 	 * Returns true if the given adapter is already loaded
 	 * @param			string			$adapterName
 	 * @return			boolean
+	 * @api
 	 */
 	public function adapterIsLoaded($adapterName) {
 		return array_key_exists($adapterName, $this->loadedAdapters);
@@ -111,6 +114,7 @@ class CacheManager {
 	 * Returns a connection.
 	 * @param			string			$linkID
 	 * @return			array<ikarus\system\cache\adapter\ICacheAdapter>
+	 * @api
 	 */
 	public function getConnection($linkID) {
 		// strict standards
@@ -125,6 +129,7 @@ class CacheManager {
 	 * @param			string			$adapterName
 	 * @throws			StrictStandardException
 	 * @return			boolean
+	 * @api
 	 */
 	public function loadAdapter($adapterName) {
 		// get class name
@@ -145,6 +150,7 @@ class CacheManager {
 	/**
 	 * Loads all available adapters
 	 * @return			void
+	 * @internal			This will be called by Ikarus during it's init period.
 	 */
 	protected function loadAdapters() {
 		$sql = "SELECT
@@ -162,6 +168,8 @@ class CacheManager {
 	/**
 	 * Sets the default cache adapter
 	 * @param			ikarus\system\cache\adapter\ICacheAdapter			$handle
+	 * @return			void
+	 * @api
 	 */
 	public function setDefaultAdapter(adapter\ICacheAdapter $handle) {
 		// set as default
@@ -174,6 +182,7 @@ class CacheManager {
 	 * @param			string			$fallback
 	 * @throws			SystemException
 	 * @return			void
+	 * @api
 	 */
 	public function setFallback($linkID, $fallback) {
 		// validate linkIDs
@@ -186,6 +195,7 @@ class CacheManager {
 	/**
 	 * Closes all cache connections
 	 * @return			void
+	 * @internal			This will be called by Ikarus during it's shutdown period.
 	 */
 	public function shutdown() {
 		foreach($this->connections as $connection) {
@@ -196,6 +206,7 @@ class CacheManager {
 	/**
 	 * Starts all cache connections
 	 * @return			void
+	 * @internal			This will be called by Ikarus during it's init period.
 	 */
 	protected function startAdapters() {
 		$sql = "SELECT
@@ -223,7 +234,8 @@ class CacheManager {
 
 	/**
 	 * Starts the default adapter
-	 * @return		void
+	 * @return			void
+	 * @internal			This will be called by Ikarus during it's init period.
 	 */
 	public function startDefaultAdapter() {
 		$this->loadAdapters();

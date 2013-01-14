@@ -46,6 +46,7 @@ interface ArchiveContent {
 	 * @param			string			$targetPath
 	 * @return			void
 	 * @throws			IOException
+	 * @api
 	 */
 	public function extract($targetPath);
 	
@@ -53,42 +54,49 @@ interface ArchiveContent {
 	 * Extracts the content of a file and returns it as string.
 	 * @return			string
 	 * @throws			IOException
+	 * @api
 	 */
 	public function extractContent();
 	
 	/**
 	 * Returns the checksom of the actual file.
 	 * @return			mixed
+	 * @api
 	 */
 	public function getChecksum();
 	
 	/**
 	 * Returns the name of the actual file.
 	 * @return			string
+	 * @api
 	 */
 	public function getFilename();
 	
 	/**
 	 * Returns the *NIX file mode of the actual file.
 	 * @return			integer
+	 * @api
 	 */
 	public function getMode();
 	
 	/**
 	 * Returns the prefix (the path) of the actual file.
 	 * @return			string
+	 * @api
 	 */
 	public function getPrefix();
 	
 	/**
 	 * Returns the size of the actual file in bytes.
 	 * @return			integer
+	 * @api
 	 */
 	public function getSize();
 	
 	/**
 	 * Returns the type of the actual file (directory or file).
 	 * @return			integer
+	 * @api
 	 */
 	public function getType();
 	
@@ -96,6 +104,7 @@ interface ArchiveContent {
 	 * Sets the checksum of the actual file.
 	 * @param			$checksum			mixed
 	 * @return			void
+	 * @api
 	 */
 	public function setChecksum($checksum);
 	
@@ -103,6 +112,7 @@ interface ArchiveContent {
 	 * Sets the filename of the actual file.
 	 * @param			$handle				ikarus\system\io\FilesystemHandle
 	 * @return			void
+	 * @api
 	 */
 	public function setFilename(ikarus\system\io\FilesystemHandle $handle);
 	
@@ -110,6 +120,7 @@ interface ArchiveContent {
 	 * Sets the mode of the actual file.
 	 * @param			$mode				integer
 	 * @return			void
+	 * @api
 	 */
 	public function setMode($mode = 0755);
 	
@@ -117,6 +128,7 @@ interface ArchiveContent {
 	 * Sets the prefix of the actual file.
 	 * @param			$prefix				string
 	 * @return			void
+	 * @api
 	 */
 	public function setPrefix($prefix = '/');
 	
@@ -124,6 +136,7 @@ interface ArchiveContent {
 	 * Sets the size of the actual file.
 	 * @param			$size				integer			The filesize in bytes.
 	 * @return			void
+	 * @api
 	 */
 	public function setSize($size = 0);
 	
@@ -131,6 +144,7 @@ interface ArchiveContent {
 	 * Sets the type of the actual file.
 	 * @param			$type				integer
 	 * @return			void
+	 * @api
 	 */
 	public function setType($type);
 }

@@ -32,6 +32,7 @@ interface ICacheAdapter {
 	/**
 	 * Creates a new instance of type ICacheAdapter
 	 * @param			array			$adapterParameters
+	 * @internal			This is only called by the parent manager.
 	 */
 	public function __construct($adapterParameters = array());
 
@@ -44,6 +45,7 @@ interface ICacheAdapter {
 	 * @param			array			$additionalCacheBuilderParameters
 	 * @throws			SystemException
 	 * @return			boolean
+	 * @api
 	 */
 	public function createResource($resourceName, $cacheBuilderClass, $minimalLifetime = 0, $maximalLifetime = 0, $additionalCacheBuilderParameters = array());
 
@@ -52,18 +54,21 @@ interface ICacheAdapter {
 	 * @param			string			$resourceName
 	 * @throws			SystemException
 	 * @return			mixed
+	 * @api
 	 */
 	public function get($resourceName);
 
 	/**
 	 * Returns true if this adapter is supported by php installation
 	 * @return			boolean
+	 * @api
 	 */
 	public static function isSupported();
 
 	/**
 	 * Closes the cache adapter connection (if any)
 	 * @return			void
+	 * @internal			This method will be called by Ikarus during it's shutdown period.
 	 */
 	public function shutdown();
 }

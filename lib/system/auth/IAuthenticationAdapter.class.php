@@ -32,6 +32,7 @@ interface IAuthenticationAdapter {
 	/**
 	 * Constructs the object.
 	 * @param			mixed[]			$parameters
+	 * @internal			New instances are created by Ikarus ...
 	 */
 	public function __construct($parameters);
 	
@@ -39,18 +40,21 @@ interface IAuthenticationAdapter {
 	 * Returns a user object (if any).
 	 * @param			ikarus\system\session\ISession			$session
 	 * @return			ikarus\system\auth\IUserObject
+	 * @api
 	 */
 	public function getUserObject(ikarus\system\session\ISession $session = null);
 	
 	/**
 	 * Checks whether the current session belongs to an authenticated user.
 	 * @return			boolean
+	 * @api
 	 */
 	public function isAuthenticated(ikarus\system\session\ISession $session = null);
 	
 	/**
 	 * Checks whether this adapter is supported in current environment.
 	 * @return			boolean
+	 * @api
 	 */
 	public static function isSupported();
 }
