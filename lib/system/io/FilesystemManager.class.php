@@ -206,8 +206,8 @@ class FilesystemManager {
 		$this->loadAdapter(Ikarus::getConfiguration()->get('filesystem.general.defaultAdapter'));
 
 		// create new connection
-		$handle = $this->createConnection(Ikarus::getConfiguration()->get('filesystem.general.defaultAdapter'), Ikarus::getConfiguration()->get('filesystem.general.adapterParameters'));
-
+		$handle = $this->createConnection(Ikarus::getConfiguration()->get('filesystem.general.defaultAdapter'), (Ikarus::getConfiguration()->get('filesystem.general.adapterParameters') !== null ? Ikarus::getConfiguration()->get('filesystem.general.adapterParameters') : array()));
+		
 		// set as default
 		$this->setDefaultAdapter($handle);
 	}
