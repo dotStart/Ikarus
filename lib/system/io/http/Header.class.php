@@ -45,6 +45,7 @@ class Header {
 	 * Constructs the object.
 	 * @param			string			$name
 	 * @param			string			$value
+	 * @internal			Header instances should get created thru Header::parse()
 	 */
 	public function __construct($name, $value) {
 		$this->name = $name;
@@ -54,6 +55,7 @@ class Header {
 	/**
 	 * Returns the header name.
 	 * @return			string
+	 * @api
 	 */
 	public function getName() {
 		return $this->name;
@@ -62,6 +64,7 @@ class Header {
 	/**
 	 * Returns the header value.
 	 * @return			string
+	 * @api
 	 */
 	public function getValue() {
 		return $this->value;
@@ -70,6 +73,7 @@ class Header {
 	/**
 	 * Checks whether a string is a valid HTTP header.
 	 * @return			boolean
+	 * @api
 	 */
 	public static function isValid($line) {
 		return (strpos($line, ':') !== -1);
@@ -79,6 +83,7 @@ class Header {
 	 * Parses an HTTP header line.
 	 * @param			string			$line
 	 * @return			self
+	 * @api
 	 */
 	public static function parse($line) {
 		// remove whitespace characters

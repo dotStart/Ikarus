@@ -51,67 +51,68 @@ class Ikarus extends NonInstantiableClass {
 
 	/**
 	 * Contains the name of the file wich contains the core configuration
-	 * @var		string
+	 * @var			string
 	 */
 	const CONFIGURATION_FILE = 'options.inc.php';
 
 	/**
 	 * Contains an instance of ApplicationManager
-	 * @var		ApplicationManager
+	 * @var			ApplicationManager
 	 */
 	protected static $applicationManagerObj = null;
 
 	/**
 	 * Contains an instance of CacheManager
-	 * @var		CacheManager
+	 * @var			CacheManager
 	 */
 	protected static $cacheManagerObj = null;
 
 	/**
 	 * Contains all requested appliation components
-	 * @var		array
+	 * @var			array
 	 */
 	protected static $componentList = array();
 
 	/**
 	 * Contains an instance of Configuration
-	 * @var		Configuration
+	 * @var			Configuration
 	 */
 	protected static $configurationObj = null;
 
 	/**
 	 * Contains the time of init sequence
-	 * @var		int64
+	 * @var			integer
 	 */
 	protected static $currentTime = -1;
 
 	/**
 	 * Contains an instance of DatabaseManager
-	 * @var		DatabaseManager
+	 * @var			DatabaseManager
 	 */
 	protected static $databaseManagerObj = null;
 
 	/**
 	 * Contains an instance of EventManager
-	 * @var		EventManager
+	 * @var			EventManager
 	 */
 	protected static $eventManagerObj = null;
 
 	/**
 	 * Contains an instance of ExtensionManager
-	 * @var		ExtensionManager
+	 * @var			ExtensionManager
 	 */
 	protected static $extensionManagerObj = null;
 
 	/**
 	 * Contains an instance of FilesystemManager
-	 * @var		FilesystemManager
+	 * @var			FilesystemManager
 	 */
 	protected static $filesystemManagerObj = null;
 
 	/**
 	 * Starts all core instances
-	 * @return		void
+	 * @return			void
+	 * @internal			This method gets called by our index script.
 	 */
 	public static final function init() {
 		// save current time
@@ -133,7 +134,8 @@ class Ikarus extends NonInstantiableClass {
 
 	/**
 	 * Shuts the whole framework down
-	 * @return		void
+	 * @return			void
+	 * @internal			This method gets called by PHP.
 	 */
 	public static final function shutdown() {
 		if (static::getDatabaseManager() !== null) echo static::getDatabaseManager()->getDefaultAdapter()->getQueryCount(); // FIXME: Remove this
@@ -153,6 +155,7 @@ class Ikarus extends NonInstantiableClass {
 	 * Checks wheater a component abbreviation exists
 	 * @param			string			$abbreviation
 	 * @return			boolean
+	 * @api
 	 */
 	public static function componentAbbreviationExists($abbreviation) {
 		return array_key_exists($abbreviation, static::$componentList);
@@ -162,6 +165,8 @@ class Ikarus extends NonInstantiableClass {
 	 * Checks wheater a component with the same abbreviation does already exist
 	 * @param			string			$componentName
 	 * @param			string			$abbreviation
+	 * @return			boolean
+	 * @api
 	 */
 	public static function componentLoaded($componentName, $abbreviation = null) {
 		// check abbreviation
@@ -184,6 +189,7 @@ class Ikarus extends NonInstantiableClass {
 	 * Configures all loaded components.
 	 * @param			IApplication			$application
 	 * @return			void
+	 * @api
 	 */
 	public static function configureComponents(application\IApplication $application) {
 		foreach(static::$componentList as $component) {
@@ -192,36 +198,9 @@ class Ikarus extends NonInstantiableClass {
 	}
 
 	/**
-	 * Fixes damage created by magic quotes
-	 * @return			void
-	 * @deprecated			We require PHP 5.4! This is senseless and should be removed.
-	 */
-	protected static final function fixMagicQuotes() {
-		// check for php 5.4+ (magic quotes are deprecated since php 5.4)
-		if (version_compare(PHP_VERSION, '5.3') >= 0) return;
-
-		// fix damage
-		if (function_exists('get_magic_quotes_gpc')) {
-			if (get_magic_quotes_gpc()) {
-				if (count($_REQUEST)) $_REQUEST = util\ArrayUtil::stripslashes($_REQUEST);
-				if (count($_POST)) $_POST = util\ArrayUtil::stripslashes($_POST);
-				if (count($_GET)) $_GET = util\ArrayUtil::stripslashes($_GET);
-				if (count($_COOKIE)) $_COOKIE = util\ArrayUtil::stripslashes($_COOKIE);
-
-				if (count($_FILES))
-					foreach ($_FILES as $name => $attributes)
-						foreach ($attributes as $key => $value)
-							if ($key != 'tmp_name') $_FILES[$name][$key] = util\ArrayUtil::stripslashes($value);
-			}
-		}
-
-		// disable magic quotes
-		if (function_exists('set_magic_quotes_runtime')) set_magic_quotes_runtime(0);
-	}
-
-	/**
 	 * Returns the current ApplicationManager instance
 	 * @return		ikarus\system\application\ApplicationManager
+	 * @api
 	 */
 	public static final function getApplicationManager() {
 		return static::$applicationManagerObj;
@@ -230,6 +209,7 @@ class Ikarus extends NonInstantiableClass {
 	/**
 	 * Returns the current CacheManager instance
 	 * @return		ikarus\system\cache\CacheManager
+	 * @api
 	 */
 	public static final function getCacheManager() {
 		return static::$cacheManagerObj;
@@ -240,6 +220,7 @@ class Ikarus extends NonInstantiableClass {
 	 * @param			string			$abbreviation
 	 * @throws			StrictStandardException
 	 * @return			void
+	 * @api
 	 */
 	public static final function getComponent($abbreviation) {
 		if (!static::componentAbbreviationExists($abbreviation)) throw new StrictStandardException("The component with the abbreviation '%s' does not exist", $abbreviation);
@@ -249,6 +230,7 @@ class Ikarus extends NonInstantiableClass {
 	/**
 	 * Returns the current Configuration instance
 	 * @return		ikarus\system\configuration\Configuration
+	 * @api
 	 */
 	public static final function getConfiguration() {
 		return static::$configurationObj;
@@ -257,6 +239,7 @@ class Ikarus extends NonInstantiableClass {
 	/**
 	 * Returns the current DatabaseManager instance
 	 * @return		ikarus\system\database\DatabaseManager
+	 * @api
 	 */
 	public static final function getDatabaseManager() {
 		return static::$databaseManagerObj;
@@ -265,6 +248,7 @@ class Ikarus extends NonInstantiableClass {
 	/**
 	 * Returns the current EventManager instance
 	 * @return		ikarus\system\event\ExtensionManager
+	 * @api
 	 */
 	public static final function getEventManager() {
 		return static::$eventManagerObj;
@@ -273,6 +257,7 @@ class Ikarus extends NonInstantiableClass {
 	/**
 	 * Returns the current ExtensionManager instance
 	 * @return		ikarus\system\extension\ExtensionManager
+	 * @api
 	 */
 	public static final function getExtensionManager() {
 		return static::$extensionManagerObj;
@@ -281,6 +266,7 @@ class Ikarus extends NonInstantiableClass {
 	/**
 	 * Returns the current FilesystemManager instance
 	 * @return		ikarus\system\io\FilesystemManager
+	 * @api
 	 */
 	public static final function getFilesystemManager() {
 		if (static::$filesystemManagerObj === null) static::initFilesystemManager();
@@ -291,6 +277,7 @@ class Ikarus extends NonInstantiableClass {
 	 * Returns Ikarus' package ID
 	 * @todo		This is currently hardcoded.
 	 * @return		integer
+	 * @api
 	 */
 	public static final function getPackageID() {
 		return 1;
@@ -299,6 +286,7 @@ class Ikarus extends NonInstantiableClass {
 	/**
 	 * Returns Ikarus' path with a trailing slash.
 	 * @return		string
+	 * @api
 	 */
 	public static final function getPath() {
 		if (!class_exists('FileUtil', true)) return dirname(__FILE__).'/../../';
@@ -307,7 +295,8 @@ class Ikarus extends NonInstantiableClass {
 
 	/**
 	 * Returns the init time.
-	 * @return		int64
+	 * @return		integer
+	 * @api
 	 */
 	public static final function getTime() {
 		return static::$currentTime;
@@ -393,6 +382,7 @@ class Ikarus extends NonInstantiableClass {
 	 * @param			string			$abbreviation
 	 * @throws			StrictStandardException
 	 * @return			boolean
+	 * @api
 	 */
 	public static function requestComponent($componentName, $abbreviation = null) {
 		// get abbreviation
@@ -414,6 +404,7 @@ class Ikarus extends NonInstantiableClass {
 	 * Autoloads missing classes
 	 * @param		string			$className
 	 * @return		void
+	 * @api
 	 */
 	public static function autoload($className) {
 		// split namespaces
@@ -478,6 +469,7 @@ class Ikarus extends NonInstantiableClass {
 	 * @param			integer			$message
 	 * @throws			SystemException
 	 * @return			void
+	 * @api
 	 */
 	public static function handleAssertion($file, $line, $code) {
 		// get the relative version of file parameter
@@ -495,6 +487,7 @@ class Ikarus extends NonInstantiableClass {
 	 * @param		integer			$lineNo
 	 * @throws		SystemException
 	 * @return		void
+	 * @api
 	 */
 	public static final function handleError($errorNo, $message, $filename, $lineNo) {
 		if (error_reporting() != 0) {
@@ -512,6 +505,7 @@ class Ikarus extends NonInstantiableClass {
 	 * Handles exceptions
 	 * @param		\Exception			$ex
 	 * @return		void
+	 * @api
 	 */
 	public static final function handleException(\Exception $ex) {
 		if ($ex instanceof exception\IPrintableException) {
@@ -533,6 +527,7 @@ class Ikarus extends NonInstantiableClass {
 	 * @param			array			$arguments
 	 * @throws			SystemException
 	 * @return			mixed
+	 * @api
 	 */
 	public static function __callStatic($methodName, $arguments) {
 		// support for components

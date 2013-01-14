@@ -34,6 +34,7 @@ class ArrayUtil {
 	 * @param			array			$array
 	 * @param			string			$suffix
 	 * @return			array
+	 * @api
 	 */
 	public static function appendSuffix($array, $suffix) {
 		if (!is_array($array)) throw new StrictStandardException(__CLASS__.'::'.__FUNCTION__.' expects parameter 1 to be array');
@@ -48,6 +49,7 @@ class ArrayUtil {
 	 * Converts all non-html conform chars into HTML compatible strings (Non-string elements will be ignored).
 	 * @param			array			$array
 	 * @return			array
+	 * @api
 	 */
 	public static function encodeHTML($array) {
 		if (!is_array($array)) throw new StrictStandardException(__CLASS__.'::'.__FUNCTION__.' expects parameter 1 to be array');
@@ -65,6 +67,7 @@ class ArrayUtil {
 	 * @param			array			$array
 	 * @return			array
 	 * @throws			StrictStandardException
+	 * @api
 	 */
 	public static function encodeUTF8($array) {
 		if (!is_array($array)) throw new StrictStandardException(__CLASS__.'::'.__FUNCTION__.' expects parameter 1 to be array');
@@ -83,6 +86,7 @@ class ArrayUtil {
 	 * @param			array			$search
 	 * @return			boolean
 	 * @todo Check for a better way to do this.
+	 * @api
 	 */
 	public static function in_array($array, $search) {
 		if (!is_array($array)) throw new StrictStandardException(__CLASS__.'::'.__FUNCTION__.' expects parameter 1 to be array');
@@ -97,6 +101,7 @@ class ArrayUtil {
 	 * Converts all elements (!) into integers.
 	 * @param			array			$array
 	 * @return			array
+	 * @api
 	 */
 	public static function toIntegerArray($array) {
 		if (!is_array($array)) throw new StrictStandardException(__CLASS__.'::'.__FUNCTION__.' expects parameter 1 to be array');
@@ -113,7 +118,8 @@ class ArrayUtil {
 	 * Trims all elements of a string stack (Non-string elements will be ignored).
 	 * @param			array			$array
 	 * @param			boolean			$removeEmptyElements
-	 * @return			array 
+	 * @return			array
+	 * @api
 	 */
 	public static function trim($array, $removeEmptyElements = true) {
 		if (!is_array($array)) throw new StrictStandardException(__CLASS__.'::'.__FUNCTION__.' expects parameter 1 to be array');
@@ -138,6 +144,7 @@ class ArrayUtil {
 	 * Replaces all non-*NIX newlines with *NIX newlines (Non-string elements will be ignored).
 	 * @param			array			$array
 	 * @return			array
+	 * @api
 	 */
 	public static function unifyNewlines($array) {
 		if (!is_array($array)) throw new StrictStandardException(__CLASS__.'::'.__FUNCTION__.' expects parameter 1 to be array');

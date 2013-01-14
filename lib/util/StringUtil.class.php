@@ -44,6 +44,7 @@ class StringUtil {
 	 * Adds thousands separators to a given number
 	 * @param		mixed			$number
 	 * @return		string
+	 * @api
 	 */
 	public static function addThousandsSeparator($number) {
 		if ($number >= 1000 || $number <= -1000) $number = preg_replace('~(?<=\d)(?=(\d{3})+(?!\d))~', (Ikarus::componentAbbreviationExists('LanguageManager') ? Ikarus::getLanguageManager()->getActiveLanguage()->get('ikarus.global.decimalPoint') : '.'), $number);
@@ -52,6 +53,7 @@ class StringUtil {
 	
 	/**
 	 * @see substr_count()
+	 * @api
 	 */
 	public static function countSubstring($hayStack, $needle) {
 		if (static::mbStringAvailable())
@@ -63,7 +65,8 @@ class StringUtil {
 	/**
 	 * Decodes html entities
 	 * @param 		string 			$string
-	 * @return 		string 			$string
+	 * @return 		string
+	 * @api
 	 */
 	public static function decodeHTML($string) {
 		if (is_object($string)) $string = (string) $string;
@@ -74,7 +77,8 @@ class StringUtil {
 	/**
 	 * Converts html special characters
 	 * @param 		string 			$string
-	 * @return 		string 			$string
+	 * @return 		string
+	 * @api
 	 */
 	public static function encodeHTML($string) {
 		// convert to string
@@ -86,6 +90,7 @@ class StringUtil {
 	 * Encodes a string as UTF8 (usually used for json_encode() stuff).
 	 * @param			string			$string
 	 * @return			string
+	 * @api
 	 */
 	public static function encodeUTF8($string) {
 		return utf8_encode($string);
@@ -93,6 +98,7 @@ class StringUtil {
 	
 	/**
 	 * @see ucfirst()
+	 * @api
 	 */
 	public static function firstCharToUpperCase($string) {
 		if (static::mbStringAvailable())
@@ -106,6 +112,7 @@ class StringUtil {
 	 * @param		double			$double
 	 * @param		integer			$minDecimals
 	 * @return		string
+	 * @api
 	 */
 	public static function formatDouble($double, $minDecimals = 0) {
 		// consider as integer, if no decimal places found
@@ -128,6 +135,7 @@ class StringUtil {
 	 * Formats a numeric
 	 * @param 		numeric 		$numeric
 	 * @return 		string
+	 * @api
 	 */
 	public static function formatNumeric($numeric) {
 		if (is_int($numeric))
@@ -145,7 +153,8 @@ class StringUtil {
 	 * Returns a double salted hash of the given value
 	 * @param 		string			$value
 	 * @param		string			$salt
-	 * @return 		string	 		$hash
+	 * @return 		string
+	 * @api
 	 */
 	public static function getDoubleSaltedHash($value, $salt) {
 		return static::getSaltedHash(static::getSaltedHash($value, $salt), $salt, true);
@@ -154,6 +163,7 @@ class StringUtil {
 	/**
 	 * Creates a random hash
 	 * @return		string
+	 * @api
 	 */
 	public static function getRandomID() {
 		return EncryptionManager::hash(microtime() . uniqid(mt_rand(), true));
@@ -163,7 +173,8 @@ class StringUtil {
 	 * Returns a salted hash of the given value
 	 * @param 		string			$value
 	 * @param		string			$salt
-	 * @return 		string			$hash
+	 * @return 		string
+	 * @api
 	 */
 	public static function getSaltedHash($value, $salt, $prepend = false) {
 		return EncryptionManager::hash(($prepend ? $salt : '').$value.(!$prepend ? $salt : ''));
@@ -171,6 +182,7 @@ class StringUtil {
 	
 	/**
 	 * @see strpos()
+	 * @api
 	 */
 	public static function indexOf($hayStack, $needle, $offset = 0) {
 		if (static::mbStringAvailable())
@@ -181,6 +193,7 @@ class StringUtil {
 	
 	/**
 	 * @see stripos()
+	 * @api
 	 */
 	public static function indexOfIgnoreCase($hayStack, $needle, $offset = 0) {
 		if (static::mbStringAvailable())
@@ -191,6 +204,7 @@ class StringUtil {
 	
 	/**
 	 * @see strrpos()
+	 * @api
 	 */
 	public static function lastIndexOf($hayStack, $needle) {
 		if (static::mbStringAvailable())
@@ -201,6 +215,7 @@ class StringUtil {
 	
 	/**
 	 * @see strlen()
+	 * @api
 	 */
 	public static function length($string) {
 		if (static::mbStringAvailable())
@@ -219,6 +234,7 @@ class StringUtil {
 	
 	/**
 	 * @see str_replace()
+	 * @api
 	 */
 	public static function replace($search, $replace, $subject, &$count = null) {
 		return str_replace($search, $replace, $subject, $count);
@@ -226,6 +242,7 @@ class StringUtil {
 	
 	/**
 	 * @see str_ireplace()
+	 * @api
 	 */
 	public static function replaceIgnoreCase($search, $replace, $subject, &$count = 0) {
 		if (static::mbStringAvailable()) {
@@ -245,6 +262,7 @@ class StringUtil {
 	 * Sorts an array of strings and maintain index association
 	 * @param 		array			$strings
 	 * @return 		boolean
+	 * @api
 	 */
 	public static function sort(&$strings) {
 		return asort($strings, SORT_LOCALE_STRING);
@@ -261,6 +279,7 @@ class StringUtil {
 	
 	/**
 	 * @see substr()
+	 * @api
 	 */
 	public static function substring($string, $start, $length = null) {
 		if (static::mbStringAvailable()) {
@@ -274,6 +293,7 @@ class StringUtil {
 
 	/**
 	 * @see strtolower()
+	 * @api
 	 */
 	public static function toLowerCase($string) {
 		if (static::mbStringAvailable())
@@ -284,6 +304,7 @@ class StringUtil {
 	
 	/**
 	 * @see strtoupper()
+	 * @api
 	 */
 	public static function toUpperCase($string) {
 		if (static::mbStringAvailable())
@@ -294,16 +315,18 @@ class StringUtil {
 	
 	/**
 	 * @see trim()
+	 * @api
 	 */
 	public static function trim($text) {
 		return trim($text);
 	}
 	
 	/**
-	 * Unescapes escaped characters in a string
+	 * Unescapes escaped characters in a string.
 	 * @param		string			$string
 	 * @param		string			$chars
 	 * @return 		string
+	 * @api
 	 */
 	public static function unescape($string, $chars = '"') {
 		for ($i = 0, $j = strlen($chars); $i < $j; $i++) $string = static::replace('\\'.$chars[$i], $chars[$i], $string);
@@ -311,9 +334,10 @@ class StringUtil {
 	}
 	
 	/**
-	 * Converts dos to unix newlines
+	 * Converts dos to unix newlines.
 	 * @param 		string 			$string
-	 * @return 		string 			$string
+	 * @return 		string
+	 * @api
 	 */
 	public static function unifyNewlines($string) {
 		return preg_replace("~(\r\n)|(\r)~", "\n", $string);
@@ -321,6 +345,7 @@ class StringUtil {
 
 	/**
 	 * @see ucwords()
+	 * @api
 	 */
 	public static function wordsToUpperCase($string) {
 		if (static::mbStringAvailable())

@@ -50,6 +50,7 @@ class Language extends DatabaseObject {
 	/**
 	 * Loads the language cache for this language
 	 * @return			void
+	 * @api
 	 */
 	public function loadCache() {
 		// performance check
@@ -66,6 +67,8 @@ class Language extends DatabaseObject {
 	 * Returns the compiled value of a language variable
 	 * @param			string			$variableName
 	 * @param			boolean			$disableCompilation
+	 * @return			string
+	 * @api
 	 */
 	public function get($variableName) {
 		// return variable name if variable doesn't exist
@@ -77,7 +80,8 @@ class Language extends DatabaseObject {
 	
 	/**
 	 * Returns the whole list of variables.
-	 * @return array<string>
+	 * @return			array<string>
+	 * @api
 	 */
 	public function getVariables() {
 		return $this->languageVariables;

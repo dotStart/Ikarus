@@ -64,9 +64,10 @@ class RequestDispatcher extends Singleton {
 
 	/**
 	 * Dispatches a request to correct controller
-	 * @param			IApplication		$application
-	 * @param			string			$requestParameters
-	 * @throws IllegalLinkException
+	 * @param			IApplication			$application
+	 * @param			string				$requestParameters
+	 * @throws			IllegalLinkException
+	 * @api
 	 */
 	public function dispatch(IApplication $application, $requestParameters) {
 		// set defaults
@@ -107,6 +108,7 @@ class RequestDispatcher extends Singleton {
 	 * @param			string			$controllerName
 	 * @param			string			$controllerNamespace
 	 * @param			IApplication		$application
+	 * @api
 	 */
 	public function executeController($controllerName, $controllerNamespace, $application) {
 		// build classPath
@@ -134,6 +136,7 @@ class RequestDispatcher extends Singleton {
 	 * @param		string			$controllerName
 	 * @param		string			$controllerNamespace
 	 * @param		IApplication		$application
+	 * @api
 	 */
 	public function loadController($controllerName, $controllerNamespace, $application) {
 		// build classPath

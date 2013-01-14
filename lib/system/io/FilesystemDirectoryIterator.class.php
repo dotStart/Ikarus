@@ -47,6 +47,7 @@ class FilesystemDirectoryIterator implements Iterator, Countable, IFileInfo {
 	/**
 	 * Constructs the object.
 	 * @param			array<IFileInfo>			$contents
+	 * @internal			New instances should get created by the parent adapter.
 	 */
 	public function __construct($contents) {
 		$this->contents = $contents;
@@ -54,6 +55,7 @@ class FilesystemDirectoryIterator implements Iterator, Countable, IFileInfo {
 	
 	/**
 	 * @see Countable::count()
+	 * @api
 	 */
 	public function count() {
 		return count($this->contents);
@@ -61,6 +63,7 @@ class FilesystemDirectoryIterator implements Iterator, Countable, IFileInfo {
 	
 	/**
 	 * @see Iterator::current()
+	 * @api
 	 */
 	public function current() {
 		if (!array_key_exists($this->key(), $this->contents)) throw new IteratorOutOfBoundsException();
@@ -69,6 +72,7 @@ class FilesystemDirectoryIterator implements Iterator, Countable, IFileInfo {
 	
 	/**
 	 * @see ikarus\system\io.IFileInfo::isDirectory()
+	 * @api
 	 */
 	public function isDirectory() {
 		return false;
@@ -76,6 +80,7 @@ class FilesystemDirectoryIterator implements Iterator, Countable, IFileInfo {
 	
 	/**
 	 * @see ikarus\system\io.IFileInfo::isFile()
+	 * @api
 	 */
 	public function isFile() {
 		return true;
@@ -83,6 +88,7 @@ class FilesystemDirectoryIterator implements Iterator, Countable, IFileInfo {
 	
 	/**
 	 * @see Iterator::key()
+	 * @api
 	 */
 	public function key() {
 		$keys = array_keys($this->contents);
@@ -91,6 +97,7 @@ class FilesystemDirectoryIterator implements Iterator, Countable, IFileInfo {
 	
 	/**
 	 * @see Iterator::next()
+	 * @api
 	 */
 	public function next() {
 		$this->pointer++;
@@ -98,6 +105,7 @@ class FilesystemDirectoryIterator implements Iterator, Countable, IFileInfo {
 	
 	/**
 	 * @see Iterator::rewind()
+	 * @api
 	 */
 	public function rewind() {
 		$this->pointer = 0;
@@ -105,6 +113,7 @@ class FilesystemDirectoryIterator implements Iterator, Countable, IFileInfo {
 	
 	/**
 	 * @see Iterator::valid()
+	 * @api
 	 */
 	public function valid() {
 		return array_key_exists($this->key(), $this->contents);

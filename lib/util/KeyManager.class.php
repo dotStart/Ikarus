@@ -34,6 +34,7 @@ class KeyManager {
 	 * Returns the maintainer public key (Used to encrypt error reports)
 	 * @throws			KeyException
 	 * @return			string
+	 * @api
 	 */
 	public static function getMaintainerKey() {
 		// validate key file

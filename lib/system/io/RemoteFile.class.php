@@ -65,6 +65,7 @@ class RemoteFile extends File {
 	 * @param			string			$hostname
 	 * @param			string			$port
 	 * @param			integer			$timeout
+	 * @api
 	 */
 	public function __construct($hostname, $port, $timeout = 30) {
 		// store connection detail
@@ -79,7 +80,8 @@ class RemoteFile extends File {
 	/**
 	 * Creates the connection.
 	 * @return			void
-	 * @throws IOException
+	 * @throws			IOException
+	 * @internal			This method gets called by __construct()
 	 */
 	public function createConnection() {
 		// create connection
@@ -92,6 +94,7 @@ class RemoteFile extends File {
 	/**
 	 * Returns the current connection timeout.
 	 * @return			integer
+	 * @api
 	 */
 	public function getConnectionTimeout() {
 		return $this->connectionTimeout;
@@ -100,6 +103,7 @@ class RemoteFile extends File {
 	/**
 	 * Returns the error number of the last error.
 	 * @return 			integer
+	 * @api
 	 */
 	public function getErrorNumber() {
 		return $this->errorNumber;
@@ -108,6 +112,7 @@ class RemoteFile extends File {
 	/**
 	 * Returns the error description of last error.
 	 * @return			string
+	 * @api
 	 */
 	public function getErrorDescription() {
 		return $this->errorDescription;
@@ -116,6 +121,7 @@ class RemoteFile extends File {
 	/**
 	 * Returns the current hostname.
 	 * @return			string
+	 * @api
 	 */
 	public function getHostname() {
 		return $this->hostname;
@@ -124,6 +130,7 @@ class RemoteFile extends File {
 	/**
 	 * Returns the current port.
 	 * @return			integer
+	 * @api
 	 */
 	public function getPort() {
 		return $this->port;
@@ -133,6 +140,7 @@ class RemoteFile extends File {
 	 * Sets a new connection timeout.
 	 * @param			integer			$timeout
 	 * @return			void
+	 * 2@api
 	 */
 	public function setConnectionTimeout($timeout) {
 		$this->connectionTimeout = $timeout;
@@ -142,6 +150,7 @@ class RemoteFile extends File {
 	 * Sets a new hostname.
 	 * @param			string			$hostname
 	 * @return			void
+	 * @api
 	 */
 	public function setHostname($hostname) {
 		$this->hostname = $hostname;
@@ -151,6 +160,7 @@ class RemoteFile extends File {
 	 * Sets a new port.
 	 * @param			integer			$port
 	 * @return			void
+	 * @api
 	 */
 	public function setPort($port) {
 		$this->port = $port;

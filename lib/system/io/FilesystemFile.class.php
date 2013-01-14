@@ -43,9 +43,10 @@ class FilesystemFile implements IFileInfo {
 	protected $filePath = null;
 	
 	/**
-	 * COnstructs the object.
+	 * Constructs the object.
 	 * @param			string				$filePath
 	 * @param			adapter\IFilesystemAdapter	$adapter
+	 * @internal			New instances should get constructed by the parent adapter.
 	 */
 	public function __construct($filePath, adapter\IFilesystemAdapter $adapter) {
 		$this->adapter = $adapter;

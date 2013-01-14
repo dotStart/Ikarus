@@ -82,6 +82,7 @@ class PackageInformation {
 	 * Appends a dependency.
 	 * @param			PackageDependency				$dependency
 	 * @return			void
+	 * @api
 	 */
 	public function appendDependency(PackageDependency $dependency) {
 		$this->dependencies[] = $dependency;
@@ -91,6 +92,7 @@ class PackageInformation {
 	 * Appends an exclusion.
 	 * @param			PackageExclusion				$exclusion
 	 * @return			void
+	 * @api
 	 */
 	public function appendExclusion(PackageExclusion $exclusion) {
 		$this->exclusions[] = $exclusion;
@@ -100,6 +102,7 @@ class PackageInformation {
 	 * Appends an installation instruction.
 	 * @param			InstallationInstruction				$instruction
 	 * @return			void
+	 * @api
 	 */
 	public function appendInstallationInstruction(InstallationInstruction $instruction) {
 		$this->installationInstructions[] = $instruction;
@@ -109,6 +112,7 @@ class PackageInformation {
 	 * Appends an optional package.
 	 * @param			OptionalPackage					$package
 	 * @return			void
+	 * @api
 	 */
 	public function appendOptionalPackage(OptionalPackage $package) {
 		$this->optionalPackages[] = $package;
@@ -118,6 +122,7 @@ class PackageInformation {
 	 * Appends a soft dependency
 	 * @param			SoftDependency					$dependency
 	 * @return			void
+	 * @api
 	 */
 	public function appendSoftDependency(SoftDependency $dependency) {
 		$this->softDependencies[] = $dependency;
@@ -127,6 +132,7 @@ class PackageInformation {
 	 * Appends an update instruction.
 	 * @param			UpdateInstruction				$instruction
 	 * @return			void
+	 * @api
 	 */
 	public function appendUpdateInstruction(UpdateInstruction $instruction) {
 		$this->updateInstructions[] = $instruction;
@@ -136,6 +142,7 @@ class PackageInformation {
 	 * Decodes package data (Which has been pre-processed by the PackageFileReader class).
 	 * @param			string			$data
 	 * @return			self
+	 * @api
 	 */
 	public static function decode($data) {
 		// decode json string
@@ -173,6 +180,7 @@ class PackageInformation {
 	 * Sets the author information.
 	 * @param			PackageAuthorInformation			$information
 	 * @return			void
+	 * @api
 	 */
 	public function setAuthorInformation(PackageAuthorInformation $information) {
 		$this->authorInformation = $information;
@@ -182,6 +190,7 @@ class PackageInformation {
 	 * Sets the dependency list.
 	 * @param			PackageDependency[]				$dependencies
 	 * @return			void
+	 * @api
 	 */
 	public function setDependencies($dependencies) {
 		$this->dependencies = $dependencies;
@@ -191,6 +200,7 @@ class PackageInformation {
 	 * Sets the exclusion list.
 	 * @param			PackageExclusion[]				$exclusions
 	 * @return			void
+	 * @api
 	 */
 	public function setExclusions($exclusions) {
 		$this->exclusions = $exclusions;
@@ -200,6 +210,7 @@ class PackageInformation {
 	 * Sets the installation instruction list.
 	 * @param			InstallationInstruction[]			$instructions
 	 * @return			void
+	 * @api
 	 */
 	public function setInstallationInstructions($instructions) {
 		$this->installationInstructions = $instructions;
@@ -209,6 +220,7 @@ class PackageInformation {
 	 * Sets the list of optional packages.
 	 * @param			OptionalPackage[]				$packages
 	 * @return			void
+	 * @api
 	 */
 	public function setOptionalPackages($packages) {
 		$this->optionalPackages = $packages;
@@ -218,6 +230,7 @@ class PackageInformation {
 	 * Sets the package information.
 	 * @param			UniquePackageInformation			$information
 	 * @return			void
+	 * @api
 	 */
 	public function setPackageInformation(UniquePackageInformation $information) {
 		$this->packageInformation = $information;
@@ -227,6 +240,7 @@ class PackageInformation {
 	 * Sets the list of soft dependencies.
 	 * @param			SoftPackageDependency[]				$dependencies
 	 * @return			void
+	 * @api
 	 */
 	public function setSoftDependencies($dependencies) {
 		$this->softDependencies = $dependencies;
@@ -236,6 +250,7 @@ class PackageInformation {
 	 * Sets the list of update instructions.
 	 * @param			UpdateInstruction[]				$instructions
 	 * @return			void
+	 * @api
 	 */
 	public function setUpdateInstructions($instructions) {
 		$this->updateInstructions = $instructions;
@@ -244,6 +259,7 @@ class PackageInformation {
 	/**
 	 * Returns the author information object.
 	 * @return			PackageAuthorInformation
+	 * @api
 	 */
 	public function getAuthorInformation() {
 		return $this->authorInformation;
@@ -252,6 +268,7 @@ class PackageInformation {
 	/**
 	 * Returns the dependency list.
 	 * @return			PackageDependency[]
+	 * @api
 	 */
 	public function getDependencies() {
 		return $this->dependencies;
@@ -260,6 +277,7 @@ class PackageInformation {
 	/**
 	 * Returns the exclusion list.
 	 * @return			ExcludedPackage[]
+	 * @api
 	 */
 	public function getExclusions() {
 		return $this->exclusions;
@@ -268,6 +286,7 @@ class PackageInformation {
 	/**
 	 * Returns the installation instruction object.
 	 * @return			InstallationInstructionList
+	 * @api
 	 */
 	public function getInstallationInstructions() {
 		return $this->installationInstructions;
@@ -276,6 +295,7 @@ class PackageInformation {
 	/**
 	 * Returns the optional package list.
 	 * @return			OptionalPackage[]
+	 * @api
 	 */
 	public function getOptionalPackages() {
 		return $this->optionalPackages;
@@ -284,6 +304,7 @@ class PackageInformation {
 	/**
 	 * Returns the package information object.
 	 * @return			UniquePackageInformation
+	 * @api
 	 */
 	public function getPackageInformation() {
 		return $this->packageInformation;
@@ -292,6 +313,7 @@ class PackageInformation {
 	/**
 	 * Returns the soft dependency list.
 	 * @return			SoftPackageDependency[]
+	 * @api
 	 */
 	public function getSoftDependencies() {
 		return $this->softDependencies;
@@ -300,6 +322,7 @@ class PackageInformation {
 	/**
 	 * Returns the update instruction list.
 	 * @return			UpdateInstruction[]
+	 * @api
 	 */
 	public function getUpdateInstructions() {
 		return $this->updateInstructions;

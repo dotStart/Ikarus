@@ -33,6 +33,7 @@ class GeoIP {
 	 * Returns the country which belongs to the given address or host.
 	 * @param			string			$ipAddress			IP address or hostname
 	 * @return			string
+	 * @api
 	 */
 	public static function getCountry($ipAddress) {
 		/// something failed
@@ -45,6 +46,7 @@ class GeoIP {
 	/**
 	 * Checks whether geoip is natively supported.
 	 * @return			boolean
+	 * @api
 	 */
 	public static function isSupported() {
 		// extension loaded?

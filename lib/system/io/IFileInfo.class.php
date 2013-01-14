@@ -32,12 +32,14 @@ interface IFileInfo {
 	/**
 	 * Checks whether the object represents a directory.
 	 * @return			boolean
+	 * @api
 	 */
 	public function isDirectory();
 	
 	/**
 	 * Checks whether the object represents a file.
 	 * @return			boolean
+	 * @api
 	 */
 	public function isFile();
 }

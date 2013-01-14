@@ -33,6 +33,7 @@ class DebugUtil {
 	 * Prints a debug backtrace
 	 * WARNING: Never use this method in productive systems. It can show internal information such as passwords
 	 * @return			void
+	 * @api
 	 */
 	public static function printBacktrace() {
 		// get backtrace

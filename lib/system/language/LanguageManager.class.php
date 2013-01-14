@@ -54,9 +54,8 @@ class LanguageManager implements IConfigurableComponent {
 	protected $languageList = null;
 
 	/**
-	 * Configures a language manager instance
-	 * @param			ikarus\system\application\IApplication			$application
-	 * @return			void
+	 * (non-PHPdoc)
+	 * @see \ikarus\system\application\IConfigurableComponent::configure()
 	 */
 	public function configure(IApplication $application) {
 		// configure instance
@@ -73,6 +72,7 @@ class LanguageManager implements IConfigurableComponent {
 	 * Returns the default language
 	 * @throws			ikarus\system\exception\SystemException
 	 * @return			ikarus\system\language\Language
+	 * @api
 	 */
 	public function getDefaultLanguage() {
 		foreach($this->languageList as $language) if ($language->isDefault) return $language;
@@ -83,6 +83,7 @@ class LanguageManager implements IConfigurableComponent {
 	 * Returns a language by identifier
 	 * @param			integer			$languageID
 	 * @return			ikarus\system\language\Language
+	 * @api
 	 */
 	public function getLanguage($languageID) {
 		foreach($this->languageList as $language) if ($language->languageID == $languageID) return $language;
@@ -92,6 +93,7 @@ class LanguageManager implements IConfigurableComponent {
 	/**
 	 * Loads the language cache
 	 * @return			void
+	 * @internal			This method gets called by __construct().
 	 */
 	protected function loadLanguageCache() {
 		Ikarus::getCacheManager()->getDefaultAdapter()->createResource('lannguages-'.$this->application->getPackageID(), 'languages-'.$this->application->getPackageID(), 'ikarus\\system\\cache\\builder\\CacheBuilderLanguages');
@@ -103,6 +105,7 @@ class LanguageManager implements IConfigurableComponent {
 	 * Sets a language as active
 	 * @param			ikarus\system\language\Language			$language
 	 * @return			void
+	 * @api
 	 */
 	public function setActiveLanguage(Language $language) {
 		$this->activeLanguage = $language;

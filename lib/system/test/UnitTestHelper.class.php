@@ -65,7 +65,10 @@ class UnitTestHelper extends Singleton {
 			return;
 		}
 		
+		// increment failed test count
 		$this->failedTests++;
+		
+		// display error message
 		try {
 			throw new SystemException("Unit test failed: %s", $message);
 		} catch (SystemException $ex) {
@@ -79,6 +82,7 @@ class UnitTestHelper extends Singleton {
 	 * @param		mixed			$variable1
 	 * @param		mixed			$variable2
 	 * @return		void
+	 * @api
 	 */
 	public function assertEqual($message, $variable1, $variable2) {
 		$this->assert($message, $variable1 == $variable2);
@@ -89,6 +93,7 @@ class UnitTestHelper extends Singleton {
 	 * @param		string			$message
 	 * @param		mixed			$variable
 	 * @return		void
+	 * @api
 	 */
 	public function assertFalse($message, $variable) {
 		$this->assert($message, !(bool) $variable);
@@ -100,6 +105,7 @@ class UnitTestHelper extends Singleton {
 	 * @param		mixed			$variable1
 	 * @param		mixed			$variable2
 	 * @return		void
+	 * @api
 	 */
 	public function assertIdentical($message, $variable1, $variable2) {
 		$this->assert($message, $variable1 === $variable2);
@@ -110,6 +116,7 @@ class UnitTestHelper extends Singleton {
 	 * @param		string			$message
 	 * @param		mixed			$variable
 	 * @return		void
+	 * @api
 	 */
 	public function assertTrue($message, $variable) {
 		$this->assert($message, (bool) $variable);
@@ -119,6 +126,7 @@ class UnitTestHelper extends Singleton {
 	 * Executes all tests of given class
 	 * @param		object		$testClass
 	 * @return		void
+	 * @api
 	 */
 	public function executeTests($testClass) {
 		// get reflection instance

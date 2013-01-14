@@ -40,6 +40,7 @@ class CompressionUtil {
 	 * @param			integer			$level			You should leave this at it's default level (2)
 	 * @throws			CompressionException
 	 * @return			string
+	 * @api
 	 */
 	public static function compress($data, $level = static::DEFAULT_LEVEL) {
 		// check support
@@ -60,6 +61,7 @@ class CompressionUtil {
 	 * @param			string			$data
 	 * @throws			CompressionException
 	 * @return			string
+	 * @api
 	 */
 	public static function decompress($data) {
 		// check support
@@ -78,6 +80,7 @@ class CompressionUtil {
 	/**
 	 * Checks whether compression via zlib is supported.
 	 * @return			boolean
+	 * @api
 	 */
 	public static function isSupported() {
 		return extension_loaded('zlib');

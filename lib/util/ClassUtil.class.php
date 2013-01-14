@@ -38,7 +38,8 @@ class ClassUtil {
 	 * @param			string			$part1
 	 * @param			string			$part2
 	 * @param			string			...
-	 * @throws StrictStandardException
+	 * @throws			StrictStandardException
+	 * @api
 	 */
 	public static function buildPath() {
 		// Dumb developer
@@ -67,6 +68,7 @@ class ClassUtil {
 	 * @param			string			$className
 	 * @param			boolean			$autoload
 	 * @return			boolean
+	 * @api
 	 */
 	public static function classExists($className, $autoload = false) {
 		return (class_exists($className, $autoload) or interface_exists($className, $autoload));
@@ -74,6 +76,7 @@ class ClassUtil {
 	
 	/**
 	 * @see class_alias()
+	 * @api
 	 */
 	public static function createAlias($originalClass, $aliasClass) {
 		// convert object to string
@@ -90,6 +93,7 @@ class ClassUtil {
 	 * Returns a list of parent interfaces.
 	 * @param			string			$className
 	 * @return			array<string>
+	 * @api
 	 */
 	public static function getInterfaces($className) {
 		// convert object to string
@@ -101,6 +105,7 @@ class ClassUtil {
 	
 	/**
 	 * @see ReflectionClass::getConstants()
+	 * @api
 	 */
 	public static function getConstantList($className) {
 		// convert object to string
@@ -117,6 +122,7 @@ class ClassUtil {
 	 * Returns the namespace of the given class.
 	 * @param			mixed			$className
 	 * @return			string
+	 * @api
 	 */
 	public static function getNamespace($className) {
 		// convert object to string
@@ -135,6 +141,7 @@ class ClassUtil {
 	 * @param			mixed			$className
 	 * @param			boolean			$getInterfaces			Set this to true if you need a list of interfaces, too.
 	 * @return			array<string>
+	 * @api
 	 */
 	public static function getParents($className, $getInterfaces = false) {
 		// convert object to string
@@ -160,6 +167,7 @@ class ClassUtil {
 	
 	/**
 	 * @see get_object_vars()
+	 * @api
 	 */
 	public static function getPublicProperties($instance) {
 		return get_object_vars($instance);
@@ -170,6 +178,7 @@ class ClassUtil {
 	 * @param			mixed			$className
 	 * @return			boolean
 	 * @throws			MissingDependencyException
+	 * @api
 	 */
 	public static function isAbstract($className) {
 		// convert object to string
@@ -188,6 +197,7 @@ class ClassUtil {
 	 * @param			mixed			$className
 	 * @return			boolean
 	 * @throws			MissingDependencyException
+	 * @api
 	 */
 	public static function isInstantiable($className) {
 		// convert object to string
@@ -206,6 +216,7 @@ class ClassUtil {
 	 * @param			mixed			$className
 	 * @return			boolean
 	 * @throws			MissingDependencyException
+	 * @api
 	 */
 	public static function isInterface($className) {
 		// convert object to string
@@ -222,6 +233,7 @@ class ClassUtil {
 	 * Returns true if the given class inherits from given target class
 	 * @param			mixed			$className
 	 * @param			mixed			$targetClass
+	 * @api
 	 */
 	public static function isInstanceOf($className, $targetClass) {
 		// convert objects to string
@@ -252,6 +264,7 @@ class ClassUtil {
 	 * Loads dependencies defined by a given class.
 	 * @param			string			$className
 	 * @return			void
+	 * @api
 	 */
 	public static function loadDependencies($className) {
 		$reflectionClass = new ReflectionClass($className);
@@ -269,6 +282,7 @@ class ClassUtil {
 	
 	/**
 	 * @see method_exists()
+	 * @api
 	 */
 	public static function methodExists($className, $methodName) {
 		// convert object to string

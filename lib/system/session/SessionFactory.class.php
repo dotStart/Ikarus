@@ -50,6 +50,7 @@ class SessionFactory {
 	 * @param			integer			$packageID
 	 * @param			string			$environment
 	 * @return			void
+	 * @api
 	 */
 	public static function createSession($sessionID, $abbreviation, $packageID, $environment) {
 		// no custom session class? exit!
@@ -102,6 +103,7 @@ class SessionFactory {
 	 * Creates a new session ID
 	 * @todo			Queries in while loops are not the best way ...
 	 * @return			string
+	 * @api
 	 */
 	public static function createSessionID() {
 		do {

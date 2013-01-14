@@ -65,6 +65,7 @@ class SessionManager implements IConfigurableComponent {
 	 * Boots the session
 	 * @param			ikarus\system\application\IApplication			$application
 	 * @return			void
+	 * @internal			This method gets called during init.
 	 */
 	public function boot($application) {
 		try {
@@ -79,6 +80,7 @@ class SessionManager implements IConfigurableComponent {
 	/**
 	 * Clears all session information
 	 * @return			void
+	 * @api
 	 */
 	public function clearSessions() {
 		// fire event
@@ -95,9 +97,8 @@ class SessionManager implements IConfigurableComponent {
 	}
 
 	/**
-	 * Configures the session instance
-	 * @param			ikarus\system\application\IApplication			$application
-	 * @return			void
+	 * (non-PHPdoc)
+	 * @see \ikarus\system\application\IConfigurableComponent::configure()
 	 */
 	public function configure(IApplication $application) {
 		$this->boot($application);
@@ -108,6 +109,7 @@ class SessionManager implements IConfigurableComponent {
 	 * @param			string			$abbreviation
 	 * @return			ISession
 	 * @throws			StrictStandardException
+	 * @api
 	 */
 	public function getSession($abbreviation) {
 		// validate
@@ -120,6 +122,7 @@ class SessionManager implements IConfigurableComponent {
 	/**
 	 * Detects the sessionID from query parameters or cookies (if supported)
 	 * @return			string
+	 * @api
 	 */
 	protected static function getSessionID() {
 		// disable cookies if not support
@@ -138,6 +141,7 @@ class SessionManager implements IConfigurableComponent {
 	/**
 	 * Returns the current session query parameter
 	 * @return			string
+	 * @api
 	 */
 	public static function getSessionQueryParameter() {
 		return static::$sessionQueryParameter;
@@ -214,6 +218,7 @@ class SessionManager implements IConfigurableComponent {
 	 * @param			ISession		$sessionInstance
 	 * @throws			StrictStandardException
 	 * @return			void
+	 * @api
 	 */
 	public function registerSession($abbreviation, ISession $sessionInstance) {
 		// fire event
@@ -237,6 +242,7 @@ class SessionManager implements IConfigurableComponent {
 	 * Saves the sessionID at client
 	 * @param			string			$sessionID
 	 * @return			void
+	 * @api
 	 */
 	protected static function saveSessionID($sessionID) {
 		// save cookies
@@ -250,6 +256,7 @@ class SessionManager implements IConfigurableComponent {
 	 * Checks whether a session with specified abbreviation exists
 	 * @param			string			$abbreviation
 	 * @return			boolean
+	 * @api
 	 */
 	public function sessionExists($abbreviation) {
 		return isset($this->sessions[$abbreviation]);

@@ -34,6 +34,7 @@ class HeaderUtil {
 	 * Returns true if cookies are supported
 	 * Note: This will return the correct value only after the second execution
 	 * @return			boolean
+	 * @api
 	 */
 	public static function cookiesSupported() {
 		// check for CLI
@@ -51,6 +52,7 @@ class HeaderUtil {
 	 * Returns cookie content
 	 * @param			string			$cookieName
 	 * @return			string
+	 * @api
 	 */
 	public static function getCookie($cookieName) {
 		if (isset($_COOKIE[Ikarus::getConfiguration()->get('global.http.cookiePrefix').$cookieName])) return $_COOKIE[Ikarus::getConfiguration()->get('global.http.cookiePrefix').$cookieName];
@@ -62,6 +64,8 @@ class HeaderUtil {
 	 * @param			string			$location
 	 * @param			boolean			$prependDir
 	 * @param			boolean			$sendStatusCode
+	 * @return			void
+	 * @api
 	 */
 	public static function redirect($location, $prependDir = true, $sendStatusCode = false) {
 		if ($prependDir and Ikarus::componentAbbreviationExists('SessionManager')) $location = FileUtil::addTrailingSlash(FileUtil::unifyDirSeperator(dirname(Ikarus::getSessionManager()->getSession('ikarus')->requestURI))) . $location;
@@ -75,6 +79,7 @@ class HeaderUtil {
 	 * @param			string			$value
 	 * @param			integer			$expire
 	 * @return			void
+	 * @api
 	 */
 	public static function setCookie($name, $value = '', $expire = 0) {
 		static::sendHeader('Set-Cookie', rawurlencode(Ikarus::getConfiguration()->get('global.http.cookiePrefix').$name).'='.rawurlencode($value).($expire ? '; expires='.gmdate('D, d-M-Y H:i:s', $expire).' GMT' : '').(Ikarus::getConfiguration()->get('global.http.cookiePath') ? '; path='.Ikarus::getConfiguration()->get('global.http.cookiePath') : '').(Ikarus::getConfiguration()->get('global.http.cookieDomain') ? '; domain='.Ikarus::getConfiguration()->get('global.http.cookieDomain') : '').((isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443') ? '; secure' : '').'; HttpOnly', false);
@@ -83,6 +88,7 @@ class HeaderUtil {
 	/**
 	 * Alias for header()
 	 * @see header()
+	 * @api
 	 */
 	public static function sendHeader($name, $content, $replace = true) {
 		@header($name.': '.$content, $replace);
@@ -91,6 +97,7 @@ class HeaderUtil {
 	/**
 	 * Sends no cache headers
 	 * @return			void
+	 * @api
 	 */
 	public static function sendNoCacheHeaders() {
 		static::sendHeader('Expires', 'Mon, 26 Jul 1997 05:00:00 GMT');

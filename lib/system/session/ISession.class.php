@@ -39,6 +39,7 @@ interface ISession {
 	 * Checks whether a session variable is read only.
 	 * @param			string			$variableName
 	 * @return			boolean
+	 * @api
 	 */
 	public function isReadOnly($variableName);
 
@@ -47,12 +48,14 @@ interface ISession {
 	 * @param			string			$variableName
 	 * @param			mixed			$variableValue
 	 * @return			void
+	 * @api
 	 */
 	public function setVariable($variableName, $variableValue);
 	
 	/**
 	 * Updates the database row of this session
 	 * @return			void
+	 * @api
 	 */
 	public function update();
 }

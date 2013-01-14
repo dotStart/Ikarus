@@ -33,6 +33,7 @@ class XMLUtil {
 	 * Converts a DOMDocument or DOMElement to array
 	 * @param			DOMElement			$rootElement
 	 * @return			array
+	 * @api
 	 */
 	public static function convertToArray($rootElement) {
 		if ($rootElement instanceof DOMDocument) return static::convertToArray($rootElement->documentElement);
@@ -97,6 +98,7 @@ class XMLUtil {
 	 * @param			string			$root			Defaults to 'data'
 	 * @param			string			$doc
 	 * @return			DOMDocument
+	 * @api
 	 */
 	public static function convertFromArray($data, $root = null, $doc = null) {
 		// create root element

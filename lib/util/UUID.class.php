@@ -41,7 +41,8 @@ class UUID {
 	/**
 	 * Creates a new UUID.
 	 * @param			string			$namespace			A namespace UUID.
-	 * @param			string			$resourceName			
+	 * @param			string			$resourceName	
+	 * @return			string		
 	 */
 	public static function create($namespace, $resourceName) {
 		// validate namespace
@@ -88,6 +89,7 @@ class UUID {
 	/**
 	 * Generates a pseudo random v4 UUID which can be used for root namespaces.
 	 * @return			string
+	 * @api
 	 */
 	public static function generateNamespace() {
 		return sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
@@ -112,6 +114,7 @@ class UUID {
 	/**
 	 * Returns the root namespace UUID.
 	 * @return			string
+	 * @api
 	 */
 	public static function getRootNamespace() {
 		// regenerate root namespace
@@ -124,6 +127,7 @@ class UUID {
 	/**
 	 * Inits the root namespace.
 	 * @return			void
+	 * @api
 	 */
 	public static function initRootNamespace() {
 		// try to get root namespace from configuration
@@ -156,6 +160,7 @@ class UUID {
 	 * Checks whether the specified UUID is valid or not.
 	 * @param			string			$uuid
 	 * @return			boolean
+	 * @api
 	 */
 	public static function isUUID($uuid) {
 		return preg_match(static::UUID_REGEX, $uuid) === 1;

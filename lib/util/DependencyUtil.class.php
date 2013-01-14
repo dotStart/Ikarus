@@ -37,6 +37,7 @@ class DependencyUtil {
 	 * @param			QueryEditor			$query
 	 * @param			string				$table
 	 * @return			void
+	 * @api
 	 */
 	public static function generateDependencyQuery($packageID, QueryEditor $query, $table) {
 		$query->join(QueryEditor::LEFT_JOIN, array('ikarus1_package_dependency' => 'dependency'), $table.'.packageID = dependency.packageID', '');
@@ -50,6 +51,7 @@ class DependencyUtil {
 	 * @param			QueryEditor			$query
 	 * @param			string				$table
 	 * @return			void
+	 * @api
 	 */
 	public static function generateInstanceQuery($instanceID, QueryEditor $query, $table) {
 		if (Ikarus::getConfiguration()->get('application.dependency.inheritParentInstanceInformation')) {

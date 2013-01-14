@@ -27,6 +27,7 @@ use ikarus\system\exception\io\IOException;
  * @category		Ikarus Framework
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
+ * @todo		Port this class over to filesystem API.
  */
 class File {
 
@@ -54,6 +55,7 @@ class File {
 	 * @param 		string			$filename
 	 * @param 		string			$mode
 	 * @throws		IOException
+	 * @api
 	 */
 	public function __construct($filename, $mode = 'wb') {
 		$this->filename = $filename;
@@ -66,6 +68,7 @@ class File {
 	 * Opens up the file.
 	 * @return			void
 	 * @throws			IOException
+	 * @internal			This method gets called automatically.
 	 */
 	public function open() {
 		// open resource
@@ -78,6 +81,7 @@ class File {
 	/**
 	 * Returnes the given filename
 	 * @return			string
+	 * @api
 	 */
 	public function getFilename() {
 		return $this->filename;
@@ -87,6 +91,7 @@ class File {
 	 * Returns the current file handle
 	 * @return			Resource
 	 * @deprecated			Everything should be wrapped in some way.
+	 * @api
 	 */
 	public function getResource() {
 		return $this->resource;
@@ -97,6 +102,7 @@ class File {
 	 * @param 			string			$function
 	 * @param 			array			$arguments
 	 * @return			mixed
+	 * @api
 	 */
 	public function __call($function, $arguments) {
 		if (function_exists('f' . $function)) {

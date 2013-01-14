@@ -74,6 +74,7 @@ class FilesystemManager {
 	 * Checks whether the given adapter is loaded or not
 	 * @param			string			$adapterName
 	 * @return			boolean
+	 * @api
 	 */
 	public function adapterIsLoaded($adapterName) {
 		return in_array($adapterName, $this->loadedAdapters);
@@ -86,6 +87,7 @@ class FilesystemManager {
 	 * @param			string			$linkID
 	 * @throws			SystemException
 	 * @return			ikarus\system\io\adapter\IFilesystemAdapter
+	 * @api
 	 */
 	public function createConnection($adapterName, $adapterParameters = array(), $linkID = null) {
 		// validate adapter name
@@ -106,6 +108,7 @@ class FilesystemManager {
 	 * Creates a new file handle
 	 * @param			string			$fileName
 	 * @return			ikarus\system\io\FilesystemHandle
+	 * @api
 	 */
 	public function createFile($fileName) {
 		// events ...
@@ -126,6 +129,7 @@ class FilesystemManager {
 	 * Returns the connection with the given linkID
 	 * @param			string			$linkID
 	 * @return			ikarus\system\io\adapter\IFilesystemAdapter
+	 * @api
 	 */
 	public function getConnection($linkID) {
 		if (isset($this->connections[$linkID])) return $this->connections[$linkID];
@@ -135,6 +139,7 @@ class FilesystemManager {
 	/**
 	 * Returns the current active default adapter
 	 * @return			ikarus\system\io\adapter\IFilesystemAdapter
+	 * @api
 	 */
 	public function getDefaultAdapter() {
 		return $this->defaultAdapter;
@@ -146,6 +151,7 @@ class FilesystemManager {
 	 * @throws			SystemException
 	 * @throws			StrictStandardException
 	 * @return			void
+	 * @api
 	 */
 	public function loadAdapter($adapterName) {
 		// get class name
@@ -166,6 +172,7 @@ class FilesystemManager {
 	 * Sets the default adapter
 	 * @param			ikarus\system\io\adapter\IFilesystemAdapter		$handle
 	 * @return			void
+	 * @api
 	 */
 	public function setDefaultAdapter(adapter\IFilesystemAdapter $handle) {
 		$this->defaultAdapter = $handle;
@@ -177,6 +184,7 @@ class FilesystemManager {
 	/**
 	 * Closes all filesystem connections
 	 * @return			void
+	 * @internal			This method gets called by Ikarus during it's shutdown period.
 	 */
 	public function shutdown() {
 		// shutdown filesystem adapters
@@ -191,6 +199,7 @@ class FilesystemManager {
 	/**
 	 * Starts the default adapter
 	 * @return			void
+	 * @internal			This method gets called automatically during init.
 	 */
 	public function startDefaultAdapter() {
 		// load adapter
@@ -208,6 +217,7 @@ class FilesystemManager {
 	 * @param			string			$path
 	 * @throws			StrictStandardException
 	 * @return			void
+	 * @api
 	 */
 	public function validatePath($path) {
 		// disallow relative paths

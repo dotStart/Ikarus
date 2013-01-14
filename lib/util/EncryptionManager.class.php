@@ -52,6 +52,7 @@ class EncryptionManager {
 	/**
 	 * Creates an initialization vector
 	 * @return			string
+	 * @api
 	 */
 	public static function createIV() {
 		return mcrypt_create_iv(mcrypt_get_iv_size(static::CRYPT_ALGORITHM, static::CRYPT_MODE), MCRYPT_RAND);
@@ -64,6 +65,7 @@ class EncryptionManager {
 	 * @param			string			$iv
 	 * @throws			SystemException
 	 * @return			string
+	 * @api
 	 */
 	public static function decrypt($key, $data, $iv) {
 		if (!static::encryptionAvailable()) throw new EncryptionException("Encryption is not supported by php installation");
@@ -84,6 +86,7 @@ class EncryptionManager {
 	 * @param			string			$iv
 	 * @throws			SystemException
 	 * @return			string
+	 * @api
 	 */
 	public static function encrypt($key, $data, $iv) {
 		if (!static::encryptionAvailable()) throw new EncryptionException("Encryption is not supported by php installation");
@@ -103,6 +106,7 @@ class EncryptionManager {
 	 * @param			string				$data
 	 * @throws			SystemException
 	 * @return			string
+	 * @api
 	 */
 	public static function encryptForMaintainer($data) {
 		// check for openssl
@@ -117,6 +121,7 @@ class EncryptionManager {
 	/**
 	 * Returns true if encryption is supported by php installation
 	 * @return			boolean
+	 * @api
 	 */
 	public static function encryptionAvailable() {
 		return (extension_loaded('mcrypt') and in_array(static::CRYPT_ALGORITHM, mcrypt_list_algorithms()));
@@ -141,6 +146,7 @@ class EncryptionManager {
 	 * Hashes data with sha256
 	 * @param			string			$data
 	 * @return			string
+	 * @api
 	 */
 	public static function hash($data) {
 		$hash = mhash(static::HASH_ALGORITHM, $data);
@@ -155,6 +161,7 @@ class EncryptionManager {
 	/**
 	 * Loads all information needed for global encryption.
 	 * @return			void
+	 * @api
 	 */
 	public static final function initGlobalEncryption() {
 		// check for encryption file

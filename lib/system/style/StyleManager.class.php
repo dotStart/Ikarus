@@ -54,9 +54,8 @@ class StyleManager implements IConfigurableComponent {
 	protected $styleList = array();
 
 	/**
-	 * Configures the style instance
-	 * @param			ikarus\system\application\IApplication			$application
-	 * @return			void
+	 * (non-PHPdoc)
+	 * @see \ikarus\system\application\IConfigurableComponent::configure()
 	 */
 	public function configure(IApplication $application) {
 		$this->application = $application;
@@ -69,17 +68,19 @@ class StyleManager implements IConfigurableComponent {
 	}
 
 	/**
-	 * Returns the current active style
+	 * Returns the current active style.
 	 * @return			ikarus\system\style\Style
+	 * @api
 	 */
 	public function getActiveStyle() {
 		return $this->activeStyle;
 	}
 
 	/**
-	 * Returns the default style
+	 * Returns the default style.
 	 * @throws			ikarus\system\exception\SystemException
 	 * @return			ikarus\system\style\Style
+	 * @api
 	 */
 	public function getDefaultStyle() {
 		foreach($this->styleList as $style) if ($style->isDefault) return $style;
@@ -87,9 +88,10 @@ class StyleManager implements IConfigurableComponent {
 	}
 
 	/**
-	 * Returns a style by identifier
+	 * Returns a style by identifier.
 	 * @param			integer			$styleID
 	 * @return			ikarus\system\style\Style
+	 * @api
 	 */
 	public function getStyle($styleID) {
 		foreach($this->styleList as $style) if ($style->styleID == $styleID) return $style;
@@ -97,7 +99,7 @@ class StyleManager implements IConfigurableComponent {
 	}
 
 	/**
-	 * Loads all style manager caches
+	 * Loads all style manager caches.
 	 * @return			void
 	 */
 	protected function loadStyleCache() {
@@ -107,9 +109,10 @@ class StyleManager implements IConfigurableComponent {
 	}
 
 	/**
-	 * Activates a style
+	 * Activates a style.
 	 * @param			ikarus\system\style\Style			$style
 	 * @return			void
+	 * @api
 	 */
 	public function setActiveStyle(Style $style) {
 		// fire event

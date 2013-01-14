@@ -48,6 +48,7 @@ class WebOutputManager {
 	 * @param			mixed			$data
 	 * @param			string			$outputType			xml, json, html, debug and custom output handlers are supported.
 	 * @return			OutputHandle
+	 * @api
 	 */
 	public function generateOutput($data, $outputType = null) {
 		// get default output type
@@ -88,6 +89,7 @@ class WebOutputManager {
 	 * @param			string			$name
 	 * @return			void
 	 * @throws			StrictStandardException
+	 * @api
 	 */
 	public function registerOutputVariable($name) {
 		// validate key
@@ -111,6 +113,7 @@ class WebOutputManager {
 	 * @param			mixed			$value
 	 * @return			void
 	 * @throws			StrictStandardException
+	 * @api
 	 */
 	public function setOutputVariable($name, $value) {
 		// validate key

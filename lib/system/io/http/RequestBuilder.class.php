@@ -196,6 +196,7 @@ class RequestBuilder {
 	 * Adds an acceptable language to list.
 	 * @param			string			$language
 	 * @return			void
+	 * @api
 	 */
 	public function addAcceptableLanguage($language) {
 		$this->acceptableLanguages[] = $language;
@@ -205,6 +206,7 @@ class RequestBuilder {
 	 * Adds an acceptable type to list.
 	 * @param			string			$type
 	 * @return			void
+	 * @api
 	 */
 	public function addAcceptableType($type) {
 		$this->acceptableTypes[] = $type;
@@ -215,6 +217,7 @@ class RequestBuilder {
 	 * @param			string			$key
 	 * @param			string			$value
 	 * @return			void
+	 * @api
 	 */
 	public function addQueryVariable($key, $value) {
 		$this->queryVariables[$key] = $value;
@@ -270,6 +273,7 @@ class RequestBuilder {
 	 * Creates a request from URI.
 	 * @param			string			$uri
 	 * @return			self
+	 * @api
 	 */
 	public static function fromURI($uri) {
 		// parse url
@@ -283,6 +287,7 @@ class RequestBuilder {
 	/**
 	 * Indicates whether the compression is available.
 	 * @return			boolean
+	 * @api
 	 */
 	public static function isCompressionAvailable() {
 		return (extension_loaded('zlib'));
@@ -292,6 +297,7 @@ class RequestBuilder {
 	 * Removes an acceptable language.
 	 * @param			string			$language
 	 * @return			void
+	 * @api
 	 */
 	public function removeAcceptableLanguage($language) {
 		// check
@@ -306,6 +312,7 @@ class RequestBuilder {
 	 * Removes an acceptable type.
 	 * @param			string			$type
 	 * @return			void
+	 * @api
 	 */
 	public function removeAcceptableType($type) {
 		// check
@@ -320,6 +327,7 @@ class RequestBuilder {
 	 * Removes a header.
 	 * @param			string			$key
 	 * @return			void
+	 * @api
 	 */
 	public function removeHeader($key) {
 		if (!array_key_exists($key, $this->headers)) return;
@@ -330,6 +338,7 @@ class RequestBuilder {
 	 * Removes a query variable.
 	 * @param			string			$key
 	 * @return			void
+	 * @api
 	 */
 	public function removeQueryVariable($key) {
 		if (!array_key_exists($key, $this->queryVariables)) return;
@@ -339,6 +348,7 @@ class RequestBuilder {
 	/**
 	 * Resets the credentials (username and password).
 	 * @return			void
+	 * @api
 	 */
 	public function resetCredentials() {
 		$this->username = null;
@@ -349,6 +359,7 @@ class RequestBuilder {
 	 * Sets a new charset.
 	 * @param			string			$charset
 	 * @return			void
+	 * @api
 	 */
 	public function setCharset($charset) {
 		$this->charset = $charset;
@@ -359,6 +370,7 @@ class RequestBuilder {
 	 * @param			string			$key
 	 * @param			string			$value
 	 * @return			void
+	 * @api
 	 */
 	public function setHeader($key, $value) {
 		$this->headers[$key] = $value;
@@ -368,6 +380,7 @@ class RequestBuilder {
 	 * Sets a new hostname.
 	 * @param			string			$hostname
 	 * @return			void
+	 * @api
 	 */
 	public function setHostname($hostname) {
 		$this->hostname = $hostname;
@@ -386,6 +399,7 @@ class RequestBuilder {
 	 * Sets a new path.
 	 * @param			string			$path
 	 * @return			void
+	 * @api
 	 */
 	public function setPath($path) {
 		$this->path = $path;
@@ -395,6 +409,7 @@ class RequestBuilder {
 	 * Sets all needed properties from URI.
 	 * @param			string			$uri
 	 * @return			void
+	 * @api
 	 */
 	public function setPathFromURI($uri) {
 		$uri = parse_url($uri);
@@ -419,6 +434,7 @@ class RequestBuilder {
 	 * Sets a new port.
 	 * @param			integer			$port
 	 * @return			void
+	 * @api
 	 */
 	public function setPort($port) {
 		$this->port = $port;
@@ -428,6 +444,7 @@ class RequestBuilder {
 	 * Sets a new post string.
 	 * @param			string			$data
 	 * @return			void
+	 * @api
 	 */
 	public function setPostData($data) {
 		// build query array if needed
@@ -442,6 +459,7 @@ class RequestBuilder {
 	 * @param			string			$scheme
 	 * @return			void
 	 * @throws			HTTPException
+	 * @api
 	 */
 	public function setScheme($scheme) {
 		if (!in_array($scheme, static::$validSchemes)) throw new HTTPException('Cannot set request to unknown scheme "%s"', $scheme);
@@ -453,6 +471,7 @@ class RequestBuilder {
 	 * @param			string			$type
 	 * @return			void
 	 * @throws			HTTPException
+	 * @api
 	 */
 	public function setType($type) {
 		if (!in_array($type, static::$validTypes)) throw new HTTPException('Cannot set request type to unknown type "%s"', $type);
@@ -463,6 +482,7 @@ class RequestBuilder {
 	 * Sets a new user agent.
 	 * @param			string			$userAgent
 	 * @return			void
+	 * @api
 	 */
 	public function setUserAgent($userAgent) {
 		$this->userAgent = $userAgent;
@@ -472,6 +492,7 @@ class RequestBuilder {
 	 * Sets a new username.
 	 * @param			string			$username
 	 * @return			void
+	 * @api
 	 */
 	public function setUsername($username) {
 		$this->username = $username;
@@ -480,6 +501,7 @@ class RequestBuilder {
 	/**
 	 * Builds the whole query.
 	 * @return			void
+	 * @api
 	 */
 	public function __toString() {
 		// validation

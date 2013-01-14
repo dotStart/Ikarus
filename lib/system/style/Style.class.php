@@ -56,6 +56,7 @@ class Style extends DatabaseObject {
 	/**
 	 * Builds a minified version of style's css code
 	 * @return			string
+	 * @api
 	 */
 	public function buildCssCode() {
 		$mediaQueries = array();
@@ -112,6 +113,7 @@ class Style extends DatabaseObject {
 	/**
 	 * Loads the css definition cache
 	 * @return			void
+	 * @internal			This method gets called by it's parent style manager.
 	 */
 	public function loadCache() {
 		Ikarus::getCacheManager()->getDefaultAdapter()->createResource('style-'.$this->styleID, 'style-'.$this->styleID, 'ikarus\\system\\cache\\builder\\CacheBuilderStyle');

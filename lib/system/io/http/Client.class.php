@@ -38,6 +38,7 @@ class Client {
 	 * @param			RequestBuilder			$request
 	 * @return			\ikarus\system\io\http\Response
 	 * @throws			ConnectionException
+	 * @api
 	 */
 	public static function executeQuery(RequestBuilder $request) {
 		// get connection
@@ -91,6 +92,7 @@ class Client {
 	 * @throws			ConnectionException
 	 * @throws			HTTPException
 	 * @return			string
+	 * @api
 	 */
 	public static function get($URI) {
 		// init request
@@ -108,6 +110,7 @@ class Client {
 	 * @throws			ConnectionException
 	 * @throws			HTTPException
 	 * @return			string
+	 * @api
 	 */
 	public static function post($URI, $data = array()) {
 		// init request

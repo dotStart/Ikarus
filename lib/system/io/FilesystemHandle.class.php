@@ -58,6 +58,7 @@ class FilesystemHandle {
 	 * Creates a new instance of FilesystemHandle
 	 * @param			string			$fileName
 	 * @param			boolean			$newFile
+	 * @api
 	 */
 	public function __construct($fileName, $newFile = false, ikarus\system\io\adapter\IFilesystemAdapter $adapter = null) {
 		$this->fileName = $fileName;
@@ -70,6 +71,7 @@ class FilesystemHandle {
 	 * Adds the given content to buffer
 	 * @param			string			$content
 	 * @return			void
+	 * @api
 	 */
 	public function append($content) {
 		$this->buffer .= $content;
@@ -79,6 +81,7 @@ class FilesystemHandle {
 	 * Replaces the current buffer with new content
 	 * @param			string			$content
 	 * @return			void
+	 * @api
 	 */
 	public function setContent($content) {
 		$this->buffer = $content;
@@ -86,6 +89,7 @@ class FilesystemHandle {
 	
 	/**
 	 * @see ikarus\system\io.FilesystemManager::writeFile()
+	 * @api
 	 */
 	public function write(ikarus\system\io\adapter\IFilesystemAdapter $adapter = null) {
 		// get correct adapter instance
@@ -102,6 +106,7 @@ class FilesystemHandle {
 	/**
 	 * Converts the file buffer to string
 	 * @return			string
+	 * @api
 	 */
 	public function __toString() {
 		return $this->buffer;

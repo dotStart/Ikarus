@@ -42,6 +42,7 @@ class FileUtil {
 	/**
 	 * Alias for dirname()
 	 * @see dirname()
+	 * @api
 	 */
 	public static function getDirectoryName($path) {
 		return dirname($path);
@@ -51,6 +52,7 @@ class FileUtil {
 	 * Returns the path of a temporary file.
 	 * @param			ikarus\system\io\adapter\IFilesystemAdapter			$adapter
 	 * @return			string
+	 * @api
 	 */
 	public static function getTemporaryFilename(ikarus\system\io\adapter\IFilesystemAdapter $adapter = null) {
 		// get adapter if needed
@@ -72,6 +74,7 @@ class FileUtil {
 	 * Removes a leading slash.
 	 * @param			string			$path
 	 * @return			string
+	 * @api
 	 */
 	public static function removeLeadingSlash($path) {
 		if ($path{0} == '/') return substr($path, 1);
@@ -83,6 +86,7 @@ class FileUtil {
 	 * Removes a trailing slash
 	 * @param			string			$path
 	 * @return			string
+	 * @api
 	 */
 	public static function removeTrailingSlash($path) {
 		if (substr($path, -1) == '/') return substr($path, 0, -1);
@@ -94,6 +98,7 @@ class FileUtil {
 	 * Adds a trailing slash
 	 * @param			string			$path
 	 * @return			string
+	 * @api
 	 */
 	public static function addTrailingSlash($path) {
 		if (substr($path, -1) != '/') return $path.'/';
@@ -106,6 +111,7 @@ class FileUtil {
 	 * @param			string			$currentDir
 	 * @param			string			$targetDir
 	 * @return			string
+	 * @api
 	 */
 	public static function getRelativePath($currentDir, $targetDir) {
 		// remove trailing slashes
@@ -145,6 +151,7 @@ class FileUtil {
 	 * Unifies windows and unix directory seperators
 	 * @param			string			$path
 	 * @return			string
+	 * @api
 	 */
 	public static function unifyDirSeperator($path) {
 		$path = str_replace('\\\\', '/', $path);
@@ -155,6 +162,7 @@ class FileUtil {
 	 * Returns canonicalized absolute pathname
 	 * @param			string			$path
 	 * @return			string
+	 * @api
 	 */
 	public static function getRealPath($path) {
 		// unify dir seperators
@@ -191,6 +199,7 @@ class FileUtil {
 	 * @param			integer			$byte
 	 * @param			integer			$precision
 	 * @return			string
+	 * @api
 	 */
 	public static function formatFilesize($byte, $precision = 2) {
 		// start symbol
@@ -230,6 +239,7 @@ class FileUtil {
 	 * @param			integer			$byte
 	 * @param			integer			$precision
 	 * @return			string
+	 * @api
 	 */
 	public static function formatFilesizeBinary($byte, $precision = 2) {
 		// start symbol

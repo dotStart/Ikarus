@@ -70,6 +70,7 @@ class Response {
 	 * Adds a new header to list.
 	 * @param			Header			$header
 	 * @return			void
+	 * @api
 	 */
 	public function addHeader(Header $header) {
 		$this->headers[] = $header;
@@ -79,6 +80,7 @@ class Response {
 	 * Appends text to the response buffer.
 	 * @param			string			$line
 	 * @return			void
+	 * @api
 	 */
 	public function append($content) {
 		$this->content .= $content;
@@ -89,7 +91,7 @@ class Response {
 	 * @param			string			$encodingType
 	 * @return			void
 	 * @throws			IOException
-	 * @todo			Verify function. This may not work as PHP could use other compression levels or algorithms than Apache/the webserver.
+	 * @api
 	 */
 	public function decodeBody($encodingType) {
 		// validate encoding
@@ -118,6 +120,7 @@ class Response {
 	 * Parses an HTTP response.
 	 * @param			string			$buffer
 	 * @return			self
+	 * @api
 	 */
 	public static function parse($buffer) {
 		// unify newlines
@@ -166,6 +169,7 @@ class Response {
 	/**
 	 * Returns the body of this response.
 	 * @return			string
+	 * @api
 	 */
 	public function getContent() {
 		return $this->content;
@@ -174,6 +178,7 @@ class Response {
 	/**
 	 * Returns a list of headers.
 	 * @return			\ikarus\system\io\http\Header[]
+	 * @api
 	 */
 	public function getHeaders() {
 		return $this->headers;
@@ -182,6 +187,7 @@ class Response {
 	/**
 	 * Returns the received status code.
 	 * @return			integer
+	 * @api
 	 */
 	public function getStatusCode() {
 		return $this->statusCode;
@@ -190,6 +196,7 @@ class Response {
 	/**
 	 * Returns the received status message.
 	 * @return			string
+	 * @api
 	 */
 	public function getStatusMessage() {
 		return $this->statusMessage;
@@ -199,6 +206,7 @@ class Response {
 	 * Sets a new status code.
 	 * @param			integer			$code
 	 * @return			void
+	 * @api
 	 */
 	public function setStatusCode($code) {
 		$this->statusCode = $code;
@@ -208,6 +216,7 @@ class Response {
 	 * Sets a new status message.
 	 * @param			string			$message
 	 * @return			void
+	 * @api
 	 */
 	public function setStatusMessage($message) {
 		$this->statusMessage = $message;

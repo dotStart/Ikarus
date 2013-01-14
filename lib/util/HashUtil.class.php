@@ -39,6 +39,7 @@ class HashUtil {
 	 * Generates a checksum.
 	 * @param			string			$fileContents
 	 * @return			string
+	 * @api
 	 */
 	public static function generateChecksum($fileContents) {
 		return mhash(static::CHECKSUM_ALGORITHM, $fileContents);
