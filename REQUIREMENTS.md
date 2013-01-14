@@ -24,3 +24,4 @@ mcrypt
 PDO
 mysql
 mysqli
+zlib
