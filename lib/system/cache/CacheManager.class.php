@@ -226,7 +226,7 @@ class CacheManager {
 		$resultList = $stmt->fetchList();
 
 		foreach($resultList as $result) {
-			$adapter = $this->createConnection($result->adapterClass, (!empty($result->adapterParameters) ? unserialize($result->adapterParameters) : null), $result->connectionID);
+			$adapter = $this->createConnection($result->adapterClass, (!empty($result->adapterParameters) ? unserialize($result->adapterParameters) : array()), $result->connectionID);
 			if ($result->isDefaultConnection) $this->setDefaultAdapter($adapter);
 			if ($result->fallbackFor) $this->setFallback($result->connectionID, $result->fallbackFor);
 		}
