@@ -51,12 +51,11 @@ interface ArchiveContent {
 	public function extract($targetPath);
 	
 	/**
-	 * Extracts the content of a file and returns it as string.
+	 * Returns the content of this archive part.
 	 * @return			string
-	 * @throws			IOException
 	 * @api
 	 */
-	public function extractContent();
+	public function getContent();
 	
 	/**
 	 * Returns the checksom of the actual file.
@@ -107,6 +106,14 @@ interface ArchiveContent {
 	 * @api
 	 */
 	public function setChecksum($checksum);
+	
+	/**
+	 * Stores a new content.
+	 * @param			string				$content
+	 * @return			void
+	 * @api
+	 */
+	public function setContent($content);
 	
 	/**
 	 * Sets the filename of the actual file.

@@ -43,6 +43,12 @@ class TarArchiveContent implements ArchiveContent {
 	protected $checksum = 0;
 	
 	/**
+	 * Stores a cached version of the part's content.
+	 * @var			string
+	 */
+	protected $content = null;
+	
+	/**
 	 * Stores a content's filename.
 	 * @var			string
 	 */
@@ -115,10 +121,11 @@ class TarArchiveContent implements ArchiveContent {
 	
 	/**
 	 * (non-PHPdoc)
-	 * @see \ikarus\system\io\archive\ArchiveContent::extractContent()
+	 * @see \ikarus\system\io\archive\ArchiveContent::getContent()
 	 */
-	public function extractContent() {
-		return $this->archive->extractContent($this);
+	public function getContent() {
+		if ($this->content === null) $this->content = $this->archive->extractContent($this);
+		return $this->content;
 	}
 	
 	/**
@@ -237,6 +244,14 @@ class TarArchiveContent implements ArchiveContent {
 	 */
 	public function setChecksum($checksum) {
 		$this->checksum = $checksum;
+	}
+	
+	/**
+	 * (non-PHPdoc)
+	 * @see \ikarus\system\io\archive\ArchiveContent::setContent()
+	 */
+	public function setContent($content) {
+		$this->content = $content;
 	}
 	
 	/**
