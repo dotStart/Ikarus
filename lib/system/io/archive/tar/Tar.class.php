@@ -193,7 +193,7 @@ class Tar {
 	 * @api
 	 */
 	public function extract(TarArchiveContent $content, ikarus\system\io\FilesystemHandle $handle) {
-		$handle->setContent($this->extractContent($content));
+		$handle->setContent($content->getContent());
 		$handle->write();
 	}
 	
