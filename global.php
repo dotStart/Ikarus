@@ -26,6 +26,7 @@
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
+namespace ikarus;
 
 /* defines */
 
@@ -45,5 +46,5 @@ define('TIME_NOW', time());
 
 // include core functions and application core
 require_once(IKARUS_DIR.'lib/system/Ikarus.class.php');
-ikarus\system\Ikarus::init();
+system\Ikarus::init();
 ?>
