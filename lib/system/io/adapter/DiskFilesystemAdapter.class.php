@@ -16,9 +16,12 @@
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
 namespace ikarus\system\io\adapter;
+use ikarus\system\exception\io\IOException;
+use ikarus\system\exception\SystemException;
 use ikarus\system\Ikarus;
 use ikarus\system\io\FilesystemDirectoryIterator;
 use ikarus\system\io\FilesystemFile;
+use ikarus\util\FileUtil;
 
 /**
  * Implements disk filesystem methods
@@ -131,6 +134,87 @@ class DiskFilesystemAdapter implements IFilesystemAdapter {
 	public function getModificationTimestamp($fileName) {
 		Ikarus::getFilesystemManager()->validatePath($fileName);
 		return filemtime($fileName);
+	}
+	
+	/**
+	 * @see ikarus\system\io\adapter.IFilesystemAdapter::getTemporaryDirectory()
+	 */
+	public function getTemporaryDirectory() {
+		// document root
+		if (!empty($_SERVER['DOCUMENT_ROOT'])) {
+			// get path
+			$tempDirectory = FileUtil::addTrailingSlash($_SERVER['DOCUMENT_ROOT']).'tmp/';
+			
+			// create tmp folder if not already created
+			if (!$this->isDirectory($tempDirectory)) { // XXX: This should work for strato webservers, too ...
+				try {
+					$this->createDirectory($tempDirectory);
+					@chmod($tempDirectory, 0777);
+				} catch (SystemException $ex) { } // ignore exceptions
+			}
+			
+			if ($this->isDirectory($tempDirectory) and $this->fileWritable($tempDirectory)) return $tempDirectory;
+		}
+		
+		// environment variables
+		if (isset($_ENV['TMP']) or isset($_ENV['TEMP']) or isset($_ENV['TMPDIR'])) {
+			$tempDirectory = FileUtil::addTrailingSlash((isset($_ENV['TMP']) ? $_ENV['TMP'] : (isset($_ENV['TEMP']) ? $_ENV['TEMP'] : $_ENV['TMPDIR'])));
+			
+			// try to create
+			if (!$this->isDirectory($tempDirectory)) {
+				try {
+					$this->createDirectory($tempDirectory);
+					@chmod($tempDirectory, 0777);
+				} catch (SystemException $ex) { } // ignore exceptions
+			}
+			
+			if ($this->isDirectory($tempDirectory) and $this->fileWritable($tempDirectory)) return $tempDirectory;
+		}
+		
+		// upload_tmp_dir ini variable
+		if (($tempDirectory = ini_get('upload_tmp_dir'))) {
+			// try to create
+			if (!$this->isDirectory($tempDirectory)) {
+				try {
+					$this->createDirectory($tempDirectory);
+					@chmod($tempDirectory, 0777);
+				} catch (SystemException $ex) { } // ignore exceptions
+			}
+			
+			if ($this->isDirectory($tempDirectory) and $this->fileWritable($tempDirectory)) return $tempDirectory;
+		}
+		
+		// /tmp/
+		if ($this->isDirectory('/tmp/') and $this->fileWritable('/tmp/')) return '/tmp/';
+		
+		// session save path
+		if (function_exists('session_save_path') and ($tempDirectory = session_save_path())) {
+			// try to create
+			if (!$this->isDirectory($tempDirectory)) {
+				try {
+					$this->createDirectory($tempDirectory);
+					@chmod($tempDirectory, 0777);
+				} catch (SystemException $ex) { }
+			}
+			
+			if ($this->isDirectory($tempDirectory) and $this->fileWritable($tempDirectory)) return $tempDirectory;
+		}
+		
+		// ikarus installation path
+		$tempDirectory = Ikarus::getPath().'tmp/';
+		
+		// try to create
+		if (!$this->isDirectory($tempDirectory)) {
+			try {
+				$this->createDirectory($tempDirectory);
+				@chmod($tempDIrectory, 0777);
+			} catch (SystemException $ex) { }
+			
+			if ($this->isDirectory($tempDirectory) and $this->fileWritable($tempDirectory)) return $tempDirectory;
+		}
+		
+		// giving up
+		throw new IOException('Tried 9001 temp directories. Could not find any suitable place for my garbage. Giving up.'); // some kind of easteregg
 	}
 	
 	/**

@@ -139,6 +139,14 @@ interface IFilesystemAdapter {
 	public function getModificationTimestamp($fileName);
 	
 	/**
+	 * Returns a path which is used to store files temporary.
+	 * <strong>Note:</strong> This path is unique to this adapter and should NOT be used with other adapters.
+	 * @return			string
+	 * @throws			ikarus\system\exception\io\IOException
+	 */
+	public function getTemporaryDirectory();
+	
+	/**
 	 * Checks whether the target is a directory
 	 * @param			string			$targetPath
 	 * @throws			ikarus\system\exception\io\IOException
