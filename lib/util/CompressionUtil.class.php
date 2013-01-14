@@ -76,6 +76,27 @@ class CompressionUtil {
 		// all ok
 		return $result;
 	}
+	
+	/**
+	 * Decompresses data with zlibs deflate algorithm.
+	 * @param			string			$data
+	 * @throws			CompressionException
+	 * @return			string
+	 * @api
+	 */
+	public static function deflate($data) {
+		// check support
+		if (!static::isSupported()) throw new CompressionException("Cannot compress data: zlib is not available");
+		
+		// decompress data
+		$result = gzdeflate($data);
+		
+		// error
+		if ($result === false) throw new CompressionException("Cannot decompress data: An error occured while decompressing");
+		
+		// all ok
+		return $result;
+	}
 
 	/**
 	 * Checks whether compression via zlib is supported.
