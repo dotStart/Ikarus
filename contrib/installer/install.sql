@@ -1,11 +1,10 @@
 DROP TABLE IF EXISTS ikarus1_application;
 CREATE TABLE ikarus1_application (
-	applicationID INT UNSIGNED AUTO_INCREMENT NOT NULL,
-	applicationTitle VARCHAR (255) NOT NULL,
-	applicationAbbreviation VARCHAR (255) NOT NULL,
-	className VARCHAR (400) NOT NULL,
+	applicationID INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	applicationAbbreviation VARCHAR(255) NOT NULL,
+	className VARCHAR(400) NOT NULL,
 	libraryNamespace TEXT NOT NULL,
-	templatePath TEXT NOT NULL,
+	relativeApplicationPath TEXT,
 	packageID INT NOT NULL,
 	PRIMARY KEY (applicationID)
 );
@@ -147,8 +146,19 @@ CREATE TABLE ikarus1_style_css (
 	PRIMARY KEY (definitionID)
 );
 
+DROP TABLE IF EXISTS ikarus1_instance;
+CREATE TABLE ikarus1_instance (
+	instanceID INT unsigned NOT NULL AUTO_INCREMENT,
+	applicationID INT unsigned NOT NULL,
+	documentRoot VARCHAR(255) DEFAULT NULL,
+	domainName VARCHAR(255) DEFAULT NULL,
+	PRIMARY KEY (instanceID, applicationID),
+	UNIQUE KEY (documentRoot, domainName)
+);
+
 -- rows
-INSERT INTO ikarus1_application (applicationAbbreviation, className, libraryNamespace, templatePath, packageID) VALUES ('ikarus', 'ikarus\\system\\application\\IkarusApplication', 'admin', './template/', 1);
+INSERT INTO ikarus1_application (applicationID, applicationAbbreviation, className, libraryNamespace, relativeApplicationPath, packageID) VALUES
+	(NULL,		'ikarus',		'ikarus\\system\\application\\IkarusApplication',		'admin',		NULL,		1);
 
 INSERT INTO ikarus1_cache_adapter (adapterClass) VALUES ('DiskCacheAdapter');
 INSERT INTO ikarus1_cache_source (adapterID, adapterParameters, isDefaultConnection, fallbackFor, isDisabled) VALUES (1, '', 1, 0, 0);
@@ -156,15 +166,17 @@ INSERT INTO ikarus1_cache_source (adapterID, adapterParameters, isDefaultConnect
 INSERT INTO ikarus1_language (languageName, translatedName, languageCode, isEnabled, hasContent, isDefault, packageID) VALUES ('English', 'English', 'en', 1, 1, 1, 1);
 
 INSERT INTO ikarus1_option (optionID, optionName, optionValue, optionType, packageID) VALUES
-	(NULL,	'global.advanced.debug',					'1',		'boolean',		1),
-	(NULL,	'filesystem.general.defaultAdapter',				'Disk',		'text',			1),
-	(NULL,	'filesystem.general.adapterParameters',				NULL,		'serialized',		1),
-	(NULL,	'output.general.type',						'xml',		'text',			1),
-	(NULL,	'system.encryption.secureMode',					'1',		'boolean',		1),
-	(NULL,	'system.encryption.secureModeKey'				'12345678',	'text',			1), -- Note: This is just a dummy value. The installer should regenerate this.
-	(NULL,	'system.encryption.secureModeIV',				'a9sd80ausfd8hginspﬂ9g78s7fu89a7'	'text', 1); -- Note: THis is just a dummy value. The installer should regenerate this.
+	(NULL,	'global.advanced.debug',					'1',					'boolean',		1),
+	(NULL,	'filesystem.general.defaultAdapter',				'Disk',					'text',			1),
+	(NULL,	'filesystem.general.adapterParameters',				NULL,					'serialized',		1),
+	(NULL,	'output.general.type',						'xml',					'text',			1),
+	(NULL,	'system.encryption.secureMode',					'1',					'boolean',		1);
 
 INSERT INTO ikarus1_request_controller_type (controllerTypeID, parameterName, controllerNamespace, packageID) VALUES
 	(NULL, 'action', 'action', 1);
 
-INSERT INTO ikarus1_style (styleTitle, authorName, authorAlias, authorUrl, styleVersion, styleUrl, styleUrlAlias, licenseName, licenseUrl, environment, isDefault, isEnabled, packageID) VALUES ('Ikarus Default Administration', 'Johannes Donath', 'Akkarin', 'http://www.akkarin.de', '1.0.0 Alpha 1', 'http://www.ikarus-framework.de', 'Ikarus Framework', 'GNU Lesser Public License', 'http://www.gnu.org/licenses/lgpl.txt', 'administration', 1, 1, 1);
+INSERT INTO ikarus1_style (styleTitle, authorName, authorAlias, authorUrl, styleVersion, styleUrl, styleUrlAlias, licenseName, licenseUrl, environment, isDefault, isEnabled, packageID) VALUES
+	('Ikarus Default Administration', 'Johannes Donath', 'Akkarin', 'http://www.akkarin.de', '1.0.0 Alpha 1', 'http://www.ikarus-framework.de', 'Ikarus Framework', 'GNU Lesser Public License', 'http://www.gnu.org/licenses/lgpl.txt', 'administration', 1, 1, 1);
+
+INSERT INTO ikarus1_instance (instanceID, applicationID, documentRoot, domainName) VALUES
+	(NULL, 1, '/Ikarus/admin', NULL);
