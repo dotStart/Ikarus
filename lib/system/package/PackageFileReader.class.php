@@ -25,10 +25,12 @@ use ikarus\system\event\package\PackageFileReaderArguments;
 use ikarus\system\event\package\PackageVerificationFailedEvent;
 use ikarus\system\event\package\PackageVerificationSucceededEvent;
 use ikarus\system\exception\package\ContentVerificationFailedException;
-use ikarus\system\€xception\package\UnsupportedPackageVersionException;
+use ikarus\system\exception\package\UnsupportedPackageVersionException;
 use ikarus\system\exception\package\WrongMagicStringException;
 use ikarus\system\Ikarus;
+use ikarus\system\io\archive\tar\Tar;
 use ikarus\util\CompressionUtil;
+use ikarus\util\FileUtil;
 use ikarus\util\StringUtil;
 
 /**
@@ -40,7 +42,6 @@ use ikarus\util\StringUtil;
  * @category		Ikarus Framework
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
- * @todo		Add events and update file implementation
  */
 class PackageFileReader {
 
@@ -79,6 +80,12 @@ class PackageFileReader {
 	 * @var			PackageInformation
 	 */
 	protected $package = null;
+	
+	/**
+	 * Stores the file part of a package.
+	 * @var			string
+	 */
+	protected $packageContent = null;
 	
 	/**
 	 * Contains unprocessed file contents.
@@ -129,8 +136,37 @@ class PackageFileReader {
 			throw $ex;
 		}
 		
+		// split contents
+		list($packageMetadata, $packageContent) = explode(chr(0), $this->fileContents, 2);
+		
 		// decode contents
-		$this->package = PackageInformation::decode($this->fileContents);
+		$this->package = PackageInformation::decode($packageMetadata);
+		
+		// store package contents
+		$this->packageContent = $packageContent;
+	}
+	
+	/**
+	 * Returns the raw package content.
+	 * @return			string
+	 */
+	public function getRawPackage() {
+		return $this->packageContent;
+	}
+	
+	/**
+	 * Returns a tar instance for the package content.
+	 * @return			ikarus\system\io\archive\tar\Tar;
+	 */
+	public function getContent() {
+		// write contents to file
+		$filename = FileUtil::getTemporaryFilename();
+		
+		// write contents
+		Ikarus::getFilesystemManager()->getDefaultAdapter()->createFile($filename, $this->packageContent);
+		
+		// get tar handle
+		return (new Tar($filename));
 	}
 	
 	/**
