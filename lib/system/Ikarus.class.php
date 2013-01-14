@@ -119,7 +119,6 @@ class Ikarus extends NonInstantiableClass {
 		static::$currentTime = time();
 
 		// start core components
-		static::fixMagicQuotes();
 		static::initDatabaseManager();
 		static::initConfiguration();
 		static::initEncryptionManager();
