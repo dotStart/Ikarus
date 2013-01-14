@@ -123,7 +123,7 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	/**
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::__construct()
 	 */
-	public function __construct($hostname, $port, $user, $password, array $databaseParameters) {
+	public function __construct($hostname, $port, $user, $password, $databaseParameters) {
 		// proceed arguments
 		$this->hostname = $hostname;
 		$this->port = $port;
