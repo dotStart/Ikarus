@@ -99,7 +99,7 @@ class DiskCacheAdapter implements ICacheAdapter {
 	 * @param			string			$resourceName
 	 * @return			mixed
 	 */
-	protected function getCacheData($cacheBuilderClass, $resourceName, array $additionalCacheBuilderParameters = array()4) {
+	protected function getCacheData($cacheBuilderClass, $resourceName, array $additionalCacheBuilderParameters = array()) {
 		// validate class
 		if (!class_exists($cacheBuilderClass, true)) throw new SystemException("Cannot use cache builder class '%s': The class does not exist!", $cacheBuilderClass);
 
