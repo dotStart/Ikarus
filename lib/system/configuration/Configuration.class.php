@@ -151,7 +151,7 @@ class Configuration {
 		
 		// check for existing class
 		if (!class_exists($className)) throw new StrictStandardException("The class '%s' for option type '%s' is missing", $className, $type);
-		if (!ClassUtil::isInstanceOf($className, 'ikarus\system\configuration\type\ConfigurationType')) throw new StrictStandardException("The class '%s' of option type '%s' is not an implementation of ikarus\\system\\configuration\\type\\ConfigurationType", $className, $type);
+		if (!ClassUtil::isInstanceOf($className, 'ikarus\system\configuration\type\IConfigurationType')) throw new StrictStandardException("The class '%s' of option type '%s' is not an implementation of ikarus\\system\\configuration\\type\\ConfigurationType", $className, $type);
 		
 		// get real variable content
 		return call_user_func(array($className, 'getRealValue'), $value);
