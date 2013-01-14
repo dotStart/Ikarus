@@ -193,6 +193,7 @@ class PackageFileReader {
 	
 	/**
 	 * Verifies a package file.
+	 * @return			void
 	 * @throws			WrongMagicStringException
 	 * @throws			UnsupportedPackageVersionException
 	 * @throws			Exception
