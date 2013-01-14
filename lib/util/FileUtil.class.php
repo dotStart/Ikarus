@@ -34,6 +34,12 @@ use ikarus\system\io\FTP;
 class FileUtil {
 	
 	/**
+	 * Stores a suffix for all temporary files.
+	 * @var			string
+	 */
+	const TEMPORARY_SUFFIX = '.tmp';
+	
+	/**
 	 * Alias for dirname()
 	 * @see dirname()
 	 */
@@ -42,23 +48,22 @@ class FileUtil {
 	}
 	
 	/**
-	 * Returns the filepath for a temporary file
-	 * @param 	string 		$prefix
-	 * @param 	string 		$extension
-	 * @param 	string		$dir
-	 * @return 	string 				temporary filename
+	 * Returns the path of a temporary file.
+	 * @param			ikarus\system\io\adapter\IFilesystemAdapter			$adapter
+	 * @return			string
 	 */
-	public static function getTemporaryFilename($dir = null) {
-		// get dir if needed
-		if ($dir === null) $dir = static::getTemporaryDirname();
+	public static function getTemporaryFilename(ikarus\system\io\adapter\IFilesystemAdapter $adapter = null) {
+		// get adapter if needed
+		if ($adapter === null) $adapter = Ikarus::getFilesystemManager()->getDefaultAdapter();
 		
-		// add trailing slash to dir
-		$dir = static::addTrailingSlash($dir);
+		// get directory
+		$directory = $adapter->getTemporaryDirectory();
 		
 		do {
-			$tmpFile = $dir.StringUtil::getRandomID().static::TEMPORARY_SUFFIX;
-		} while (file_exists($tmpFile));
+			$tmpFile = $directory.StringUtil::getRandomID().static::TEMPORARY_SUFFIX;
+		} while ($adapter->fileExists($tmpFile));
 
+		// return temporary filename
 		return $tmpFile;
 	}
 
