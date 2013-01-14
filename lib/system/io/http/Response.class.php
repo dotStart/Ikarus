@@ -16,6 +16,7 @@
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
 namespace ikarus\system\io\http;
+use ikarus\util\CompressionUtil;
 use ikarus\util\StringUtil;
 
 /**
@@ -98,20 +99,20 @@ class Response {
 		switch($encodingType) {
 			case static::ENCODING_DEFLATE:
 			case static::ENCODING_GZIP:
-				if (!RequestBuilder::isCompressionAvailable()) throw new IOException('Cannot decode response body: Compression is not supported by PHP');
+				if (!CompressionUtil::isSupported()) throw new IOException('Cannot decode response body: Compression is not supported by PHP');
 				break;
 		}
 		
 		// decode
 		switch($encodingType) {
 			case static::ENCODING_DEFLATE:
-				$this->content = gzdeflate($this->content);
+				$this->content = CompressionUtil::deflate($this->content);
 				break;
 			case static::ENCODING_GZIP:
-				$this->content = gzdecode($this->content);
+				$this->content = CompressionUtil::decompress($this->content);
 				break;
 			default:
-				throw new IOException('cannot decode response body: Unknown algorithm "%s" supplied', $encodingType);
+				throw new IOException('Cannot decode response body: Unknown algorithm "%s" supplied.', $encodingType);
 				break;
 		}
 	}
