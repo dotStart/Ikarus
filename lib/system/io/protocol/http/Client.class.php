@@ -15,8 +15,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
-namespace ikarus\system\io\http;
-
+namespace ikarus\system\io\protocol\http;
 use ikarus\system\exception\io\http\HTTPException;
 use ikarus\system\exception\io\http\ConnectionException;
 use ikarus\system\Ikarus;
