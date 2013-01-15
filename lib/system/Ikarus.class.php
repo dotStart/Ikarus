@@ -117,6 +117,9 @@ class Ikarus extends NonInstantiableClass {
 	public static final function init() {
 		// save current time
 		static::$currentTime = time();
+		
+		// set default locale to en-US
+		setLocale(LC_ALL, 'en_US');
 
 		// start core components
 		static::initDatabaseManager();
