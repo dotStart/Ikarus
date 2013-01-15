@@ -17,6 +17,7 @@
  */
 namespace ikarus\system\exception;
 use \Exception;
+use ikarus\system\Ikarus;
 
 /**
  * This exception will be thrown if an exception should be hidden (productive mode).
@@ -35,6 +36,31 @@ class HiddenApplicationException extends SystemException {
 	 */
 	public function __construct($message = "", $code = 0, SystemException $previous = null) {
 		Exception::__construct($message, $code, $previous);
+		
+		// store information
+		if (Ikarus::getDatabaseManager() !== null and Ikarus::getDatabaseManager()->getDefaultAdapter() !== null) {
+			try {
+				$sql = "INSERT INTO
+						ikarus1_error_log (message, code, file, line, stacktrace, files, constants, extensions)
+					VALUES
+						(?, ?, ?, ?, ?, ?, ?, ?)";
+				
+				$constatns = get_defined_constants(true);
+				
+				$stmt = Ikarus::getDatabaseManager()->getDefaultAdapter()->prepareStatement($sql);
+				$stmt->bind($this->getMessage());
+				$stmt->bind($this->__getCode());
+				$stmt->bind($this->__getFile());
+				$stmt->bind($this->getLine());
+				$stmt->bind($this->__getTraceAsString());
+				$stmt->bind(implode(', ', array_map(array($this, 'prepareFilePath'), get_included_files())));
+				$stmt->bind(implode(', ', array_keys($constants['user'])));
+				$stmt->bind(implode(', ', get_loaded_extensions()));
+				$stmt->execute();
+			} catch (DatabaseException $ex) {
+				; // ignore
+			}
+		}
 	}
 	
 	/**
@@ -63,11 +89,11 @@ class HiddenApplicationException extends SystemException {
 					
 					if (preg_match('~ENCRYPTED REPORT~i', $errorReport)) {
 					?>
-					<h2><a href="javascript:void(0);" onclick="$('#errorReport').toggle('blind'); $(this).text(($(this).text() == '+' ? '-' : '+'));">+</a> Support Information</h2>
-					<div id="errorReport" style="display: none;">
-						<p>If you are the administrator of this page you can use the following information for supporting purposes:</p>
-						<pre><?php echo $errorReport; ?></pre>
-					</div>
+						<h2><a href="javascript:void(0);" onclick="$('#errorReport').toggle('blind'); $(this).text(($(this).text() == '+' ? '-' : '+'));">+</a> Support Information</h2>
+						<div id="errorReport" style="display: none;">
+							<p>If you are the administrator of this page you can use the following information for supporting purposes:</p>
+							<pre><?php echo $errorReport; ?></pre>
+						</div>
 					<?php
 					}
 					?>
