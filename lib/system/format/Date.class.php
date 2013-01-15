@@ -127,6 +127,22 @@ class Date {
 	}
 	
 	/**
+	 * Parses a date with a specified format.
+	 * @param			string			$format
+	 * @param			string			$date
+	 * @return			self
+	 */
+	public static function parse($format, $date) {
+		$parsed = date_parse_from_format($format, $date);
+		
+		// validate
+		if (!$parsed or !is_array($parsed)) throw new IllegalArgumentException('Cannot parse date "%s" with format "%s".', $date, $format); // XXX: I'm not sure whether this works ...
+		
+		// create timestamp
+		return (new static(mktime($parsed['hour'], $parsed['minute'], $parsed['second'], $parsed['month'], $parsed['day'], $parsed['year'], (isset($parsed['dst']) and !empty($parsed['dst']) and ((bool) $parsed['dst'])))));
+	}
+	
+	/**
 	 * Sets a new day.
 	 * @param			integer			$day
 	 * @return			void
