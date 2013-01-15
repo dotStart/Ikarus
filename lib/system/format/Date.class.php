@@ -197,5 +197,13 @@ class Date {
 	public function setDST($dst = false) {
 		$this->timestamp = mktime($this->getHour(), $this->getMinute(), $this->getSecond(), $this->getMonth(), $this->getDay(), $this->getYear(), ($dst ? 1 : 0));
 	}
+	
+	/**
+	 * Returns a preferred date and time string (based on current set locale).
+	 * @return			string
+	 */
+	public function __toString() {
+		return $this->format('%c');
+	}
 }
 ?>
