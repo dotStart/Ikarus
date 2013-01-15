@@ -276,10 +276,10 @@ class SystemException extends Exception implements IPrintableException {
 						<h2><a href="javascript:void(0);" onclick="$('#stacktrace').toggle('blind'); $(this).text(($(this).text() == '+' ? '-' : '+'));">+</a>Stacktrace</h2>
 						<pre id="stacktrace" style="display: none;"><?php echo StringUtil::encodeHTML($this->__getTraceAsString()); ?></pre>
 
-						<h2><a href="javascript:void(0);" onclick="$('#files').toggle('blind'); $(this).text(($(this).text() == '+' ? '-' : '+'));">+</a>Files</h2>
+						<h2><a href="javascript:void(0);" onclick="$('#files').toggle('blind'); $(this).text(($(this).text() == '+' ? '-' : '+'));">+</a>Files (<?php echo count(get_included_files()); ?>)</h2>
 						<pre id="files" style="display: none;"><?php $includes = array_map(array($this, 'prepareFilePath'), get_included_files()); asort($includes); foreach($includes as $file) echo $file."\n"; ?></pre>
 
-						<h2><a href="javascript:void(0);" onclick="$('#definedConstants').toggle('blind'); $(this).text(($(this).text() == '+' ? '-' : '+'));">+</a>Constants</h2>
+						<h2><a href="javascript:void(0);" onclick="$('#definedConstants').toggle('blind'); $(this).text(($(this).text() == '+' ? '-' : '+'));">+</a>Constants (<?php echo count(get_defined_constants(true)); ?>)</h2>
 						<pre id="definedConstants" style="display: none;"><?php $constants = get_defined_constants(true); $constants = array_keys($constants['user']); asort($constants); foreach($constants as $constant) {
 							$string = gettype($constant).'';
 							$constantValue = constant($constant);
@@ -301,7 +301,7 @@ class SystemException extends Exception implements IPrintableException {
 							echo str_pad($constant, (max(array_map('strlen', $constants)) + 4), " ", STR_PAD_RIGHT).$string."\n";
 						} ?></pre>
 
-						<h2><a href="javascript:void(0);" onclick="$('#extensions').toggle('blind'); $(this).text(($(this).text() == '+' ? '-' : '+'));">+</a>Extensions</h2>
+						<h2><a href="javascript:void(0);" onclick="$('#extensions').toggle('blind'); $(this).text(($(this).text() == '+' ? '-' : '+'));">+</a>Extensions (<?php echo count(get_loaded_extensions()); ?>)</h2>
 						<pre id="extensions" style="display: none;"><?php $extensions = get_loaded_extensions(); asort($extensions); foreach($extensions as $extension) echo $extension."\n"; ?></pre>
 
 						<?php echo $this->additionalInformationElements; ?>
