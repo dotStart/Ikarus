@@ -94,5 +94,13 @@ class Header {
 		
 		return (new Header($name, $value));
 	}
+	
+	/**
+	 * Converts the header back to a mime header string.
+	 * @return			string
+	 */
+	public function __toString() {
+		return $this->name.': '.$this->value;
+	}
 }
 ?>
