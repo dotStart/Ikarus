@@ -40,12 +40,21 @@ class FileUtil {
 	const TEMPORARY_SUFFIX = '.tmp';
 	
 	/**
-	 * Alias for dirname()
-	 * @see dirname()
+	 * Alias for dirname().
+	 * @see			dirname()
 	 * @api
 	 */
 	public static function getDirectoryName($path) {
 		return dirname($path);
+	}
+	
+	/**
+	 * Alias for basename().
+	 * @see			basename()
+	 * @api
+	 */
+	public static function getFilename($path, $suffix = '') {
+		return basename($path, $suffix);
 	}
 	
 	/**
