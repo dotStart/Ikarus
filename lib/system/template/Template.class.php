@@ -131,7 +131,7 @@ class Template {
 	 * @param			mixed[]			$variables
 	 * @return			void
 	 */
-	public function assignVariables($variables, VariableContext $context = null) {
+	public function assignVariables(array $variables, VariableContext $context = null) {
 		foreach($variables as $key => $value) {
 			$this->assignVariable($key, $value, $context);
 		}
@@ -143,7 +143,7 @@ class Template {
 	 * @param			VariableContext			$variables
 	 * @return			\ikarus\system\template\TemplateContext
 	 */
-	public function createTemplateContext(TemplateFile $template, $variables = array(), ITemplateParser $parser = null) {
+	public function createTemplateContext(TemplateFile $template, array $variables = array(), ITemplateParser $parser = null) {
 		// add default variable context
 		if (empty($variables)) $variables[] = $this->variables['default'];
 		if ($parser === null) $parser = $this->parser;
@@ -247,10 +247,10 @@ class Template {
 	
 	/**
 	 * Sets a new variable array.
-	 * @param			VariableContext[9		$variables
+	 * @param			VariableContext[]		$variables
 	 * @return			void
 	 */
-	public function setVariables($variables) {
+	public function setVariables(array $variables) {
 		// fire event
 		$event = new SetVariablesEvent(new PropertyStoreEventArguments($variables));
 		Ikarus::getEventManager()->fire($event);
