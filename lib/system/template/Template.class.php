@@ -82,7 +82,7 @@ class Template {
 	 * @param			ITemplateCompiler			$compiler
 	 * @param			string					$templateDirectory
 	 */
-	public function __construct($compiler = null, $templateDirectory = null) {
+	public function __construct(ITemplateCompiler $compiler = null, $templateDirectory = null) {
 		if ($compiler === null) $this->compiler = new DefaultTemplateCompiler($this);
 		if ($templateDirectory === null) $templateDirectory = Ikarus::getPath().'templates/';
 		
