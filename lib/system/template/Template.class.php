@@ -17,7 +17,21 @@
  */
 namespace ikarus\system\template;
 use ikarus\system\event\GenericEventArguments;
-
+use ikarus\system\event\IdentifierEventArguments;
+use ikarus\system\event\PropertyStoreEventArguments;
+use ikarus\system\event\template\AssignVariableEvent;
+use ikarus\system\event\template\CompilerEventArguments;
+use ikarus\system\event\template\CreateTemplateContextEvent;
+use ikarus\system\event\template\InitEvent;
+use ikarus\system\event\template\InitFinishedEvent;
+use ikarus\system\event\template\ParserEventArguments;
+use ikarus\system\event\template\SetCompilerEvent;
+use ikarus\system\event\template\SetParserEvent;
+use ikarus\system\event\template\SetTemplateDirectoryEvent;
+use ikarus\system\event\template\SetVariablesEvent;
+use ikarus\system\event\template\TemplateContextArguments;
+use ikarus\system\event\template\TemplateEventArguments;
+use ikarus\system\event\template\VariableEventArguments;
 use ikarus\system\Ikarus;
 
 /**
@@ -99,7 +113,7 @@ class Template {
 		if ($context === null) $context = $this->variables['default'];
 		
 		// fire event
-		$event = new AssignVariableEvent(new AssignEventArguments($name, $value, $context));
+		$event = new AssignVariableEvent(new VariableEventArguments($name, $value, $context));
 		Ikarus::getEventManager()->fire($event);
 		
 		// cancellable event
@@ -238,7 +252,7 @@ class Template {
 	 */
 	public function setVariables($variables) {
 		// fire event
-		$event = new SetVariablesEvvent(new PropertyStoreEventArguments($variables));
+		$event = new SetVariablesEvent(new PropertyStoreEventArguments($variables));
 		Ikarus::getEventManager()->fire($event);
 		
 		// cancellable event
