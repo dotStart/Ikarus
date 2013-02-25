@@ -492,15 +492,13 @@ class Ikarus extends NonInstantiableClass {
 	 * @api
 	 */
 	public static final function handleError($errorNo, $message, $filename, $lineNo) {
-		if (error_reporting() != 0) {
-			$type = 'error';
-			switch ($errorNo) {
-				case 2: $type = 'warning'; break;
-				case 8: $type = 'notice'; break;
-			}
-
-			throw new SystemException('PHP '.$type.' in file %s (%s): %s', $filename, $lineNo, $message);
+		$type = 'error';
+		switch ($errorNo) {
+			case 2: $type = 'warning'; break;
+			case 8: $type = 'notice'; break;
 		}
+
+		throw new SystemException('PHP '.$type.' in file %s (%s): %s', $filename, $lineNo, $message);
 	}
 
 	/**
