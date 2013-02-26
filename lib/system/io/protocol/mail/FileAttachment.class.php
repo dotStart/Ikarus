@@ -126,7 +126,7 @@ class FileAttachment implements Attachment {
 	 * @return			void
 	 */
 	protected function guessContentType() {
-		$this->contentType = MimeRegister::guess($this->path, $this->getContent());
+		$this->contentType = MimeRegister::guessType($this->path, $this->getContent());
 	}
 }
 ?>
