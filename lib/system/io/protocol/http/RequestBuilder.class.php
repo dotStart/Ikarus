@@ -29,146 +29,146 @@ use ikarus\system\exception\io\http\HTTPException;
  * @version		2.0.0-0001
  */
 class RequestBuilder {
-	
+
 	/**
 	 * Defines the HTTP version to use.
 	 * @var			string
 	 */
 	const HTTP_VERSION = 'HTTP/1.1';
-	
+
 	/**
 	 * Defines the newline to use.
 	 * Note: This is a Windows newline and should work on every server as it contains both \n and \r.
 	 * @var			string
 	 */
 	const NEWLINE = "\r\n";
-	
+
 	/**
 	 * Defines the delete type.
 	 * @var			string
 	 */
 	const TYPE_DELETE = 'DELETE';
-	
+
 	/**
 	 * Defines the get type.
 	 * @var			string
 	 */
 	const TYPE_GET = 'GET';
-	
+
 	/**
 	 * Defines the head type.
 	 * @var			string
 	 */
 	const TYPE_HEAD = 'HEAD';
-	
+
 	/**
 	 * Defines the options type.
 	 * @var			string
 	 */
 	const TYPE_OPTIONS = 'OPTIONS';
-	
+
 	/**
 	 * Defines the post type.
 	 * @var			string
 	 */
 	const TYPE_POST = 'POST';
-	
+
 	/**
 	 * Defines the put type.
 	 * @var			string
 	 */
 	const TYPE_PUT = 'PUT';
-	
+
 	/**
 	 * Defines the trace type.
 	 * @var			string
 	 */
 	const TYPE_TRACE = 'TRACE';
-	
+
 	/**
 	 * Stores a list of acceptables languages.
 	 * @var			string[]
 	 */
 	protected $acceptableLanguages = array();
-	
+
 	/**
 	 * Stores a list of acceptable mime types.
 	 * @var			string[]
 	 */
 	protected $acceptableTypes = array();
-	
+
 	/**
 	 * Stores the charset to use for communication.
 	 * @var			string
 	 */
 	protected $charset = 'UTF-8';
-	
+
 	/**
 	 * Stores a list of headers to send.
 	 * @var			string[]
 	 */
 	protected $headers = array();
-	
+
 	/**
 	 * Stores the hostname which we want to connect.
 	 * @var			string
 	 */
 	protected $hostname = '';
-	
+
 	/**
 	 * Stores the password which is used to connect.
 	 * @var			string
 	 */
 	protected $password = null;
-	
+
 	/**
 	 * Stores the path to query.
 	 * @var			string
 	 */
 	protected $path = '/';
-	
+
 	/**
 	 * Stores the port where we want to connect.
 	 * @var			integer
 	 */
 	protected $port = 80;
-	
+
 	/**
 	 * Stores the data to send.
-	 * @var			string
+	 * @var			mixed[]
 	 */
-	protected $postData = '';
-	
+	protected $postData = array();
+
 	/**
 	 * Stores a list of variables which we want to send.
 	 * @var			string[]
 	 */
 	protected $queryVariables = array();
-	
+
 	/**
 	 * Stores the scheme used for the connection (http or https).
 	 * @var			string
 	 */
 	protected $scheme = 'http';
-	
+
 	/**
 	 * Stores the current request type.
 	 * @var			string
 	 */
 	protected $type = 'GET';
-	
+
 	/**
 	 * Stores the current user agent template.
 	 * @var			string
 	 */
 	protected $userAgent = 'Ikarus/%s (RequestBuilder)';
-	
+
 	/**
 	 * Stores the username which is used to connect.
 	 * @var			string
 	 */
 	protected $username = null;
-	
+
 	/**
 	 * Stores a list of valid schemes.
 	 * @var			string[]
@@ -177,7 +177,7 @@ class RequestBuilder {
 		'http',
 		'https'
 	);
-	
+
 	/**
 	 * Stores a list of valid HTTP request types.
 	 * @var			string[]
@@ -191,7 +191,7 @@ class RequestBuilder {
 		static::TYPE_PUT,
 		static::TYPE_TRACE
 	);
-	
+
 	/**
 	 * Adds an acceptable language to list.
 	 * @param			string			$language
@@ -201,7 +201,7 @@ class RequestBuilder {
 	public function addAcceptableLanguage($language) {
 		$this->acceptableLanguages[] = $language;
 	}
-	
+
 	/**
 	 * Adds an acceptable type to list.
 	 * @param			string			$type
@@ -211,7 +211,7 @@ class RequestBuilder {
 	public function addAcceptableType($type) {
 		$this->acceptableTypes[] = $type;
 	}
-	
+
 	/**
 	 * Adds a query variable.
 	 * @param			string			$key
@@ -222,7 +222,7 @@ class RequestBuilder {
 	public function addQueryVariable($key, $value) {
 		$this->queryVariables[$key] = $value;
 	}
-	
+
 	/**
 	 * Builds an accept header.
 	 * @return			string
@@ -230,18 +230,18 @@ class RequestBuilder {
 	protected function buildAcceptHeader() {
 		// nothing set?
 		if (!count($this->acceptableTypes)) return '*/*';
-		
+
 		// build acceptables string
 		$acceptables = '';
-		
+
 		foreach($this->acceptableTypes as $type) {
 			if (!empty($acceptables)) $acceptables .= ', ';
 			$acceptables  .= $type;
 		}
-		
+
 		return $acceptables;
 	}
-	
+
 	/**
 	 * Builds an accept language header.
 	 * @return			string
@@ -249,18 +249,18 @@ class RequestBuilder {
 	protected function buildAcceptLanguageHeader() {
 		// nothing set?
 		if (!count($this->acceptableLanguages)) return '*';
-		
+
 		// build acceptables string
 		$acceptables = '';
-		
+
 		foreach($this->acceptableLanguages as $language) {
 			if (!empty($acceptables)) $acceptables .= ', ';
 			$acceptables .= $language;
 		}
-		
+
 		return $acceptables;
 	}
-	
+
 	/**
 	 * Creates a new connection.
 	 * @return			RemoteFile
@@ -268,7 +268,7 @@ class RequestBuilder {
 	protected function createConnection() {
 		return (new RemoteFile(($this->scheme == 'https' ? 'ssl://' : '').$this->hostname, $this->port));
 	}
-	
+
 	/**
 	 * Creates a request from URI.
 	 * @param			string			$uri
@@ -278,12 +278,138 @@ class RequestBuilder {
 	public static function fromURI($uri) {
 		// parse url
 		$uri = parse_url($uri);
-		
+
 		// create object
 		$obj = new static();
 		$obj->setPathFromURI($uri);
 	}
-	
+
+	/**
+	 * Returns a list of set acceptable languages.
+	 * @return			string[]
+	 * @api
+	 */
+	public function getAcceptableLanguages() {
+		return $this->acceptableLanguages;
+	}
+
+	/**
+	 * Returns a list of set acceptable content types.
+	 * @return			string[]
+	 * @api
+	 */
+	public function getAcceptableTypes() {
+		return $this->acceptableTypes;
+	}
+
+	/**
+	 * Returns the current set request charset.
+	 * @return			string
+	 * @api
+	 */
+	public function getCharset() {
+		return $this->charset;
+	}
+
+	/**
+	 * Returns a list of currently set headers.
+	 * @return			string[]
+	 * @api
+	 */
+	public function getHeaders() {
+		return $this->headers;
+	}
+
+	/**
+	 * Returns the current set hostname.
+	 * @return			string
+	 * @api
+	 */
+	public function getHostname() {
+		return $this->hostname;
+	}
+
+	/**
+	 * Returns the current set password.
+	 * @return			string
+	 * @api
+	 */
+	public function getPassword() {
+		return $this->password;
+	}
+
+	/**
+	 * Returns the current set path.
+	 * @return			string
+	 * @api
+	 */
+	public function getPath() {
+		return $this->path;
+	}
+
+	/**
+	 * Returns the current set port.
+	 * @return			integer
+	 * @api
+	 */
+	public function getPort() {
+		return $this->port;
+	}
+
+	/**
+	 * Returns the current set post data.
+	 * @return			mixed[]
+	 * @api
+	 */
+	public function getPostData() {
+		return $this->postData;
+	}
+
+	/**
+	 * Returns a list of set query variables.
+	 * @return			mixed[]
+	 * @api
+	 */
+	public function getQueryVariables() {
+		return $this->queryVariables;
+	}
+
+	/**
+	 * Returns the current set protocol sheme.
+	 * @return			string
+	 * @api
+	 */
+	public function getScheme() {
+		return $this->scheme;
+	}
+
+	/**
+	 * Returns the current set request type.
+	 * @return			string
+	 * @api
+	 */
+	public function getType() {
+		return $this->type;
+	}
+
+	/**
+	 * Returns the current set user agent.
+	 * @return			string
+	 * @api
+	 */
+	public function getUserAgent() {
+		return $this->userAgent;
+	}
+
+	/**
+	 * Returns the current set username.
+	 * @return			string
+	 * @api
+	 */
+	public function getUsername() {
+		return $this->username;
+	}
+
 	/**
 	 * Indicates whether the compression is available.
 	 * @return			boolean
@@ -292,7 +418,7 @@ class RequestBuilder {
 	public static function isCompressionAvailable() {
 		return (extension_loaded('zlib'));
 	}
-	
+
 	/**
 	 * Removes an acceptable language.
 	 * @param			string			$language
@@ -302,12 +428,12 @@ class RequestBuilder {
 	public function removeAcceptableLanguage($language) {
 		// check
 		if (!in_array($language, $this->acceptableLanguages)) return;
-		
+
 		foreach($this->acceptableLanguages as $key => $value) {
 			if ($value == $language) unset($this->acceptableLanguages[$key]);
 		}
 	}
-	
+
 	/**
 	 * Removes an acceptable type.
 	 * @param			string			$type
@@ -317,12 +443,12 @@ class RequestBuilder {
 	public function removeAcceptableType($type) {
 		// check
 		if (!in_array($type, $this->acceptableTypes)) return;
-		
+
 		foreach($this->acceptableTypes as $key => $value) {
 			if ($value == $type) unset($this->acceptableTypes[$key]);
 		}
 	}
-	
+
 	/**
 	 * Removes a header.
 	 * @param			string			$key
@@ -333,7 +459,7 @@ class RequestBuilder {
 		if (!array_key_exists($key, $this->headers)) return;
 		unset($this->headers[$key]);
 	}
-	
+
 	/**
 	 * Removes a query variable.
 	 * @param			string			$key
@@ -344,7 +470,7 @@ class RequestBuilder {
 		if (!array_key_exists($key, $this->queryVariables)) return;
 		unset($this->queryVariables[$key]);
 	}
-	
+
 	/**
 	 * Resets the credentials (username and password).
 	 * @return			void
@@ -354,7 +480,7 @@ class RequestBuilder {
 		$this->username = null;
 		$this->password = null;
 	}
-	
+
 	/**
 	 * Sets a new charset.
 	 * @param			string			$charset
@@ -364,7 +490,7 @@ class RequestBuilder {
 	public function setCharset($charset) {
 		$this->charset = $charset;
 	}
-	
+
 	/**
 	 * Sets the value of any kind of header.
 	 * @param			string			$key
@@ -375,7 +501,7 @@ class RequestBuilder {
 	public function setHeader($key, $value) {
 		$this->headers[$key] = $value;
 	}
-	
+
 	/**
 	 * Sets a new hostname.
 	 * @param			string			$hostname
@@ -385,7 +511,7 @@ class RequestBuilder {
 	public function setHostname($hostname) {
 		$this->hostname = $hostname;
 	}
-	
+
 	/**
 	 * Sets a new password.
 	 * @param			string			$password
@@ -394,7 +520,7 @@ class RequestBuilder {
 	public function setPassword($password) {
 		$this->password = $password;
 	}
-	
+
 	/**
 	 * Sets a new path.
 	 * @param			string			$path
@@ -404,7 +530,7 @@ class RequestBuilder {
 	public function setPath($path) {
 		$this->path = $path;
 	}
-	
+
 	/**
 	 * Sets all needed properties from URI.
 	 * @param			string			$uri
@@ -413,7 +539,7 @@ class RequestBuilder {
 	 */
 	public function setPathFromURI($uri) {
 		$uri = parse_url($uri);
-		
+
 		$this->setScheme((isset($uri['scheme']) ? $uri['scheme'] : 'http'));
 		$this->setHostname($uri['host']);
 		$this->setPort((isset($uri['port']) ? $uri['port'] : 80));
@@ -423,13 +549,13 @@ class RequestBuilder {
 		if (isset($uri['query'])) {
 			// parse query
 			$variables = parse_str($uri['query']);
-				
+
 			foreach($variables as $key => $value) {
 				$this->addQueryVariable($key, $value);
 			}
 		}
 	}
-	
+
 	/**
 	 * Sets a new port.
 	 * @param			integer			$port
@@ -439,7 +565,7 @@ class RequestBuilder {
 	public function setPort($port) {
 		$this->port = $port;
 	}
-	
+
 	/**
 	 * Sets a new post string.
 	 * @param			string			$data
@@ -449,11 +575,11 @@ class RequestBuilder {
 	public function setPostData($data) {
 		// build query array if needed
 		if (is_array($data)) $data = http_build_query(data);
-		
+
 		// save
 		$this->postData = $data;
 	}
-	
+
 	/**
 	 * Sets a new scheme.
 	 * @param			string			$scheme
@@ -465,7 +591,7 @@ class RequestBuilder {
 		if (!in_array($scheme, static::$validSchemes)) throw new HTTPException('Cannot set request to unknown scheme "%s"', $scheme);
 		$this->scheme = $scheme;
 	}
-	
+
 	/**
 	 * Sets a new type.
 	 * @param			string			$type
@@ -477,7 +603,7 @@ class RequestBuilder {
 		if (!in_array($type, static::$validTypes)) throw new HTTPException('Cannot set request type to unknown type "%s"', $type);
 		$this->type = $type;
 	}
-	
+
 	/**
 	 * Sets a new user agent.
 	 * @param			string			$userAgent
@@ -487,7 +613,7 @@ class RequestBuilder {
 	public function setUserAgent($userAgent) {
 		$this->userAgent = $userAgent;
 	}
-	
+
 	/**
 	 * Sets a new username.
 	 * @param			string			$username
@@ -497,7 +623,7 @@ class RequestBuilder {
 	public function setUsername($username) {
 		$this->username = $username;
 	}
-	
+
 	/**
 	 * Builds the whole query.
 	 * @return			void
@@ -506,7 +632,7 @@ class RequestBuilder {
 	public function __toString() {
 		// validation
 		if (empty($this->hostname)) throw new HTTPException('Required parameter is missing: %s', 'hostname');
-		
+
 		// add header
 		$request = $this->type.' '.$this->path.$this->buildQuery().' '.static::HTTP_VERSION.static::NEWLINE;
 		$request .= 'User-Agent: '.sprintf($this->userAgent, IKARUS_VERSION).static::NEWLINE;
@@ -514,27 +640,27 @@ class RequestBuilder {
 		$request .= 'Accept-Charset: '.$this->charset.static::NEWLINE;
 		$request .= 'Accept-Language: '.$this->buildAcceptLanguageHeader().static::NEWLINE;
 		$request .= 'Host: '.$this->hostname.static::NEWLINE;
-		
+
 		// auth
 		if ($this->username !== null and $this->password !== null) $request .= 'Authorization: Basic '.base64_encode($this->username.':'.$this->password);
-		
+
 		// allow compression
 		if (static::isCompressionAvailable()) $request .= 'Accept-Encoding: gzip, deflate'.static::NEWLINE;
-		
+
 		// append post information
 		if (!empty($this->postData)) {
 			$request .= 'Content-Type: application/x-www-form-urlencoded; charset='.$this->charset.static::NEWLINE;
 			$request .= 'Content-Length: '.strlen($this->postData);
 		}
-		
+
 		// add custom headers
 		foreach($this->headers as $key => $value) {
 			$request .= $key.': '.$value.static::NEWLINE;
 		}
-		
+
 		// add spacer
 		$request .= static::NEWLINE;
-		
+
 		// add post data (if any)
 		$request .= $this->postData;
 	}
