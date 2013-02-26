@@ -104,6 +104,12 @@ class RequestBuilder {
 	protected $charset = 'UTF-8';
 
 	/**
+	 * Stores the content type to send.
+	 * @var			string
+	 */
+	protected $contentType = '';
+
+	/**
 	 * Stores a list of headers to send.
 	 * @var			string[]
 	 */
@@ -312,6 +318,15 @@ class RequestBuilder {
 	}
 
 	/**
+	 * Returns the current set content type.
+	 * @return			string
+	 * @api
+	 */
+	public function getContentType() {
+		return $this->contentType;
+	}
+
+	/**
 	 * Returns a list of currently set headers.
 	 * @return			string[]
 	 * @api
@@ -492,6 +507,15 @@ class RequestBuilder {
 	}
 
 	/**
+	 * Sets a new content type
+	 * @param			string			$type
+	 * @return			void
+	 */
+	public function setContentType($type) {
+		$this->contentType = $type;
+	}
+
+	/**
 	 * Sets the value of any kind of header.
 	 * @param			string			$key
 	 * @param			string			$value
@@ -633,6 +657,9 @@ class RequestBuilder {
 		// validation
 		if (empty($this->hostname)) throw new HTTPException('Required parameter is missing: %s', 'hostname');
 
+		// set default values
+		if (empty($this->contentType) and !empty($this->postData)) $this->contentType = 'application/x-www-form-urlencoded';
+
 		// add header
 		$request = $this->type.' '.$this->path.$this->buildQuery().' '.static::HTTP_VERSION.static::NEWLINE;
 		$request .= 'User-Agent: '.sprintf($this->userAgent, IKARUS_VERSION).static::NEWLINE;
@@ -640,6 +667,7 @@ class RequestBuilder {
 		$request .= 'Accept-Charset: '.$this->charset.static::NEWLINE;
 		$request .= 'Accept-Language: '.$this->buildAcceptLanguageHeader().static::NEWLINE;
 		$request .= 'Host: '.$this->hostname.static::NEWLINE;
+		$request .= 'Content-Type: '.$this->contentType.'; charset='.$this->charset.static::NEWLINE;
 
 		// auth
 		if ($this->username !== null and $this->password !== null) $request .= 'Authorization: Basic '.base64_encode($this->username.':'.$this->password);
@@ -647,9 +675,9 @@ class RequestBuilder {
 		// allow compression
 		if (static::isCompressionAvailable()) $request .= 'Accept-Encoding: gzip, deflate'.static::NEWLINE;
 
+
 		// append post information
 		if (!empty($this->postData)) {
-			$request .= 'Content-Type: application/x-www-form-urlencoded; charset='.$this->charset.static::NEWLINE;
 			$request .= 'Content-Length: '.strlen($this->postData);
 		}
 
