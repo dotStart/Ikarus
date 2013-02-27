@@ -52,6 +52,44 @@ class Request {
 	}
 
 	/**
+	 * Appends a parameter based on its value type.
+	 * @param			mixed			$value
+	 * @param			XMLNode			$parent
+	 */
+	protected function appendParameter($value, $parent) {
+		$type = $this->detectType($value);
+		$content = $doc->createElement($type);
+
+		if ($value !== null) {
+			if ($type == static::TYPE_STRUCT) {
+				$struct = $parent->createElement('struct');
+
+				foreach($value as $key => $val) {
+					// create member element
+					$member = $struct->createElement('member');
+
+					// name element
+					$name = $member->createElement('name');
+					$name->setValue($key);
+					$member->appendChild($name);
+
+					// cerate value
+					$par = $member->createElement('value');
+					$member->appendChild($par);
+
+					// append data
+					$this->appendParameter($key, $val, $par);
+				}
+
+				$content->appendChild($struct);
+			} else
+				$content->setValue($value);
+		}
+
+		$parent->append($content);
+	}
+
+	/**
 	 * Builds a new request.
 	 * @return			ikarus\system\io\http\RequestBuilder
 	 */
@@ -73,19 +111,19 @@ class Request {
 			$param = $doc->createElement('param');
 			$parameters->appendChild($doc);
 
-			$value = $doc->createElement('value');
-			$param->appendChild($value);
+			$parent = $doc->createElement('value');
+			$param->appendChild($parent);
 
-			$content = $doc->createElement($this->detectType($value));
-			if ($value === null) $content->setValue($value);
-			$param->appendChild($content);
+			$this->appendParameter($name, $value, $parent);
 		}
 
+		// build XMLRPC request
 		$request = new RequestBuilder();
 		$request->setType(RequestBuilder::TYPE_POST);
 		$request->setPostData($doc->__toString());
 		$request->setContentType('text/xml');
 
+		// return request
 		return $request;
 	}
 
