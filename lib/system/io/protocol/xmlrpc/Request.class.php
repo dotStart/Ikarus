@@ -17,6 +17,7 @@
  */
 namespace ikarus\system\io\protocol\xmlrpc;
 use ikarus\system\io\http\RequestBuilder;
+use ikarus\system\io\file\XMLDocument;
 
 /**
  * Builds a XMLRPC request.
