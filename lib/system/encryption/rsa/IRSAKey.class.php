@@ -30,6 +30,24 @@ namespace ikarus\system\encryption\rsa;
 interface IRSAKey {
 
 	/**
+	 * Defines an unknown key.
+	 * @var			integer
+	 */
+	const TYPE_UNKNOWN = -1;
+
+	/**
+	 * Defines a private key.
+	 * @var			integer
+	 */
+	const TYPE_PRIVATE = 0;
+
+	/**
+	 * Defines a public key.
+	 * @var			integer
+	 */
+	const TYPE_PUBLIC = 1;
+
+	/**
 	 * Decodes an encoded key.
 	 * @param			string			$data
 	 * @return			self
@@ -47,5 +65,11 @@ interface IRSAKey {
 	 * @return			string
 	 */
 	public function getEncodedVersion();
+
+	/**
+	 * Returns the type of this key.
+	 * @return			integer
+	 */
+	public function getType();
 }
 ?>
