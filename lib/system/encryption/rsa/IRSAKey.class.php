@@ -52,7 +52,7 @@ interface IRSAKey {
 	 * @param			string			$data
 	 * @return			self
 	 */
-	public static function decode($data, $keyLength);
+	public static function decode($data);
 
 	/**
 	 * Returns a binary version of this key.
