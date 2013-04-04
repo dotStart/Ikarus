@@ -27,7 +27,7 @@ namespace ikarus\system\encryption\rsa;
  * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
  * @version		2.0.0-0001
  */
-class RSAPublicKey extends IRSAKey {
+class RSAPublicKey implements IRSAKey {
 
 	/**
 	 * Stores the binary version of this key.
