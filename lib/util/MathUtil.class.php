@@ -39,7 +39,7 @@ class MathUtil {
 	 * @param			string			$binaryData
 	 * @return			number
 	 */
-	public static function binaryToNumber($binaryData) {
+	public static function binaryToNumber($data) {
 		// init variables
 		$base = 256;
 		$radix = 1;
