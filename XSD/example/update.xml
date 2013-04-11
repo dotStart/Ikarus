@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<update xmlns="http://www.ikarus-framework.org/2013/update">
+<update xmlns="http://www.ikarus-framework.org/2013/update" timestamp="1234567890"> <!-- Timestamp is used to determine changes without parsing the whole XML -->
 	<!-- Server Metadata -->
 	<server uniqueIdentifier="{12345678-90ab-cdef-1234-567890abcdef}" identifier="repository.evil-co.com/ikarus/2.0/free">
 		<name><![CDATA[Evil-Co]]></name>
