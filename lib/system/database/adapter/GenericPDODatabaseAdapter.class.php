@@ -46,8 +46,14 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 	 */
 	public function connect() {
 		try {
+			// create dsn
+			if ($this->databaseParameters['connectionType'] != 'sqlite')
+				$dsn = $this->databaseParameters['connectionType'].':host='.$this->hostname.';port='.$this->port;
+			else
+				$dsn = 'sqlite:'.$this->hostname;
+				
 			// connect
-			$this->connection = new PDO($this->databaseParameters['connectionType'].':host='.$this->hostname.';port='.$this->port, $this->user, $this->password, array(PDO::ATTR_PERSISTENT => true));
+			$this->connection = new PDO($dsn, $this->user, $this->password, array(PDO::ATTR_PERSISTENT => true));
 
 			// set attributes
 			$this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
