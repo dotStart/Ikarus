@@ -13,3 +13,6 @@
 [submodule "lib/system/configuration"]
 	path = lib/system/configuration
 	url = https://github.com/IkarusFramework/system-configuration.git
+[submodule "lib/system/database"]
+	path = lib/system/database
+	url = https://github.com/IkarusFramework/system-database.git
