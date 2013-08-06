@@ -10,3 +10,6 @@
 [submodule "lib/system/cache"]
 	path = lib/system/cache
 	url = https://github.com/IkarusFramework/system-cache.git
+[submodule "lib/system/configuration"]
+	path = lib/system/configuration
+	url = https://github.com/IkarusFramework/system-configuration.git
