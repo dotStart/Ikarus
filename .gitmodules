@@ -1,3 +1,6 @@
 [submodule "lib/util"]
 	path = lib/util
 	url = https://github.com/IkarusFramework/utilities.git
+[submodule "lib/system/application"]
+	path = lib/system/application
+	url = https://github.com/IkarusFramework/system-application.git
