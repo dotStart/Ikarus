@@ -7,3 +7,6 @@
 [submodule "lib/system/auth"]
 	path = lib/system/auth
 	url = https://github.com/IkarusFramework/system-auth.git
+[submodule "lib/system/cache"]
+	path = lib/system/cache
+	url = https://github.com/IkarusFramework/system-cache.git
