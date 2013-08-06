@@ -4,3 +4,6 @@
 [submodule "lib/system/application"]
 	path = lib/system/application
 	url = https://github.com/IkarusFramework/system-application.git
+[submodule "lib/system/auth"]
+	path = lib/system/auth
+	url = https://github.com/IkarusFramework/system-auth.git
