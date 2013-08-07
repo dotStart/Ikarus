@@ -34,3 +34,6 @@
 [submodule "lib/system/style"]
 	path = lib/system/style
 	url = https://github.com/IkarusFramework/system-style.git
+[submodule "lib/system/template"]
+	path = lib/system/template
+	url = https://github.com/IkarusFramework/system-template.git
