@@ -16,3 +16,6 @@
 [submodule "lib/system/database"]
 	path = lib/system/database
 	url = https://github.com/IkarusFramework/system-database.git
+[submodule "lib/system/encryption"]
+	path = lib/system/encryption
+	url = https://github.com/IkarusFramework/system-encryption.git
