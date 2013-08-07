@@ -37,3 +37,6 @@
 [submodule "lib/system/template"]
 	path = lib/system/template
 	url = https://github.com/IkarusFramework/system-template.git
+[submodule "lib/system/test"]
+	path = lib/system/test
+	url = https://github.com/IkarusFramework/system-test.git
