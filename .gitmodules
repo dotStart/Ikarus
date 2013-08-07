@@ -19,3 +19,6 @@
 [submodule "lib/system/encryption"]
 	path = lib/system/encryption
 	url = https://github.com/IkarusFramework/system-encryption.git
+[submodule "lib/system/event"]
+	path = lib/system/event
+	url = https://github.com/IkarusFramework/system-event.git
