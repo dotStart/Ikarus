@@ -22,3 +22,6 @@
 [submodule "lib/system/event"]
 	path = lib/system/event
 	url = https://github.com/IkarusFramework/system-event.git
+[submodule "lib/system/exception"]
+	path = lib/system/exception
+	url = https://github.com/IkarusFramework/system-exception.git
