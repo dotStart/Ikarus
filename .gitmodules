@@ -25,3 +25,6 @@
 [submodule "lib/system/exception"]
 	path = lib/system/exception
 	url = https://github.com/IkarusFramework/system-exception.git
+[submodule "lib/system/io"]
+	path = lib/system/io
+	url = https://github.com/IkarusFramework/system-io.git
