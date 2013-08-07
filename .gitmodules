@@ -28,3 +28,6 @@
 [submodule "lib/system/io"]
 	path = lib/system/io
 	url = https://github.com/IkarusFramework/system-io.git
+[submodule "lib/system/package"]
+	path = lib/system/package
+	url = https://github.com/IkarusFramework/system-package.git
