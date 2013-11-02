@@ -2,7 +2,7 @@
 <phpdoc>
 	<!-- Project metadata -->
 	<title><![CDATA[Ikarus Framework]]></title>
-	
+
 	<!-- Parser settings -->
 	<parser>
 		<markers>
@@ -11,7 +11,7 @@
 			<item>XXX</item>
 		</markers>
 	</parser>
-	
+
 	<!-- Transformations -->
 	<transformations>
 		<template name="responsive" />

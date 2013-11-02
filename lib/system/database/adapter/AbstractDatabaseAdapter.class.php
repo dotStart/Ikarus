@@ -1,21 +1,19 @@
 <?php
 /**
  * This file is part of the Ikarus Framework.
- *
  * The Ikarus Framework is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
  * The Ikarus Framework is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
  * You should have received a copy of the GNU Lesser General Public License
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
 namespace ikarus\system\database\adapter;
+
 use ikarus\system\database\DatabaseResult;
 use ikarus\system\database\DatabaseResultList;
 use ikarus\system\exception\database\ConnectionParameterException;
@@ -26,148 +24,148 @@ use ikarus\util\StringUtil;
 
 /**
  * Implements default methods for database adapters
- * @author		Johannes Donath
- * @copyright		2011 Evil-Co.de
- * @package		de.ikarus-framework.core
- * @subpackage		system
- * @category		Ikarus Framework
- * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
- * @version		2.0.0-0001
+ * @author                    Johannes Donath
+ * @copyright                 2011 Evil-Co.de
+ * @package                   de.ikarus-framework.core
+ * @subpackage                system
+ * @category                  Ikarus Framework
+ * @license                   GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
+ * @version                   2.0.0-0001
  */
 abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 
 	/**
 	 * Contains the name of the database editor that should be used
-	 * @var			string
+	 * @var                        string
 	 */
 	const DATABASE_EDITOR_CLASS = 'ikarus\system\database\DatabaseEditor';
 
 	/**
 	 * Contains the name of the class used for prepared statements
-	 * @var			string
+	 * @var                        string
 	 */
 	const PREPARED_STATEMENT_CLASS = 'ikarus\system\database\PreparedStatement';
 
 	/**
 	 * Contains the current connection object
-	 * @var			mixed
+	 * @var                        mixed
 	 */
 	protected $connection = null;
 
 	/**
 	 * Contains an instance of IDatabaseEditor
-	 * @var			ikarus\system\database\IDatabaseEditor
+	 * @var                        ikarus\system\database\IDatabaseEditor
 	 */
 	protected $databaseEditor = null;
 
 	/**
 	 * Contains the current selected database
-	 * @var			string
+	 * @var                        string
 	 */
 	protected $databaseName = '';
 
 	/**
 	 * Contains additional parameters used for connection
-	 * @var			array
+	 * @var                        array
 	 */
 	protected $databaseParameters = array();
 
 	/**
 	 * Contains the hostname where the database server runs (or an ip address)
-	 * @var			string
+	 * @var                        string
 	 */
 	protected $hostname = '';
 
 	/**
 	 * Contains the result set of last query
-	 * @var			mixed
+	 * @var                        mixed
 	 */
 	protected $lastResult = null;
 
 	/**
 	 * Contains the last executed query
-	 * @var			string
+	 * @var                        string
 	 */
 	protected $lastQuery = "";
 
 	/**
 	 * Contains a list of needed database parameters
-	 * @var			array<string>
+	 * @var                        array<string>
 	 */
 	protected $neededDatabaseParameters = array();
 
 	/**
 	 * Contains the password used to connect
-	 * @var			string
+	 * @var                        string
 	 */
 	protected $password = '';
 
 	/**
 	 * Contains the port where the database server listens
-	 * @var			integer
+	 * @var                        integer
 	 */
 	protected $port = 0;
 
 	/**
 	 * Contains the amount of sent queries in this application instance
-	 * @var			integer
+	 * @var                        integer
 	 */
 	protected $queryCount = 0;
 
 	/**
 	 * Contains the username used to connect
-	 * @var			string
+	 * @var                        string
 	 */
 	protected $user = '';
 
 	/**
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::__construct()
 	 */
-	public function __construct($hostname, $port, $user, $password, $databaseParameters) {
+	public function __construct ($hostname, $port, $user, $password, $databaseParameters) {
 		// proceed arguments
 		$this->hostname = $hostname;
 		$this->port = $port;
 		$this->user = $user;
 		$this->password = $password;
-		parse_str($databaseParameters, $this->databaseParameters);
+		parse_str ($databaseParameters, $this->databaseParameters);
 
 		// check database parameters
-		if (count(array_diff($this->neededDatabaseParameters, array_keys($this->databaseParameters)))) throw new ConnectionParameterException("Cannot start database adapter %s: Needed database parameters are missing", __CLASS__);
+		if (count (array_diff ($this->neededDatabaseParameters, array_keys ($this->databaseParameters)))) throw new ConnectionParameterException("Cannot start database adapter %s: Needed database parameters are missing", __CLASS__);
 
 		// start connection
-		$this->connect();
+		$this->connect ();
 	}
 
 	/**
 	 * Creates a connection to database server
 	 */
-	abstract public function connect();
+	abstract public function connect ();
 
 	/**
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::escapeString()
 	 */
-	public function escapeString($string) {
-		return addslashes($string);
+	public function escapeString ($string) {
+		return addslashes ($string);
 	}
 
 	/**
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::execute()
 	 */
-	public function execute($query) {
-		throw new NotImplementedException("The adapter %s is not completely implemented and does not support method %s", get_class($this), __FUNCTION__);
+	public function execute ($query) {
+		throw new NotImplementedException("The adapter %s is not completely implemented and does not support method %s", get_class ($this), __FUNCTION__);
 	}
 
 	/**
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::getClientVersion()
 	 */
-	public function getClientVersion() {
+	public function getClientVersion () {
 		return 'unknown';
 	}
 
 	/**
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::getDatabaseEditor()
 	 */
-	public function getDatabaseEditor() {
+	public function getDatabaseEditor () {
 		if ($this->databaseEditor === null) {
 			$className = static::DATABASE_EDITOR_CLASS;
 			$this->databaseEditor = new $className($this);
@@ -179,81 +177,82 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	/**
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::getDatabaseName()
 	 */
-	public function getDatabaseName() {
+	public function getDatabaseName () {
 		return $this->databaseName;
 	}
 
 	/**
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::getErrorDescription()
 	 */
-	public function getErrorDescription() {
+	public function getErrorDescription () {
 		return '';
 	}
 
 	/**
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::getErrorInformation()
 	 */
-	public function getErrorInformation() {
+	public function getErrorInformation () {
 		return array();
 	}
 
 	/**
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::getErrorNumber()
 	 */
-	public function getErrorNumber() {
+	public function getErrorNumber () {
 		return 0;
 	}
 
 	/**
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::getInsertID()
 	 */
-	public function getInsertID($table = null, $field = null) {
+	public function getInsertID ($table = null, $field = null) {
 		return null;
 	}
 
-	public function getLastQuery() {
+	public function getLastQuery () {
 		return $this->lastQuery;
 	}
 
-	public function getLastResult() {
+	public function getLastResult () {
 		return $this->lastResult;
 	}
 
 	/**
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::getParameter()
 	 */
-	public function getParameter($parameter) {
+	public function getParameter ($parameter) {
 		if (isset($this->databaseParameters[$parameter])) return $this->databaseParameters[$parameter];
+
 		return null;
 	}
 
 	/**
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::getQueryCount()
 	 */
-	public function getQueryCount() {
+	public function getQueryCount () {
 		return $this->queryCount;
 	}
 
 	/**
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::getQuoteDelimiter()
 	 */
-	public function getQuoteDelimiter() {
+	public function getQuoteDelimiter () {
 		return array('\'', '"');
 	}
 
 	/**
 	 * Returns a result object for use in application
-	 * @param			mixed				$result
-	 * @param			boolean				$forceList
-	 * @return			mixed
+	 * @param                        mixed   $result
+	 * @param                        boolean $forceList
+	 * @return                        mixed
 	 */
-	protected function getResultObject($result, $forceList = false) {
-		if (count($result) <= 0 and $forceList) return new DatabaseResultList(array());
-		if (count($result) <= 0) return null;
-		if (count($result) > 1 or $forceList) {
+	protected function getResultObject ($result, $forceList = false) {
+		if (count ($result) <= 0 and $forceList) return new DatabaseResultList(array());
+		if (count ($result) <= 0) return null;
+		if (count ($result) > 1 or $forceList) {
 			return (new DatabaseResultList($result));
 		} else {
-			foreach($result as $realResult) {
+			foreach ($result as $realResult) {
 				return (new DatabaseResult($result));
 			}
 		}
@@ -262,43 +261,44 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	/**
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::getUser()
 	 */
-	public function getUser() {
+	public function getUser () {
 		return $this->user;
 	}
 
 	/**
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::getVersion()
 	 */
-	public function getVersion() {
+	public function getVersion () {
 		return 'unknown';
 	}
 
 	/**
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::handleLimitParameter()
 	 */
-	public function handleLimitParameter($query, $limit = 0, $offset = 0) {
-		if ($limit != 0) $query .= " LIMIT ".$limit." OFFSET ". $offset;
+	public function handleLimitParameter ($query, $limit = 0, $offset = 0) {
+		if ($limit != 0) $query .= " LIMIT " . $limit . " OFFSET " . $offset;
+
 		return $query;
 	}
 
 	/**
 	 * @see ikarus\system\atabase\adapter.IDatabaseAdapter::isSupported()
 	 */
-	public static function isSupported() {
+	public static function isSupported () {
 		return true;
 	}
 
 	/**
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::parseQuery()
 	 */
-	public function parseQuery($query) {
+	public function parseQuery ($query) {
 		// replace ikarus abbreviation
-		$query = StringUtil::replace('ikarus1_', 'ikarus'.Ikarus::getPackageID().'_', $query);
+		$query = StringUtil::replace ('ikarus1_', 'ikarus' . Ikarus::getPackageID () . '_', $query);
 
 		// replace application abbreviation
-		if (Ikarus::getApplicationManager() !== null) {
-			foreach(Ikarus::getApplicationManager()->getApplicationList() as $abbreviation => $application) {
-				$query = StringUtil::replace($abbreviation.'1_', $abbreviation.$application->getPackageID().'_', $query);
+		if (Ikarus::getApplicationManager () !== null) {
+			foreach (Ikarus::getApplicationManager ()->getApplicationList () as $abbreviation => $application) {
+				$query = StringUtil::replace ($abbreviation . '1_', $abbreviation . $application->getPackageID () . '_', $query);
 			}
 		}
 
@@ -308,26 +308,27 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	/**
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::prepareStatement()
 	 */
-	public function prepareStatement($statement, $limit = 0, $offset = 0, $forceList = false) {
-		$statement = $this->handleLimitParameter($statement, $limit, $offset);
+	public function prepareStatement ($statement, $limit = 0, $offset = 0, $forceList = false) {
+		$statement = $this->handleLimitParameter ($statement, $limit, $offset);
 
 		$className = static::PREPARED_STATEMENT_CLASS;
+
 		return (new $className($this, $statement, $forceList));
 	}
 
 	/**
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::quote()
 	 */
-	public function quote($string) {
-		return "'".$this->escapeString($string)."'";
+	public function quote ($string) {
+		return "'" . $this->escapeString ($string) . "'";
 	}
 
 	/**
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::selectDatabase()
 	 */
-	public function selectDatabase($databaseName) {
-		$stmt = $this->prepareStatement("USE ".$databaseName);
-		$stmt->execute();
+	public function selectDatabase ($databaseName) {
+		$stmt = $this->prepareStatement ("USE " . $databaseName);
+		$stmt->execute ();
 
 		$this->databaseName = $databaseName;
 	}
@@ -335,26 +336,28 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	/**
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::sendQuery()
 	 */
-	public function sendQuery($query, $forceList = false) {
-		throw new NotImplementedException("The adapter %s is not completely implemented and does not support method %s", get_class($this), __FUNCTION__);
+	public function sendQuery ($query, $forceList = false) {
+		throw new NotImplementedException("The adapter %s is not completely implemented and does not support method %s", get_class ($this), __FUNCTION__);
 	}
 
 	/**
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::setCharset()
 	 */
-	public function setCharset($charset) {
+	public function setCharset ($charset) {
 		try {
-			$this->sendQuery("SET NAMES ".$this->quote($charset));
-		} Catch (DatabaseException $ex) { }
+			$this->sendQuery ("SET NAMES " . $this->quote ($charset));
+		} Catch (DatabaseException $ex) {
+		}
 	}
 
 	/**
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::setParameter()
 	 */
-	public function setParameter($parameter, $value = null) {
+	public function setParameter ($parameter, $value = null) {
 		// allow passing arrays of parameters
-		if (is_array($parameter)) {
-			foreach($parameter as $key => $val) $this->setParameter($key, $val);
+		if (is_array ($parameter)) {
+			foreach ($parameter as $key => $val) $this->setParameter ($key, $val);
+
 			return;
 		}
 
@@ -363,8 +366,9 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 
 	/**
 	 * Closes the database connection
-	 * @return			void
+	 * @return                        void
 	 */
-	abstract public function shutdown();
+	abstract public function shutdown ();
 }
+
 ?>

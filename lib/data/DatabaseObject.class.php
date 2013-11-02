@@ -1,21 +1,19 @@
 <?php
 /**
  * This file is part of the Ikarus Framework.
- *
  * The Ikarus Framework is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
  * The Ikarus Framework is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
  * You should have received a copy of the GNU Lesser General Public License
  * along with the Ikarus Framework. If not, see <http://www.gnu.org/licenses/>.
  */
 namespace ikarus\data;
+
 use ikarus\system\database\QueryEditor;
 use ikarus\system\event\data\DatabaseObjectEventArguments;
 use ikarus\system\event\data\GetByIdentifierEvent;
@@ -30,62 +28,59 @@ use ikarus\util\StringUtil;
 
 /**
  * Represents a database row
- * @author		Johannes Donath
- * @copyright		2011 Evil-Co.de
- * @package		de.ikarus-framework.core
- * @subpackage		system
- * @category		Ikarus Framework
- * @license		GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
- * @version		2.0.0-0001
+ * @author                    Johannes Donath
+ * @copyright                 2011 Evil-Co.de
+ * @package                   de.ikarus-framework.core
+ * @subpackage                system
+ * @category                  Ikarus Framework
+ * @license                   GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
+ * @version                   2.0.0-0001
  */
 abstract class DatabaseObject {
 
 	/**
 	 * Contains all variables from database
-	 * @var				array
+	 * @var                                array
 	 */
 	protected $data = null;
 
 	/**
 	 * Contains the field name for row identifier (or primary key)
-	 * @var				string
+	 * @var                                string
 	 */
 	protected static $identifierField = null;
 
 	/**
 	 * Contains the name of the table where all data of this database object is stored
-	 * @var				string
+	 * @var                                string
 	 */
 	protected static $tableName = null;
 
 	/**
 	 * Creates a new DatabaseObject instance
-	 * @param			array			$row
+	 * @param                        array $row
 	 * @api
 	 */
-	public function __construct($row) {
-		$this->handleData($row);
+	public function __construct ($row) {
+		$this->handleData ($row);
 	}
 
 	/**
 	 * Returns an object by identifier (if configured)
-	 * @param			mixed			$identifier
-	 * @throws			SystemException
-	 * @return			ikarus\data\DatabaseObject
+	 * @param                        mixed $identifier
+	 * @throws                        SystemException
+	 * @return                        ikarus\data\DatabaseObject
 	 * @api
 	 */
-	public static function getByIdentifier($identifier) {
+	public static function getByIdentifier ($identifier) {
 		// eventing
-		if (Ikarus::getEventManager() !== null) {
+		if (Ikarus::getEventManager () !== null) {
 			// fire event
 			$event = new GetByIdentifierEvent(new IdentifierEventArguments($identifier));
-			Ikarus::getEventManager()->fire($event);
+			Ikarus::getEventManager ()->fire ($event);
 
 			// cancellable event
-			if ($event->isCancelled() and $event->getReplacement() === null)
-				throw new StrictStandardException("Missing replacement for database object");
-			elseif ($event->isCancelled())
-				return $event->getReplacement();
+			if ($event->isCancelled () and $event->getReplacement () === null) throw new StrictStandardException("Missing replacement for database object"); elseif ($event->isCancelled ()) return $event->getReplacement ();
 		}
 
 		// check for configuration
@@ -93,82 +88,79 @@ abstract class DatabaseObject {
 
 		// get data via editor
 		$editor = new QueryEditor();
-		$editor->from(array(static::$tableName => 'databaseObjectTable'));
-		$editor->where(static::$identifierField.' = ?');
-		$stmt = $editor->prepare();
-		$stmt->bind($identifier);
-		$result = $stmt->fetch();
+		$editor->from (array(static::$tableName => 'databaseObjectTable'));
+		$editor->where (static::$identifierField . ' = ?');
+		$stmt = $editor->prepare ();
+		$stmt->bind ($identifier);
+		$result = $stmt->fetch ();
 
 		// no rows found?
 		if (!$result) return null;
 
 		// create object
-		return (new static($result->__toArray()));
+		return (new static($result->__toArray ()));
 	}
 
 	/**
 	 * Handles data from database
-	 * @param			array			$data
-	 * @return			void
+	 * @param                        array $data
+	 * @return                        void
 	 */
-	protected function handleData($data) {
+	protected function handleData ($data) {
 		// convert data
-		if (is_object($data) and ClassUtil::isInstanceOf($data, 'ikarus\\system\\database\\DatabaseResult')) $data = $data->__toArray();
-		
+		if (is_object ($data) and ClassUtil::isInstanceOf ($data, 'ikarus\\system\\database\\DatabaseResult')) $data = $data->__toArray ();
+
 		// save data
 		$this->data = $data;
 
 		// fire event
-		if (Ikarus::getEventManager() !== null) Ikarus::getEventManager()->fire(new HandleDataEvent(new DatabaseObjectEventArguments($this)));
+		if (Ikarus::getEventManager () !== null) Ikarus::getEventManager ()->fire (new HandleDataEvent(new DatabaseObjectEventArguments($this)));
 	}
 
 	/**
 	 * Checks whether the given variable exists in this database object
-	 * @param			string			$variable
-	 * @return			boolean
+	 * @param                        string $variable
+	 * @return                        boolean
 	 * @api
 	 */
-	public function __isset($variable) {
-		return array_key_exists($variable, $this->data);
+	public function __isset ($variable) {
+		return array_key_exists ($variable, $this->data);
 	}
 
 	/**
 	 * Unsets the given variable (Support for unset($databaseObject->variable))
-	 * @param			string			$variable
-	 * @return			void
+	 * @param                        string $variable
+	 * @return                        void
 	 * @api
 	 */
-	public function __unset($variable) {
-		if (!$this->_isset($variable)) return;
+	public function __unset ($variable) {
+		if (!$this->_isset ($variable)) return;
 		unset($this->data[$variable]);
 	}
 
 	/**
 	 * Magic method to handle properties from database row
-	 * @param			string			$variable
-	 * @return			mixed
-	 * @throws			SystemException
+	 * @param                        string $variable
+	 * @return                        mixed
+	 * @throws                        SystemException
 	 * @api
 	 */
-	public function __get($variable) {
+	public function __get ($variable) {
 		// eventing
-		if (Ikarus::getEventManager() !== null) {
+		if (Ikarus::getEventManager () !== null) {
 			// fire event
 			$event = new MagicGetEvent(new IdentifierEventArguments($variable));
-			Ikarus::getEventManager()->fire($event);
+			Ikarus::getEventManager ()->fire ($event);
 
 			// cancellable event
-			if ($event->isCancelled() and $event->getReplacement() === null)
-				throw new StrictStandardException('Missing replacement for variable "%s"', $variable);
-			elseif ($event->isCancelled())
-				return $event->getReplacement();
+			if ($event->isCancelled () and $event->getReplacement () === null) throw new StrictStandardException('Missing replacement for variable "%s"', $variable); elseif ($event->isCancelled ()) return $event->getReplacement ();
 		}
 
 		// strict standard
-		if (!$this->__isset($variable)) throw new StrictStandardException("The variable '%s' is not defined in DatabaseObject %s", $variable, get_class($this));
+		if (!$this->__isset ($variable)) throw new StrictStandardException("The variable '%s' is not defined in DatabaseObject %s", $variable, get_class ($this));
 
 		// handle variables in data array
-		if (array_key_exists($variable, $this->data)) return $this->data[$variable];
+		if (array_key_exists ($variable, $this->data)) return $this->data[$variable];
 
 		// no variable found
 		return null;
@@ -176,25 +168,26 @@ abstract class DatabaseObject {
 
 	/**
 	 * Magic method to handle methods such as getXYZ and isXYZ
-	 * @param			string			$name
-	 * @param			array			$arguments
-	 * @return			mixed
-	 * @throws			SystemException
+	 * @param                        string $name
+	 * @param                        array  $arguments
+	 * @return                        mixed
+	 * @throws                        SystemException
 	 * @api
 	 */
-	public function __call($name, $arguments) {
+	public function __call ($name, $arguments) {
 		// handle getXYZ methods
-		if (StringUtil::substring($name, 0, 3) == 'get' ) {
-			$variable = substr($name, 3);
-			$variable{0} = StringUtil::toLowerCase($variable{0});
-			if ($this->__isset($variable)) return $this->__get($variable);
+		if (StringUtil::substring ($name, 0, 3) == 'get') {
+			$variable = substr ($name, 3);
+			$variable{0} = StringUtil::toLowerCase ($variable{0});
+			if ($this->__isset ($variable)) return $this->__get ($variable);
 		}
 
 		// handle isXYZ methods
-		if (substr($name, 0, 2) == 'is' and $this->__isset($name)) return $this->__get($name);
+		if (substr ($name, 0, 2) == 'is' and $this->__isset ($name)) return $this->__get ($name);
 
 		// handle undefined methods
-		throw new SystemException("Method '%s' does not exist in class %s", $name, get_class($this));
+		throw new SystemException("Method '%s' does not exist in class %s", $name, get_class ($this));
 	}
 }
+
 ?>
