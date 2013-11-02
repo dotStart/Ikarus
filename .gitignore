@@ -16,6 +16,11 @@ local.properties
 .settings/
 .loadpath
 
+########################
+### phpStorm Ignores ###
+########################
+.idea/
+
 # External tool builders
 .externalToolBuilders/
 
