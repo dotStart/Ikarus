@@ -38,7 +38,7 @@ class Session extends DatabaseObject implements ISession {
 	 * Stores a list of built-in variables which are read-only from external sources.
 	 * @var                        string[]
 	 */
-	protected $builtInVariables = array();
+	protected $builtInVariables = array ();
 
 	/**
 	 * @see ikarus\system\session.ISession::__construct()
@@ -71,7 +71,7 @@ class Session extends DatabaseObject implements ISession {
 		$this->data['user'] = null;
 
 		// register built-in variables
-		$this->registerBuiltInVariable (array('userAgent', 'acceptLanguage', 'requestMethod', 'requestURI', 'ipAddress', 'hostname'));
+		$this->registerBuiltInVariable (array ('userAgent', 'acceptLanguage', 'requestMethod', 'requestURI', 'ipAddress', 'hostname'));
 
 		// fire event
 		Ikarus::getEventManager ()->fire (new InitFinishedEvent(new SessionEventArguments($this)));

@@ -77,8 +77,11 @@ class FileAttachment implements Attachment {
 		$this->path = $path;
 		$this->filename = $filename;
 
-		if ($contentType !== null) $this->contentType = $contentType; else
+		if ($contentType !== null) {
+			$this->contentType = $contentType;
+		} else {
 			$this->guessContentType ();
+		}
 	}
 
 	/**

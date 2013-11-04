@@ -23,8 +23,8 @@
 if (!count ($_POST) or !isset($_POST['report'])) {
 	?>
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-		<textarea name="report" cols="40" rows="20"></textarea><br/>
-		<input type="submit" name="submit" value="submit"/>
+		<textarea name="report" cols="40" rows="20"></textarea><br />
+		<input type="submit" name="submit" value="submit" />
 	</form>
 <?php
 } else {

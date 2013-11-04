@@ -52,7 +52,7 @@ class Response {
 	 * Stores a list of headers.
 	 * @var                        Header[]
 	 */
-	protected $headers = array();
+	protected $headers = array ();
 
 	/**
 	 * Stores the received status code.
@@ -154,8 +154,9 @@ class Response {
 				}
 
 				if (Header::isValid ($line)) $response->addHeader (Header::parse ($line));
-			} else
+			} else {
 				$response->appendLine ($line);
+			}
 		}
 
 		// process headers

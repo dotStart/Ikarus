@@ -32,7 +32,7 @@ class KeyPair extends DatabaseObject {
 	 * @see ikarus\data\DatabaseObject::__construct()
 	 */
 	public function __construct ($publicKey, $privateKey) {
-		parent::__construct (array('publicKey' => $publicKey, 'privateKey' => $privateKey));
+		parent::__construct (array ('publicKey' => $publicKey, 'privateKey' => $privateKey));
 	}
 }
 

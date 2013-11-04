@@ -42,13 +42,13 @@ class RequestDispatcher extends Singleton {
 	 * Contains a list of available controller types
 	 * @var                        array<array<string>>
 	 */
-	protected $availableControllerTypes = array();
+	protected $availableControllerTypes = array ();
 
 	/**
 	 * Contains a list of available routes
 	 * @var                        array<string>
 	 */
-	protected $availableRoutes = array();
+	protected $availableRoutes = array ();
 
 	/**
 	 * @see ikarus\pattern.Singleton::__construct()

@@ -40,7 +40,7 @@ class MemcacheAdapter implements ICacheAdapter {
 	 * Contains all stored cache resources.
 	 * @var                        array
 	 */
-	protected $cacheResources = array();
+	protected $cacheResources = array ();
 
 	/**
 	 * Contains the memcache connection instance.
@@ -51,7 +51,7 @@ class MemcacheAdapter implements ICacheAdapter {
 	/**
 	 * @see ikarus\system\cache\adapter.ICacheAdapter::__construct()
 	 */
-	public function __construct (array $adapterParameters = array()) {
+	public function __construct (array $adapterParameters = array ()) {
 		// validate server list
 		if (!isset($adapterParameters['serverList'])) throw new ConnectionException("No server list for memcache adapter given");
 
@@ -66,7 +66,7 @@ class MemcacheAdapter implements ICacheAdapter {
 		}
 
 		// check connection
-		$this->memcache->add ('test', serialize (array('creationTimestamp' => TIME_NOW, 'content' => static::TEST_STRING)));
+		$this->memcache->add ('test', serialize (array ('creationTimestamp' => TIME_NOW, 'content' => static::TEST_STRING)));
 		$this->memcache->get ('test', MEMCACHE_COMPRESSED);
 	}
 
@@ -98,7 +98,7 @@ class MemcacheAdapter implements ICacheAdapter {
 	/**
 	 * @see ikarus\system\cache\adapter.ICacheAdapter::createResource()
 	 */
-	public function createResource ($resourceName, $cacheBuilderClass, $minimalLifetime = 0, $maximalLifetime = 0, array $additionalCacheBuilderParameters = array()) {
+	public function createResource ($resourceName, $cacheBuilderClass, $minimalLifetime = 0, $maximalLifetime = 0, array $additionalCacheBuilderParameters = array ()) {
 		try {
 			$this->storeCacheResource ($resourceName, $this->loadCache ($resourceName, $cacheBuilderClass, $minimalLifetime, $maximalLifetime));
 		} Catch (SystemException $ex) {
@@ -130,7 +130,7 @@ class MemcacheAdapter implements ICacheAdapter {
 		if (!class_exists ($cacheBuilderClass, true)) throw new SystemException("Cannot use cache builder class '%s': The class does not exist!", $cacheBuilderClass);
 
 		// load data
-		return call_user_func (array($cacheBuilderClass, 'getData'), $resourceName, $additionalCacheBuilderParameters);
+		return call_user_func (array ($cacheBuilderClass, 'getData'), $resourceName, $additionalCacheBuilderParameters);
 	}
 
 	/**
@@ -174,7 +174,7 @@ class MemcacheAdapter implements ICacheAdapter {
 	 * @return                        mixed
 	 */
 	protected function storeCacheData ($cacheKey, $data) {
-		$this->memcache->add ($cacheKey, serialize (array('creationTimestamp' => TIME_NOW, 'content' => $data)), MEMCACHE_COMPRESSED);
+		$this->memcache->add ($cacheKey, serialize (array ('creationTimestamp' => TIME_NOW, 'content' => $data)), MEMCACHE_COMPRESSED);
 
 		return $data;
 	}

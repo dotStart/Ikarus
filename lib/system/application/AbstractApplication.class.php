@@ -43,7 +43,7 @@ abstract class AbstractApplication implements IApplication {
 	 * Contains all application components
 	 * @var                        array
 	 */
-	protected $components = array();
+	protected $components = array ();
 
 	/**
 	 * Contains the choosen environment

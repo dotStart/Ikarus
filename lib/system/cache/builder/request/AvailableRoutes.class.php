@@ -37,16 +37,16 @@ class AvailableRoutes implements ICacheBuilder {
 		list($resourceName, $packageID) = explode ('-', $resourceName);
 
 		$editor = new QueryEditor();
-		$editor->from (array('ikarus' . IKARUS_N . '_request_route' => 'requestRoute'));
+		$editor->from (array ('ikarus' . IKARUS_N . '_request_route' => 'requestRoute'));
 		DependencyUtil::generateDependencyQuery ($packageID, $editor, 'requestRoute');
 		$stmt = $editor->prepare ();
 		$resultList = $stmt->fetchList ();
 
-		$routeList = array();
+		$routeList = array ();
 
 		foreach ($resultList as $result) {
-			if (!isset($routeList[$result->parameterName])) $routeList[$result->parameterName] = array();
-			$routeList[$result->parameterName][$result->routeName] = array('controllerName' => $result->controllerName, 'controllerDirectory' => $result->controllerDirectory);
+			if (!isset($routeList[$result->parameterName])) $routeList[$result->parameterName] = array ();
+			$routeList[$result->parameterName][$result->routeName] = array ('controllerName' => $result->controllerName, 'controllerDirectory' => $result->controllerDirectory);
 		}
 
 		return $routeList;

@@ -72,7 +72,7 @@ abstract class AbstractAction implements IAction {
 	 * Defines dependencies for this resource.
 	 * @var        array
 	 */
-	public $requirements = array();
+	public $requirements = array ();
 
 	/**
 	 * @see ikarus\action.IAction::__construct()
@@ -224,11 +224,12 @@ abstract class AbstractAction implements IAction {
 		// object support
 		if (is_object ($data)) {
 			// serialize support
-			if (ClassUtil::isInstanceOf ($data, '\\Serializable')) $data = serialize ($data);
-
-			// __toString() support (fallback)
-			else
-				$data = (string) $data;
+			if (ClassUtil::isInstanceOf ($data, '\\Serializable')) {
+				$data = serialize ($data);
+			} // __toString() support (fallback)
+			else {
+				$data = (string)$data;
+			}
 		}
 
 		// fix information (encoding related problems)
@@ -239,7 +240,7 @@ abstract class AbstractAction implements IAction {
 		} elseif (is_string ($data)) $data = utf8_encode ($data);
 
 		// encode data
-		$returnValue = array('errorNumber' => $this->errorNumber, 'errorMessage' => $this->errorMessage,);
+		$returnValue = array ('errorNumber' => $this->errorNumber, 'errorMessage' => $this->errorMessage,);
 		if (!is_null ($data) and !empty($data)) $returnValue['data'] = $data;
 
 		// generate output

@@ -39,7 +39,7 @@ class Style extends DatabaseObject {
 	 * Contains a list of all css definitions in this style
 	 * @var                        ikarus\system\database\DatabaseResultList
 	 */
-	protected $cssDefinitions = array();
+	protected $cssDefinitions = array ();
 
 	/**
 	 * @see ikarus\data\DatabaseObject::$identifierField
@@ -57,7 +57,7 @@ class Style extends DatabaseObject {
 	 * @api
 	 */
 	public function buildCssCode () {
-		$mediaQueries = array();
+		$mediaQueries = array ();
 		$css = '';
 
 		// fire event
@@ -73,7 +73,7 @@ class Style extends DatabaseObject {
 			if (!$definition->isEnabled) continue;
 
 			// save to media query
-			if (!isset($mediaQueries[$definition->cssMediaQuery])) $mediaQueries[$definition->cssMediaQuery] = array();
+			if (!isset($mediaQueries[$definition->cssMediaQuery])) $mediaQueries[$definition->cssMediaQuery] = array ();
 			$mediaQueries[$definition->cssMediaQuery][] = $definition;
 		}
 

@@ -38,7 +38,7 @@ class DependencyUtil {
 	 * @api
 	 */
 	public static function generateDependencyQuery ($packageID, QueryEditor $query, $table) {
-		$query->join (QueryEditor::LEFT_JOIN, array('ikarus1_package_dependency' => 'dependency'), $table . '.packageID = dependency.packageID', '');
+		$query->join (QueryEditor::LEFT_JOIN, array ('ikarus1_package_dependency' => 'dependency'), $table . '.packageID = dependency.packageID', '');
 		$query->where ('dependency.packageID = ' . $packageID . ' OR dependency.dependencyID = ' . $packageID . ' OR ' . $table . '.packageID = ' . $packageID);
 		$query->order ('dependency.dependencyLevel ASC');
 	}
@@ -53,7 +53,7 @@ class DependencyUtil {
 	 */
 	public static function generateInstanceQuery ($instanceID, QueryEditor $query, $table) {
 		if (Ikarus::getConfiguration ()->get ('application.dependency.inheritParentInstanceInformation')) {
-			$query->join (QueryEditor::LEFT_JOIN, array('ikarus1_package_instance' => 'instance'), $table . 'instanceID = instance.instanceID', '');
+			$query->join (QueryEditor::LEFT_JOIN, array ('ikarus1_package_instance' => 'instance'), $table . 'instanceID = instance.instanceID', '');
 			static::generateDependencyQuery ('instance.packageID', $query, $table);
 		}
 		$query->where ($table . '.instanceID = ' . $instanceID);

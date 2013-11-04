@@ -37,16 +37,16 @@ class EventListener implements ICacheBuilder {
 		list($resourceName, $packageID) = explode ('-', $resourceName);
 
 		$editor = new QueryEditor();
-		$editor->from (array('ikarus' . IKARUS_N . '_event_listener' => 'listener'));
+		$editor->from (array ('ikarus' . IKARUS_N . '_event_listener' => 'listener'));
 		DependencyUtil::generateDependencyQuery ($packageID, $editor, 'listener');
 		$stmt = $editor->prepare ();
 		$resultList = $stmt->fetchList ();
 
-		$listenerList = array();
+		$listenerList = array ();
 
 		foreach ($resultList as $result) {
-			if (!isset($listenerList[$result->className])) $listenerList[$result->className] = array();
-			if (!isset($listenerList[$result->className][$result->eventName])) $listenerList[$result->className][$result->eventName] = array();
+			if (!isset($listenerList[$result->className])) $listenerList[$result->className] = array ();
+			if (!isset($listenerList[$result->className][$result->eventName])) $listenerList[$result->className][$result->eventName] = array ();
 			$listenerList[$result->className][$result->eventName][] = $result;
 		}
 

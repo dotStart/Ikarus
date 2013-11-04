@@ -51,7 +51,7 @@ class HiddenApplicationException extends SystemException {
 				$stmt->bind ($this->__getFile ());
 				$stmt->bind ($this->getLine ());
 				$stmt->bind ($this->__getTraceAsString ());
-				$stmt->bind (implode (', ', array_map (array($this, 'prepareFilePath'), get_included_files ())));
+				$stmt->bind (implode (', ', array_map (array ($this, 'prepareFilePath'), get_included_files ())));
 				$stmt->bind (implode (', ', array_keys ($constants['user'])));
 				$stmt->bind (implode (', ', get_loaded_extensions ()));
 				$stmt->execute ();
@@ -73,7 +73,7 @@ class HiddenApplicationException extends SystemException {
 		<html>
 		<head>
 			<title>An error occoured</title>
-			<link rel="stylesheet" type="text/css" href="<?php echo RELATIVE_IKARUS_DIR; ?>assets/style/fatalError.css"/>
+			<link rel="stylesheet" type="text/css" href="<?php echo RELATIVE_IKARUS_DIR; ?>assets/style/fatalError.css" />
 			<script type="text/javascript" src="<?php echo RELATIVE_IKARUS_DIR; ?>assets/js/3rdParty/jquery.min.js"></script>
 			<script type="text/javascript" src="<?php echo RELATIVE_IKARUS_DIR; ?>assets/js/3rdParty/jquery-ui.min.js"></script>
 		</head>

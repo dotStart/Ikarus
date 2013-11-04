@@ -40,7 +40,7 @@ class EventManager {
 	 * Contains a list of listener instances
 	 * @var        array<EventListener>
 	 */
-	protected $listenerInstances = array();
+	protected $listenerInstances = array ();
 
 	/**
 	 * Creates a new instance of type EventManager
@@ -76,14 +76,19 @@ class EventManager {
 		if (get_class ($event) != $eventClass and !ClassUtil::isInstanceOf ($event, $eventClass)) throw new StrictStandardException('"%s" has to be a parent of "%s" in case to use it as alias', $eventClass, get_class ($event));
 
 		// normal listeners
-		if (isset($this->listenerList[$eventClass])) foreach ($this->listenerList[$eventClass] as $listenerInformation) {
-			$className = $listenerInformation->listenerClass;
+		if (isset($this->listenerList[$eventClass])) {
+			foreach ($this->listenerList[$eventClass] as $listenerInformation) {
+				$className = $listenerInformation->listenerClass;
 
-			// get listener instance
-			if (!isset($this->listenerInstances[$listenerInformation->listenerClass])) $instance = $this->listenerInstances[$listenerInformation->listenerClass] = new $className(); else
-				$instance = $this->listenerInstances[$listenerInformation->listenerClass];
+				// get listener instance
+				if (!isset($this->listenerInstances[$listenerInformation->listenerClass])) {
+					$instance = $this->listenerInstances[$listenerInformation->listenerClass] = new $className();
+				} else {
+					$instance = $this->listenerInstances[$listenerInformation->listenerClass];
+				}
 
-			$instance->execute ($event);
+				$instance->execute ($event);
+			}
 		}
 
 		// fire parents (if any)

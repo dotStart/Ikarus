@@ -176,7 +176,7 @@ class FileUtil {
 		$path = static::unifyDirSeperator ($path);
 
 		// create needed arrays
-		$result = array();
+		$result = array ();
 
 		// split path to array
 		$pathA = explode ('/', $path);
@@ -186,7 +186,9 @@ class FileUtil {
 
 		foreach ($pathA as $key => $dir) {
 			if ($dir == '..') {
-				if (end ($result) == '..') $result[] = '..'; else {
+				if (end ($result) == '..') {
+					$result[] = '..';
+				} else {
 					$lastValue = array_pop ($result);
 					if ($lastValue === '' || $lastValue === null) $result[] = '..';
 				}

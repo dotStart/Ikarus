@@ -32,7 +32,7 @@ abstract class AbstractEventArguments implements IEventArguments {
 	 * Contains the content of this argument list.
 	 * @var        array
 	 */
-	protected $content = array();
+	protected $content = array ();
 
 	/**
 	 * Allows developers to call AbstractEventArguments::getVariableName()

@@ -41,7 +41,7 @@ class DatabaseResultList extends DatabaseObjectList {
 	 * @see ikarus\data.DatabaseObjectList::__toArray()
 	 */
 	public function __toArray () {
-		$array = array();
+		$array = array ();
 
 		foreach ($this as $element) {
 			$array[] = $element->toArray ();

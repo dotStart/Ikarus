@@ -88,7 +88,7 @@ class Mail {
 	 * Stores a list of additional headers.
 	 * @var                        ikarus\system\io\protocol\mime\MimeHeader[]
 	 */
-	protected $additionalHeaders = array();
+	protected $additionalHeaders = array ();
 
 	/**
 	 * Indicates whether this mail should be marked as automatic mail.
@@ -100,13 +100,13 @@ class Mail {
 	 * Stores a list of bcc recipients.
 	 * @var                        ikarus\system\io\protocol\mail\Contact[]
 	 */
-	protected $blindCarbonCopyAddresses = array();
+	protected $blindCarbonCopyAddresses = array ();
 
 	/**
 	 * Stores a list of cc recipients.
 	 * @var                        ikarus\system\io\protocol\mail\contact[]
 	 */
-	protected $carbonCopyAddresses = array();
+	protected $carbonCopyAddresses = array ();
 
 	/**
 	 * Stores the charset.
@@ -207,8 +207,11 @@ class Mail {
 		}
 
 		$header .= 'MIME-Version: 1.0' . "\r\n";
-		if (!$this->content->hasAttachments ()) $header .= 'Content-Type: ' . $this->contentType . '; charset=' . $this->charset . "\r\n"; else
+		if (!$this->content->hasAttachments ()) {
+			$header .= 'Content-Type: ' . $this->contentType . '; charset=' . $this->charset . "\r\n";
+		} else {
 			$header .= 'Content-Type: multipart/mixed; boundary=' . $this->content->getBoundary () . "\r\n";
+		}
 		$header .= 'Content-Language: ' . $this->contentLanguage . "\r\n";
 		$header .= 'Date: ' . $this->date->format ('%a, %d %b %G %H:%M:%S %z') . "\r\n";
 		$header .= 'Subject: ' . $this->subject . "\r\n";

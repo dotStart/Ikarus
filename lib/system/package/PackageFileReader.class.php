@@ -93,7 +93,7 @@ class PackageFileReader {
 	 * Contains a list of supported file versions.
 	 * @var                        string
 	 */
-	protected static final $supportedFileVersions = array(static::FILE_VERSION);
+	protected static final $supportedFileVersions = array (static::FILE_VERSION);
 
 	/**
 	 * Constructs the object.

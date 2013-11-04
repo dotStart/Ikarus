@@ -48,7 +48,7 @@ class IkarusAuthenticationAdapter implements IAuthenticationAdapter, IGenericAut
 	/**
 	 * @see                        ikarus\system\auth.IAuthenticationAdapter
 	 */
-	public function __construct (IApplication $application, $parameters = array()) {
+	public function __construct (IApplication $application, $parameters = array ()) {
 		$this->application = $application;
 	}
 
@@ -57,7 +57,7 @@ class IkarusAuthenticationAdapter implements IAuthenticationAdapter, IGenericAut
 	 */
 	public function auth ($username = null, $password = null) {
 		$query = new QueryEditor();
-		$query->from (array('ikarus1_user', 'user'));
+		$query->from (array ('ikarus1_user', 'user'));
 		$query->where ("user.username = ?");
 		if (!Ikarus::getConfiguration ()->get ('application.user.ignoreInstanceBounds')) DependencyUtil::generateInstanceQuery ($this->application->getInstanceID (), $query, 'user');
 		$stmt = $query->prepare ();

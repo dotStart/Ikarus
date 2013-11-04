@@ -38,25 +38,25 @@ class PackageInformation {
 	 * Contains a list of dependencies.
 	 * @var                        PackageDependency[]
 	 */
-	protected $dependencies = array();
+	protected $dependencies = array ();
 
 	/**
 	 * Contains a list of exclusions (incompatible packages).
 	 * @var                        ExcludedPackage[]
 	 */
-	protected $exclusions = array();
+	protected $exclusions = array ();
 
 	/**
 	 * Contains a list of installation instructions.
 	 * @var                        InstallationInstructionList
 	 */
-	protected $installationInstructions = array();
+	protected $installationInstructions = array ();
 
 	/**
 	 * Contains a list of optional packages.
 	 * @var                        OptionalPackage[]
 	 */
-	protected $optionalPackages = array();
+	protected $optionalPackages = array ();
 
 	/**
 	 * Contains information about the package itself.
@@ -68,13 +68,13 @@ class PackageInformation {
 	 * Contains a list of soft dependencies.
 	 * @var                        SoftPackageDependency[]
 	 */
-	protected $softDependencies = array();
+	protected $softDependencies = array ();
 
 	/**
 	 * Contains a list of update instructions.
 	 * @var                        UpdateInstruction[]
 	 */
-	protected $updateInstructions = array();
+	protected $updateInstructions = array ();
 
 	/**
 	 * Appends a dependency.

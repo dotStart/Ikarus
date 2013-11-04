@@ -68,7 +68,7 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	 * Contains additional parameters used for connection
 	 * @var                        array
 	 */
-	protected $databaseParameters = array();
+	protected $databaseParameters = array ();
 
 	/**
 	 * Contains the hostname where the database server runs (or an ip address)
@@ -92,7 +92,7 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	 * Contains a list of needed database parameters
 	 * @var                        array<string>
 	 */
-	protected $neededDatabaseParameters = array();
+	protected $neededDatabaseParameters = array ();
 
 	/**
 	 * Contains the password used to connect
@@ -192,7 +192,7 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::getErrorInformation()
 	 */
 	public function getErrorInformation () {
-		return array();
+		return array ();
 	}
 
 	/**
@@ -237,7 +237,7 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	 * @see ikarus\system\database\adapter.IDatabaseAdapter::getQuoteDelimiter()
 	 */
 	public function getQuoteDelimiter () {
-		return array('\'', '"');
+		return array ('\'', '"');
 	}
 
 	/**
@@ -247,7 +247,7 @@ abstract class AbstractDatabaseAdapter implements IDatabaseAdapter {
 	 * @return                        mixed
 	 */
 	protected function getResultObject ($result, $forceList = false) {
-		if (count ($result) <= 0 and $forceList) return new DatabaseResultList(array());
+		if (count ($result) <= 0 and $forceList) return new DatabaseResultList(array ());
 		if (count ($result) <= 0) return null;
 		if (count ($result) > 1 or $forceList) {
 			return (new DatabaseResultList($result));

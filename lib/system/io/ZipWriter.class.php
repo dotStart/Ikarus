@@ -27,8 +27,8 @@ use ikarus\util\StringUtil;
  * @version                   2.0.0-0001
  */
 class ZipWriter {
-	protected $headers = array();
-	protected $data = array();
+	protected $headers = array ();
+	protected $data = array ();
 	protected $endOfData = "\x50\x4b\x05\x06\x00\x00\x00\x00";
 	protected $lastOffset = 0;
 

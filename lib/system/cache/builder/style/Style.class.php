@@ -36,7 +36,7 @@ class Style implements ICacheBuilder {
 		list($resourceName, $styleID) = explode ('-', $resourceName);
 
 		$editor = new QueryEditor();
-		$editor->from (array('ikarus' . IKARUS_N . '_style_css' => 'style_css'));
+		$editor->from (array ('ikarus' . IKARUS_N . '_style_css' => 'style_css'));
 		$editor->where ('styleID = ?');
 		$stmt = $editor->prepare ();
 		$stmt->bind ($styleID);

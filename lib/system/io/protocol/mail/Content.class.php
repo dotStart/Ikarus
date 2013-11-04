@@ -38,7 +38,7 @@ class Content {
 	 * Stores a list of attachments.
 	 * @var                        Attachment[]
 	 */
-	protected $attachments = array();
+	protected $attachments = array ();
 
 	/**
 	 * Stores a boundary which is used to seperate all parts from each other.

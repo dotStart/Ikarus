@@ -36,7 +36,7 @@ class DiskFilesystemAdapter implements IFilesystemAdapter {
 	/**
 	 * @see ikarus\system\io\adapter.IFilesystemAdapter
 	 */
-	public function __construct (array $adapterParameters = array()) {
+	public function __construct (array $adapterParameters = array ()) {
 	}
 
 	/**
@@ -114,7 +114,7 @@ class DiskFilesystemAdapter implements IFilesystemAdapter {
 		Ikarus::getFilesystemManager ()->validatePath ($directoryName);
 
 		$iterator = new DirectoryIterator($directoryName);
-		$elements = array();
+		$elements = array ();
 
 		foreach ($iterator as $element) {
 			$elements[] = ($element->isDir () ? $this->getDirectoryIterator ($element->getPathname ()) : new FilesystemFile($element->getPathname (), $this));

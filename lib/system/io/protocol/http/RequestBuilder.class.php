@@ -87,13 +87,13 @@ class RequestBuilder {
 	 * Stores a list of acceptables languages.
 	 * @var                        string[]
 	 */
-	protected $acceptableLanguages = array();
+	protected $acceptableLanguages = array ();
 
 	/**
 	 * Stores a list of acceptable mime types.
 	 * @var                        string[]
 	 */
-	protected $acceptableTypes = array();
+	protected $acceptableTypes = array ();
 
 	/**
 	 * Stores the charset to use for communication.
@@ -111,7 +111,7 @@ class RequestBuilder {
 	 * Stores a list of headers to send.
 	 * @var                        string[]
 	 */
-	protected $headers = array();
+	protected $headers = array ();
 
 	/**
 	 * Stores the hostname which we want to connect.
@@ -141,13 +141,13 @@ class RequestBuilder {
 	 * Stores the data to send.
 	 * @var                        mixed[]
 	 */
-	protected $postData = array();
+	protected $postData = array ();
 
 	/**
 	 * Stores a list of variables which we want to send.
 	 * @var                        string[]
 	 */
-	protected $queryVariables = array();
+	protected $queryVariables = array ();
 
 	/**
 	 * Stores the scheme used for the connection (http or https).
@@ -177,13 +177,13 @@ class RequestBuilder {
 	 * Stores a list of valid schemes.
 	 * @var                        string[]
 	 */
-	public static $validSchemes = array('http', 'https');
+	public static $validSchemes = array ('http', 'https');
 
 	/**
 	 * Stores a list of valid HTTP request types.
 	 * @var                        string[]
 	 */
-	public static $validTypes = array(static::TYPE_DELETE, static::TYPE_GET, static::TYPE_HEAD, static::TYPE_OPTIONS, static::TYPE_POST, static::TYPE_PUT, static::TYPE_TRACE);
+	public static $validTypes = array (static::TYPE_DELETE, static::TYPE_GET, static::TYPE_HEAD, static::TYPE_OPTIONS, static::TYPE_POST, static::TYPE_PUT, static::TYPE_TRACE);
 
 	/**
 	 * Adds an acceptable language to list.

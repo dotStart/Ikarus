@@ -37,8 +37,8 @@ class Applications implements ICacheBuilder {
 		list($resourceName, $instanceID) = explode ('-', $resourceName);
 
 		$editor = new QueryEditor();
-		$editor->from (array('ikarus1_instance' => 'instance'), array('documentRoot', 'instanceID'));
-		$editor->join (QueryEditor::LEFT_JOIN, array('ikarus1_application' => 'app'), 'instance.applicationID = app.applicationID', '*');
+		$editor->from (array ('ikarus1_instance' => 'instance'), array ('documentRoot', 'instanceID'));
+		$editor->join (QueryEditor::LEFT_JOIN, array ('ikarus1_application' => 'app'), 'instance.applicationID = app.applicationID', '*');
 		DependencyUtil::generateDependencyQuery ('app.packageID', $editor, 'app');
 		$stmt = $editor->prepare ();
 

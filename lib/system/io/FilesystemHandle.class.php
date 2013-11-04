@@ -94,9 +94,12 @@ class FilesystemHandle {
 		if ($adapter === null) $adapter = ($this->adapter == null ? Ikarus::getFilesystemManager ()->getDefaultAdapter () : $this->adapter);
 
 		// create file
-		if ($this->newFile) $adapter->createFile ($this->fileName, $this->buffer); // modify file
-		else
+		if ($this->newFile) {
+			$adapter->createFile ($this->fileName, $this->buffer);
+		} // modify file
+		else {
 			$adapter->modifyFile ($this->fileName, $this->buffer);
+		}
 	}
 
 	/**

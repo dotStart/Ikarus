@@ -50,7 +50,7 @@ class PreparedStatement implements IPreparedStatement {
 	 * Contains all bound variables with their positions
 	 * @var                        array
 	 */
-	protected $boundVariables = array();
+	protected $boundVariables = array ();
 
 	/**
 	 * Contains true if the initiator of this statement requested a DatabaseResultList
@@ -68,7 +68,7 @@ class PreparedStatement implements IPreparedStatement {
 	 * Contains a splittet version of statement
 	 * @var                        array<string>
 	 */
-	protected $statementSplit = array();
+	protected $statementSplit = array ();
 
 	/**
 	 * Contains the maximum count of bound variables
@@ -86,7 +86,7 @@ class PreparedStatement implements IPreparedStatement {
 	 * Contains a sorted list of variables
 	 * @var                        array<string>
 	 */
-	protected $variables = array();
+	protected $variables = array ();
 
 	/**
 	 * @see ikarus\system\database.IPreparedStatement::__construct()
@@ -245,8 +245,11 @@ class PreparedStatement implements IPreparedStatement {
 		$currentVariablePosition = 0;
 
 		foreach ($this->statementSplit as $element) {
-			if (preg_match (static::STATEMENT_VARIABLE_PATTERN, $element)) $sql .= $this->escapeVariable ($this->boundVariables[$currentVariablePosition++]); else
+			if (preg_match (static::STATEMENT_VARIABLE_PATTERN, $element)) {
+				$sql .= $this->escapeVariable ($this->boundVariables[$currentVariablePosition++]);
+			} else {
 				$sql .= $element;
+			}
 		}
 
 		return $sql;

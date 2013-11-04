@@ -33,7 +33,7 @@ class XMLOutputHandle extends AbstractOutputHandle implements IOutputHandle {
 	 * @see \ikarus\system\io\output\IOutputHandle::render()
 	 */
 	public function render () {
-		$data = array('variables' => $this->outputVariables, 'data' => $this->data);
+		$data = array ('variables' => $this->outputVariables, 'data' => $this->data);
 
 		// convert to XML
 		$doc = XMLUtil::convertToArray ($data);

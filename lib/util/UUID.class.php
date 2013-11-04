@@ -47,7 +47,7 @@ class UUID {
 		if (!static::isUUID ($namespace)) throw new StrictStandardException('Cannot use a random value as UUID namespace.');
 
 		// remove non-hex characters from namespace
-		$hexNamespace = str_replace (array('{', '}', '-'), '', $namespace);
+		$hexNamespace = str_replace (array ('{', '}', '-'), '', $namespace);
 
 		// init binary version variable
 		$binaryNamespace = '';

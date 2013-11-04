@@ -37,7 +37,7 @@ class Instance extends DatabaseObject {
 	public function __construct ($instanceID, $row = null) {
 		if ($instanceID != null) {
 			$editor = new QueryEditor();
-			$editor->from (array('ikarus1_instance' => 'app_instance'));
+			$editor->from (array ('ikarus1_instance' => 'app_instance'));
 			$editor->where ('instanceID = ?');
 			$editor->limit (1);
 			$stmt = $editor->prepare ();

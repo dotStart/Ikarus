@@ -36,7 +36,7 @@ class ApplicationManager {
 	 * Contains a list of applications
 	 * @var                        array<Application>
 	 */
-	protected $applications = array();
+	protected $applications = array ();
 
 	/**
 	 * Creates a new instance of type ApplicationManager.

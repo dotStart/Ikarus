@@ -54,7 +54,7 @@ class KeyManager {
 	 * @return                        void
 	 */
 	protected function loadCache () {
-		Ikarus::getCacheManager ()->getDefaultAdapter ()->createResource ('keys-' . $this->packageID, 'keys-' . $this->packageID, 'ikarus\\system\\cache\\adapter\\CacheBuilderApplicationKeys', 0, 0, array('packageID' => $this->packageID));
+		Ikarus::getCacheManager ()->getDefaultAdapter ()->createResource ('keys-' . $this->packageID, 'keys-' . $this->packageID, 'ikarus\\system\\cache\\adapter\\CacheBuilderApplicationKeys', 0, 0, array ('packageID' => $this->packageID));
 		$this->keyList = Ikarus::getCacheManager ()->getDefaultAdapter ()->get ('keys-' . $this->packageID);
 	}
 }

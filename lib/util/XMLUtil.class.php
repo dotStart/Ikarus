@@ -36,7 +36,7 @@ class XMLUtil {
 		if ($rootElement instanceof DOMDocument) return static::convertToArray ($rootElement->documentElement);
 
 		// create result object
-		$array = array();
+		$array = array ();
 
 		// handle attributes
 		if ($root->hasAttributes ()) {
@@ -58,23 +58,28 @@ class XMLUtil {
 				$array['value'] = $child->nodeValue;
 
 				// return text content if there is no other content to return
-				if (count ($array) == 1) return $array['value']; else
+				if (count ($array) == 1) {
+					return $array['value'];
+				} else {
 					return $array;
+				}
 			}
 		}
 
 		// create group array
-		$group = array();
+		$group = array ();
 
 		// loop through children
 		foreach ($children as $child) // no other children with this node name found
 		{
-			if (!isset($result[$child->nodeName])) $array[$child->nodeName] = static::convertToArray ($child); // other children with this node name found -> group them
+			if (!isset($result[$child->nodeName])) {
+				$array[$child->nodeName] = static::convertToArray ($child);
+			} // other children with this node name found -> group them
 			else {
 				// copy existing elements to group (if any to copy)
 				if (!isset($group[$child->nodeName])) {
 					$otherChild = $array[$child->nodeName];
-					$array[$child->nodeName] = array($otherChild);
+					$array[$child->nodeName] = array ($otherChild);
 					$group[$child->nodeName] = 1;
 				}
 
@@ -104,8 +109,10 @@ class XMLUtil {
 
 		foreach ($data as $key => $value) {
 			$element = $doc->createElement ($key);
-			if (is_array ($value)) static::convertFromArray ($value, $element, $doc); else {
-				$value = $element->createCDATASection ((string) $value);
+			if (is_array ($value)) {
+				static::convertFromArray ($value, $element, $doc);
+			} else {
+				$value = $element->createCDATASection ((string)$value);
 				$element->appendChild ($value);
 			}
 

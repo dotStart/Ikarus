@@ -73,31 +73,31 @@ class QueryEditor {
 	 * Contains initial values for query parts array.
 	 * @var                        array
 	 */
-	protected static $partsInit = array(self::DISTINCT => false, self::COLUMNS => array(), self::UNION => array(), self::FROM => array(), self::WHERE => array(), self::GROUP => array(), self::HAVING => array(), self::ORDER => array(), self::LIMIT_COUNT => null, self::LIMIT_OFFSET => null, self::FOR_UPDATE => false);
+	protected static $partsInit = array (self::DISTINCT => false, self::COLUMNS => array (), self::UNION => array (), self::FROM => array (), self::WHERE => array (), self::GROUP => array (), self::HAVING => array (), self::ORDER => array (), self::LIMIT_COUNT => null, self::LIMIT_OFFSET => null, self::FOR_UPDATE => false);
 
 	/**
 	 * Contains a list of valid join types.
 	 * @var                        array
 	 */
-	protected static $validJoinTypes = array(self::INNER_JOIN, self::LEFT_JOIN, self::RIGHT_JOIN, self::FULL_JOIN, self::CROSS_JOIN, self::NATURAL_JOIN,);
+	protected static $validJoinTypes = array (self::INNER_JOIN, self::LEFT_JOIN, self::RIGHT_JOIN, self::FULL_JOIN, self::CROSS_JOIN, self::NATURAL_JOIN,);
 
 	/**
 	 * Contains a list of valid join types.
 	 * @var                        array
 	 */
-	protected static $validUnionTypes = array(self::SQL_UNION, self::SQL_UNION_ALL);
+	protected static $validUnionTypes = array (self::SQL_UNION, self::SQL_UNION_ALL);
 
 	/**
 	 * Contains all parts for the query.
 	 * @var                        array
 	 */
-	protected $parts = array();
+	protected $parts = array ();
 
 	/**
 	 * Contains a list of columns wich should read.
 	 * @var                        array
 	 */
-	protected $columns = array();
+	protected $columns = array ();
 
 	/**
 	 * Creates a new instance of type QueryEditor.
@@ -136,7 +136,7 @@ class QueryEditor {
 	 * @return                        ikarus\system\database\QueryEditor
 	 */
 	public function distinct ($flag = true) {
-		$this->parts[static::DISTINCT] = (bool) $flag;
+		$this->parts[static::DISTINCT] = (bool)$flag;
 
 		return $this;
 	}
@@ -159,7 +159,9 @@ class QueryEditor {
 	 * qreturn                        string
 	 */
 	protected function getColumnString ($column, $alias) {
-		if (is_array ($column)) list($correlationName, $columnName) = $column; else {
+		if (is_array ($column)) {
+			list($correlationName, $columnName) = $column;
+		} else {
 			$columnName = $column;
 			$correlationName = '';
 		}
@@ -203,7 +205,9 @@ class QueryEditor {
 	 * @return                        string
 	 */
 	protected function getUniqueCorrelationName ($name) {
-		if (is_array ($name)) $name = end ($name); else {
+		if (is_array ($name)) {
+			$name = end ($name);
+		} else {
 			// Extract just the last name of a qualified table name
 			$dot = strrpos ($name, '.');
 			$name = ($dot === false ? $name : substr ($name, $dot + 1));
@@ -226,7 +230,7 @@ class QueryEditor {
 	 */
 	public function group ($columns) {
 		// unify $columns
-		if (!is_array ($columns)) $columns = array(0 => $columns);
+		if (!is_array ($columns)) $columns = array (0 => $columns);
 
 		// execute
 		foreach ($columns as $column) {
@@ -244,8 +248,11 @@ class QueryEditor {
 	 * @api
 	 */
 	public function having ($condition, $type = self::TYPE_AND) {
-		if ($this->parts[static::HAVING]) $this->parts[static::HAVING][] = $this->getType ($type) . ' (' . $condition . ')'; else
+		if ($this->parts[static::HAVING]) {
+			$this->parts[static::HAVING][] = $this->getType ($type) . ' (' . $condition . ')';
+		} else {
 			$this->parts[static::HAVING][] = '(' . $condition . ')';
+		}
 
 		return $this;
 	}
@@ -267,27 +274,33 @@ class QueryEditor {
 		// check for existing unions
 		if (count ($this->parts[static::UNION])) throw new SystemException("Invalid use of JOIN with UNION");
 
-		if (empty($table)) $correlationName = $tableName = ''; else if (is_array ($table)) {
-			// The array format is array($correlationName => $tableName)
-			foreach ($table as $_tableName => $_correlationName) {
-				// We assume the key is the correlation name and value is the table name
-				$tableName = $_tableName;
-				$correlationName = $_correlationName;
-				break;
-			}
-		} else if (preg_match ('~^(.+)\s+AS\s+(.+)$~i', $table, $matches)) {
-			$tableName = $matches[1];
-			$correlationName = $matches[2];
+		if (empty($table)) {
+			$correlationName = $tableName = '';
 		} else {
-			$tableName = $table;
-			$correlationName = $this->getUniqueCorrelationName ($tableName);
+			if (is_array ($table)) {
+				// The array format is array($correlationName => $tableName)
+				foreach ($table as $_tableName => $_correlationName) {
+					// We assume the key is the correlation name and value is the table name
+					$tableName = $_tableName;
+					$correlationName = $_correlationName;
+					break;
+				}
+			} else {
+				if (preg_match ('~^(.+)\s+AS\s+(.+)$~i', $table, $matches)) {
+					$tableName = $matches[1];
+					$correlationName = $matches[2];
+				} else {
+					$tableName = $table;
+					$correlationName = $this->getUniqueCorrelationName ($tableName);
+				}
+			}
 		}
 
 		if (!empty($correlationName)) {
 			// validate name
 			if (array_key_exists ($correlationName, $this->parts[static::FROM])) throw new SystemException("Cannot redefine correlation name '%s'", $correlationName);
 
-			$this->parts[static::FROM][$correlationName] = array('joinType' => $type, 'tableName' => $tableName, 'joinCondition' => $condition);
+			$this->parts[static::FROM][$correlationName] = array ('joinType' => $type, 'tableName' => $tableName, 'joinCondition' => $condition);
 		}
 
 		// add to the columns from this joined table
@@ -304,8 +317,8 @@ class QueryEditor {
 	 * @api
 	 */
 	public function limit ($count = null, $offset = null) {
-		$this->parts[static::LIMIT_COUNT] = (int) $count;
-		$this->parts[static::LIMIT_OFFSET] = (int) $offset;
+		$this->parts[static::LIMIT_COUNT] = (int)$count;
+		$this->parts[static::LIMIT_OFFSET] = (int)$offset;
 
 		return $this;
 	}
@@ -318,8 +331,8 @@ class QueryEditor {
 	 * @api
 	 */
 	public function limitPage ($page, $itemsPerPage = 20) {
-		$this->parts[static::LIMIT_COUNT] = (int) $rowCount;
-		$this->parts[static::LIMIT_OFFSET] = (int) ($rowCount * ($page - 1));
+		$this->parts[static::LIMIT_COUNT] = (int)$rowCount;
+		$this->parts[static::LIMIT_OFFSET] = (int)($rowCount * ($page - 1));
 
 		return $this;
 	}
@@ -332,7 +345,7 @@ class QueryEditor {
 	 */
 	public function order ($columns) {
 		// unify $columns
-		if (!is_array ($columns)) $columns = array(0 => $columns);
+		if (!is_array ($columns)) $columns = array (0 => $columns);
 
 		// force 'ASC' or 'DESC' on each order column, default is ASC.
 		foreach ($columns as $column) {
@@ -350,7 +363,7 @@ class QueryEditor {
 			}
 
 			// add
-			$this->parts[static::ORDER][] = array($column, $direction);
+			$this->parts[static::ORDER][] = array ($column, $direction);
 		}
 
 		return $this;
@@ -376,12 +389,15 @@ class QueryEditor {
 		// no columns?
 		if (!count ($this->parts[static::COLUMNS])) return '';
 
-		$columns = array();
+		$columns = array ();
 		foreach ($this->parts[static::COLUMNS] as $columnEntry) {
 			list($correlationName, $column, $alias) = $columnEntry;
 
-			if (empty($correlationName)) $columns[] = $this->getColumnString ($column, $alias); else
-				$columns[] = $this->getColumnString (array($correlationName, $column), $alias);
+			if (empty($correlationName)) {
+				$columns[] = $this->getColumnString ($column, $alias);
+			} else {
+				$columns[] = $this->getColumnString (array ($correlationName, $column), $alias);
+			}
 		}
 
 		return ' ' . implode (', ', $columns);
@@ -412,7 +428,7 @@ class QueryEditor {
 	 * @return                        string
 	 */
 	protected function renderFrom () {
-		$from = array();
+		$from = array ();
 
 		foreach ($this->parts[static::FROM] as $correlationName => $table) {
 			$tmp = '';
@@ -445,7 +461,7 @@ class QueryEditor {
 	 */
 	protected function renderGroup () {
 		if (count ($this->parts[static::FROM]) and count ($this->parts[static::GROUP])) {
-			$group = array();
+			$group = array ();
 			foreach ($this->parts[static::GROUP] as $term) {
 				$group[] = $term;
 			}
@@ -477,10 +493,10 @@ class QueryEditor {
 		$offset = 0;
 
 		// offset
-		if (!empty($this->parts[static::LIMIT_OFFSET])) $offset = (int) $this->parts[static::LIMIT_OFFSET];
+		if (!empty($this->parts[static::LIMIT_OFFSET])) $offset = (int)$this->parts[static::LIMIT_OFFSET];
 
 		// limit
-		if (!empty($this->parts[static::LIMIT_COUNT])) $count = (int) $this->parts[static::LIMIT_COUNT];
+		if (!empty($this->parts[static::LIMIT_COUNT])) $count = (int)$this->parts[static::LIMIT_COUNT];
 
 		// get query from default adapter
 		if ($count > 0 or $offset > 0) return Ikarus::getDatabaseManager ()->getDefaultAdapter ()->handleLimitParameter ('', $count, $offset);
@@ -494,14 +510,22 @@ class QueryEditor {
 	 */
 	protected function renderOrder () {
 		if (count ($this->parts[static::ORDER])) {
-			$order = array();
+			$order = array ();
 
 			foreach ($this->parts[static::ORDER] as $term) {
 				if (is_array ($term)) {
-					if (is_numeric ($term[0]) and strval (intval ($term[0])) == $term[0]) $order[] = (int) trim ($term[0]) . ' ' . $term[1]; else
+					if (is_numeric ($term[0]) and strval (intval ($term[0])) == $term[0]) {
+						$order[] = (int)trim ($term[0]) . ' ' . $term[1];
+					} else {
 						$order[] = $term[0] . ' ' . $term[1];
-				} else if (is_numeric ($term) and strval (intval ($term)) == $term) $order[] = (int) trim ($term); else
-					$order[] = $term;
+					}
+				} else {
+					if (is_numeric ($term) and strval (intval ($term)) == $term) {
+						$order[] = (int)trim ($term);
+					} else {
+						$order[] = $term;
+					}
+				}
 			}
 
 			return ' ' . static::SQL_ORDER_BY . ' ' . implode (', ', $order);
@@ -574,7 +598,7 @@ class QueryEditor {
 	 */
 	protected function setTableColumns ($correlationName, $columns) {
 		// unify columns
-		if (!is_array ($columns)) $columns = array(0 => $columns);
+		if (!is_array ($columns)) $columns = array (0 => $columns);
 
 		// default value for correlationName
 		if ($correlationName == null) $correlationName = '';
@@ -584,7 +608,7 @@ class QueryEditor {
 			return !empty($value);
 		});
 
-		$columnValues = array();
+		$columnValues = array ();
 		foreach ($columns as $alias => $column) {
 			$currentCorrelationName = $correlationName;
 
@@ -600,7 +624,7 @@ class QueryEditor {
 				$column = $matches[2];
 			}
 
-			$columnValues[] = array($currentCorrelationName, $column, (is_string ($alias) ? $alias : null));
+			$columnValues[] = array ($currentCorrelationName, $column, (is_string ($alias) ? $alias : null));
 		}
 
 		if (count ($columnValues) > 0) {
@@ -617,16 +641,16 @@ class QueryEditor {
 	 * @return                        ikarus\system\database\QueryEditor
 	 * @api
 	 */
-	public function union ($select = array(), $type = self::SQL_UNION) {
+	public function union ($select = array (), $type = self::SQL_UNION) {
 		// unify select parameter
-		if (!is_array ($select)) $select = array(0 => $select);
+		if (!is_array ($select)) $select = array (0 => $select);
 
 		// validate type
 		if (!in_array ($type, static::$validUnionTypes)) throw new SystemException("Invalid union type '%s' passed to " . __CLASS__ . "::union()", $type);
 
 		// execute
 		foreach ($select as $target) {
-			$this->parts[static::UNION][] = array($target, $type);
+			$this->parts[static::UNION][] = array ($target, $type);
 		}
 
 		return $this;

@@ -67,7 +67,7 @@ class Ikarus extends NonInstantiableClass {
 	 * Contains all requested appliation components
 	 * @var                        array
 	 */
-	protected static $componentList = array();
+	protected static $componentList = array ();
 
 	/**
 	 * Contains an instance of Configuration
@@ -382,7 +382,8 @@ class Ikarus extends NonInstantiableClass {
 	 * Loads a requested application component
 	 * @param                        string $componentName
 	 * @param                        string $abbreviation
-	 * @throws                        StrictStandardException
+	 * @throws exception\StrictStandardException
+	 * @throws exception\SystemException
 	 * @return                        boolean
 	 * @api
 	 */
@@ -517,8 +518,11 @@ class Ikarus extends NonInstantiableClass {
 	 */
 	public static final function handleException (\Exception $ex) {
 		if ($ex instanceof exception\IPrintableException) {
-			if (static::$applicationManagerObj !== null) $ex->show (); else
+			if (static::$applicationManagerObj !== null) {
+				$ex->show ();
+			} else {
 				$ex->showMinimal ();
+			}
 
 			exit;
 		}

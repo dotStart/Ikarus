@@ -149,7 +149,7 @@ class ClassUtil {
 		if (!is_string ($className)) $className = get_class ($className);
 
 		// create default return value
-		$parents = array();
+		$parents = array ();
 
 		// get interfaces
 		if ($getInterfaces) $parents = static::getInterfaces ($className);

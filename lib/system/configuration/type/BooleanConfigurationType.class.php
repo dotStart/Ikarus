@@ -30,7 +30,7 @@ class BooleanConfigurationType implements IConfigurationType {
 	 * @see ikarus\system\configuration\type.ConfigurationType
 	 */
 	public static function getRealValue ($value) {
-		return (bool) $value;
+		return (bool)$value;
 	}
 }
 

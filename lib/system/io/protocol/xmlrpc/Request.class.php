@@ -39,7 +39,7 @@ class Request {
 	 * Stores a list of method parameters.
 	 * @var                        mixed[]
 	 */
-	protected $parameters = array();
+	protected $parameters = array ();
 
 	/**
 	 * Constructs the request.
@@ -80,8 +80,9 @@ class Request {
 				}
 
 				$content->appendChild ($struct);
-			} else
+			} else {
 				$content->setValue ($value);
+			}
 		}
 
 		$parent->append ($content);

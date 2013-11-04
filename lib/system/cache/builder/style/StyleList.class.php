@@ -38,7 +38,7 @@ class StyleList implements ICacheBuilder {
 		list($resourceName, $packageID, $environment) = explode ('-', $resourceName);
 
 		$editor = new QueryEditor();
-		$editor->from (array('ikarus' . IKARUS_N . '_style' => 'style'));
+		$editor->from (array ('ikarus' . IKARUS_N . '_style' => 'style'));
 		$editor->where ('environment = ?');
 		$editor->where ('isEnabled = 1');
 		DependencyUtil::generateDependencyQuery ($packageID, $editor, 'style');
@@ -46,7 +46,7 @@ class StyleList implements ICacheBuilder {
 		$stmt->bind ($environment);
 		$resultList = $stmt->fetchList ();
 
-		$styleList = array();
+		$styleList = array ();
 
 		foreach ($resultList as $result) {
 			$styleList[] = new Style($result->__toArray ());

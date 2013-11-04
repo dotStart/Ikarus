@@ -35,11 +35,11 @@ class Instances implements ICacheBuilder {
 	 */
 	public static function getData ($resourceName, array $additionalParameters) {
 		$editor = new QueryEditor();
-		$editor->from (array('ikarus1_instance' => 'app_instance'));
-		$editor->join (QueryEditor::LEFT_JOIN, array('ikarus1_application' => 'app'), 'app_instance.applicationID = app.applicationID', 'app.packageID');
+		$editor->from (array ('ikarus1_instance' => 'app_instance'));
+		$editor->join (QueryEditor::LEFT_JOIN, array ('ikarus1_application' => 'app'), 'app_instance.applicationID = app.applicationID', 'app.packageID');
 		$stmt = $editor->prepare ();
 
-		$instanceList = array();
+		$instanceList = array ();
 
 		foreach ($stmt->fetchList () as $item) {
 			$instanceList[] = new Instance(null, $item);

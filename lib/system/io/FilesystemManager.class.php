@@ -53,7 +53,7 @@ class FilesystemManager {
 	 * Contains all available connection handles
 	 * @var                        array<ikarus\system\io\adapter\IFilesystemAdapter>
 	 */
-	protected $connections = array();
+	protected $connections = array ();
 
 	/**
 	 * Contains the current default adapter
@@ -65,7 +65,7 @@ class FilesystemManager {
 	 * Contains a list of loaded adapters
 	 * @var                        array<string>
 	 */
-	protected $loadedAdapters = array();
+	protected $loadedAdapters = array ();
 
 	/**
 	 * Checks whether the given adapter is loaded or not
@@ -86,7 +86,7 @@ class FilesystemManager {
 	 * @return                        ikarus\system\io\adapter\IFilesystemAdapter
 	 * @api
 	 */
-	public function createConnection ($adapterName, array $adapterParameters = array(), $linkID = null) {
+	public function createConnection ($adapterName, array $adapterParameters = array (), $linkID = null) {
 		// validate adapter name
 		if (!$this->adapterIsLoaded ($adapterName)) throw new SystemException("Cannot create a new connection with filesystem adapter '%s': The adapter was not loaded");
 
@@ -161,7 +161,7 @@ class FilesystemManager {
 		if (!ClassUtil::isInstanceOf ($className, 'ikarus\system\io\adapter\IFilesystemAdapter')) throw new StrictStandardException("Cannot load filesystem adapter '%s': The adapter class '%s' does not implement ikarus\\system\\io\\adapter\\IfilesystemAdapter");
 
 		// check for php side support
-		if (!call_user_func (array($className, 'isSupported'))) throw new SystemException("Cannot create a new connection with filesystem adapter '%s': The adapter is not supported by php");
+		if (!call_user_func (array ($className, 'isSupported'))) throw new SystemException("Cannot create a new connection with filesystem adapter '%s': The adapter is not supported by php");
 
 		// save adapter
 		$this->loadedAdapters[] = $adapterName;
@@ -205,7 +205,7 @@ class FilesystemManager {
 		$this->loadAdapter (Ikarus::getConfiguration ()->get ('filesystem.general.defaultAdapter'));
 
 		// create new connection
-		$handle = $this->createConnection (Ikarus::getConfiguration ()->get ('filesystem.general.defaultAdapter'), (Ikarus::getConfiguration ()->get ('filesystem.general.adapterParameters') !== null ? Ikarus::getConfiguration ()->get ('filesystem.general.adapterParameters') : array()));
+		$handle = $this->createConnection (Ikarus::getConfiguration ()->get ('filesystem.general.defaultAdapter'), (Ikarus::getConfiguration ()->get ('filesystem.general.adapterParameters') !== null ? Ikarus::getConfiguration ()->get ('filesystem.general.adapterParameters') : array ()));
 
 		// set as default
 		$this->setDefaultAdapter ($handle);

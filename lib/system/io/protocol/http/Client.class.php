@@ -108,7 +108,7 @@ class Client {
 	 * @return                        string
 	 * @api
 	 */
-	public static function post ($URI, array $data = array()) {
+	public static function post ($URI, array $data = array ()) {
 		// init request
 		$request = RequestBuilder::fromURI ($uri);
 		$request->setMethod (RequestBuilder::TYPE_POST);

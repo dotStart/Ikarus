@@ -50,13 +50,13 @@ class SystemException extends Exception implements IPrintableException {
 	 * Contains additional error information
 	 * @var        string
 	 */
-	protected $information = array();
+	protected $information = array ();
 
 	/**
 	 * Contains additional error information that should only appear in encoded error reports
 	 * @var                        string
 	 */
-	protected $hiddenInformation = array();
+	protected $hiddenInformation = array ();
 
 	/**
 	 * Contains additional html code for error
@@ -92,7 +92,7 @@ class SystemException extends Exception implements IPrintableException {
 		// little workaround
 		// Note this is absolutly senseless ... xD
 		if (isset($arguments[1]) && is_array ($arguments[1])) {
-			$fixedArguments = array(0 => $message);
+			$fixedArguments = array (0 => $message);
 			foreach ($arguments[1] as $val) {
 				$fixedArguments[] = $val;
 			}
@@ -216,7 +216,7 @@ class SystemException extends Exception implements IPrintableException {
 		if (isset($_SERVER['HTTP_REFERER'])) $this->information['referer'] = StringUtil::encodeHTML ($_SERVER['HTTP_REFERER']);
 
 		// hidden information
-		$this->hiddenInformation['files'] = array_map (array($this, 'prepareFilePath'), get_included_files ());
+		$this->hiddenInformation['files'] = array_map (array ($this, 'prepareFilePath'), get_included_files ());
 		$this->hiddenInformation['constants'] = get_defined_constants (true);
 		$this->hiddenInformation['constants'] = array_keys ($this->hiddenInformation['constants']['user']);
 		$this->hiddenInformation['extensions'] = get_loaded_extensions ();
@@ -255,10 +255,10 @@ class SystemException extends Exception implements IPrintableException {
 		<!DOCTYPE html>
 		<html>
 		<head>
-			<meta charset="UTF-8"/>
-			<meta name="Content-Type" content="text/html;Charset=UTF-8"/>
+			<meta charset="UTF-8" />
+			<meta name="Content-Type" content="text/html;Charset=UTF-8" />
 			<title><?php echo static::EXCEPTION_TITLE; ?>: <?php echo StringUtil::encodeHTML ($this->getMessage ()); ?></title>
-			<link rel="stylesheet" type="text/css" href="<?php echo RELATIVE_IKARUS_DIR; ?>style/fatalError.css"/>
+			<link rel="stylesheet" type="text/css" href="<?php echo RELATIVE_IKARUS_DIR; ?>style/fatalError.css" />
 			<script type="text/javascript" src="<?php echo RELATIVE_IKARUS_DIR; ?>assets/script/jquery.min.js"></script>
 			<script type="text/javascript" src="<?php echo RELATIVE_IKARUS_DIR; ?>assets/script/jquery-ui.min.js"></script>
 		</head>
@@ -281,7 +281,7 @@ class SystemException extends Exception implements IPrintableException {
 				<h2>
 					<a href="javascript:void(0);" onclick="$('#files').toggle('blind'); $(this).text(($(this).text() == '+' ? '-' : '+'));">+</a>Files (<?php echo count (get_included_files ()); ?>)
 				</h2>
-				<pre id="files" style="display: none;"><?php $includes = array_map (array($this, 'prepareFilePath'), get_included_files ());
+				<pre id="files" style="display: none;"><?php $includes = array_map (array ($this, 'prepareFilePath'), get_included_files ());
 					asort ($includes);
 					foreach ($includes as $file) echo $file . "\n"; ?></pre>
 
@@ -324,7 +324,7 @@ class SystemException extends Exception implements IPrintableException {
 				<h2>
 					<a href="javascript:void(0);" onclick="$('#errorReport').toggle('blind'); $(this).text(($(this).text() == '+' ? '-' : '+'));">+</a>Report
 				</h2>
-				<pre id="errorReport" style="display: none;">Ikarus Framework Error Report<br/><br/><?php echo $this->generateErrorReport (); ?></pre>
+				<pre id="errorReport" style="display: none;">Ikarus Framework Error Report<br /><br /><?php echo $this->generateErrorReport (); ?></pre>
 			</div>
 
 			<?php echo $this->functions; ?>

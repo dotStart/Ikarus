@@ -36,24 +36,24 @@ class ApplicationKeys implements ICacheBuilder {
 	 */
 	public static function getData ($resourceName, array $additionalParameters) {
 		$editor = QueryEditor ();
-		$editor->from (array('ikarus1_encryption_key' => 'encryption_key'));
+		$editor->from (array ('ikarus1_encryption_key' => 'encryption_key'));
 		DependencyUtil::generateDependencyQuery ($additionalParameters['packageID'], $editor, 'encryption_key');
 		$stmt = $editor->prepare ();
 		$resultList = $stmt->fetchList ();
 
-		$keyList = array();
+		$keyList = array ();
 
 		foreach ($resultList as $key) {
 			$keyList[$key->keyID] = new Key(null, $key);
 		}
 
 		$editor = QueryEditor ();
-		$editor->from (array('ikarus1_encryption_key_pair' => 'encryption_key_pair'));
+		$editor->from (array ('ikarus1_encryption_key_pair' => 'encryption_key_pair'));
 		DependencyUtil::generateDependencyQuery ($additionalParameters['packageID'], $editor, 'encryption_key');
 		$stmt = $editor->prepare ();
 		$resultList = $stmt->fetchList ();
 
-		$keyPairList = array();
+		$keyPairList = array ();
 
 		foreach ($resultList as $result) {
 			$keyPairList[] = new KeyPair(($result->publicKey ? $keyList[$result->publicKey] : null), ($result->privateKey ? $keyList[$result->privateKey] : null));

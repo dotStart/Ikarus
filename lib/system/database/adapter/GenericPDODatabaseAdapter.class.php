@@ -35,7 +35,7 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 	/**
 	 * @see ikarus\system\database\adapter.AbstractDatabaseAdapter::$neededDatabaseParameters
 	 */
-	protected $neededDatabaseParameters = array('connectionType');
+	protected $neededDatabaseParameters = array ('connectionType');
 
 	/**
 	 * @see ikarus\system\database\adapter.AbstractDatabaseAdapter::connect()
@@ -43,11 +43,14 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 	public function connect () {
 		try {
 			// create dsn
-			if ($this->databaseParameters['connectionType'] != 'sqlite') $dsn = $this->databaseParameters['connectionType'] . ':host=' . $this->hostname . ';port=' . $this->port; else
+			if ($this->databaseParameters['connectionType'] != 'sqlite') {
+				$dsn = $this->databaseParameters['connectionType'] . ':host=' . $this->hostname . ';port=' . $this->port;
+			} else {
 				$dsn = 'sqlite:' . $this->hostname;
+			}
 
 			// connect
-			$this->connection = new PDO($dsn, $this->user, $this->password, array(PDO::ATTR_PERSISTENT => true));
+			$this->connection = new PDO($dsn, $this->user, $this->password, array (PDO::ATTR_PERSISTENT => true));
 
 			// set attributes
 			$this->connection->setAttribute (PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -110,7 +113,7 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 	 * @see ikarus\system\database\adapter.AbstractDatabaseAdapter::getErrorInformation()
 	 */
 	public function getErrorInformation () {
-		$information = array();
+		$information = array ();
 
 		try {
 			if (!$this->connection) return $information;
@@ -148,12 +151,12 @@ class GenericPDODatabaseAdapter extends AbstractDatabaseAdapter {
 	 * @see ikarus\system\database\adapter.AbstractDatabaseAdapter::getResultObject()
 	 */
 	protected function getResultObject ($result, $forceList = false) {
-		$resultList = array();
+		$resultList = array ();
 		while ($row = $result->fetch ()) {
 			$resultList[] = $row;
 		}
 
-		if ($result->rowCount () <= 0) return (new DatabaseResultList(array()));
+		if ($result->rowCount () <= 0) return (new DatabaseResultList(array ()));
 
 		return parent::getResultObject ($resultList, $forceList);
 	}

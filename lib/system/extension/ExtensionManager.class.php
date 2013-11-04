@@ -48,26 +48,26 @@ class ExtensionManager {
 	 * Contains a list of callbacks that should be executed after autoloading a missing class
 	 * @var                                array<callable>
 	 */
-	protected $autoloadHooks = array();
+	protected $autoloadHooks = array ();
 
 	/**
 	 * Contains a list of callbacks that should be executed before flushing output buffer
 	 * @var                                array<callable>
 	 */
-	protected $outputHooks = array();
+	protected $outputHooks = array ();
 
 	/**
 	 * Contains a list of callbacks that should be executed before stopping the application
 	 * @var                                array<callable>
 	 */
-	protected $shutdownHooks = array();
+	protected $shutdownHooks = array ();
 
 	/**
 	 * Creates a new instance of type ExtensionManager.
 	 * @internal                        This method will be called by Ikarus during it's startup period.
 	 */
 	public function __construct () {
-		ob_start (array($this, 'handleOutputBuffer'));
+		ob_start (array ($this, 'handleOutputBuffer'));
 	}
 
 	/**

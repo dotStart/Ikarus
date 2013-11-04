@@ -100,7 +100,7 @@ class MathUtil {
 	 */
 	public static function powMod ($p, $q, $r) {
 		// extract powers of 2 from q
-		$factors = array();
+		$factors = array ();
 		$div = $q;
 		$powerOfTwo = 0;
 
@@ -114,7 +114,7 @@ class MathUtil {
 
 		// calculate partial results for each factor using each partial result as a starting point for the next
 		// depends of the factors of two being generated in increasing order
-		$partialResults = array();
+		$partialResults = array ();
 		$partialResult = $p;
 		$index = 0;
 

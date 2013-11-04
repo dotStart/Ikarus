@@ -50,7 +50,7 @@ class SessionManager implements IConfigurableComponent {
 	 * Contains all registered session objects
 	 * @var                        array<ikarus\system\session\ISession>
 	 */
-	protected $sessions = array();
+	protected $sessions = array ();
 
 	/**
 	 * Contains the session query parameter used if cookies aren't available
@@ -90,7 +90,7 @@ class SessionManager implements IConfigurableComponent {
 		// reset session tracking
 		HeaderUtil::setCookie ('sessionID', '', TIME_NOW - 3600);
 		if (isset($_REQUEST['s'])) unset($_REQUEST['s']);
-		$this->sessions = array();
+		$this->sessions = array ();
 	}
 
 	/**
@@ -156,7 +156,7 @@ class SessionManager implements IConfigurableComponent {
 
 		if ($sessionID !== null) {
 			$editor = new QueryEditor();
-			$editor->from (array('ikarus' . IKARUS_N . '_session' => 'session'));
+			$editor->from (array ('ikarus' . IKARUS_N . '_session' => 'session'));
 			$editor->where ('sessionID = ?');
 			$editor->where ('environment = ?');
 			DependencyUtil::generateDependencyQuery ($application->getPackageID (), $editor, 'session');

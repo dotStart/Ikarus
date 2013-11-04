@@ -62,10 +62,10 @@ class DatabaseException extends SystemException {
 		unset($arguments[0]);
 
 		// resort
-		$arguments = array_merge (array(), $arguments);
+		$arguments = array_merge (array (), $arguments);
 
 		// call parent
-		call_user_func_array (array('parent', '__construct'), $arguments);
+		call_user_func_array (array ('parent', '__construct'), $arguments);
 	}
 
 	/**

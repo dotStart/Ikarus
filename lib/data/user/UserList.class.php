@@ -42,7 +42,7 @@ class UserList extends DatabaseObjectList {
 	 * @param        string  $whereClouse
 	 */
 	public function __construct ($limit = 0, $offset = 0, $whereClouse = null) {
-		$objectList = array();
+		$objectList = array ();
 		$sql = "SELECT
 				*
 			FROM

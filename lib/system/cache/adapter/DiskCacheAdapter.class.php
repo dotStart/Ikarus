@@ -34,12 +34,12 @@ class DiskCacheAdapter implements ICacheAdapter {
 	 * Contains all stored cache resources
 	 * @var                        array
 	 */
-	protected $cacheResources = array();
+	protected $cacheResources = array ();
 
 	/**
 	 * @see ikarus\system\cache\adapter.ICacheAdapter::__construct()
 	 */
-	public function __construct (array $adapterParameters = array()) {
+	public function __construct (array $adapterParameters = array ()) {
 	}
 
 	/**
@@ -69,7 +69,7 @@ class DiskCacheAdapter implements ICacheAdapter {
 	/**
 	 * @see ikarus\system\cache\adapter.ICacheAdapter::createResource()
 	 */
-	public function createResource ($resourceName, $cacheBuilderClass, $minimalLifetime = 0, $maximalLifetime = 0, array $additionalCacheBuilderParameters = array()) {
+	public function createResource ($resourceName, $cacheBuilderClass, $minimalLifetime = 0, $maximalLifetime = 0, array $additionalCacheBuilderParameters = array ()) {
 		// get file path
 		$cacheFile = IKARUS_DIR . 'cache/cache.' . $resourceName . '.php';
 
@@ -99,12 +99,12 @@ class DiskCacheAdapter implements ICacheAdapter {
 	 * @param                        string $resourceName
 	 * @return                        mixed
 	 */
-	protected function getCacheData ($cacheBuilderClass, $resourceName, array $additionalCacheBuilderParameters = array()) {
+	protected function getCacheData ($cacheBuilderClass, $resourceName, array $additionalCacheBuilderParameters = array ()) {
 		// validate class
 		if (!class_exists ($cacheBuilderClass, true)) throw new SystemException("Cannot use cache builder class '%s': The class does not exist!", $cacheBuilderClass);
 
 		// load data
-		return call_user_func (array($cacheBuilderClass, 'getData'), $resourceName, $additionalCacheBuilderParameters);
+		return call_user_func (array ($cacheBuilderClass, 'getData'), $resourceName, $additionalCacheBuilderParameters);
 	}
 
 	/**

@@ -39,7 +39,7 @@ class WebOutputManager {
 	 * Stores a list of output variables with their values.
 	 * @var                        mixed[]
 	 */
-	protected $outputVariables = array();
+	protected $outputVariables = array ();
 
 	/**
 	 * Generates a new output handle.

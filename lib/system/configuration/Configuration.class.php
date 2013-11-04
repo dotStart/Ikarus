@@ -73,7 +73,7 @@ class Configuration {
 	 * Contains a raw list of options (if needed)
 	 * @var                        array
 	 */
-	protected $rawOptionList = array();
+	protected $rawOptionList = array ();
 
 	/**
 	 * Creates a new instance of type Configuration
@@ -153,7 +153,7 @@ class Configuration {
 		if (!ClassUtil::isInstanceOf ($className, 'ikarus\system\configuration\type\IConfigurationType')) throw new StrictStandardException("The class '%s' of option type '%s' is not an implementation of ikarus\\system\\configuration\\type\\ConfigurationType", $className, $type);
 
 		// get real variable content
-		return call_user_func (array($className, 'getRealValue'), $value);
+		return call_user_func (array ($className, 'getRealValue'), $value);
 	}
 
 	/**
@@ -200,7 +200,7 @@ class Configuration {
 	protected function readOptionsFromDatabase () {
 		// generate query
 		$query = new QueryEditor();
-		$query->from (array('ikarus' . IKARUS_N . '_option' => 'ioption'));
+		$query->from (array ('ikarus' . IKARUS_N . '_option' => 'ioption'));
 
 		// add dependency clauses
 		DependencyUtil::generateDependencyQuery ($this->packageID, $query, 'ioption');

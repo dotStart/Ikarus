@@ -38,7 +38,7 @@ class User extends DatabaseObject implements IUserObject {
 	public function __construct ($userID, $row = null) {
 		if ($userID !== null) {
 			$query = new QueryEditor();
-			$query->from (array('ikarus1_user' => 'user'));
+			$query->from (array ('ikarus1_user' => 'user'));
 			$query->where ('userID = ?');
 			$stmt = $query->prepare ();
 			$stmt->bind ($userID);

@@ -48,7 +48,7 @@ class Tar {
 	 * Stores a list of all files in this package.
 	 * @var                                string[]
 	 */
-	protected $contentList = array();
+	protected $contentList = array ();
 
 	/**
 	 * Stores the file interface which is used to read the file.
@@ -91,7 +91,7 @@ class Tar {
 	 */
 	public function decode () {
 		// reset data
-		$tis->contentList = array();
+		$tis->contentList = array ();
 
 		// reset file pointer
 		$this->file->seek (0);
@@ -173,8 +173,9 @@ class Tar {
 		if ($data['typeflag'] == '5') {
 			$content->setSize ();
 			$content->setType (ArchiveContent::TYPE_DIRECTORY);
-		} else
+		} else {
 			$content->setType (ArchiveContent::TYPE_FILE);
+		}
 
 		// store offset
 		$content->setOffset ($this->file->tell ());

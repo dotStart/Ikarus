@@ -37,12 +37,12 @@ class ControllerTypes implements ICacheBuilder {
 		list($resourceName, $packageID) = explode ('-', $resourceName);
 
 		$editor = new QueryEditor();
-		$editor->from (array('ikarus' . IKARUS_N . '_request_controller_type' => 'controllerType'));
+		$editor->from (array ('ikarus' . IKARUS_N . '_request_controller_type' => 'controllerType'));
 		DependencyUtil::generateDependencyQuery ($packageID, $editor, 'controllerType');
 		$stmt = $editor->prepare ();
 		$resultList = $stmt->fetchList ();
 
-		$typeList = array();
+		$typeList = array ();
 
 		foreach ($resultList as $result) {
 			$typeList[$result->parameterName] = $result->controllerNamespace;

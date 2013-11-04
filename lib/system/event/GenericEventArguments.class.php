@@ -29,7 +29,7 @@ class GenericEventArguments extends AbstractEventArguments {
 	 * Constructs the object.
 	 * @param                        array $content
 	 */
-	public function __construct (array $content = array()) {
+	public function __construct (array $content = array ()) {
 		$this->content = $content;
 	}
 }

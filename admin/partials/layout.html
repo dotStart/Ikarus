@@ -3,17 +3,17 @@
 <head>
 	<!-- Basic page information -->
 	<title ng:bind="{{pageInformation.title}}">Loading ... - Ikarus Framework</title>
-	<meta charset="UTF-8"/>
+	<meta charset="UTF-8" />
 
 	<!-- Meta information -->
-	<meta name="robots" content="{{pageInformation.robots}}"/>
-	<meta name="description" ng:repeat="description in pageInformation.description" lang="{{description.lang}}" content="{{description.content}}"/>
-	<meta name="keywords" ng:repeat="keywords in pageInformation.keywords" lang="{{keywords.lang}}" content="{{keywords.content}}"/>
-	<meta name="application-name" content="{{applicationInformation.applicationName}}"/>
-	<meta name="generator" content="{{applicationInformation.generatorString}}"/>
+	<meta name="robots" content="{{pageInformation.robots}}" />
+	<meta name="description" ng:repeat="description in pageInformation.description" lang="{{description.lang}}" content="{{description.content}}" />
+	<meta name="keywords" ng:repeat="keywords in pageInformation.keywords" lang="{{keywords.lang}}" content="{{keywords.content}}" />
+	<meta name="application-name" content="{{applicationInformation.applicationName}}" />
+	<meta name="generator" content="{{applicationInformation.generatorString}}" />
 
 	<!-- Stylesheets -->
-	<link rel="stylesheet" type="text/css" href="index.php?action=Stylesheet"/>
+	<link rel="stylesheet" type="text/css" href="index.php?action=Stylesheet" />
 
 	<!-- Scripts -->
 	<script type="text/javascript" src="index.php?action=JavaScriptLibraries"></script>
@@ -32,13 +32,13 @@
 				<div class="formElement">
 					<div class="formField input-prepend">
 						<span class="add-on"><i class="icon-user"></i></span>
-						<input type="text" name="username" id="username" placeholder="Username"/>
+						<input type="text" name="username" id="username" placeholder="Username" />
 					</div>
 				</div>
 				<div class="formElement">
 					<div class="formField input-prepend">
 						<span class="add-on"><i class="icon-password"></i></span>
-						<input type="password" name="password" id="password" placeholder="Password"/>
+						<input type="password" name="password" id="password" placeholder="Password" />
 					</div>
 				</div>
 				<div class="formSubmit">
@@ -112,7 +112,7 @@
 			<section id="searchForm">
 				<form class="form-search">
 					<div class="input-append">
-						<input type="text" name="q" id="q" placeholder="Query" class="span8 search-query"/>
+						<input type="text" name="q" id="q" placeholder="Query" class="span8 search-query" />
 						<button type="submit" class="btn">{{ "global.search.submit" | Language }}</button>
 					</div>
 				</form>
@@ -123,13 +123,13 @@
 				<ul>
 					<li ng:repeat="item in pageInformation.sidebarMenu" ng:class="item.className">
 						<a href="{{item.href}}" title="{{item.title}}" ng:class="item.linkClassName">
-							<img ng:src="{{item.image | Image}}" alt="" class="icon24"/>
+							<img ng:src="{{item.image | Image}}" alt="" class="icon24" />
 							<span>{{item.title}}</span> </a>
 						<nav class="subMenu minimizableContainer" style="display: none;">
 							<ul>
 								<li ng:repeat="subItem in item.subMenu" ng:class="subItem.className">
 									<a href="subItem.href" title="{{subItem.title}}">
-										<img ng:src="{{subItem.image | Image}}" alt="" class="icon24"/>
+										<img ng:src="{{subItem.image | Image}}" alt="" class="icon24" />
 										<span>{{subItem.title}}</span> </a>
 								</li>
 							</ul>

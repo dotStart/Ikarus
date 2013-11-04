@@ -57,7 +57,7 @@ class SessionFactory {
 		// create session instance
 		$className = $abbreviation . '\\' . static::SESSION_CLASS_PATH;
 
-		$instance = new $className(array('abbreviation' => $abbreviation, 'sessionID' => $sessionID, 'packageID' => $packageID, 'environment' => $environment));
+		$instance = new $className(array ('abbreviation' => $abbreviation, 'sessionID' => $sessionID, 'packageID' => $packageID, 'environment' => $environment));
 
 		// fire event
 		$event = new CreateSessionEvent(new SessionEventArguments($instance));

@@ -40,7 +40,7 @@ class CouchbaseAdapter implements ICacheAdapter {
 	 * Contains all stored cache resources.
 	 * @var                        array
 	 */
-	protected $cacheResources = array();
+	protected $cacheResources = array ();
 
 	/**
 	 * Contains the couchbase connection instance.
@@ -51,7 +51,7 @@ class CouchbaseAdapter implements ICacheAdapter {
 	/**
 	 * @see ikarus\system\cache\adapter.ICacheAdapter::__construct()
 	 */
-	public function __construct (array $adapterParameters = array()) {
+	public function __construct (array $adapterParameters = array ()) {
 		// validate server list
 		if (!isset($adapterParameters['server']) and !isset($adapterParameters['serverList'])) throw new ConnectionException("No server for couchbase connection specified");
 		if (isset($adapterParameters['server']) and !isset($adapterParameters['bucket'])) throw new ConnectionException("No information about connection's bucket specified");
@@ -68,12 +68,13 @@ class CouchbaseAdapter implements ICacheAdapter {
 				// add server to connection pool
 				$this->couchbase->addServer ($hostname, intval ($port), $weight);
 			}
-		} else
-			// create instance
+		} else // create instance
+		{
 			$this->couchbase = new Couchbase($adapterParameters['server'], (isset($adapterParameters['username']) ? $adapterParameters['username'] : null), (isset($adapterParameters['password']) ? $adapterParameters['password'] : null), $adapterParameters['bucket']);
+		}
 
 		// check connection
-		@$this->couchbase->add ('test', serialize (array('creationTimestamp' => TIME_NOW, 'content' => static::TEST_STRING)));
+		@$this->couchbase->add ('test', serialize (array ('creationTimestamp' => TIME_NOW, 'content' => static::TEST_STRING)));
 		if (@$this->couchbase->get ('test', MEMCACHE_COMPRESSED) != static::TEST_STRING) throw new ConnectionException("Cannot create a correct couchbase connection");
 	}
 
@@ -105,7 +106,7 @@ class CouchbaseAdapter implements ICacheAdapter {
 	/**
 	 * @see ikarus\system\cache\adapter.ICacheAdapter::createResource()
 	 */
-	public function createResource ($resourceName, $cacheBuilderClass, $minimalLifetime = 0, $maximalLifetime = 0, array $additionalCacheBuilderParameters = array()) {
+	public function createResource ($resourceName, $cacheBuilderClass, $minimalLifetime = 0, $maximalLifetime = 0, array $additionalCacheBuilderParameters = array ()) {
 		try {
 			$this->storeCacheResource ($resourceName, $this->loadCache ($resourceName, $cacheBuilderClass, $minimalLifetime, $maximalLifetime));
 		} Catch (SystemException $ex) {
@@ -137,7 +138,7 @@ class CouchbaseAdapter implements ICacheAdapter {
 		if (!class_exists ($cacheBuilderClass, true)) throw new SystemException("Cannot use cache builder class '%s': The class does not exist!", $cacheBuilderClass);
 
 		// load data
-		return call_user_func (array($cacheBuilderClass, 'getData'), $resourceName, $additionalCacheBuilderParameters);
+		return call_user_func (array ($cacheBuilderClass, 'getData'), $resourceName, $additionalCacheBuilderParameters);
 	}
 
 	/**
@@ -180,7 +181,7 @@ class CouchbaseAdapter implements ICacheAdapter {
 	 * @return                        mixed
 	 */
 	protected function storeCacheData ($cacheKey, $data) {
-		$this->couchbase->add ($cacheKey, serialize (array('creationTimestamp' => TIME_NOW, 'content' => $data)));
+		$this->couchbase->add ($cacheKey, serialize (array ('creationTimestamp' => TIME_NOW, 'content' => $data)));
 
 		return $data;
 	}

@@ -32,7 +32,7 @@ abstract class ExtendableUserObject extends DatabaseObject {
 	 * Contains a list of registered user object extensions.
 	 * @var                        IUserObjectExtension[]
 	 */
-	protected $extensions = array();
+	protected $extensions = array ();
 
 	/**
 	 * Registers a new

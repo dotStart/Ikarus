@@ -45,7 +45,7 @@ printf ("Preparing ...");
 // get ignore file
 $ignoreFile = "";
 if (file_exists (BUILD_DIR . '.ikarusignore')) $ignoreFile = file_get_contents (BUILD_DIR . '.ikarusignore');
-$ignores = (!empty($ignoreFile) ? explode ("\n", $ignoreFile) : array());
+$ignores = (!empty($ignoreFile) ? explode ("\n", $ignoreFile) : array ());
 
 // append
 $ignores[] = 'contrib/';
@@ -73,8 +73,9 @@ if (!extension_loaded ('phar') or (ini_get ('phar.readonly') and !ini_set ('phar
 	fputs ($error, "Cannot create installer: PHAR problem: ");
 	fputs ($error, (!extension_loaded ('phar') ? 'phar extension not available' : 'phar.readonly set to 1') . "\n");
 	exit;
-} else
+} else {
 	print("PHAR support detected. Creating 1-file installer!\n");
+}
 
 // get filename
 $fileName = BUILD_DIR . 'ikarus-1file-' . str_replace ('.', '', IKARUS_VERSION) . '.tar';
@@ -93,7 +94,7 @@ $phar = new \PharData($fileName);
 $phar->buildFromDirectory (BUILD_DIR . 'build/');
 
 // set properties
-$phar->setMetadata (array('ikarus.version' => IKARUS_VERSION, 'ikarus.version.major' => IKARUS_VERSION_MAJOR, 'ikarus.version.minor' => IKARUS_VERSION_MINOR, 'ikarus.version.revision' => IKARUS_VERSION_REVISION));
+$phar->setMetadata (array ('ikarus.version' => IKARUS_VERSION, 'ikarus.version.major' => IKARUS_VERSION_MAJOR, 'ikarus.version.minor' => IKARUS_VERSION_MINOR, 'ikarus.version.revision' => IKARUS_VERSION_REVISION));
 
 // set signature
 $phar->setSignatureAlgorithm (\PHAR::SHA512);
@@ -155,7 +156,7 @@ function getStrippedPath ($path) {
 	// remove . & ..
 	if ($elements[0] == '..' or $elements[0] == '.') {
 		unset($elements[0]);
-		$elements = array_merge (array(), $elements);
+		$elements = array_merge (array (), $elements);
 	}
 
 	return implode ('/', $elements);

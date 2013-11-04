@@ -38,7 +38,7 @@ class DatabaseObjectList implements Iterator, Countable {
 	 * Contains all iterateable database objects
 	 * @var                        array
 	 */
-	protected $objectList = array();
+	protected $objectList = array ();
 
 	/**
 	 * Points to the current database object

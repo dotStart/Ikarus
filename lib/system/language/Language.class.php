@@ -42,7 +42,7 @@ class Language extends DatabaseObject {
 	 * Contains all language variables for this language
 	 * @var                        array<string>
 	 */
-	protected $languageVariables = array();
+	protected $languageVariables = array ();
 
 	/**
 	 * Loads the language cache for this language

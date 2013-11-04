@@ -35,7 +35,7 @@ abstract class AbstractOutputHandle {
 	 * Stores output variables.
 	 * @var                        mixed[]
 	 */
-	protected $outputVariables = array();
+	protected $outputVariables = array ();
 
 	/**
 	 * @see ikarus\system\io\output.IOutputHandle::__construct()

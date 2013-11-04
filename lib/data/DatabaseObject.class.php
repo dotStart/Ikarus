@@ -88,7 +88,7 @@ abstract class DatabaseObject {
 
 		// get data via editor
 		$editor = new QueryEditor();
-		$editor->from (array(static::$tableName => 'databaseObjectTable'));
+		$editor->from (array (static::$tableName => 'databaseObjectTable'));
 		$editor->where (static::$identifierField . ' = ?');
 		$stmt = $editor->prepare ();
 		$stmt->bind ($identifier);

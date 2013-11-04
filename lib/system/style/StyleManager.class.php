@@ -48,7 +48,7 @@ class StyleManager implements IConfigurableComponent {
 	 * Contains a cached list of styles
 	 * @var                        array<ikarus\system\style\Style>
 	 */
-	protected $styleList = array();
+	protected $styleList = array ();
 
 	/**
 	 * (non-PHPdoc)

@@ -57,13 +57,13 @@ class DatabaseManager {
 	 * Contains all active application connections.
 	 * @var                        array<ikarus\system\database\adapter\IDatabaseAdapter>
 	 */
-	protected $applicationConnections = array();
+	protected $applicationConnections = array ();
 
 	/**
 	 * Contains all active database connections
 	 * @var                        array<ikarus\system\database\adapter\IDatabaseAdapter>
 	 */
-	protected $connections = array();
+	protected $connections = array ();
 
 	/**
 	 * Contains the adapter handle used by default
@@ -75,13 +75,13 @@ class DatabaseManager {
 	 * Contains a list of loaded adapters
 	 * @var                array<string>
 	 */
-	protected $loadedAdapters = array();
+	protected $loadedAdapters = array ();
 
 	/**
 	 * Contains a list of needed configuration variables defined in configuration file (See above for file path)
 	 * @var                array<string>
 	 */
-	protected $neededConfigurationVariables = array('adapterName', 'hostname', 'port', 'user', 'password', 'databaseParameters', 'charset', 'databaseName');
+	protected $neededConfigurationVariables = array ('adapterName', 'hostname', 'port', 'user', 'password', 'databaseParameters', 'charset', 'databaseName');
 
 	/**
 	 * Returnes true if the specified adapter is already loaded
@@ -176,7 +176,7 @@ class DatabaseManager {
 		if (!class_exists ($className)) throw new SystemException("Cannot load adapter %s: The needed class (%s) was not defined in adapter file", $adapterName, $className);
 
 		// check for support
-		if (!call_user_func (array($className, 'isSupported'))) throw new SystemException("Cannot load adapter %s: The adapter is not supported by PHP installation", $adapterName);
+		if (!call_user_func (array ($className, 'isSupported'))) throw new SystemException("Cannot load adapter %s: The adapter is not supported by PHP installation", $adapterName);
 
 		// add to array
 		$this->loadedAdapters[] = $adapterName;

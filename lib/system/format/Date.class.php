@@ -137,7 +137,7 @@ class Date {
 		if (!$parsed or !is_array ($parsed)) throw new IllegalArgumentException('Cannot parse date "%s" with format "%s".', $date, $format); // XXX: I'm not sure whether this works ...
 
 		// create timestamp
-		return (new static(mktime ($parsed['hour'], $parsed['minute'], $parsed['second'], $parsed['month'], $parsed['day'], $parsed['year'], (isset($parsed['dst']) and !empty($parsed['dst']) and ((bool) $parsed['dst'])))));
+		return (new static(mktime ($parsed['hour'], $parsed['minute'], $parsed['second'], $parsed['month'], $parsed['day'], $parsed['year'], (isset($parsed['dst']) and !empty($parsed['dst']) and ((bool)$parsed['dst'])))));
 	}
 
 	/**

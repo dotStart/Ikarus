@@ -34,7 +34,7 @@ class FilesystemDirectoryIterator implements Iterator, Countable, IFileInfo {
 	 * Stores all directory contents.
 	 * @var                        array<IFileInfo>
 	 */
-	protected $contents = array();
+	protected $contents = array ();
 
 	/**
 	 * Stores the current iterator position.

@@ -25,18 +25,18 @@ namespace ikarus;
 	 */
 
 // set exception handler
-set_exception_handler (array('ikarus\system\Ikarus', 'handleException'));
+set_exception_handler (array ('ikarus\system\Ikarus', 'handleException'));
 
 // set error handler
-set_error_handler (array('ikarus\system\Ikarus', 'handleError'), E_ALL);
+set_error_handler (array ('ikarus\system\Ikarus', 'handleError'), E_ALL);
 
 // register autoloader
-spl_autoload_register (array('ikarus\system\Ikarus', 'autoload'));
+spl_autoload_register (array ('ikarus\system\Ikarus', 'autoload'));
 
 // register shutdown method
-register_shutdown_function (array('ikarus\system\Ikarus', 'shutdown'));
+register_shutdown_function (array ('ikarus\system\Ikarus', 'shutdown'));
 
 // assert settings
 assert_options (ASSERT_WARNING, false);
-assert_options (ASSERT_CALLBACK, array('ikarus\system\Ikarus', 'handleAssertion'));
+assert_options (ASSERT_CALLBACK, array ('ikarus\system\Ikarus', 'handleAssertion'));
 ?>

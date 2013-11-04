@@ -52,12 +52,14 @@ class ZipFile extends File {
 			array_unshift ($arguments, $this->resource);
 
 			return call_user_func_array ('gz' . $function, $arguments);
-		} else if (function_exists ($function)) {
-			array_unshift ($arguments, $this->filename);
-
-			return call_user_func_array ($function, $arguments);
 		} else {
-			throw new SystemException('Can not call method ' . $function, 11003);
+			if (function_exists ($function)) {
+				array_unshift ($arguments, $this->filename);
+
+				return call_user_func_array ($function, $arguments);
+			} else {
+				throw new SystemException('Can not call method ' . $function, 11003);
+			}
 		}
 	}
 

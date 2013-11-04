@@ -54,8 +54,11 @@ class StringUtil {
 	 * @api
 	 */
 	public static function countSubstring ($hayStack, $needle) {
-		if (static::mbStringAvailable ()) return mb_substr_count ($hayStack, $needle); else
+		if (static::mbStringAvailable ()) {
+			return mb_substr_count ($hayStack, $needle);
+		} else {
 			return substr_count ($hayStack, $needle);
+		}
 	}
 
 	/**
@@ -65,7 +68,7 @@ class StringUtil {
 	 * @api
 	 */
 	public static function decodeHTML ($string) {
-		if (is_object ($string)) $string = (string) $string;
+		if (is_object ($string)) $string = (string)$string;
 		$string = str_ireplace ('&nbsp;', ' ', $string); // convert non-breaking spaces to ascii 32; not ascii 160
 		return @html_entity_decode ($string, ENT_COMPAT, defined ('OPTION_CHARSET') ? CHARSET : 'UTF-8');
 	}
@@ -78,7 +81,7 @@ class StringUtil {
 	 */
 	public static function encodeHTML ($string) {
 		// convert to string
-		if (is_object ($string)) $string = (string) $string;
+		if (is_object ($string)) $string = (string)$string;
 
 		return @htmlspecialchars ($string, ENT_COMPAT, defined ('OPTION_CHARSET') ? CHARSET : 'UTF-8');
 	}
@@ -98,8 +101,11 @@ class StringUtil {
 	 * @api
 	 */
 	public static function firstCharToUpperCase ($string) {
-		if (static::mbStringAvailable ()) return static::toUpperCase (static::substring ($string, 0, 1)) . static::substring ($string, 1); else
+		if (static::mbStringAvailable ()) {
+			return static::toUpperCase (static::substring ($string, 0, 1)) . static::substring ($string, 1);
+		} else {
 			return ucfirst ($string);
+		}
 	}
 
 	/**
@@ -133,8 +139,19 @@ class StringUtil {
 	 * @api
 	 */
 	public static function formatNumeric ($numeric) {
-		if (is_int ($numeric)) return static::formatInteger ($numeric); else if (is_float ($numeric)) return static::formatDouble ($numeric); else if (floatval ($numeric) - (float) intval ($numeric)) return static::formatDouble ($numeric); else
-			return static::formatInteger (intval ($numeric));
+		if (is_int ($numeric)) {
+			return static::formatInteger ($numeric);
+		} else {
+			if (is_float ($numeric)) {
+				return static::formatDouble ($numeric);
+			} else {
+				if (floatval ($numeric) - (float)intval ($numeric)) {
+					return static::formatDouble ($numeric);
+				} else {
+					return static::formatInteger (intval ($numeric));
+				}
+			}
+		}
 	}
 
 	/**
@@ -173,8 +190,11 @@ class StringUtil {
 	 * @api
 	 */
 	public static function indexOf ($hayStack, $needle, $offset = 0) {
-		if (static::mbStringAvailable ()) return mb_strpos ($hayStack, $needle, $offset); else
+		if (static::mbStringAvailable ()) {
+			return mb_strpos ($hayStack, $needle, $offset);
+		} else {
 			return strpos ($hayStack, $needle, $offset);
+		}
 	}
 
 	/**
@@ -182,8 +202,11 @@ class StringUtil {
 	 * @api
 	 */
 	public static function indexOfIgnoreCase ($hayStack, $needle, $offset = 0) {
-		if (static::mbStringAvailable ()) return mb_strpos (static::toLowerCase ($hayStack), static::toLowerCase ($needle), $offset); else
+		if (static::mbStringAvailable ()) {
+			return mb_strpos (static::toLowerCase ($hayStack), static::toLowerCase ($needle), $offset);
+		} else {
 			return stripos ($hayStack, $needle, $offset);
+		}
 	}
 
 	/**
@@ -191,8 +214,11 @@ class StringUtil {
 	 * @api
 	 */
 	public static function lastIndexOf ($hayStack, $needle) {
-		if (static::mbStringAvailable ()) return mb_strrpos ($hayStack, $needle); else
+		if (static::mbStringAvailable ()) {
+			return mb_strrpos ($hayStack, $needle);
+		} else {
 			return strrpos ($hayStack, $needle);
+		}
 	}
 
 	/**
@@ -200,8 +226,11 @@ class StringUtil {
 	 * @api
 	 */
 	public static function length ($string) {
-		if (static::mbStringAvailable ()) return mb_strlen ($string); else
+		if (static::mbStringAvailable ()) {
+			return mb_strlen ($string);
+		} else {
 			return strlen ($string);
+		}
 	}
 
 	/**
@@ -227,14 +256,17 @@ class StringUtil {
 	public static function replaceIgnoreCase ($search, $replace, $subject, &$count = 0) {
 		if (static::mbStringAvailable ()) {
 			$startPos = static::indexOf (static::toLowerCase ($subject), static::toLowerCase ($search));
-			if ($startPos === false) return $subject; else {
+			if ($startPos === false) {
+				return $subject;
+			} else {
 				$endPos = $startPos + static::length ($search);
 				$count++;
 
 				return static::substring ($subject, 0, $startPos) . $replace . static::replaceIgnoreCase ($search, $replace, static::substring ($subject, $endPos), $count);
 			}
-		} else
+		} else {
 			return str_ireplace ($search, $replace, $subject, $count);
+		}
 	}
 
 	/**
@@ -277,8 +309,11 @@ class StringUtil {
 	 * @api
 	 */
 	public static function toLowerCase ($string) {
-		if (static::mbStringAvailable ()) return mb_strtolower ($string); else
+		if (static::mbStringAvailable ()) {
+			return mb_strtolower ($string);
+		} else {
 			return strtolower ($string);
+		}
 	}
 
 	/**
@@ -286,8 +321,11 @@ class StringUtil {
 	 * @api
 	 */
 	public static function toUpperCase ($string) {
-		if (static::mbStringAvailable ()) return mb_strtoupper ($string); else
+		if (static::mbStringAvailable ()) {
+			return mb_strtoupper ($string);
+		} else {
 			return strtoupper ($string);
+		}
 	}
 
 	/**
@@ -326,8 +364,11 @@ class StringUtil {
 	 * @api
 	 */
 	public static function wordsToUpperCase ($string) {
-		if (static::mbStringAvailable ()) return mb_convert_case ($string, MB_CASE_TITLE); else
+		if (static::mbStringAvailable ()) {
+			return mb_convert_case ($string, MB_CASE_TITLE);
+		} else {
 			return ucwords ($string);
+		}
 	}
 }
 

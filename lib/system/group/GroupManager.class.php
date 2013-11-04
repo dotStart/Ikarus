@@ -40,13 +40,13 @@ class GroupManager implements IConfigurableComponent {
 	 * Contains all group handles.
 	 * @var                        array<ikarus\data\group.Group>
 	 */
-	protected $groups = array();
+	protected $groups = array ();
 
 	/**
 	 * Contains a list of groups mapped to a user.
 	 * @var                        array<ikarus\system\group\UserPermissionHandle>
 	 */
-	protected $userToGroupCache = array();
+	protected $userToGroupCache = array ();
 
 	/**
 	 * Boots up the component.
@@ -80,7 +80,7 @@ class GroupManager implements IConfigurableComponent {
 
 		// load cache
 		$cacheIdentifier = 'groups-' . sha1 (implode (',', $groupIDs)) . '-' . $this->application->getPackageID ();
-		Ikarus::getCacheManager ()->getDefaultAdapter ()->createResource ($cacheIdentifier, $cacheIdentifier, 'ikarus\\system\\cache\\builder\\CacheBuilderUserGroupHandle', array('groupIDs' => $groupIDs));
+		Ikarus::getCacheManager ()->getDefaultAdapter ()->createResource ($cacheIdentifier, $cacheIdentifier, 'ikarus\\system\\cache\\builder\\CacheBuilderUserGroupHandle', array ('groupIDs' => $groupIDs));
 
 		return Ikarus::getCacheManager ()->getDefaultAdapter ()->get ($cacheIdentifier);
 	}

@@ -95,7 +95,7 @@ class UnitTestHelper extends Singleton {
 	 * @api
 	 */
 	public function assertFalse ($message, $variable) {
-		$this->assert ($message, !(bool) $variable);
+		$this->assert ($message, !(bool)$variable);
 	}
 
 	/**
@@ -118,7 +118,7 @@ class UnitTestHelper extends Singleton {
 	 * @api
 	 */
 	public function assertTrue ($message, $variable) {
-		$this->assert ($message, (bool) $variable);
+		$this->assert ($message, (bool)$variable);
 	}
 
 	/**

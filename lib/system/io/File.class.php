@@ -114,8 +114,9 @@ class File {
 
 			// call <method>()
 			return call_user_func_array ($function, $arguments);
-		} else
+		} else {
 			throw new NotImplementedException('Called unsupported method "%s" from file context', $function);
+		}
 	}
 }
 

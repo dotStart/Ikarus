@@ -41,7 +41,7 @@ class CacheManager {
 	 * Contains all active cache connections
 	 * @var                                array<ikarus\system\cache\adapter\ICacheAdapter>
 	 */
-	protected $connections = array();
+	protected $connections = array ();
 
 	/**
 	 * Contains the current default adapter
@@ -53,13 +53,13 @@ class CacheManager {
 	 * Contains predefined adapter fallbacks
 	 * @var                                array<string>
 	 */
-	protected $fallbacks = array();
+	protected $fallbacks = array ();
 
 	/**
 	 * Contains a list of loaded adapters
 	 * @var                                array<string>
 	 */
-	protected $loadedAdapters = array();
+	protected $loadedAdapters = array ();
 
 	/**
 	 * Creates a new cache connection
@@ -70,7 +70,7 @@ class CacheManager {
 	 * @return                        ikarus\system\cache\adapter.ICacheAdapter
 	 * @api
 	 */
-	public function createConnection ($adapterName, array $parameters = array(), $linkID = null) {
+	public function createConnection ($adapterName, array $parameters = array (), $linkID = null) {
 		// validate adapter name
 		if (!$this->adapterIsLoaded ($adapterName)) throw new SystemException("Cannot start adapter '%s': The adapter is not loaded", $adapterName);
 
@@ -139,7 +139,7 @@ class CacheManager {
 		if (!ClassUtil::isInstanceOf ($className, 'ikarus\system\cache\adapter\ICacheAdapter')) throw new StrictStandardException("The cache adapter class '%s' of adapter '%s' is not an implementation of ikarus\\system\\cache\\adapter\\ICacheAdapter");
 
 		// check for php side support
-		if (!call_user_func (array($className, 'isSupported'))) return false;
+		if (!call_user_func (array ($className, 'isSupported'))) return false;
 
 		// add to loaded adapter list
 		$this->loadedAdapters[$adapterName] = $className;
@@ -226,7 +226,7 @@ class CacheManager {
 		$resultList = $stmt->fetchList ();
 
 		foreach ($resultList as $result) {
-			$adapter = $this->createConnection ($result->adapterClass, (!empty($result->adapterParameters) ? unserialize ($result->adapterParameters) : array()), $result->connectionID);
+			$adapter = $this->createConnection ($result->adapterClass, (!empty($result->adapterParameters) ? unserialize ($result->adapterParameters) : array ()), $result->connectionID);
 			if ($result->isDefaultConnection) $this->setDefaultAdapter ($adapter);
 			if ($result->fallbackFor) $this->setFallback ($result->connectionID, $result->fallbackFor);
 		}

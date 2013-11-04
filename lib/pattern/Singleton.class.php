@@ -32,7 +32,7 @@ abstract class Singleton {
 	 * Contains an instance of type Singelton
 	 * @var                        array<Singelton>
 	 */
-	protected static $instances = array();
+	protected static $instances = array ();
 
 	/**
 	 * A protected construct method.

@@ -17,8 +17,8 @@ namespace ikarus\system\auth;
 use ikarus\system\application\IApplication;
 use ikarus\system\application\IConfigurableComponent;
 use ikarus\system\database\QueryEditor;
-use ikarus\system\event\IdentifierEventArguments;
 
+use ikarus\system\event\IdentifierEventArguments;
 use ikarus\system\exception\MissingDependencyException;
 use ikarus\system\exception\StrictStandardException;
 use ikarus\util\ClassUtil;
@@ -57,7 +57,7 @@ class AuthenticationManager implements IConfigurableComponent {
 	 * Contains a list of loaded adapters.
 	 * @var                        string[]
 	 */
-	protected $loadedAdapters = array();
+	protected $loadedAdapters = array ();
 
 	/**
 	 * @see \ikarus\system\application\IConfigurableComponent::configure()
@@ -77,11 +77,11 @@ class AuthenticationManager implements IConfigurableComponent {
 	 */
 	public function createConnections () {
 		$editor = new QueryEditor();
-		$editor->from (array('ikarus1_auth_connection' => 'authConnection'));
+		$editor->from (array ('ikarus1_auth_connection' => 'authConnection'));
 		DependencyUtil::generateDependencyQuery ($this->application->getPackageID (), $editor, 'authConnection');
 		$stmt = $editor->prepare ();
 		foreach ($stmt->fetchList () as $connection) {
-			$linkID = $this->createInstance ($connection->adapterID, $connection->linkID, (!empty($connection->parameters) ? unserialize ($connection->parameters) : array()));
+			$linkID = $this->createInstance ($connection->adapterID, $connection->linkID, (!empty($connection->parameters) ? unserialize ($connection->parameters) : array ()));
 			if ($connection->isDefault) $this->setDefaultAdapter ($this->getAdapter ($linkID));
 		}
 	}
@@ -95,7 +95,7 @@ class AuthenticationManager implements IConfigurableComponent {
 	 * @return                        string
 	 * @api
 	 */
-	public function createInstance ($adapterID, $linkID = null, array $parameters = array()) {
+	public function createInstance ($adapterID, $linkID = null, array $parameters = array ()) {
 		// generate linkID (if not given)
 		if ($linkID === null) $linkID = GUID::generate ('AuthenticationManager');
 
@@ -174,7 +174,7 @@ class AuthenticationManager implements IConfigurableComponent {
 	 */
 	public function loadAdapters () {
 		$editor = new QueryEditor();
-		$editor->from (array('ikarus1_auth_adapter' => 'authAdapter'));
+		$editor->from (array ('ikarus1_auth_adapter' => 'authAdapter'));
 		DependencyUtil::generateDependencyQuery ($this->application->getPackageID (), $editor, 'authAdapter');
 		$stmt = $editor->prepare ();
 		foreach ($stmt->fetchList () as $adapter) {

@@ -40,7 +40,7 @@ class MimeRegister extends Singleton {
 	 * Stores a list of types.
 	 * @var                        MimeType[]
 	 */
-	protected $types = array();
+	protected $types = array ();
 
 	/**
 	 * (non-PHPdoc)
@@ -58,8 +58,9 @@ class MimeRegister extends Singleton {
 	 * @return                        ikarus\system\io\protocol\mime\MimeType
 	 */
 	public function getType ($category, $type = null) {
-		if ($type === null) $typeString = $category; else
+		if ($type === null) $typeString = $category; else {
 			$typeString = $category . MimeType::TYPE_SEPERATOR . $category;
+		}
 
 		// validate
 		if (!$this->isKnownType ($typeString)) throw new InvalidMimeTypeException('Cannot find mime type "%s" in register', $typeString);
@@ -104,68 +105,68 @@ class MimeRegister extends Singleton {
 	 */
 	protected function registerDefaultTypes () {
 		// application category
-		$this->registerType (new MimeType('application', 'octet-stream'), array(), null, true); // fallback
+		$this->registerType (new MimeType('application', 'octet-stream'), array (), null, true); // fallback
 
-		$this->registerType (new MimeType('application', 'atom+xml'), array('atom'));
-		$this->registerType (new MimeType('application', 'excel'), array('xls', 'xlt', 'xlv', 'xlw'));
-		$this->registerType (new MimeType('application', 'font-woff'), array('woff'));
-		$this->registerType (new MimeType('application', 'java'), array('class')); // java bytecode
-		$this->registerType (new MimeType('application', 'java-byte-code'), array(), $this->getType ('application', 'java')); // alias for java bytecode
-		$this->registerType (new MimeType('application', 'json'), array('json'));
-		$this->registerType (new MimeType('application', 'mac-binary'), array('bin')); // mac binary
-		$this->registerType (new MimeType('application', 'macbinary'), array(), $this->getType ('application', 'mac-binary')); // alias for mac binary
-		$this->registerType (new MimeType('application', 'mspowerpoint'), array('pot', 'pps', 'ppt', 'ppz'));
-		$this->registerType (new MimeType('application', 'msword'), array('doc', 'word')); // msword document
-		$this->registerType (new MimeType('application', 'pdf'), array('pdf'));
-		$this->registerType (new MimeType('application', 'postscript'), array('eps')); // postscript document
-		$this->registerType (new MimeType('application', 'rdf+xml'), array('rdf'));
-		$this->registerType (new MimeType('application', 'rss+xml'), array('rss'));
-		$this->registerType (new MimeType('application', 'x-bzip'), array('bzip', 'bz')); // bzip1
-		$this->registerType (new MimeType('application', 'x-bzip2'), array('bzip2', 'bz2')); // bzip2
-		$this->registerType (new MimeType('application', 'x-deb'), array('deb')); // debian
-		$this->registerType (new MimeType('application', 'x-gzip'), array('gzip', 'gz', 'tgz'));
-		$this->registerType (new MimeType('application', 'x-compressed'), array('z'));
-		$this->registerType (new MimeType('application', 'x-compress'), array(), $this->getType ('application', 'x-compressed'));
-		$this->registerType (new MimeType('application', 'x-java-class'), array(), $this->getType ('application', 'java'));
-		$this->registerType (new MimeType('application', 'x-javascript'), array('js'));
-		$this->registerType (new MimeType('application', 'x-macbinary'), array(), $this->getType ('application', 'mac-binary')); // alias for mac binary
-		$this->registerType (new MimeType('application', 'x-rar-compressed'), array('rar'));
-		$this->registerType (new MimeType('application', 'x-shockwave-flash'), array('swf'));
-		$this->registerType (new MimeType('application', 'x-tar'), array('tar'));
-		$this->registerType (new MimeType('application', 'xhtml+xml'), array('xhtml'));
-		$this->registerType (new MimeType('application', 'xml-dtd'), array('dtd'));
-		$this->registerType (new MimeType('application', 'x-xpinstall'), array('xpi'));
-		$this->registerType (new MimeType('application', 'zip'), array('zip'));
+		$this->registerType (new MimeType('application', 'atom+xml'), array ('atom'));
+		$this->registerType (new MimeType('application', 'excel'), array ('xls', 'xlt', 'xlv', 'xlw'));
+		$this->registerType (new MimeType('application', 'font-woff'), array ('woff'));
+		$this->registerType (new MimeType('application', 'java'), array ('class')); // java bytecode
+		$this->registerType (new MimeType('application', 'java-byte-code'), array (), $this->getType ('application', 'java')); // alias for java bytecode
+		$this->registerType (new MimeType('application', 'json'), array ('json'));
+		$this->registerType (new MimeType('application', 'mac-binary'), array ('bin')); // mac binary
+		$this->registerType (new MimeType('application', 'macbinary'), array (), $this->getType ('application', 'mac-binary')); // alias for mac binary
+		$this->registerType (new MimeType('application', 'mspowerpoint'), array ('pot', 'pps', 'ppt', 'ppz'));
+		$this->registerType (new MimeType('application', 'msword'), array ('doc', 'word')); // msword document
+		$this->registerType (new MimeType('application', 'pdf'), array ('pdf'));
+		$this->registerType (new MimeType('application', 'postscript'), array ('eps')); // postscript document
+		$this->registerType (new MimeType('application', 'rdf+xml'), array ('rdf'));
+		$this->registerType (new MimeType('application', 'rss+xml'), array ('rss'));
+		$this->registerType (new MimeType('application', 'x-bzip'), array ('bzip', 'bz')); // bzip1
+		$this->registerType (new MimeType('application', 'x-bzip2'), array ('bzip2', 'bz2')); // bzip2
+		$this->registerType (new MimeType('application', 'x-deb'), array ('deb')); // debian
+		$this->registerType (new MimeType('application', 'x-gzip'), array ('gzip', 'gz', 'tgz'));
+		$this->registerType (new MimeType('application', 'x-compressed'), array ('z'));
+		$this->registerType (new MimeType('application', 'x-compress'), array (), $this->getType ('application', 'x-compressed'));
+		$this->registerType (new MimeType('application', 'x-java-class'), array (), $this->getType ('application', 'java'));
+		$this->registerType (new MimeType('application', 'x-javascript'), array ('js'));
+		$this->registerType (new MimeType('application', 'x-macbinary'), array (), $this->getType ('application', 'mac-binary')); // alias for mac binary
+		$this->registerType (new MimeType('application', 'x-rar-compressed'), array ('rar'));
+		$this->registerType (new MimeType('application', 'x-shockwave-flash'), array ('swf'));
+		$this->registerType (new MimeType('application', 'x-tar'), array ('tar'));
+		$this->registerType (new MimeType('application', 'xhtml+xml'), array ('xhtml'));
+		$this->registerType (new MimeType('application', 'xml-dtd'), array ('dtd'));
+		$this->registerType (new MimeType('application', 'x-xpinstall'), array ('xpi'));
+		$this->registerType (new MimeType('application', 'zip'), array ('zip'));
 
 		// audio category
-		$this->registerType (new MimeType('audio', 'midi'), array('mid', 'midi')); // midi audio
-		$this->registerType (new MimeType('audio', 'mpeg'), array('m2a', 'mp3')); // mpeg audio
-		$this->registerType (new MimeType('audio', 'wav'), array('wav'));
-		$this->registerType (new MimeType('audio', 'x-aac'), array('aac'));
-		$this->registerType (new MimeType('audio', 'x-midi'), array(), $this->getType ('application', 'midi'));
+		$this->registerType (new MimeType('audio', 'midi'), array ('mid', 'midi')); // midi audio
+		$this->registerType (new MimeType('audio', 'mpeg'), array ('m2a', 'mp3')); // mpeg audio
+		$this->registerType (new MimeType('audio', 'wav'), array ('wav'));
+		$this->registerType (new MimeType('audio', 'x-aac'), array ('aac'));
+		$this->registerType (new MimeType('audio', 'x-midi'), array (), $this->getType ('application', 'midi'));
 
 		// image category
-		$this->registerType (new MimeType('image', 'bmp'), array('bmp', 'bm')); // BMP file format
-		$this->registerType (new MimeType('image', 'gif'), array('gif')); // gif image format
-		$this->registerType (new MimeType('image', 'jpeg'), array('jpeg', 'jpg', 'jpe'));
-		$this->registerType (new MimeType('image', 'png'), array('png')); // png
-		$this->registerType (new MimeType('image', 'svg+xml'), array('svg')); // svg
-		$this->registerType (new MimeType('image', 'tiff'), array('tif', 'tiff'));
-		$this->registerType (new MimeType('image', 'x-icon'), array('ico')); // icon
-		$this->registerType (new MimeType('image', 'x-quicktime'), array('qti', 'qtif'));
-		$this->registerType (new MimeType('image', 'x-windows-bmp'), array(), $this->getType ('image', 'bmp')); // alias for BMP
-		$this->registerType (new MimeType('image', 'x-xcf'), array('xcf'));
-		$this->registerType (new MimeType('image', 'xpm'), array('xpm'));
+		$this->registerType (new MimeType('image', 'bmp'), array ('bmp', 'bm')); // BMP file format
+		$this->registerType (new MimeType('image', 'gif'), array ('gif')); // gif image format
+		$this->registerType (new MimeType('image', 'jpeg'), array ('jpeg', 'jpg', 'jpe'));
+		$this->registerType (new MimeType('image', 'png'), array ('png')); // png
+		$this->registerType (new MimeType('image', 'svg+xml'), array ('svg')); // svg
+		$this->registerType (new MimeType('image', 'tiff'), array ('tif', 'tiff'));
+		$this->registerType (new MimeType('image', 'x-icon'), array ('ico')); // icon
+		$this->registerType (new MimeType('image', 'x-quicktime'), array ('qti', 'qtif'));
+		$this->registerType (new MimeType('image', 'x-windows-bmp'), array (), $this->getType ('image', 'bmp')); // alias for BMP
+		$this->registerType (new MimeType('image', 'x-xcf'), array ('xcf'));
+		$this->registerType (new MimeType('image', 'xpm'), array ('xpm'));
 
 		// multipart category
-		$this->registerType (new MimeType('multipart', 'mixed'), array('eml')); // emails
+		$this->registerType (new MimeType('multipart', 'mixed'), array ('eml')); // emails
 
 		// text category
-		$this->registerType (new MimeType('text', 'css'), array('css')); // CSS
-		$this->registerType (new MimeType('text', 'csv'), array('csv')); // CSV
-		$this->registerType (new MimeType('text', 'html'), array('html', 'html5', 'htm', 'shtml')); // html
-		$this->registerType (new MimeType('text', 'pascal'), array('pas')); // pascal
-		$this->registerType (new MimeType('text', 'plain'), array( // plain text
+		$this->registerType (new MimeType('text', 'css'), array ('css')); // CSS
+		$this->registerType (new MimeType('text', 'csv'), array ('csv')); // CSV
+		$this->registerType (new MimeType('text', 'html'), array ('html', 'html5', 'htm', 'shtml')); // html
+		$this->registerType (new MimeType('text', 'pascal'), array ('pas')); // pascal
+		$this->registerType (new MimeType('text', 'plain'), array ( // plain text
 			'txt', 'text', 'conf', 'log', // simple text files
 			'c', 'cpp', 'c++', 'cxx', 'cc', 'h', 'hh', // C & C++
 			'f', 'for', // Fortran
@@ -176,21 +177,21 @@ class MimeRegister extends Singleton {
 			'bsh', 'sh', 'shar', // Bash
 			'sdml' // misc
 		));
-		$this->registerType (new MimeType('text', 'richtext'), array('rt', 'rtf', 'rtx'));
-		$this->registerType (new MimeType('text', 'vcard'), array('vcard'));
-		$this->registerType (new MimeType('text', 'x-script.python'), array('py')); // Python
-		$this->registerType (new MimeType('text', 'xml'), array('xml', 'svg')); // xml
+		$this->registerType (new MimeType('text', 'richtext'), array ('rt', 'rtf', 'rtx'));
+		$this->registerType (new MimeType('text', 'vcard'), array ('vcard'));
+		$this->registerType (new MimeType('text', 'x-script.python'), array ('py')); // Python
+		$this->registerType (new MimeType('text', 'xml'), array ('xml', 'svg')); // xml
 
 		// video category
-		$this->registerType (new MimeType('video', 'avi'), array('avi')); // AVI video container
-		$this->registerType (new MimeType('video', 'mpeg'), array('m1v', 'm2v')); // mpeg video
-		$this->registerType (new MimeType('video', 'msvideo'), array(), $this->getType ('video', 'msvideo')); // MS avi
-		$this->registerType (new MimeType('video', 'quicktime'), array('mov', 'moov'));
-		$this->registerType (new MimeType('video', 'webm'), array('webm'));
-		$this->registerType (new MimeType('video', 'x-flv'), array('flv'));
-		$this->registerType (new MimeType('video', 'x-matroska'), array('mvk'));
-		$this->registerType (new MimeType('video', 'x-ms-wmv'), array('wmv'));
-		$this->registerType (new MimeType('video', 'x-msvideo'), array(), $this->getType ('video', 'msvideo')); // alias for MS avi
+		$this->registerType (new MimeType('video', 'avi'), array ('avi')); // AVI video container
+		$this->registerType (new MimeType('video', 'mpeg'), array ('m1v', 'm2v')); // mpeg video
+		$this->registerType (new MimeType('video', 'msvideo'), array (), $this->getType ('video', 'msvideo')); // MS avi
+		$this->registerType (new MimeType('video', 'quicktime'), array ('mov', 'moov'));
+		$this->registerType (new MimeType('video', 'webm'), array ('webm'));
+		$this->registerType (new MimeType('video', 'x-flv'), array ('flv'));
+		$this->registerType (new MimeType('video', 'x-matroska'), array ('mvk'));
+		$this->registerType (new MimeType('video', 'x-ms-wmv'), array ('wmv'));
+		$this->registerType (new MimeType('video', 'x-msvideo'), array (), $this->getType ('video', 'msvideo')); // alias for MS avi
 
 		// fire event
 		Ikarus::getEventManager ()->fire (new MimeRegisterDefaultTypesEvent(new MimeRegisterEventArguments($this)));
@@ -203,7 +204,7 @@ class MimeRegister extends Singleton {
 	 * @param                        MimeType $parentType
 	 * @return                        void
 	 */
-	public function registerType (MimeType $type, array $fileExtensions = array(), MimeType $parentType = null, $isFallback = false) {
+	public function registerType (MimeType $type, array $fileExtensions = array (), MimeType $parentType = null, $isFallback = false) {
 		$registeredType = new RegisteredMimeType($type, $fileExtensions, $parentType);
 
 		// fire event
