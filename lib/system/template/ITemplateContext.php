@@ -36,6 +36,7 @@ interface ITemplateContext {
 	/**
 	 * Compiles a template.
 	 * @return void
+	 * @throws CompilerException
 	 */
 	public function compile ();
 
