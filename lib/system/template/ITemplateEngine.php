@@ -55,5 +55,11 @@ interface ITemplateEngine {
 	 * @return void
 	 */
 	public function display ($templateName);
+
+	/**
+	 * Returns an instance of the template compiler.
+	 * @return ICompiler
+	 */
+	public function getCompiler ();
 }
 ?> 
