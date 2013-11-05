@@ -72,6 +72,14 @@ interface ITemplateContext {
 	public function getVariable ($name, $defaultValue = null, $disableBubble = false);
 
 	/**
+	 * Sets a variable's content.
+	 * @param $name
+	 * @param $value
+	 * @return mixed
+	 */
+	public function setVariable ($name, $value);
+
+	/**
 	 * @return string
 	 */
 	public function __invoke ();
