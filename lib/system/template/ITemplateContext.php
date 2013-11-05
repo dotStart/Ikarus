@@ -34,6 +34,14 @@ interface ITemplateContext {
 	public function __construct (ITemplate $template, ICompiler $compiler, ITemplateContext $parent = null, $sandboxed = false);
 
 	/**
+	 * Assigns a new variable to this context.
+	 * @param string $name
+	 * @param mixed  $value
+	 * @return void
+	 */
+	public function assignVariable ($name, $value = null);
+
+	/**
 	 * Compiles a template.
 	 * @return void
 	 * @throws CompilerException
