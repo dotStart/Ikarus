@@ -72,6 +72,14 @@ interface ITemplateContext {
 	public function getVariable ($name, $defaultValue = null, $disableBubble = false);
 
 	/**
+	 * Checks whether a variable exists.
+	 * @param      $name
+	 * @param bool $disableBubble
+	 * @return boolean
+	 */
+	public function hasVariable ($name, $disableBubble = true);
+
+	/**
 	 * Sets a variable's content.
 	 * @param $name
 	 * @param $value
