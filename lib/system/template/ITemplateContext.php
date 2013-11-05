@@ -77,7 +77,7 @@ interface ITemplateContext {
 	 * @param bool $disableBubble
 	 * @return boolean
 	 */
-	public function hasVariable ($name, $disableBubble = true);
+	public function hasVariable ($name, $disableBubble = false);
 
 	/**
 	 * Sets a variable's content.
