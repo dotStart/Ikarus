@@ -15,7 +15,7 @@
 namespace ikarus\system\template;
 
 /**
- * Class IFunctionContext
+ * Defines a custom context for functions.
  * @author			Johannes Donath
  * @copyright			Copyright (C) 2013 Evil-Co <http://www.evil-co.com>
  * @package			ikarus\system\template
