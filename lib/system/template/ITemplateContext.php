@@ -63,6 +63,13 @@ interface ITemplateContext {
 	public function execute ($returnContent = true);
 
 	/**
+	 * @param string $name
+	 * @param mixed  $defaultValue
+	 * @return mixed
+	 */
+	public function getVariable ($name, $defaultValue = null);
+
+	/**
 	 * @return string
 	 */
 	public function __invoke ();
