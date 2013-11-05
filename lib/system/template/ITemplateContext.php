@@ -84,7 +84,7 @@ interface ITemplateContext {
 	 * @param      $name
 	 * @param      $value
 	 * @param bool $disableBubble
-	 * @return mixed
+	 * @return void
 	 */
 	public function setVariable ($name, $value, $disableBubble = false);
 
