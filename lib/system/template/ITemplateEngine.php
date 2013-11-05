@@ -44,10 +44,11 @@ interface ITemplateEngine {
 
 	/**
 	 * Creates a template object.
-	 * @param $templateName
+	 * @param     $templateName
+	 * @param int $packageID
 	 * @return ITemplate
 	 */
-	public function createTemplateObject ($templateName);
+	public function createTemplateObject ($templateName, $packageID = 0);
 
 	/**
 	 * Displays a specific template.
