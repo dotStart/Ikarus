@@ -81,11 +81,12 @@ interface ITemplateContext {
 
 	/**
 	 * Sets a variable's content.
-	 * @param $name
-	 * @param $value
+	 * @param      $name
+	 * @param      $value
+	 * @param bool $disableBubble
 	 * @return mixed
 	 */
-	public function setVariable ($name, $value);
+	public function setVariable ($name, $value, $disableBubble = false);
 
 	/**
 	 * @return string
