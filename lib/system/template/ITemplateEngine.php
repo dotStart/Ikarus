@@ -66,7 +66,7 @@ interface ITemplateEngine {
 
 	/**
 	 * Returns the global variable context.
-	 * @return ITemplateContext
+	 * @return IGlobalContext
 	 */
 	public function getGlobalContext ();
 }
