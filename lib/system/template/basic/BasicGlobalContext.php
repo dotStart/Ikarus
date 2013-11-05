@@ -14,8 +14,8 @@
  */
 namespace ikarus\system\template\basic;
 use ikarus\system\exception\request\NotImplementedException;
-use ikarus\system\template\CompilerException;
-use ikarus\system\template\ContextException;
+use ikarus\system\exception\template\CompilerException;
+use ikarus\system\exception\template\ContextException;
 use ikarus\system\template\ICompiler;
 use ikarus\system\template\IGlobalContext;
 use ikarus\system\template\ITemplate;
@@ -23,12 +23,12 @@ use ikarus\system\template\ITemplateContext;
 
 /**
  * Class BasicGlobalContext
- * @author			Johannes Donath
- * @copyright			Copyright (C) 2013 Evil-Co <http://www.evil-co.com>
- * @package			ikarus\system\template\basic
- * @category			Ikarus Framework
- * @license			GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
- * @version			2.0.0-0001
+ * @author                           Johannes Donath
+ * @copyright                        Copyright (C) 2013 Evil-Co <http://www.evil-co.com>
+ * @package                          ikarus\system\template\basic
+ * @category                         Ikarus Framework
+ * @license                          GNU Lesser Public License <http://www.gnu.org/licenses/lgpl.txt>
+ * @version                          2.0.0-0001
  */
 abstract class BasicGlobalContext implements IGlobalContext {
 
@@ -55,7 +55,7 @@ abstract class BasicGlobalContext implements IGlobalContext {
 	 * @return void
 	 */
 	public function assignVariable ($name, $value = null) {
-		$this->setVariable($name, $value, true);
+		$this->setVariable ($name, $value, true);
 	}
 
 	/**
@@ -106,12 +106,14 @@ abstract class BasicGlobalContext implements IGlobalContext {
 	 */
 	public function getVariable ($name, $defaultValue = null, $disableBubble = false) {
 		// verify variable
-		if (!array_key_exists ($name, $this->variables) && $defaultValue == null)
+		if (!array_key_exists ($name, $this->variables) && $defaultValue == null) {
 			throw new ContextException ('Could not find a variable with name "%s" in context tree.', $name);
-
-		// return default value (if any)
-		else if (!array_key_exists ($name, $this->variables))
-			return $defaultValue;
+		} // return default value (if any)
+		else {
+			if (!array_key_exists ($name, $this->variables)) {
+				return $defaultValue;
+			}
+		}
 
 		// return actual value
 		return $this->variables[$name];
@@ -132,7 +134,7 @@ abstract class BasicGlobalContext implements IGlobalContext {
 	 * @return boolean
 	 */
 	public function hasVariable ($name, $disableBubble = false) {
-		return (array_key_exists($name, $this->variables));
+		return (array_key_exists ($name, $this->variables));
 	}
 
 	/**
@@ -162,7 +164,8 @@ abstract class BasicGlobalContext implements IGlobalContext {
 	 * @return string
 	 */
 	public function __invoke () {
-		return $this->execute(true);
+		return $this->execute (true);
 	}
 }
-?> 
+
+?>
