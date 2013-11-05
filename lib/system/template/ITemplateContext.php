@@ -65,9 +65,10 @@ interface ITemplateContext {
 	/**
 	 * @param string $name
 	 * @param mixed  $defaultValue
+	 * @param bool   $disableBubble
 	 * @return mixed
 	 */
-	public function getVariable ($name, $defaultValue = null);
+	public function getVariable ($name, $defaultValue = null, $disableBubble = false);
 
 	/**
 	 * @return string
