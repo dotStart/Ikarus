@@ -41,6 +41,14 @@ interface ITemplateContext {
 	public function compile ();
 
 	/**
+	 * Creates a child context.
+	 * @param ITemplate $template
+	 * @param bool      $sandboxed
+	 * @return ITemplateContext
+	 */
+	public function createChildContext (ITemplate $template, $sandboxed = false);
+
+	/**
 	 * @param bool $returnContent
 	 * @return mixed
 	 */
