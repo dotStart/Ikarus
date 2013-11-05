@@ -63,6 +63,13 @@ interface ITemplateContext {
 	public function execute ($returnContent = true);
 
 	/**
+	 * Returns the parent context (if any).
+	 * @return ITemplateContext
+	 * @throws ContextException
+	 */
+	public function getParent ();
+
+	/**
 	 * @param string $name
 	 * @param mixed  $defaultValue
 	 * @param bool   $disableBubble
