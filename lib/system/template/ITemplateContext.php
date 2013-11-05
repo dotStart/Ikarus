@@ -99,7 +99,7 @@ interface ITemplateContext {
 	 * @param bool $disableBubble
 	 * @return void
 	 */
-	public function setVariable ($name, $value, $disableBubble = false);
+	public function setVariable ($name, $value = null, $disableBubble = false);
 
 	/**
 	 * @return string
