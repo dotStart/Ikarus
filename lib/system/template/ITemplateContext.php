@@ -51,4 +51,4 @@ interface ITemplateContext {
 	 */
 	public function __invoke ();
 }
-?> 
+?>

@@ -70,4 +70,4 @@ interface ITemplateEngine {
 	 */
 	public function getGlobalContext ();
 }
-?> 
+?>

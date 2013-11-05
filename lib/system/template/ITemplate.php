@@ -57,4 +57,4 @@ interface ITemplate {
 	 */
 	public function validate (ICompiler $compiler);
 }
-?> 
+?>
