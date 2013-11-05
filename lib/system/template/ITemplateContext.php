@@ -79,6 +79,12 @@ interface ITemplateContext {
 	public function getVariable ($name, $defaultValue = null, $disableBubble = false);
 
 	/**
+	 * Checks whether the context has a parent context.
+	 * @return boolean
+	 */
+	public function hasParent ();
+
+	/**
 	 * Checks whether a variable exists.
 	 * @param      $name
 	 * @param bool $disableBubble
